@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Datos personales</title>
+  <title>Información Academica</title>
 </head>
-<link rel="stylesheet" href="\datos-personales.component.css">
+<link rel="stylesheet" href="\informacion-academica.component.css">
 <body>
   <div class="container-datos-personales">
 
@@ -34,49 +34,43 @@
       <form>
 
         <div class="row mb-3">
-          <label for="inputRut" class="col-sm-2 col-form-label">RUT:</label>
+          <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
           <div class="col-sm-10">
-            <input type="rut" class="form-control" id="inputRut" [(ngModel)]="usuarioNuevo.usr_rut" name="inputRut" >
+            <input type="inputTitulo" class="form-control" id="inputTitulo" [(ngModel)]="academica.titl" name="inputTitulo" >
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputNombres" class="col-sm-2 col-form-label">Nombres:</label>
+          <label for="inputEducacion" class="col-sm-2 col-form-label">Institución Educativa:</label>
           <div class="col-sm-10">
-            <input type="nombres" class="form-control" id="inputNombres" [(ngModel)]="usuarioNuevo.usr_nom" name="inputNombres">
+            <input type="inputEducacion" class="form-control" id="inputEducacion" [(ngModel)]="academica.inf_acad_nom_esc" name="inputEducacion">
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputApellidop" class="col-sm-2 col-form-label">Apellido Paterno:</label>
+          <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="apellidop" class="form-control" id="inputApellidop" [(ngModel)]="usuarioNuevo.usr_ap_pat" name="inputApellidop">
+            <input type="date" class="form-control" id="inputApellidop" [(ngModel)]="academica.inf_acad_fec_ini" [min]="minFecha" name="inputFechaini">
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputApellidom" class="col-sm-2 col-form-label">Apellido Materno:</label>
+          <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="apellidom" class="form-control" id="inputApellidom" [(ngModel)]="usuarioNuevo.usr_ap_mat" name="inputApellidom">
+            <input type="date" class="form-control" id="inputFechafin" [(ngModel)]="academica.inf_acad_fec_fin" [min]="minFecha" name="inputFechafin">
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputTelefono" class="col-sm-2 col-form-label">Teléfono:</label>
-          <div class="col-sm-10">
-            <input type="telefono" class="form-control" id="inputTelefono" [(ngModel)]="usuarioNuevo.usr_tel" name="inputTelefono">
-          </div>
+          <label for="selectEstadoAcademico" class="col-sm-2 col-form-label">Estado Academico:</label>
+            <select class="form-select" id="selectEstadoAcademico" [(ngModel)]="selectedEstadoAcademico" name="estadoAcademico">
+              <option selected disabled >Selecciona una opción...</option>
+              <option value="En curso">En curso</option>
+              <option value="En práctica">En práctica</option>
+              <option value="Egresado">Egresado</option>
+              <option value="Titulado">Titulado</option>
+            </select>
         </div>
-        <div class="row mb-3">
-          <label for="inputUbicación" class="col-sm-2 col-form-label">Ubicación:</label>
-          <div class="col-sm-10">
-            <input type="ubicacion" class="form-control" id="inputUbicación" [(ngModel)]="usuarioNuevo.pais_nom" name="inputUbicacion">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputLinkedin" class="col-sm-2 col-form-label">URL Linkedin:</label>
-          <div class="col-sm-10">
-            <input type="linkedin" class="form-control" id="inputLinkedin" [(ngModel)]="usuarioNuevo.usr_url_link" name="inputLinkedin">
-          </div>
-        </div>
+
+
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar" (click)="agregarUsuario()">GUARDAR</button>
+          <button type="submit" class="btn btn-primary btn-guardar" (click)="guardarInformacionAcademica()">GUARDAR</button>
         </div>
       </form>
     </div>
@@ -88,4 +82,3 @@
 
 </body>
 </html>
-<router-outlet></router-outlet>

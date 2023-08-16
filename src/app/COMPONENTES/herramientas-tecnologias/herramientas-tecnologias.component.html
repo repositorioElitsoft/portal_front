@@ -1,1 +1,75 @@
-<p>herramientas-tecnologias works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herramientas y Tecnologias</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<link rel="stylesheet" href="\herramientas-tecnologias.component.css">
+<body>
+  <div class="container">
+    <div class="row">
+      <!-- Menú -->
+      <div class="col-md-3">
+        <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio1" (change)="onRadio1Change()" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="btnradio1">Datos Personales</label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio2" (change)="onRadio2Change()" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="btnradio2">Herramientas y Tecnologias</label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio3" (change)="onRadio3Change()" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="btnradio3">Información Academica</label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio4" (change)="onRadio4Change()" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="btnradio4">Información Laboral</label>
+
+          <input type="radio" class="btn-check" name="btnradio" id="btnradio5" (change)="onRadio5Change()" autocomplete="off">
+          <label class="btn btn-outline-secondary" for="btnradio5">Cargo</label>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="col-md-9">
+        <h2>Herramientas y Tecnologias</h2>
+        <form class="form-container">
+          <div class="combobox">
+            <label for="categoria">Categoría:</label>
+            <select class="form-control" id="categoria" [(ngModel)]="selectedCategoriaId" (change)="obtenerProductos()" name="categoria">
+              <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</option>
+            </select>
+          </div>
+          <div class="combobox">
+            <label for="producto">Producto:</label>
+            <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto">
+              <option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
+            </select>
+          </div>
+          <div class="combobox">
+            <label for="version" style="width: 112px;">Versión Utilizada:</label>
+            <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version">
+          </div>
+          <div class="combobox">
+            <label for="certificado">Certificado:</label>
+            <select class="form-control" id="certificado" [(ngModel)]="selectedCertificadoId" name="certificado">
+              <option *ngFor="let certificado of certificados" [value]="certificado.cert_id">{{ certificado.cert }}</option>
+            </select>
+          </div>
+          <div class="combobox">
+            <label for="nivel">Nivel:</label>
+            <select class="form-control" id="nivel" [(ngModel)]="selectedNivelId" name="nivel">
+              <option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</option>
+            </select>
+          </div>
+          <div class="combobox">
+            <label for="expLaboral" style="width: 175px;">Años de Experiencia Laboral:</label>
+            <input type="text" class="form-control" id="expLaboral" [(ngModel)]="herramienta.herr_usr_anos_exp" name="expLaboral">
+          </div>
+          <button class="btn btn-primary" style="margin-top: 300px;" (click)="guardarDatos()">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
