@@ -73,6 +73,7 @@ export class InformacionLaboralComponent implements OnInit {
         if (typeof usr_id === 'number') {
           this.obtenerDatosUsuario(usr_id);
           this.cargarHerramientasConProductos(usr_id);
+          console.log(this.cargarHerramientasConProductos);
 
         }
       }
