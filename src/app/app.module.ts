@@ -29,11 +29,7 @@ import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario
     FormsModule,
     HttpClientModule,
     ToastrModule.forRoot({
-
-
-
       positionClass: 'toast-top-center'
-
     }),
   ],
   providers: [],
