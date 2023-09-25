@@ -22,6 +22,11 @@ import { WelcomeReclutadorComponent } from './COMPONENTES/reclutador/welcome-rec
 import { ProfileRComponent } from './COMPONENTES/reclutador/profile-r/profile-r.component';
 import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r/view-usuarios-r.component';
 import { ViewPerfilUsuarioRComponent } from './COMPONENTES/reclutador/view-perfil-usuario-r/view-perfil-usuario-r.component';
+import { DatosPersonalesComponent } from './COMPONENTES/datos-personales/datos-personales.component';
+import { HerramientasTecnologiasComponent } from './COMPONENTES/herramientas-tecnologias/herramientas-tecnologias.component';
+import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academica/informacion-academica.component';
+import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
+import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
 
 
 const routes: Routes = [
@@ -29,6 +34,12 @@ const routes: Routes = [
   {path:'', redirectTo:'registrar', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
+  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
+  {path:'datos_personales', component:DatosPersonalesComponent},
+  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
+  {path:'informacion-academica', component:InformacionAcademicaComponent},
+  {path:'informacion-laboral', component:InformacionLaboralComponent},
+  {path:'cargo-usuario', component:CargoUsuarioComponent},
 
   {
     path:'admin',
@@ -120,27 +131,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
-
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DatosPersonalesComponent } from './COMPONENTES/datos-personales/datos-personales.component';
-import { HerramientasTecnologiasComponent } from './COMPONENTES/herramientas-tecnologias/herramientas-tecnologias.component';
-import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academica/informacion-academica.component';
-import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
-import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
-
-const routes: Routes = [
-  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
-  {path:'datos_personales', component:DatosPersonalesComponent},
-  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
-  {path:'informacion-academica', component:InformacionAcademicaComponent},
-  {path:'informacion-laboral', component:InformacionLaboralComponent},
-  {path:'cargo-usuario', component:CargoUsuarioComponent}
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+export class AppRoutingModule {}
