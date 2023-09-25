@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el ReactiveFormsModule
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
@@ -28,7 +27,13 @@ import { WelcomeReclutadorComponent } from './COMPONENTES/reclutador/welcome-rec
 import { ProfileRComponent } from './COMPONENTES/reclutador/profile-r/profile-r.component';
 import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r/view-usuarios-r.component';
 import { ViewPerfilUsuarioRComponent } from './COMPONENTES/reclutador/view-perfil-usuario-r/view-perfil-usuario-r.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatosPersonalesComponent } from './COMPONENTES/datos-personales/datos-personales.component';
+import { HerramientasTecnologiasComponent } from './COMPONENTES/herramientas-tecnologias/herramientas-tecnologias.component';
+import { ToastrModule } from 'ngx-toastr';
+import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
+import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academica/informacion-academica.component';
+import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
 
 @NgModule({
   declarations: [
@@ -55,15 +60,25 @@ import { ViewPerfilUsuarioRComponent } from './COMPONENTES/reclutador/view-perfi
     WelcomeReclutadorComponent,
     ProfileRComponent,
     ViewUsuariosRComponent,
-    ViewPerfilUsuarioRComponent
-    
+    ViewPerfilUsuarioRComponent,    
+    DatosPersonalesComponent,
+    HerramientasTecnologiasComponent,
+    InformacionLaboralComponent,
+    InformacionAcademicaComponent,
+    CargoUsuarioComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule // Agrega el ReactiveFormsModule a los imports del módulo
+    ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-center'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]
