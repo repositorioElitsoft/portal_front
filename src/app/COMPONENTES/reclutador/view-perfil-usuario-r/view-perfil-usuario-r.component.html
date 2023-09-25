@@ -1,0 +1,49 @@
+<p class="admin-panel-text">Panel de Reclutador</p>
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card">
+          <div class="card-header">
+            <h4>Perfil de Usuario</h4>
+          </div>
+          <div class="card-body">
+            <div class="user-profile">
+              <div class="profile-item">
+                <label>Nombre:</label>
+                <p>{{ usuario.usr_nom }}</p>
+              </div>
+              <div class="profile-item">
+                <label>Apellidos:</label>
+                <p>{{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</p>
+              </div>
+              <div class="profile-item">
+                <label>RUT:</label>
+                <p>{{ usuario.usr_rut }}</p>
+              </div>
+              <div class="profile-item">
+                <label>Correo Electrónico:</label>
+                <p>{{ usuario.email }}</p>
+              </div>
+              <div class="profile-item">
+                <label>Teléfono:</label>
+                <p>{{ usuario.usr_tel }}</p>
+              </div>
+              <div class="profile-item">
+                <label>URL de LinkedIn:</label>
+                <p>{{ usuario.usr_url_link }}</p>
+              </div>
+              <div class="profile-item">
+                <label>Rol:</label>
+                <p>{{ rol }}</p>
+              </div>
+              <!-- Agrega más campos del perfil según tu entidad Usuario -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-secondary" (click)="regresar()">Regresar</button>
+      </div>
+    </div>
+ </div>
+  

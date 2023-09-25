@@ -1,0 +1,25 @@
+.user-profile {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-item {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .profile-item label {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .profile-item p {
+    margin: 0;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }

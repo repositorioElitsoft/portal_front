@@ -1,0 +1,59 @@
+<router-outlet></router-outlet>
+<nav class="navbar navbar-expand navbar-light bg-light">
+    <div class="container">
+      <ul class="navbar-nav ml-auto"> <!-- Modificamos ml-auto aquí -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container mt-5">
+    <!-- Aquí sigue el formulario de registro -->
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3>Registro</h3>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+                    <!-- Campos del formulario -->
+                    <div class="form-group">
+                      <label for="email">Correo electrónico:</label>
+                      <input type="email" class="form-control" id="email" formControlName="email" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Contraseña:</label>
+                      <input type="password" class="form-control" id="usr_pass" formControlName="usr_pass" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="confirmPassword">Confirmar contraseña:</label>
+                      <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" required>
+                    </div>
+                    <!-- Botón de registro -->
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                  </form>
+                  <!-- Mostrar mensaje de éxito si el registro fue exitoso -->
+                 <div *ngIf="registroExitoso" class="alert alert-success mt-3">
+                  Registro exitoso. Ahora puedes iniciar sesión.
+                 </div>
+
+                 <!-- Mostrar mensaje de error si el registro falló -->
+                 <div *ngIf="registroFallido" class="alert alert-danger mt-3">
+                   {{ mensajeError }}
+                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+
+  
+  
+  

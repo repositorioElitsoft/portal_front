@@ -1,0 +1,30 @@
+<p class="admin-panel-text">Panel de Administrador</p>
+<div class="categorias-container">
+    <h2>Categorías Disponibles</h2>
+    <div
+        class="categoria-item d-flex justify-content-between align-items-center"
+        *ngFor="let categoria of categorias"
+      >
+        <div>
+          <h3>{{ categoria.cat_exam_titl }}</h3>
+          <p>{{ categoria.cat_exam_desc }}</p>
+        </div>
+        <div>
+          <button [routerLink] = "'/admin/actualizar-categoria/'+categoria.cat_exam_id" class="btn btn-primary ml-2">Modificar</button>
+          <button class="btn btn-danger" (click)="eliminarCategoria(categoria.cat_exam_id)">Eliminar</button>
+         
+        </div>
+      </div>
+      
+
+        <!-- boton agregar categoria -->
+        <button
+          routerLink="/admin/add-categoria"
+          class="btn btn-primary"
+        >
+          Agregar categoría
+        </button>
+    
+
+</div>
+  

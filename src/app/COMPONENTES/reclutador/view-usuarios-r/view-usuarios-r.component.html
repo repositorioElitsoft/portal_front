@@ -1,0 +1,33 @@
+<p class="admin-panel-text">Panel de Reclutador</p>
+<div class="container mt-4">
+    <h1>Lista de Usuarios</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellidos</th>
+          <th>RUT</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usuarios">
+          <td>{{ usuario.usr_nom }}</td>
+          <td>{{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</td>
+          <td>{{ usuario.usr_rut }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>
+            
+            <button class="btn btn-primary" [routerLink]="['/reclutador/view-perfil-usuario-r', usuario.email]">Ver detalles del perfil</button>
+            <button class="btn btn-primary" >Ver estadisticas</button>
+            
+            
+
+           
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+

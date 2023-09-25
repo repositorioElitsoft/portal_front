@@ -1,0 +1,41 @@
+<p>actualizar-examen works!</p>
+<div class="container mt-4">
+    <h2>Actualizar Examen</h2>
+  
+    <div class="card">
+      <div class="card-body">
+        <form (ngSubmit)="actualizarDatos()">
+          <div class="mb-3">
+            <label for="exam_titl" class="form-label">Título del Examen</label>
+            <input type="text" class="form-control" id="exam_titl" [(ngModel)]="examen.exam_titl" name="exam_titl" required>
+          </div>
+          <div class="mb-3">
+            <label for="exam_desc" class="form-label">Descripción del Examen</label>
+            <textarea class="form-control" id="exam_desc" [(ngModel)]="examen.exam_desc" name="exam_desc" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="exam_ptos_max" class="form-label">Puntos Máximos</label>
+            <input type="number" class="form-control" id="exam_ptos_max" [(ngModel)]="examen.exam_ptos_max" name="exam_ptos_max" required>
+          </div>
+          <div class="mb-3">
+            <label for="exam_n_preg" class="form-label">Número de Preguntas</label>
+            <input type="number" class="form-control" id="exam_n_preg" [(ngModel)]="examen.exam_n_preg" name="exam_n_preg" required>
+          </div>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <select class="form-control" id="categoria" [(ngModel)]="examen.categoria.cat_exam_id" name="categoria" required>
+              <option value="" disabled selected>Seleccione una categoría</option>
+              <option *ngFor="let categoria of categorias" [value]="categoria.cat_exam_id">{{ categoria.cat_exam_titl }}</option>
+            </select>
+          </div>
+          <div class="form-check mb-3">
+            <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="examen.activo" name="activo">
+            <label class="form-check-label" for="activo">Activo</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Actualizar Examen</button>
+          <button type="button" class="btn btn-secondary ml-2" (click)="cancelar()">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

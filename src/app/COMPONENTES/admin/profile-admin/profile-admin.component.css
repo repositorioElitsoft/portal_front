@@ -1,0 +1,18 @@
+
+
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
+    border: 2px solid orange;
+    background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+  }
+  
+  .profile-details {
+    padding: 5px;
+    
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%; /* Ajustar el ancho según sea necesario */
+  }

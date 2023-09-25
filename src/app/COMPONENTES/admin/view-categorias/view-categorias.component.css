@@ -1,0 +1,39 @@
+
+.categorias-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Cambia a "flex-start" para alinear contenido en la parte superior */
+    flex-direction: column; /* Agrega dirección de columna para que los elementos estén uno encima del otro */
+    min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
+    border: 2px solid orange;
+    background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+  }
+
+ 
+  .categoria-item {
+  background-color: #fff;
+  padding: 5px;
+  width: 80%; /* Ajustar el ancho según sea necesario */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top: 0; /* Agrega margen superior de 0 para separar del borde superior */
+  }
+
+  .btn-primary{
+    background-color: orange;
+    border-color: orange;
+  }
+
+  
+  
+  .btn-outline-primary{
+    color:rgb(0, 0, 0);
+    border-color: orange;
+  }
+

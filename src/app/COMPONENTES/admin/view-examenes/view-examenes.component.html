@@ -1,0 +1,27 @@
+<p class="admin-panel-text">Panel de Administrador</p>
+<div class="container mt-4">
+    <h2>Lista de Exámenes</h2>
+  
+    <div *ngFor="let e of examenes" class="card mb-3">
+      <div class="card-header">
+        <h5 class="card-title">{{ e.exam_titl }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{ e.exam_desc }}</h6>
+      </div>
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">{{ e.exam_desc }}</h6>
+        <p class="card-text">Número de preguntas: {{ e.exam_n_preg }}</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" [routerLink]="'/admin/view-examen-preguntas/' + e.exam_id + '/' + e.exam_titl">Preguntas</button>
+        <button class="btn btn-outline-primary ml-2">Puntos máximos {{ e.exam_ptos_max }}</button>
+        <button [routerLink]="'/admin/actualizar-examen/'+e.exam_id" class="btn btn-primary ml-2">Actualizar</button>
+        <button class="btn btn-danger ml-2" (click)="eliminarExamen(e.exam_id)">Eliminar</button>
+      </div> 
+    </div>
+    
+  
+    <div class="container text-center mt-4">
+      <button routerLink="/admin/add-examen" class="btn btn-primary">Agregar Exámen</button>
+    </div>
+  </div>
+  
