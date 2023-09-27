@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { Niveles } from '../interface/niveles.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,3 @@ export class NivelService {
   }
 
 }
-
-export interface Niveles {
-  nvl_id?:number
-  nvl:string
-}
-

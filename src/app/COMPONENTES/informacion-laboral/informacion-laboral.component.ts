@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Laboral, LaboralService } from 'src/app/SERVICE/laboral.service';
-import { Usuario, UsuarioService } from 'src/app/SERVICE/usuario.service';
-import { HerramientasService, Herramientas } from 'src/app/SERVICE/herramientas.service';
+import { LaboralService } from 'src/app/service/laboral.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { HerramientasService } from 'src/app/service/herramientas.service';
+import { Usuario } from '../../interface/user.interface'
+import { Herramientas } from 'src/app/interface/herramientas.interface';
+import { Laboral } from 'src/app/interface/laboral.interface';
 
 
 @Component({

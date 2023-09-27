@@ -34,6 +34,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
 import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academica/informacion-academica.component';
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
+import { AppNavbarComponent } from './COMPONENTES/shared/app-navbar/app-navbar.component';
+import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sidebar.component';
+import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +68,10 @@ import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
     InformacionAcademicaComponent,
-    CargoUsuarioComponent
+    CargoUsuarioComponent,
+    AppNavbarComponent,
+    AppSidebarComponent,
+    AppFooterComponent
   ],
   imports: [
     BrowserModule,

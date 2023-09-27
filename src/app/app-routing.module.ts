@@ -121,7 +121,7 @@ const routes: Routes = [
       {
         path:'view-perfil-usuario-r/:email',
         component:ViewPerfilUsuarioRComponent
-      },   
+      }
     ]
   }
 

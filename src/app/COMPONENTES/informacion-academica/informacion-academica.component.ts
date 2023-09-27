@@ -1,7 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Academica, AcademicaService } from 'src/app/SERVICE/academica.service';
-import { Usuario, UsuarioService } from 'src/app/SERVICE/usuario.service';
+import { AcademicaService } from 'src/app/service/academica.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { Usuario } from '../../interface/user.interface'
+import { Academica } from 'src/app/interface/academica.interface';
 
 @Component({
   selector: 'app-informacion-academica',

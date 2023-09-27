@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Producto } from './producto.service';
+import { CategoriaProducto } from '../interface/categoria-prod.interface';
+import { Producto } from '../interface/producto.interface';
 
 
 @Injectable({
@@ -23,10 +24,4 @@ export class CategoriaProductoService {
     const url = `${this.url}${categoriaId}/productos`;
     return this.http.get<Producto[]>(url);
   }
-}
-
-export interface CategoriaProducto{
-  cat_prod_id:number,
-  cat_prod_nom:string
-
 }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { Pais } from '../interface/pais.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,9 +23,4 @@ export class PaisService {
     const url = `${this.url}nombre-pais?pais_nom=${pais_nom}`;
     return this.http.get<Pais>(url);
   }
-}
-
-export interface Pais {
-  pais_id?:bigint
-  pais_nom:string
 }
