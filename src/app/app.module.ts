@@ -37,6 +37,8 @@ import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario
 import { AppNavbarComponent } from './COMPONENTES/shared/app-navbar/app-navbar.component';
 import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sidebar.component';
 import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
+import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
+import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.c
     CargoUsuarioComponent,
     AppNavbarComponent,
     AppSidebarComponent,
-    AppFooterComponent
+    AppFooterComponent,
+    SidebarUserComponent,
+    TableHerramientasComponent
   ],
   imports: [
     BrowserModule,

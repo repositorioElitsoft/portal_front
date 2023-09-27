@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { CertificacionService } from 'src/app/service/certificacion.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
@@ -13,13 +14,12 @@ import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Niveles } from 'src/app/interface/niveles.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 
-
 @Component({
-  selector: 'app-herramientas-tecnologias',
-  templateUrl: './herramientas-tecnologias.component.html',
-  styleUrls: ['./herramientas-tecnologias.component.css']
+  selector: 'app-table-herramientas',
+  templateUrl: './table-herramientas.component.html',
+  styleUrls: ['./table-herramientas.component.css']
 })
-export class HerramientasTecnologiasComponent implements OnInit {
+export class TableHerramientasComponent implements OnInit {
 
   herramienta: Herramientas = {
     herr_usr_anos_exp: '',
@@ -42,17 +42,16 @@ export class HerramientasTecnologiasComponent implements OnInit {
             pais_nom: '' } // Asegúrate de tener una instancia de Pais aquí
   };
 
-
   selectedCategoriaId: number | undefined;
   selectedProductoId: number | undefined;
   selectedCertificadoId: number | undefined;
   selectedNivelId: number | undefined;
 
-
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
   certificados: Certificacion[] = [];
   niveles: Niveles[] = [];
+  public rows: any[] = [];
 
   @ViewChild('btnradio1', { static: true }) btnradio1!: ElementRef<HTMLInputElement>;
   @ViewChild('btnradio2', { static: true }) btnradio2!: ElementRef<HTMLInputElement>;
@@ -60,97 +59,99 @@ export class HerramientasTecnologiasComponent implements OnInit {
   @ViewChild('btnradio4', { static: true }) btnradio4!: ElementRef<HTMLInputElement>;
   @ViewChild('btnradio5', { static: true }) btnradio5!: ElementRef<HTMLInputElement>;
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private herramientasService: HerramientasService,
     private categoriaProductoService: CategoriaProductoService,
     private certificacionService: CertificacionService,
     private nivelService: NivelService,
     private productoService: ProductoService,
     private route: ActivatedRoute,
-    private usuarioService:UsuarioService) { }
+    private usuarioService:UsuarioService
+  ){}
 
-    ngOnInit(): void {
-      this.route.queryParams.subscribe(params => {
-        const usr_id = params['usr_id'];
-        console.log(usr_id)
-        this.usuario.usr_id = usr_id
-        if (usr_id) {
-          this.herramienta.usr_id = usr_id;
-          if (typeof usr_id === 'number') { // Verificar si usr_id es un número
-            this.obtenerDatosUsuario(usr_id);
-          }
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      const usr_id = params['usr_id'];
+      console.log(usr_id)
+      this.usuario.usr_id = usr_id
+      if (usr_id) {
+        this.herramienta.usr_id = usr_id;
+        if (typeof usr_id === 'number') { // Verificar si usr_id es un número
+          this.obtenerDatosUsuario(usr_id);
         }
-        this.obtenerCategorias();
-        this.obtenerProductos();
-        this.obtenerCertificaciones();
-        this.obtenerNiveles();
-      });
-    }
-
-    obtenerDatosUsuario(usuarioId: number) {
-      this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-        (usuario: Usuario) => {
-          this.usuario = usuario; // Almacena los datos del usuario
-        },
-        (error) => {
-          console.log('Error al obtener los datos del usuario:', error);
-        }
-      );
-    }
-
-
-    obtenerCategorias() {
-      this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-        (data: CategoriaProducto[]) => {
-          this.categorias = data;
-        },
-        (error) => {
-          console.log('Error al obtener categorías:', error);
-        }
-      );
-    }
-
-    obtenerProductos() {
-      if (!this.selectedCategoriaId) {
-        // Si no hay categoría seleccionada, no se realiza la llamada
-        this.productos = []; // Limpiamos el arreglo de productos
-        return;
       }
+      this.obtenerCategorias();
+      this.obtenerProductos();
+      this.obtenerCertificaciones();
+      this.obtenerNiveles();
+    });
+  }
 
-      this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
-        (data: Producto[]) => {
-          this.productos = data;
-          console.log('Productos cargados:', this.productos);
-        },
-        (error) => {
-          console.log('Error al obtener productos:', error);
-        }
-      );
+  obtenerDatosUsuario(usuarioId: number) {
+    this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
+      (usuario: Usuario) => {
+        this.usuario = usuario; // Almacena los datos del usuario
+      },
+      (error) => {
+        console.log('Error al obtener los datos del usuario:', error);
+      }
+    );
+  }
+
+
+  obtenerCategorias() {
+    this.categoriaProductoService.getCategoriasDisponibles().subscribe(
+      (data: CategoriaProducto[]) => {
+        this.categorias = data;
+      },
+      (error) => {
+        console.log('Error al obtener categorías:', error);
+      }
+    );
+  }
+
+  obtenerProductos() {
+    if (!this.selectedCategoriaId) {
+      // Si no hay categoría seleccionada, no se realiza la llamada
+      this.productos = []; // Limpiamos el arreglo de productos
+      return;
     }
 
-    obtenerCertificaciones() {
-      this.certificacionService.obtenerTodosLosCertificados().subscribe(
-        (data: Certificacion[]) => {
-          this.certificados = data;
-          console.log('Certificaciones cargadas:', this.certificados);
-        },
-        (error) => {
-          console.log('Error al obtener certificaciones:', error);
-        }
-      );
-    }
+    this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
+      (data: Producto[]) => {
+        this.productos = data;
+        console.log('Productos cargados:', this.productos);
+      },
+      (error) => {
+        console.log('Error al obtener productos:', error);
+      }
+    );
+  }
 
-    obtenerNiveles() {
-      this.nivelService.listarNiveles().subscribe(
-        (data: Niveles[]) => {
-          this.niveles = data;
-          console.log('Niveles cargados:', this.niveles);
-        },
-        (error) => {
-          console.log('Error al obtener niveles:', error);
-        }
-      );
-    }
+  obtenerCertificaciones() {
+    this.certificacionService.obtenerTodosLosCertificados().subscribe(
+      (data: Certificacion[]) => {
+        this.certificados = data;
+        console.log('Certificaciones cargadas:', this.certificados);
+      },
+      (error) => {
+        console.log('Error al obtener certificaciones:', error);
+      }
+    );
+  }
+
+  obtenerNiveles() {
+    this.nivelService.listarNiveles().subscribe(
+      (data: Niveles[]) => {
+        this.niveles = data;
+        console.log('Niveles cargados:', this.niveles);
+      },
+      (error) => {
+        console.log('Error al obtener niveles:', error);
+      }
+    );
+  }
 
   navigateToRoute(route: string) {
     // Navegamos a la ruta proporcionada
@@ -226,6 +227,8 @@ export class HerramientasTecnologiasComponent implements OnInit {
       }
     );
   }
+
+  addRow() {
+    this.rows.push({});
+  }
 }
-
-
