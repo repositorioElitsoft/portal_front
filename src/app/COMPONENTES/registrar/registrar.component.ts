@@ -3,7 +3,8 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 
 import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
 import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { Register } from 'src/app/interface/register-interface';
 
 @Component({
   selector: 'app-registrar',
@@ -23,13 +24,27 @@ export class RegistrarComponent {
 
   onSubmit() {
     if (this.registroForm.valid) {
-      const email = this.registroForm.get('email');
-      const usr_pass = this.registroForm.get('usr_pass');
-      
-      this.usuarioService.registrarUsuario({email, usr_pass}).subscribe(
-        () => this.handleSuccess(),
-        () => this.handleError()
+      // Desestructuramos el objeto this.registroForm para guardarlos en las variables "email", "usr_pass" y le decimos que seran del tipo Register(Interface)
+      const { email, usr_pass } = this.registroForm.value as Register;      
+
+      this.usuarioService.registrarUsuario({ email, usr_pass }).subscribe(
+        () => this.popUp(
+          'success',
+          'Registro Exitoso',
+          'Hemos enviado un correo de confirmacion.'
+        ),
+        () => this.popUp(
+          'error',
+          'Error al registrar el usuario',
+          'Hubo un error al registrar el usuario. Por favor, inténtalo más tarde.'
+        )
       );
+    } else {
+      this.popUp(
+        'error',
+        'Error en el formulario',
+        'Hubo al enviar el formulario. Por favor, revisa los campos.'
+      )
     }
   }
 
@@ -45,20 +60,11 @@ export class RegistrarComponent {
     return pass === confirmPass ? null : { passwordMismatch: true };
   };
 
-  private handleSuccess() {
+  private popUp(icon: SweetAlertIcon, title: string, text: string) {
     Swal.fire({
-      icon: 'success',
-      title: 'Registro exitoso',
-      text: 'Hemos enviado un correo de confirmacion.',
-    });
-  }
-
-  private handleError() {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error al registrar el usuario',
-      text: 'Hubo un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+      icon,
+      title,
+      text,
     });
   }
 }
-

@@ -12,7 +12,7 @@ export class UsuarioService {
   constructor(private HttpClient: HttpClient ) { }
 
   public registrarUsuario(user:any){
-    return this.HttpClient.post(`${this.baseUrl}/usuarios/`, user)
+    return this.HttpClient.post<any>(`${this.baseUrl}/usuarios/`, user)
   }
 
   public iniciarSesion(datosInicioSesion: any) {
@@ -78,7 +78,4 @@ export class UsuarioService {
     let user = this.getUser();
     return user.authorities[0].authority;
   }
-
-
 }
-
