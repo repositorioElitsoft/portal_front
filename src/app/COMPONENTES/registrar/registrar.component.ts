@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+
 import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
 import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-registrar',
@@ -10,42 +12,53 @@ import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa e
 })
 export class RegistrarComponent {
   registroForm: FormGroup;
-  registroExitoso: boolean = false;
-  registroFallido: boolean = false;
-  mensajeError: string = '';
 
   constructor(private usuarioService: UsuarioService){
     this.registroForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(3)]),
       confirmPassword: new FormControl('', [Validators.required])
-    });
+    }, { validators: this.passwordMatchValidator });  
   }
 
   onSubmit() {
     if (this.registroForm.valid) {
-      const email = this.registroForm.get('email')?.value;
-      const usr_pass = this.registroForm.get('usr_pass')?.value;
-  
-      this.usuarioService.registrarUsuario({ email, usr_pass }).subscribe(
-        (response) => {
-          // Si el registro es exitoso, muestra un mensaje de éxito
-          this.registroExitoso = true;
-          this.registroFallido = false;
-        },
-        (error) => {
-          // Si el registro falla, muestra un mensaje de error
-          this.registroExitoso = false;
-          this.registroFallido = true;
-          this.mensajeError = 'Error al registrar el usuario';
-        }
+      const email = this.registroForm.get('email');
+      const usr_pass = this.registroForm.get('usr_pass');
+      
+      this.usuarioService.registrarUsuario({email, usr_pass}).subscribe(
+        () => this.handleSuccess(),
+        () => this.handleError()
       );
-    } else {
-      // Si el formulario no es válido, muestra un mensaje de error
-      this.registroExitoso = false;
-      this.registroFallido = true;
-      this.mensajeError = 'Formulario inválido, verifica los campos';
     }
+  }
+
+  private passwordMatchValidator (control: AbstractControl): ValidationErrors | null {
+    const pass = control.get('usr_pass')?.value;
+    const confirmPass = control.get('confirmPassword')?.value;
+
+    const isMismatch = pass !== confirmPass;
+    console.log('Contraseña:', pass);
+    console.log('Confirmar contraseña:', confirmPass);
+    console.log('Contraseña coincide:', !isMismatch);
+
+    return pass === confirmPass ? null : { passwordMismatch: true };
+  };
+
+  private handleSuccess() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Registro exitoso',
+      text: 'Hemos enviado un correo de confirmacion.',
+    });
+  }
+
+  private handleError() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error al registrar el usuario',
+      text: 'Hubo un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+    });
   }
 }
 
