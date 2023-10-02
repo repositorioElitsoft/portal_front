@@ -1,37 +1,42 @@
+/* Estilos para la franja naranja en pantallas más grandes (por defecto) */
 .container-datos-personales {
   display: flex;
   align-items: center;
   font-family: 'Meera Inimai', sans-serif;
   padding-top: 10px;
   padding-bottom: 10px;
-
   font-size: 12px;
   margin-top: 100px;
   margin-left: 30px;
   margin-right: 500px;
   border: 2px solid orange;
+  border-radius: 10px;
 }
 
 .btn {
   font-size: 15px;
-
 }
 
-.div-menu{
+.div-menu {
   margin: 50px;
 }
 
-.form{
+.form {
   width: fit-content;
 }
 
-.btn-guardar{
+.btn-guardar {
   background-color: #F76805;
   border-color: black;
-
 }
 
-
-
-
-
+/* Media Query para pantallas más pequeñas (resolución móvil) */
+@media (max-width: 768px) {
+  .container-datos-personales {
+    margin-right: 30px; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    padding-right: 100px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    align-items: center;
+  }
+}
