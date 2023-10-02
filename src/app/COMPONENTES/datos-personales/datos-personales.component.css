@@ -2,43 +2,48 @@
 .container-datos-personales {
   display: flex;
   align-items: center;
+  justify-content: center;
   font-family: 'Meera Inimai', sans-serif;
   padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 4vw;
   font-size: 12px;
- padding: 5%;
- margin-top: 50px;
+  margin-inline: 28vw;
+  padding: 5%;
+  margin-top: 50px;
   border: 2px solid orange;
   border-radius: 10px;
 }
 
-.btn {
-  font-size: 15px;
-}
 
-.div-menu {
-  margin: 50px;
-}
-
-.form {
-  width: fit-content;
-}
 
 .btn-guardar {
   background-color: #F76805;
-  border-color: black;
+  border: none;
+  font-weight: 600;
+}
+
+.form-control{
+  max-width: 260px;
 }
 
 
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .container-datos-personales {
     margin-right: 30px; /* Cambia el margen derecho para adaptarse al espacio disponible */
-    padding-right: 100px;
     padding-top: 5%;
     padding-bottom: 5%;
-    align-items: center;
+    display: flex;
+    font-family: 'Meera Inimai', sans-serif;
+    padding-top: 10px;
+    font-size: 12px;
+    padding: 5%;
+    margin-top: 50px;
+    border: 2px solid orange;
+    border-radius: 10px;
+    margin-inline: 1vw;
   }
+
+  
 }
+

@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaisService } from 'src/app/service/pais.service';
 import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import * as intlTelInput from 'intl-tel-input';
 
 @Component({
   selector: 'app-datos-personales',
@@ -61,6 +62,17 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const inputElement = document.getElementById("inputTelefono");
+    console.log(inputElement)
+    if(inputElement){
+      intlTelInput(inputElement,{
+        initialCountry: "cl",
+        separateDialCode: true,
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+        placeholderNumberType: "UNKNOWN"
+      })
+    }
+
     this.paisService.obtenerPaises().subscribe(
       (data: any[]) => {
         this.countries = data;
