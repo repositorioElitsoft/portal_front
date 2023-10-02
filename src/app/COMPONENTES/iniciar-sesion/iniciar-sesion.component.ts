@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
 import { LoginService } from 'src/app/service/login.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -21,7 +22,8 @@ export class IniciarSesionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService,
-    private usuarioService: UsuarioService) { 
+    private usuarioService: UsuarioService,
+    private cookieService: CookieService) { 
       this.loginForm = this.formBuilder.group({
         email: ['', Validators.required],
         password: ['', Validators.required]
@@ -37,8 +39,8 @@ export class IniciarSesionComponent implements OnInit {
     }
 
     this.loginService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
-      (r) => {
-        console.log(r);
+      (token) => {
+        this.cookieService.set('token', token.Authorization)
         this.router.navigate(['/datos_personales']);
       },
       (e) => {
