@@ -8,7 +8,7 @@ export class AuthService {
   private currentUser: any = null;
 
   constructor( private cookieService: CookieService) {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     this.currentUser = token ? { token } : null;
   }
   
