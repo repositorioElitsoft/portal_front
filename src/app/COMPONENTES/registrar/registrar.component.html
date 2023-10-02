@@ -23,7 +23,7 @@
                     <!-- Campos del formulario -->
                     <div class="form-group">
                       <label for="email">Correo electrónico:</label>
-                      <input type="email" class="form-control" id="email" formControlName="email" required [ngClass]="{'is-invalid': registroForm.get('email')?.invalid && registroForm.get('email')?.touched}">
+                      <input type="email" class="form-control" id="email" formControlName="usr_email" required [ngClass]="{'is-invalid': registroForm.get('email')?.invalid && registroForm.get('email')?.touched}">
                       <div *ngIf="registroForm.get('email')?.invalid && registroForm.get('email')?.touched" class="invalid-feedback">
                         Correo electrónico inválido.
                       </div>

@@ -119,6 +119,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
 
       this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
         (data: Producto[]) => {
+          console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
           console.log('Productos cargados:', this.productos);
         },

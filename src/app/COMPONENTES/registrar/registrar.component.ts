@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
 import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { Register } from 'src/app/interface/register-interface';
+import { Register } from 'src/app/interface/register.interface';
 
 @Component({
   selector: 'app-registrar',
@@ -14,9 +15,9 @@ import { Register } from 'src/app/interface/register-interface';
 export class RegistrarComponent {
   registroForm: FormGroup;
 
-  constructor(private usuarioService: UsuarioService){
+  constructor(private usuarioService: UsuarioService, private router: Router){
     this.registroForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      usr_email: new FormControl('', [Validators.required, Validators.email]),
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(3)]),
       confirmPassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator });  
@@ -24,15 +25,19 @@ export class RegistrarComponent {
 
   onSubmit() {
     if (this.registroForm.valid) {
-      // Desestructuramos el objeto this.registroForm para guardarlos en las variables "email", "usr_pass" y le decimos que seran del tipo Register(Interface)
-      const { email, usr_pass } = this.registroForm.value as Register;      
+      const registerData: Register = {
+        usr_email: this.registroForm.get('usr_email')?.value,
+        usr_pass: this.registroForm.get('usr_pass')?.value
+      }
 
-      this.usuarioService.registrarUsuario({ email, usr_pass }).subscribe(
-        () => this.popUp(
+      this.usuarioService.registrarUsuario(registerData).subscribe(
+        () => {
+          this.popUp(
           'success',
           'Registro Exitoso',
-          'Hemos enviado un correo de confirmacion.'
-        ),
+          'Hemos enviado un correo de confirmacion.')
+          this.router.navigate(['/iniciar-sesion'])
+        },
         () => this.popUp(
           'error',
           'Error al registrar el usuario',
