@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Herramientas } from '../interface/herramientas.interface';
+import { HerramientaData } from '../interface/herramienta-data.interface';
 
 
 @Injectable({
@@ -13,8 +14,12 @@ export class HerramientasService {
 
   constructor(private http: HttpClient) { }
 
-  guardarHerramienta(herramienta: Herramientas, usuarioId: number): Observable<Herramientas> {
-    return this.http.post<Herramientas>(`${this.url}?usr_id=${usuarioId}`, herramienta);
+  // guardarHerramienta(herramienta: Herramientas, usuarioId: number): Observable<Herramientas> {
+  //   return this.http.post<Herramientas>(`${this.url}?usr_id=${usuarioId}`, herramienta);
+  // }
+
+  guardarHerramienta(herramienta: HerramientaData[]): Observable<HerramientaData> {
+    return this.http.post<HerramientaData>(this.url, herramienta);
   }
 
   obtenerHerramientaPorId(herramientaId: number): Observable<Herramientas> {
