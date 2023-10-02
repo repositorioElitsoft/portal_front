@@ -86,14 +86,21 @@ export class DatosPersonalesComponent implements OnInit {
     console.log(user);
 
     user.pais = {
-      pais_id: BigInt(this.form.value.pais),
+      pais_id: this.form.value.pais.pais_id,
       pais_nom: ""
     }
 
     console.log(user);
 
-    const res = this.usuarioService.updateUsuario(user)
-    console.log(res)
+    this.usuarioService.updateUsuario(user).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+
     /*
     this.paisService.obtenerPaisPorNombre(this.usuarioNuevo.pais_nom).subscribe(
       (pais: Pais) => {
