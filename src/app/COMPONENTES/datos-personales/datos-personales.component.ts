@@ -21,7 +21,7 @@ export class DatosPersonalesComponent implements OnInit {
 
 
   usuarioNuevo:Usuario={
-    usr_rut: '',
+    usr_rut: '' ,
     usr_nom: '',
     usr_ap_pat: '',
     usr_ap_mat: '',
