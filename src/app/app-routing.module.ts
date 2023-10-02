@@ -27,11 +27,12 @@ import { HerramientasTecnologiasComponent } from './COMPONENTES/herramientas-tec
 import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academica/informacion-academica.component';
 import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 
 const routes: Routes = [
 
-  {path:'', redirectTo:'registrar', pathMatch:'full'},
+  {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
   {path:'', redirectTo:'datos_personales', pathMatch:'full'},
@@ -40,6 +41,18 @@ const routes: Routes = [
   {path:'informacion-academica', component:InformacionAcademicaComponent},
   {path:'informacion-laboral', component:InformacionLaboralComponent},
   {path:'cargo-usuario', component:CargoUsuarioComponent},
+
+  {
+    path: 'user',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'datos_personales',
+        pathMatch: 'full',
+        component: DatosPersonalesComponent
+      }
+    ]
+  },
 
   {
     path:'admin',
@@ -121,7 +134,7 @@ const routes: Routes = [
       {
         path:'view-perfil-usuario-r/:email',
         component:ViewPerfilUsuarioRComponent
-      },   
+      }
     ]
   }
 

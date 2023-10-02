@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CargoUsuario } from '../interface/cargos-usuario.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +23,4 @@ export class CargosUsuarioService {
   listarCargos(): Observable<CargoUsuario[]> {
     return this.http.get<CargoUsuario[]>(`${this.url}listar`);
   }
-}
-
-
-export interface CargoUsuario{
-
-  crg_usr_id?:number,
-  crg_usr_pret:string,
-  usr_id?:number
 }

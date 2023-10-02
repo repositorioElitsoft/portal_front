@@ -1,4 +1,3 @@
-<router-outlet></router-outlet>
 <nav class="navbar navbar-expand navbar-light bg-light">
     <div class="container">
       <ul class="navbar-nav ml-auto"> <!-- Modificamos ml-auto aquí -->
@@ -57,16 +56,6 @@
                 <!-- Botón de registro -->
                 <button type="submit" class="btn btn-primary">Registrar</button>
               </form>
-
-                  <!-- Mostrar mensaje de éxito si el registro fue exitoso -->
-                 <div *ngIf="registroExitoso" class="alert alert-success mt-3">
-                  Registro exitoso. Ahora puedes iniciar sesión.
-                 </div>
-
-                 <!-- Mostrar mensaje de error si el registro falló -->
-                 <div *ngIf="registroFallido" class="alert alert-danger mt-3">
-                   {{ mensajeError }}
-                 </div>
             </div>
           </div>
         </div>

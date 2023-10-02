@@ -1,8 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Usuario, UsuarioService } from 'src/app/SERVICE/usuario.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { Usuario } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Pais, PaisService } from 'src/app/SERVICE/pais.service';
+import { PaisService } from 'src/app/service/pais.service';
+import { Pais } from 'src/app/interface/pais.interface';
 
 @Component({
   selector: 'app-datos-personales',

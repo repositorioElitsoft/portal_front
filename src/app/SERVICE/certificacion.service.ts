@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
+import { Certificacion } from '../interface/certificacion.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,4 @@ export class CertificacionService {
     const url = `${this.url}${nombre}`;
     return this.http.get<Certificacion[]>(url);
   }
-}
-
-export interface Certificacion{
-  cert_id?:number,
-  cert:string
-
 }

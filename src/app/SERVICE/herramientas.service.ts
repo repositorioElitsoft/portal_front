@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Producto } from './producto.service';
+import { Herramientas } from '../interface/herramientas.interface';
 
 
 @Injectable({
@@ -29,17 +29,4 @@ export class HerramientasService {
   listarHerramientas(): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}lista-herramientas`);
   }
-}
-
-export interface Herramientas {
-  herr_usr_id?: number;
-  herr_usr_anos_exp: string;
-  herr_usr_vrs: string;
-  cat_prod_id?: number;
-  prd_id?: number;
-  cert_id?: number;
-  nvl_id?: number;
-  usr_id?: number;
-  prd_nom?: string;
-  producto?: Producto; // Agrega esta línea para definir la propiedad producto
 }

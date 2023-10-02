@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
+
 import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
 import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
+import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { Register } from 'src/app/interface/register.interface';
 
 @Component({
   selector: 'app-registrar',
@@ -10,48 +14,63 @@ import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa e
 })
 export class RegistrarComponent {
   registroForm: FormGroup;
-  registroExitoso: boolean = false;
-  registroFallido: boolean = false;
-  mensajeError: string = '';
 
-  constructor(private usuarioService: UsuarioService){
+  constructor(private usuarioService: UsuarioService, private router: Router){
     this.registroForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(30)]),
+      usr_email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(30)]),
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(5)]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(5)])
-    });
+    }, { validators: this.passwordMatchValidator });
   }
 
 
   onSubmit() {
     if (this.registroForm.valid) {
-      const email = this.registroForm.get('email')?.value;
-      const usr_pass = this.registroForm.get('usr_pass')?.value;
+      const registerData: Register = {
+        usr_email: this.registroForm.get('usr_email')?.value,
+        usr_pass: this.registroForm.get('usr_pass')?.value
+      }
 
-      this.usuarioService.registrarUsuario({ email, usr_pass }).subscribe(
-        (response) => {
-          // Si el registro es exitoso, muestra un mensaje de éxito
-          this.registroExitoso = true;
-          this.registroFallido = false;
+      this.usuarioService.registrarUsuario(registerData).subscribe(
+        () => {
+          this.popUp(
+          'success',
+          'Registro Exitoso',
+          'Hemos enviado un correo de confirmacion.')
+          this.router.navigate(['/iniciar-sesion'])
         },
-        (error) => {
-          // Si el registro falla, muestra un mensaje de error
-          this.registroExitoso = false;
-          this.registroFallido = true;
-          this.mensajeError = 'Error al registrar el usuario';
-        }
+        () => this.popUp(
+          'error',
+          'Error al registrar el usuario',
+          'Hubo un error al registrar el usuario. Por favor, inténtalo más tarde.'
+        )
       );
     } else {
-      // Si el formulario no es válido, muestra un mensaje de error
-      this.registroExitoso = false;
-      this.registroFallido = true;
-      this.mensajeError = 'Formulario inválido, verifica los campos';
+      this.popUp(
+        'error',
+        'Error en el formulario',
+        'Hubo al enviar el formulario. Por favor, revisa los campos.'
+      )
     }
   }
 
+  private passwordMatchValidator (control: AbstractControl): ValidationErrors | null {
+    const pass = control.get('usr_pass')?.value;
+    const confirmPass = control.get('confirmPassword')?.value;
+
+    const isMismatch = pass !== confirmPass;
+    console.log('Contraseña:', pass);
+    console.log('Confirmar contraseña:', confirmPass);
+    console.log('Contraseña coincide:', !isMismatch);
+
+    return pass === confirmPass ? null : { passwordMismatch: true };
+  };
+
+  private popUp(icon: SweetAlertIcon, title: string, text: string) {
+    Swal.fire({
+      icon,
+      title,
+      text,
+    });
+  }
 }
-
-
-
-
-

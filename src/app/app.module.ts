@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-sesion.component';
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
@@ -34,6 +34,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
 import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academica/informacion-academica.component';
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
+import { AppNavbarComponent } from './COMPONENTES/shared/app-navbar/app-navbar.component';
+import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sidebar.component';
+import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
+import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
+import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -65,7 +71,12 @@ import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
     InformacionAcademicaComponent,
-    CargoUsuarioComponent
+    CargoUsuarioComponent,
+    AppNavbarComponent,
+    AppSidebarComponent,
+    AppFooterComponent,
+    SidebarUserComponent,
+    TableHerramientasComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +91,13 @@ import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario
       positionClass: 'toast-top-center'
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

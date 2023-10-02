@@ -1,8 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CargosElitsoft, CargosElitsoftService } from 'src/app/SERVICE/cargos-elitsoft.service';
-import { CargoUsuario, CargosUsuarioService } from 'src/app/SERVICE/cargos-usuario.service';
-import { Usuario, UsuarioService } from 'src/app/SERVICE/usuario.service';
+import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
+import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { Usuario } from 'src/app/interface/user.interface';
+import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 
 @Component({
   selector: 'app-cargo-usuario',

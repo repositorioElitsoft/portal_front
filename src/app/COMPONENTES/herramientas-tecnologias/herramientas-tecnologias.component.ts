@@ -1,11 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriaProducto, CategoriaProductoService } from 'src/app/SERVICE/categoria-producto.service';
-import { Certificacion, CertificacionService } from 'src/app/SERVICE/certificacion.service';
-import { Herramientas, HerramientasService } from 'src/app/SERVICE/herramientas.service';
-import { NivelService, Niveles } from 'src/app/SERVICE/nivel.service';
-import { Producto, ProductoService } from 'src/app/SERVICE/producto.service';
-import { Usuario, UsuarioService } from 'src/app/SERVICE/usuario.service';
+import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
+import { CertificacionService } from 'src/app/service/certificacion.service';
+import { HerramientasService } from 'src/app/service/herramientas.service';
+import { NivelService } from 'src/app/service/nivel.service';
+import { ProductoService } from 'src/app/service/producto.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { Usuario } from 'src/app/interface/user.interface';
+import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { Certificacion } from 'src/app/interface/certificacion.interface';
+import { Herramientas } from 'src/app/interface/herramientas.interface';
+import { Niveles } from 'src/app/interface/niveles.interface';
+import { Producto } from 'src/app/interface/producto.interface';
 
 
 @Component({
@@ -113,6 +119,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
 
       this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
         (data: Producto[]) => {
+          console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
           console.log('Productos cargados:', this.productos);
         },
@@ -220,8 +227,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
       }
     );
   }
-
-
 }
 
 
