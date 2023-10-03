@@ -6,11 +6,13 @@
   font-family: 'Meera Inimai', sans-serif;
   padding-top: 10px;
   font-size: 12px;
-  margin-inline: 28vw;
-  padding: 5%;
-  margin-top: 50px;
+ padding: 5%;
+ margin-top: 5%;
+ margin-left: 20%;
+ margin-right: 20%;
   border: 2px solid orange;
   border-radius: 10px;
+  
 }
 
 
@@ -30,7 +32,9 @@
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 600px) {
   .container-datos-personales {
-    margin-right: 30px; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    margin-left: 5%;
+    padding-right: 100px;
     padding-top: 5%;
     padding-bottom: 5%;
     display: flex;
@@ -44,6 +48,5 @@
     margin-inline: 1vw;
   }
 
-  
 }
 

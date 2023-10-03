@@ -1,6 +1,6 @@
 <p class="admin-panel-text">Panel de Administrador</p>
 <div class="categorias-container">
-    <h2>Categorías Disponibles</h2>
+    <h3 class="categoria-disponible">Categorías Disponibles</h3>
     <div
         class="categoria-item d-flex justify-content-between align-items-center"
         *ngFor="let categoria of categorias"
@@ -20,8 +20,7 @@
         <!-- boton agregar categoria -->
         <button
           routerLink="/admin/add-categoria"
-          class="btn btn-primary"
-        >
+          class="btn btn-primary mt-3">
           Agregar categoría
         </button>
     

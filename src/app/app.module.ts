@@ -40,6 +40,8 @@ import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.c
 import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
 import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
+import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-sidebar2.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     CargoUsuarioComponent,
     AppNavbarComponent,
     AppSidebarComponent,
+    AppSidebar2Component,
     AppFooterComponent,
+    SidebarUserDeskComponent,
     SidebarUserComponent,
     TableHerramientasComponent
   ],
