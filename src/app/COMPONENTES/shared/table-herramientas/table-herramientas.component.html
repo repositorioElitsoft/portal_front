@@ -46,7 +46,7 @@
                   </button>
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button type="button" class="btn btn-success rounded-circle btn-sm" id="addRow" (click)="addRow()">
+                    <button *ngIf="i === 0" type="button" class="btn btn-success rounded-circle btn-sm" id="addRow" (click)="addRow()">
                         <i class="fas fa-plus"></i> +
                     </button>
                 </div>
