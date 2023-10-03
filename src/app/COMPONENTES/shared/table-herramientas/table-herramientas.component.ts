@@ -9,6 +9,7 @@ import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
+import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
   selector: 'app-table-herramientas',
@@ -31,6 +32,7 @@ export class TableHerramientasComponent implements OnInit {
     private herramientasService: HerramientasService,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
+    private notification: NotificationService,
   ){}
 
   ngOnInit(): void {
@@ -101,14 +103,23 @@ export class TableHerramientasComponent implements OnInit {
   }
 
   guardarDatos() {
-
     const herramientas = this.herramientasForm.value.rows;
 
     this.herramientasService.guardarHerramienta(herramientas).subscribe(
       (nuevaHerramienta: HerramientaData) => {
+        this.notification.showNotification(
+          'success',
+          'Datos guardados',
+          'Las herramientas han sido guardadas correctamente.'
+        );
         console.log('Herramienta guardada exitosamente:', herramientas);
       },
       (error) => {
+        this.notification.showNotification(
+          'error',
+          'Error al guardar los datos',
+          'Ha ocurrido un error al guardar los datos, revise los campos y reintente.'
+        );
         console.log('Error al guardar herramienta:', error);
       }
     );
