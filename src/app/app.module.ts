@@ -39,6 +39,8 @@ import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sideba
 import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
 import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
 import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
+import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
+import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-sidebar2.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramien
     CargoUsuarioComponent,
     AppNavbarComponent,
     AppSidebarComponent,
+    AppSidebar2Component,
     AppFooterComponent,
+    SidebarUserDeskComponent,
     SidebarUserComponent,
     TableHerramientasComponent
   ],
