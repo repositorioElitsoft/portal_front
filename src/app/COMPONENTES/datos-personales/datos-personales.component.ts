@@ -57,7 +57,7 @@ export class DatosPersonalesComponent implements OnInit {
       usr_ap_mat: ["",[Validators.required]],
       pais: ["1",[Validators.required]],
       usr_url_link: ["",[]],
-      usr_tel: ["",[Validators.required]],
+      usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
     });
   }
 
@@ -82,7 +82,8 @@ export class DatosPersonalesComponent implements OnInit {
       }
     );
   }
-   
+
+
 
 
   navigateToRoute(route: string) {

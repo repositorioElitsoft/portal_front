@@ -61,7 +61,7 @@
         <div class="row mb-3">
           <label for="inputTelefono" class="col-sm-2 col-form-label">Teléfono:</label>
           <div class="col-sm-10">
-            <input type="tel" class="form-control" id="inputTelefono" formControlName="usr_tel" name="inputTelefono"
+            <input appNumericOnly type="text" class="form-control" id="inputTelefono" formControlName="usr_tel" name="inputTelefono"
             [ngClass]="{'is-invalid': form.get('usr_tel')?.invalid && form.get('usr_tel')?.touched}">
             <br />
             <div *ngIf="form.get('usr_tel')?.hasError('required') && form.get('usr_tel')?.touched" class="invalid-feedback">
@@ -87,7 +87,7 @@
       
         
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar"> Siguiente</button>
+          <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Siguiente</button>
         </div>
 
         

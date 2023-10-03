@@ -9,53 +9,90 @@
 <body>
   <app-sidebar-user></app-sidebar-user>
   <app-sidebar-userdesk></app-sidebar-userdesk>
+  
   <div class="container-datos-personales">
 
-    <div class="div-inputs">
 
-      <form>
+
+
+    <div class="div-inputs" *ngIf="!creationMode" >
+
+      <div *ngFor="let labor of laborales">
+        
+        <div class="row celda-laboral">
+          <div class="col-6 cargo">
+              <p>{{ labor.inf_lab_crg_emp}}</p>
+          </div>
+
+          <div class="col-4 fechas">
+           {{ labor.inf_lab_fec_ini}}
+            {{ labor.inf_lab_fec_fin}}
+          </div>
+          <div class="col-2">
+           <button class="btn btn-warning" (click)="editarLaboral(labor.inf_lab_id)"> 
+            
+            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+              <title>pencil</title>
+              <path d="M0 32l12-4 20-20-8-8-20 20zM4 28l2.016-5.984 4 4zM8 20l12-12 4 4-12 12z"></path>
+              </svg>
+           </button>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="laborales.length === 0">
+        No has definido ninguna experiencia laboral
+      </div>
+      
+
+
+      <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir experiencia laboral</button>
+    </div>
+
+
+
+
+
+
+
+    <div class="div-inputs" *ngIf="creationMode">
+
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
         <div class="row mb-3">
           <label for="inputCargo" class="col-sm-2 col-form-label">Cargo:</label>
           <div class="col-sm-10">
-            <input type="inputCargo" class="form-control" id="inputCargo" [(ngModel)]="laboral.inf_lab_crg_emp" name="inputCargo" >
+            <input type="inputCargo" class="form-control" id="inputCargo" formControlName="inf_lab_crg_emp">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputNomEmp" class="col-sm-2 col-form-label">Nombre Empresa:</label>
           <div class="col-sm-10">
-            <input type="inputNomEmp" class="form-control" id="inputNomEmp" [(ngModel)]="laboral.inf_lab_emp" name="inputNomEmp">
+            <input type="inputNomEmp" class="form-control" id="inputNomEmp" formControlName="inf_lab_emp">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputActRea" class="col-sm-2 col-form-label">Actividades Realizadas:</label>
           <div class="col-sm-10">
-            <input type="inputActRea" class="form-control" id="inputActRea" [(ngModel)]="laboral.inf_lab_act" name="inputActRea">
+            <input type="inputActRea" class="form-control" id="inputActRea" formControlName="inf_lab_act">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechaini" [(ngModel)]="laboral.inf_lab_fec_ini" [min]="minFecha" name="inputFechaini">
+            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="inf_lab_fec_ini">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" [(ngModel)]="laboral.inf_lab_fec_fin" [min]="minFecha" name="inputFechafin">
+            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="inf_lab_fec_fin">
           </div>
         </div>
-        <div class="form-group">
-          <label for="herramienta">Herramienta:</label>
-          <select class="form-control" id="herramienta" [(ngModel)]="herramientas.herr_usr_id" name="productos">
-            <option *ngFor="let herramienta of herramientasA" [value]="herramienta.herr_usr_id">
-              {{ herramienta.prd_nom }}
-            </option>
-          </select>
-        </div>
+   
 
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar"  (click)="guardarLaboral()">GUARDAR</button>
+          <button type="submit" class="btn btn-primary btn-guardar" >GUARDAR</button>
         </div>
       </form>
     </div>

@@ -12,27 +12,42 @@
   <div class="container-datos-personales">
     <div class="div-inputs">
 
-      <form>
-
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
-          <label for="input" class="col-sm-2 col-form-label">RUT:</label>
-          <div class="combobox">
-            <label for="cargosE">Cargos:</label>
-            <select class="form-control" id="cargosE" [(ngModel)]="selectedCargoElitsoft" name="cargosE">
+          <label for="cargosE"  class="col-sm-2 col-form-label">Cargos Elitsoft:</label>
+          <div class="combobox col-sm-10">
+            <select class="form-control" id="cargosE" formControlName="crg_elit_id" name="cargosE">
               <option *ngFor="let cargo of cargosElitsoft" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</option>
             </select>
+            
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputPretension" class="col-sm-2 col-form-label">Pretensión de renta:</label>
           <div class="col-sm-10">
-            <input type="renta" class="form-control" id="inputPretension" [(ngModel)]="cargo.crg_usr_pret" name="inputPretension" placeholder="CLP">
+            <input appNumericOnly type="text" class="form-control" id="inputPretension" formControlName="crg_usr_pret" name="inputPretension" placeholder="CLP"
+            [ngClass]="{'is-invalid': form.get('crg_usr_pret')?.invalid && form.get('crg_usr_pret')?.touched}" >
+            <div *ngIf="form.get('crg_usr_pret')?.hasError('pattern') && form.get('crg_usr_pret')?.touched" class="invalid-feedback">
+              Ingresar solamente valores númericos
+            </div>
           </div>
+      
+        </div>
+        <div class="row mb-3">
+          <label for="inputPretension" class="col-sm-2 col-form-label">Cargo preferente:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="crg_prf" placeholder="Opcional"
+            [ngClass]="{'is-invalid': form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched}" >
+            <div *ngIf="form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched" class="invalid-feedback">
+          
+            </div>
+          </div>
+         
         </div>
 
 
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar" (click)="guardarCargo()">GUARDAR</button>
+          <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar">Guardar</button>
         </div>
       </form>
     </div>

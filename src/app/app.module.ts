@@ -42,9 +42,11 @@ import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramien
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
 import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-sidebar2.component';
+import { NumericOnlyDirective } from './directives/numeric-only.directive';
 
 @NgModule({
   declarations: [
+    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -80,7 +82,8 @@ import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-side
     AppFooterComponent,
     SidebarUserDeskComponent,
     SidebarUserComponent,
-    TableHerramientasComponent
+    TableHerramientasComponent,
+    NumericOnlyDirective
   ],
   imports: [
     BrowserModule,
