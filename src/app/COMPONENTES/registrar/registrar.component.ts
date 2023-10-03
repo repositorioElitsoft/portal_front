@@ -59,9 +59,9 @@ export class RegistrarComponent {
     const confirmPass = control.get('confirmPassword')?.value;
 
     const isMismatch = pass !== confirmPass;
-    console.log('Contraseña:', pass);
-    console.log('Confirmar contraseña:', confirmPass);
-    console.log('Contraseña coincide:', !isMismatch);
+    // console.log('Contraseña:', pass);
+    // console.log('Confirmar contraseña:', confirmPass);
+    // console.log('Contraseña coincide:', !isMismatch);
 
     return pass === confirmPass ? null : { passwordMismatch: true };
   };
