@@ -12,6 +12,26 @@
       <li><a routerLink="/admin/view-examenes" routerLinkActive="active" class="menu__item">Exámenes</a></li>
       <li><a routerLink="/admin/add-examen" routerLinkActive="active" class="menu__item">Agregar Exámen</a></li>
       <li><a routerLink="/admin/view-usuarios" routerLinkActive="active" class="menu__item">Usuarios</a></li>
+      <li><a class="menu__item"><div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Sub-Menú
+        </a>
+      
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="https://www.elitsoft.cl/">Inicio</a></li>
+          <li><a class="dropdown-item" href="https://www.elitsoft.cl/nosotros">Nosotros</a></li>
+          <li><a class="dropdown-item" href="https://www.elitsoft.cl/servicios">Servicios</a></li>
+          <li><a class="dropdown-item" href="https://www.elitsoft.cl/tecnologías">Tecnologías</a></li>
+          <li><a class="dropdown-item" href="https://www.elitsoft.cl/contacto">Contacto</a></li>
+          <li><a class="dropdown-item" href="#">Trabaja con Nostros</a></li>
+          <li><a class="dropdown-item" href=" https://www.elitsoft.cl/blog
+            ">Blog</a></li>
+         
+        </ul>
+      </div></a></li>
+      <li class="nav-item">
+        <a (click)="cerrarSesion()" class="nav-link menu__item" style="cursor: pointer;">Cerrar Sesión</a>
+      </li>
     </ul>
     
   </div>
