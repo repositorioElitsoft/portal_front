@@ -119,6 +119,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
 
       this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
         (data: Producto[]) => {
+          console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
           console.log('Productos cargados:', this.productos);
         },
@@ -216,15 +217,15 @@ export class HerramientasTecnologiasComponent implements OnInit {
     this.herramienta.nvl_id = this.selectedNivelId;
 
     // Llamamos al servicio para guardar la herramienta
-    this.herramientasService.guardarHerramienta(this.herramienta, this.usuario.usr_id).subscribe(
-      (nuevaHerramienta: Herramientas) => {
-        console.log('Herramienta guardada exitosamente:', nuevaHerramienta);
-        // Puedes redirigir al usuario a otra página o realizar alguna otra acción después de guardar.
-      },
-      (error) => {
-        console.log('Error al guardar herramienta:', error);
-      }
-    );
+    // this.herramientasService.guardarHerramienta(this.herramienta, this.usuario.usr_id).subscribe(
+    //   (nuevaHerramienta: Herramientas) => {
+    //     console.log('Herramienta guardada exitosamente:', nuevaHerramienta);
+    //     // Puedes redirigir al usuario a otra página o realizar alguna otra acción después de guardar.
+    //   },
+    //   (error) => {
+    //     console.log('Error al guardar herramienta:', error);
+    //   }
+    // );
   }
 }
 

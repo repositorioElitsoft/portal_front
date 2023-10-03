@@ -13,6 +13,8 @@ import { Certificacion } from 'src/app/interface/certificacion.interface';
 import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Niveles } from 'src/app/interface/niveles.interface';
 import { Producto } from 'src/app/interface/producto.interface';
+import { VersionProducto } from 'src/app/interface/version.interface';
+import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 
 @Component({
   selector: 'app-table-herramientas',
@@ -26,6 +28,17 @@ export class TableHerramientasComponent implements OnInit {
     herr_usr_vrs: '',
     usr_id: -1
   };
+
+  herramientas: HerramientaData[] = [
+    {
+      herr_usr_anos_exp: '',
+      herr_is_cert: false,
+      herr_nvl: '', 
+      versionProducto: {
+        vrs_id: 0
+      }
+    }
+  ]
 
   usuario: Usuario = {
     usr_id: -1,
@@ -44,11 +57,14 @@ export class TableHerramientasComponent implements OnInit {
 
   selectedCategoriaId: number | undefined;
   selectedProductoId: number | undefined;
-  selectedCertificadoId: number | undefined;
+  selectedVersionId: number = 0;
+  certificadoSeleccionado: boolean = false;
+  selectedLevel: string = "";
   selectedNivelId: number | undefined;
 
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
+  versions: VersionProducto[] = [];
   certificados: Certificacion[] = [];
   niveles: Niveles[] = [];
   public rows: any[] = [];
@@ -83,6 +99,7 @@ export class TableHerramientasComponent implements OnInit {
       }
       this.obtenerCategorias();
       this.obtenerProductos();
+      // this.getVersion();
       this.obtenerCertificaciones();
       this.obtenerNiveles();
     });
@@ -125,6 +142,23 @@ export class TableHerramientasComponent implements OnInit {
       },
       (error) => {
         console.log('Error al obtener productos:', error);
+      }
+    );
+  }
+    
+  getVersion() {
+    if (!this.selectedProductoId) {
+      return;
+    }
+    
+    console.log(`Id del producto seleccionado: ${this.selectedProductoId}`)
+    this.productoService.getVersionByProduct(this.selectedProductoId).subscribe(
+      (data: VersionProducto[]) => {
+        this.versions = data;
+        console.log(`Versiones cargadas: ${JSON.stringify(this.versions)}`);
+      },
+      (error) => {
+        console.log(`Error al obtener las versiones: ${error}`);
       }
     );
   }
@@ -192,33 +226,42 @@ export class TableHerramientasComponent implements OnInit {
       return;
     }
 
-    // Verificamos si se ha seleccionado una certificación
-    if (!this.selectedCertificadoId) {
-      console.log('Seleccione una certificación antes de guardar.');
-      return;
-    }
+    // // Verificamos si se ha seleccionado una certificación
+    // if (!this.selectedCertificadoId) {
+    //   console.log('Seleccione una certificación antes de guardar.');
+    //   return;
+    // }
 
     // Verificamos si se ha seleccionado un nivel
-    if (!this.selectedNivelId) {
+    if (!this.selectedLevel) {
       console.log('Seleccione un nivel antes de guardar.');
       return;
     }
 
     // Verificamos si tenemos un usuario válido antes de guardar
-    if (!this.usuario || this.usuario.usr_id === undefined) {
-      console.log('No se encontró un usuario válido.');
-      return;
-    }
+    // if (!this.usuario || this.usuario.usr_id === undefined) {
+    //   console.log('No se encontró un usuario válido.');
+    //   return;
+    // }
 
     // Completamos los datos de la herramienta con las selecciones
-    this.herramienta.cat_prod_id = this.selectedCategoriaId;
-    this.herramienta.prd_id = this.selectedProductoId;
-    this.herramienta.cert_id = this.selectedCertificadoId;
-    this.herramienta.nvl_id = this.selectedNivelId;
+    this.herramientas[0].herr_usr_anos_exp = this.herramienta.herr_usr_anos_exp;
+    this.herramientas[0].herr_is_cert = this.certificadoSeleccionado;
+    this.herramientas[0].herr_nvl = this.selectedLevel;
+    const selectedVersionId = Number(this.selectedVersionId);
+    if (!isNaN(selectedVersionId)) {
+      this.herramientas[0].versionProducto.vrs_id = selectedVersionId;
+    } else {
+      console.log(`Version seleccionada ${selectedVersionId}`)
+      console.error('El valor seleccionado de versión no es un número válido.');
+    }
+
+    console.log(this.herramientas);
 
     // Llamamos al servicio para guardar la herramienta
-    this.herramientasService.guardarHerramienta(this.herramienta, this.usuario.usr_id).subscribe(
-      (nuevaHerramienta: Herramientas) => {
+    this.herramientasService.guardarHerramienta(this.herramientas).subscribe(
+      (nuevaHerramienta: HerramientaData) => {
+        this.usuarioService
         console.log('Herramienta guardada exitosamente:', nuevaHerramienta);
         // Puedes redirigir al usuario a otra página o realizar alguna otra acción después de guardar.
       },

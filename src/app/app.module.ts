@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-sesion.component';
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
@@ -39,8 +39,12 @@ import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sideba
 import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
 import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
 import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
+<<<<<<< HEAD
 import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
 import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-sidebar2.component';
+=======
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+>>>>>>> b28532484df0ad8608ae541726b4d05542f25470
 
 @NgModule({
   declarations: [
@@ -94,7 +98,13 @@ import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-side
       positionClass: 'toast-top-center'
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

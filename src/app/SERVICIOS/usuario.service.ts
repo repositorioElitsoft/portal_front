@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
+import { Register } from '../interface/register.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,18 @@ export class UsuarioService {
   
   constructor(private HttpClient: HttpClient ) { }
 
-  public registrarUsuario(user:any){
-    return this.HttpClient.post(`${this.baseUrl}/usuarios/`, user)
+  public registrarUsuario(registerData: Register){
+    return this.HttpClient.post<any>(`${this.baseUrl}/usuarios/`, registerData)
   }
-
+  
   public iniciarSesion(datosInicioSesion: any) {
     return this.HttpClient.post(`${this.baseUrl}/usuarios/iniciar-sesion/`, datosInicioSesion);
-  
   }
 
   obtenerPerfil(email: string): Observable<any> {
     return this.HttpClient.get<any>(`${this.baseUrl}/usuarios/email/${email}`);
   }
 
-  
   obtenerUsuarios(): Observable<any[]> {
     return this.HttpClient.get<any[]>(`${this.baseUrl}/usuarios/`);
   }
@@ -78,7 +77,4 @@ export class UsuarioService {
     let user = this.getUser();
     return user.authorities[0].authority;
   }
-
-
 }
-

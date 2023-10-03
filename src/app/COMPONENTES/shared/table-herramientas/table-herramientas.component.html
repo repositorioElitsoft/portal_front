@@ -10,24 +10,30 @@
             </div>
             <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                 <label class="form-label" for="producto">Producto</label>
-                <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto">
+                <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto" (change)="getVersion()">
                     <option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
                 </select>
             </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
+            <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                 <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version">
+                <select class="form-control" id="version" [(ngModel)]="selectedVersionId" name="version">
+                    <option *ngFor="let version of versions" [value]="version.vrs_id">{{ version.vrs_name }}</option>
+                </select>
+                <!-- <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version"> -->
             </div>
             <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                 <label class="form-label" for="certificado">Certificado</label>
-                <select class="form-control" id="certificado" [(ngModel)]="selectedCertificadoId" name="certificado">
-                    <option *ngFor="let certificado of certificados" [value]="certificado.cert_id">{{ certificado.cert }}</option>
+                <select class="form-control" id="certificado" [(ngModel)]="certificadoSeleccionado" name="certificado">
+                    <option [ngValue]="false">No</option>
+                    <option [ngValue]="true">Sí</option>
                 </select>
             </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
+            <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                 <label class="form-label" for="nivel">Nivel</label>
-                <select class="form-control" id="nivel" [(ngModel)]="selectedNivelId" name="nivel">
-                    <option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</option>
+                <select class="form-control" id="nivel" [(ngModel)]="selectedLevel" name="nivel">
+                    <option value="alto">Alto</option>
+                    <option value="medio">Medio</option>
+                    <option value="bajo">Bajo</option>
                 </select>
             </div>
             <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
@@ -50,24 +56,30 @@
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                     <label class="form-label" for="producto">Producto</label>
-                    <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto">
+                    <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto" (change)="getVersion()">
                         <option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                    <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version">
+                    <select class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version">
+                        <option *ngFor="let version of versions" [value]="version.vrs_id">{{ version.vrs_name }}</option>
+                    </select>
+                    <!-- <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version"> -->
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                     <label class="form-label" for="certificado">Certificado</label>
-                    <select class="form-control" id="certificado" [(ngModel)]="selectedCertificadoId" name="certificado">
-                        <option *ngFor="let certificado of certificados" [value]="certificado.cert_id">{{ certificado.cert }}</option>
+                    <select class="form-control" id="certificado" [(ngModel)]="certificadoSeleccionado" name="certificado">
+                        <option [ngValue]="false">No</option>
+                        <option [ngValue]="true">Sí</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                     <label class="form-label" for="nivel">Nivel</label>
-                    <select class="form-control" id="nivel" [(ngModel)]="selectedNivelId" name="nivel">
-                        <option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</option>
+                    <select class="form-control" id="nivel" [(ngModel)]="selectedLevel" name="nivel">
+                        <option>Alto</option>
+                        <option>Medio</option>
+                        <option>Bajo</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
