@@ -23,12 +23,12 @@
                 <!-- Campos del formulario -->
                 <div class="form-group">
                   <label for="email">Correo electrónico:</label>
-                  <input type="email" class="form-control" id="email" formControlName="email" required maxlength="30">
+                  <input type="email" class="form-control" id="usr_email" formControlName="usr_email" required maxlength="30">
                   <!-- Mostrar mensaje de error si el campo email es inválido -->
-                  <div *ngIf="registroForm.get('email')?.hasError('required') && registroForm.get('email')?.touched" class="text-danger">
+                  <div *ngIf="registroForm.get('usr_email')?.hasError('required') && registroForm.get('usr_email')?.touched" class="text-danger">
                     El Correo electrónico es requerido
                   </div>
-                  <div *ngIf="registroForm.get('email')?.hasError('email') && registroForm.get('email')?.touched" class="text-danger">
+                  <div *ngIf="registroForm.get('usr_email')?.hasError('usr_email') && registroForm.get('usr_email')?.touched" class="text-danger">
                     El Correo electrónico no es válido
                   </div>
                 </div>
