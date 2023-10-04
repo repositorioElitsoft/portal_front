@@ -41,11 +41,23 @@
 }
 
 .btn-guardar {
-  background-color: #F76805;
-  border-color: black;
+  font-size: 14px;
+  padding: 8px 16px;
+  background-color: #F57C27;
+  border-color: #F57C27;
+  margin-left: 5px;
 }
 
-
+.btn-primary{
+ font-size: 14px;
+  padding: 8px 16px;
+  background-color: #F57C27;
+  border-color: #F57C27;
+}
+.btn-danger{
+  font-size: 14px;
+   padding: 8px 16px;
+ }
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
