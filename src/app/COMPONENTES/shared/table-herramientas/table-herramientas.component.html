@@ -1,5 +1,6 @@
 <div>
-    <h2>Herramientas y Tecnologias</h2>
+    <h2 class="herramientasytecnologiash2">Herramientas y Tecnologias</h2>
+    <br>
     <form class="form-container" [formGroup]="herramientasForm">
         <div formArrayName="rows">
             <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
@@ -41,12 +42,11 @@
                     <input type="text" class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
                 </div>
                 <div class="mt-4 col-md-1">
-                  <button *ngIf="i !== 0" type="button" class="btn btn-danger rounded-circle btn-sm" (click)="removeRow(i)">
-                    <i class="fas fa-minus"></i> -
-                  </button>
+                    <button *ngIf="i !== 0" type="button" class="custom-button" (click)="removeRow(i)">-</button>
+
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button  type="button" class="btn btn-success rounded-circle btn-sm" id="addRow" (click)="addRow()">
+                    <button *ngIf="i === 0" type="button" class="custom-button2" id="addRow" (click)="addRow()">
                         <i class="fas fa-plus"></i> +
                     </button>
                 </div>

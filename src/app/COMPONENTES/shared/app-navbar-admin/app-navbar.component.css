@@ -27,7 +27,7 @@
     color: white; /* Cambiar el color del texto a blanco para que sea legible */
   }
   
-  @media (max-width: 768px) {
+  @media (max-width:1300px) {
 
     .navbar{
       display: none;
