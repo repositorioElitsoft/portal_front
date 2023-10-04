@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ValidarMailService } from 'src/app/SERVICE/validar-mail.service';
 
 @Component({
   selector: 'app-sidebar-user',
@@ -20,5 +21,6 @@ export class SidebarUserComponent implements OnInit  {
     this.cookieService.delete('token')
     this.router.navigate(['/iniciar-sesion']);
   }
+
 
 }

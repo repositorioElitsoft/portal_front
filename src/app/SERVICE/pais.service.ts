@@ -18,6 +18,10 @@ export class PaisService {
     return this.http.get<Pais>(url);
   }
 
+  obtenerPaises(){
+    return this.http.get<Pais[]>(this.url);
+  }
+
 
   obtenerPaisPorNombre(pais_nom: string): Observable<Pais> {
     const url = `${this.url}nombre-pais?pais_nom=${pais_nom}`;

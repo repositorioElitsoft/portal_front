@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from '../interface/user.interface'
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,6 +23,11 @@ export class UsuarioService {
     }
 
     return this.http.post(this.url, usuario);
+  }
+
+  
+  updateUsuario(usuario: Usuario): Observable<any> {
+    return this.http.put(this.url, usuario);
   }
 
   obtenerUsuarioPorId(usuarioId: number): Observable<Usuario> {

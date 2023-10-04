@@ -12,37 +12,69 @@
   <app-sidebar-userdesk></app-sidebar-userdesk>
   <div class="container-datos-personales">
 
-    <div class="div-inputs">
 
-      <form>
+    <div class="div-inputs" *ngIf="!creationMode" >
+
+      <div *ngFor="let academica of academicas">
+        
+        <div class="row celda-laboral">
+          <div class="col-6 cargo">
+              <p>{{ academica.titl}}</p>
+          </div>
+
+          <div class="col-4 fechas">
+           {{ academica.inf_acad_fec_ini}}
+            {{ academica.inf_acad_fec_fin}}
+          </div>
+          <div class="col-2">
+           <button class="btn btn-warning" (click)="editarAcademica(academica.inf_acad_id)"> 
+            
+            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+              <title>pencil</title>
+              <path d="M0 32l12-4 20-20-8-8-20 20zM4 28l2.016-5.984 4 4zM8 20l12-12 4 4-12 12z"></path>
+              </svg>
+           </button>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="academicas.length === 0">
+        No has definido ninguna experiencia académica
+      </div>
+      <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir estudios</button>
+    </div>
+
+    <div class="div-inputs" *ngIf="creationMode">
+
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
         <div class="row mb-3">
           <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
           <div class="col-sm-10">
-            <input type="inputTitulo" class="form-control" id="inputTitulo" [(ngModel)]="academica.titl" name="inputTitulo" >
+            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="titl" name="inputTitulo" >
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputEducacion" class="col-sm-2 col-form-label">Institución Educativa:</label>
           <div class="col-sm-10">
-            <input type="inputEducacion" class="form-control" id="inputEducacion" [(ngModel)]="academica.inf_acad_nom_esc" name="inputEducacion">
+            <input type="inputEducacion" class="form-control" id="inputEducacion" formControlName="inf_acad_nom_esc" name="inputEducacion">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputApellidop" [(ngModel)]="academica.inf_acad_fec_ini" [min]="minFecha" name="inputFechaini">
+            <input type="date" class="form-control" id="inputApellidop" formControlName="inf_acad_fec_ini" [min]="minFecha" name="inputFechaini">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" [(ngModel)]="academica.inf_acad_fec_fin" [min]="minFecha" name="inputFechafin">
+            <input type="date" class="form-control" id="inputFechafin" formControlName="inf_acad_fec_fin" [min]="minFecha" name="inputFechafin">
           </div>
         </div>
         <div class="row mb-3">
           <label for="selectEstadoAcademico" class="col-sm-2 col-form-label">Estado Academico:</label>
-            <select class="form-select" id="selectEstadoAcademico" [(ngModel)]="selectedEstadoAcademico" name="estadoAcademico">
+            <select class="form-select" id="selectEstadoAcademico" formControlName="inf_acad_est" name="estadoAcademico">
               <option selected disabled >Selecciona una opción...</option>
               <option value="En curso">En curso</option>
               <option value="En práctica">En práctica</option>
@@ -53,7 +85,10 @@
 
 
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar" (click)="guardarInformacionAcademica()">GUARDAR</button>
+          <div class="flex">
+            <button (click)="goBack()" class="btn btn-danger btn-marg" >Cancelar</button>
+            <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Guardar</button>
+          </div>   
         </div>
       </form>
     </div>
