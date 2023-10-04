@@ -26,53 +26,14 @@
     background-color: orange;
     color: white; /* Cambiar el color del texto a blanco para que sea legible */
   }
-
- 
-  .elitsoft {
-    text-align: center; /* Centrar horizontalmente el contenido */
-    margin-top: 20px; /* Espacio superior para mover la imagen hacia abajo */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end; /* Centrar verticalmente y alinear a la derecha horizontalmente */
-    justify-content: flex-end; /* Situar el contenido en la parte inferior (derecha en este caso) */
-  }
-  
-  .elitsoft img {
-    max-width: 100%; /* Para que la imagen sea responsive */
-    display: block; /* Elimina el espacio debajo de la imagen */
-    animation: fadeIn 2s ease-in-out; /* Animación de aparición */
-    margin-left: 80px;
-  }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
   
   @media (max-width: 768px) {
 
     .navbar{
       display: none;
       pointer-events: none;
-      margin-left: 0;
-  
-    }
-  
-
-    
-  }
-  
-
-  @media (max-width: 1200px) {
-
-    .navbar{
-      margin-left: 0;
   
     }
   
   }
+  
