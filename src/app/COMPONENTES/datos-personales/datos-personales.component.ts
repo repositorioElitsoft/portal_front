@@ -5,6 +5,8 @@ import { Usuario } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaisService } from 'src/app/service/pais.service';
 import { Pais } from 'src/app/interface/pais.interface';
+import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import * as intlTelInput from 'intl-tel-input';
 
 @Component({
   selector: 'app-datos-personales',
@@ -13,12 +15,11 @@ import { Pais } from 'src/app/interface/pais.interface';
 })
 export class DatosPersonalesComponent implements OnInit {
 
-  @ViewChild('btnradio1', { static: true }) btnradio1!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio2', { static: true }) btnradio2!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio3', { static: true }) btnradio3!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio4', { static: true }) btnradio4!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio5', { static: true }) btnradio5!: ElementRef<HTMLInputElement>;
 
+
+  form!: FormGroup;
+
+  countries: Pais[] = []; 
 
   usuarioNuevo:Usuario={
     usr_rut: '' ,
@@ -36,38 +37,84 @@ export class DatosPersonalesComponent implements OnInit {
     pais_nom: ''
   };
 
-  constructor(private usuarioService: UsuarioService, private paisService: PaisService, private toastr:ToastrService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private usuarioService: UsuarioService, 
+    private paisService: PaisService, 
+    private toastr:ToastrService,
+    private route: ActivatedRoute) 
+    { 
+      this.buildForm();
+    }
+
+  private buildForm(){
+    this.form = this.formBuilder.group({
+      usr_rut: ["",[Validators.required, rutValido]],
+      usr_nom: ["",[Validators.required]],
+      usr_ap_pat: ["",[Validators.required]],
+      usr_ap_mat: ["",[Validators.required]],
+      pais: ["1",[Validators.required]],
+      usr_url_link: ["",[]],
+      usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+    });
+  }
 
   ngOnInit(): void {
+    const inputElement = document.getElementById("inputTelefono");
+    console.log(inputElement)
+    if(inputElement){
+      intlTelInput(inputElement,{
+        initialCountry: "cl",
+        separateDialCode: true,
+        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+        placeholderNumberType: "UNKNOWN"
+      })
+    }
+
+    this.paisService.obtenerPaises().subscribe(
+      (data: any[]) => {
+        this.countries = data;
+      },
+      (error) => {
+        console.error('Error fetching countries:', error);
+      }
+    );
   }
+
+
+
 
   navigateToRoute(route: string) {
     // Navegamos a la ruta proporcionada
     this.router.navigate([route]);
   }
 
-  // Agregamos eventos a cada radio button y navegamos a la ruta correspondiente
-  onRadio1Change() {
-    this.navigateToRoute('/datos_personales');
-  }
+  submitForm(event: Event) {
+    event.preventDefault();
 
-  onRadio2Change() {
-    this.navigateToRoute('/herramientas-tecnologias');
-  }
+    const user: Usuario = this.form.value;
 
-  onRadio3Change() {
-    this.navigateToRoute('/informacion-academica');
-  }
+    console.log(user);
 
-  onRadio4Change() {
-    this.navigateToRoute('/informacion-laboral');
-  }
+    user.pais = {
+      pais_id: this.form.value.pais.pais_id,
+      pais_nom: ""
+    }
 
-  onRadio5Change() {
-    this.navigateToRoute('/cargo-usuario');
-  }
+    console.log(user);
 
-  agregarUsuario() {
+    this.usuarioService.updateUsuario(user).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+
+    /*
     this.paisService.obtenerPaisPorNombre(this.usuarioNuevo.pais_nom).subscribe(
       (pais: Pais) => {
         // Asignar el objeto Pais al usuarioNuevo
@@ -88,7 +135,8 @@ export class DatosPersonalesComponent implements OnInit {
         );
       },
       (err: any) => console.log(err)
-    );
+    );*/
+
   }
 
 
@@ -96,5 +144,52 @@ export class DatosPersonalesComponent implements OnInit {
 
 
 
+}
 
+function rutValido(control: AbstractControl): ValidationErrors | null {
+  if (control.value && !validarRut(control.value)) {
+    // Validation failed, return an error object
+    return { badRut: true };
+  }
+
+  /*
+  if (control.value && /\s/.test(control.value)) {
+    // Validation failed, return an error object
+    return { noSpace: true };
+  }*/
+
+  // Validation passed, return null
+  return null;
+}
+
+function validarRut(rut: string) {
+  // Eliminar espacios y guiones del RUT
+  rut = rut.replace(/\s+/g, '').replace(/-/g, '');
+
+  // Verificar que el RUT tenga el formato correcto
+  if (!/^[0-9]+[0-9kK]{1}$/.test(rut)) {
+    return false;
+  }
+
+  // Separar el número de identificación y el dígito verificador
+  const numero = rut.slice(0, -1);
+  const dv = rut.slice(-1).toUpperCase();
+
+  // Calcular el dígito verificador esperado
+  let suma = 0;
+  let multiplicador = 2;
+
+  for (let i = numero.length - 1; i >= 0; i--) {
+    suma += multiplicador * parseInt(numero.charAt(i), 10);
+    multiplicador = multiplicador < 7 ? multiplicador + 1 : 2;
+  }
+
+  const dvEsperado = 11 - (suma % 11);
+
+  // Comparar el dígito verificador calculado con el dígito verificador del RUT
+  if ((dvEsperado === 11 && dv === '0') || (dvEsperado === 10 && dv.toUpperCase() === 'K') || dvEsperado === parseInt(dv, 10)) {
+    return true;
+  }
+
+  return false;
 }

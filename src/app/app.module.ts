@@ -42,9 +42,12 @@ import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramien
 import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
 import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-sidebar2.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { NumericOnlyDirective } from './directives/numeric-only.directive';
+import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 
 @NgModule({
   declarations: [
+    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -80,7 +83,9 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     AppFooterComponent,
     SidebarUserDeskComponent,
     SidebarUserComponent,
-    TableHerramientasComponent
+    TableHerramientasComponent,
+    NumericOnlyDirective,
+    ValidarMailComponent
   ],
   imports: [
     BrowserModule,

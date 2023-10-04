@@ -3,10 +3,10 @@
     <div class="container">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</a>
+          <a class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</a>
+          <a class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</a>
         </li>
       </ul>
     </div>
@@ -44,8 +44,12 @@
                 </div>
               </div>
               <!-- Botón de registro -->
-              <button type="submit" class="btn btn-primary mt-3">Registrar</button>
+              <button type="submit" class="btn btn-primary  mt-3 ">Registrar</button>
+              
             </form>
+            <br>  
+              <a class="nav-link2" routerLink="/iniciar-sesion" routerLinkActive="active">Si ya tiene una cuenta, inicie sesión aquí</a>     
+              <br>  
           </div>
         </div>
       </div>

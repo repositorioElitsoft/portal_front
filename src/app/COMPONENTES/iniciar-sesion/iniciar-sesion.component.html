@@ -3,15 +3,15 @@
     <div class="container">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</a>
+          <a class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</a>
+          <a class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</a>
         </li>
       </ul>
     </div>
   </nav>
-<div class="container mt-5 mb-5">
+<div class="container mt-5">
     <!-- Aquí sigue el formulario de inicio de sesión -->
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -33,19 +33,11 @@
                  [(ngModel)]="usr_pass" name="usr_pass" formControlName="password" required>
               </div>
               <!-- Botón de inicio de sesión -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-              <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Iniciar Sesión</button>
-              <div *ngIf="error" class="error">{{ error }}</div>
-=======
-              <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
->>>>>>> 6174ce98ccee808dee54aeeac366a3ec1c3038ec
-=======
               <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
               <div *ngIf="error" class="error">{{ error }}</div>
->>>>>>> 7238c9cec938d69001fa67d451f4dc1536e9da6e
+
 		     <!--  <button type="submit"  onclick="limpiarCampos()">Limpiar</button> -->
-                                 
+            
             </form>
             <!-- Mostrar mensaje de error si el inicio de sesión falló -->
             <div *ngIf="inicioSesionFallido" class="alert alert-danger mt-3">
@@ -57,14 +49,15 @@
                     document.getElementById("usr_email").value = "";
                 }
             </script>
+            <br>
+                <a class="nav-link2 position-fixed top-50 start-50 translate-middle-x" routerLink="/registrar" routerLinkActive="active" >Si no está registrado, regístrese aquí</a> 
+                <br>    
           </div>
         </div>
       </div>
     </div>
     <div class="elitsoft">
       <img src="https://static.wixstatic.com/media/5a9998_6a14b7ced59447ae8f4bceee9e8d1478~mv2.png/v1/fill/w_182,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/elitesoft%201.png" alt="Elitesoft Logo">
-
     </div>
   </div>
-  
 </div>

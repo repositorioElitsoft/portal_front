@@ -14,7 +14,9 @@
   border-radius: 10px;
   
 }
-
+.btn-marg{
+  margin-right: 8px;
+}
 .btn {
   font-size: 15px;
 }
@@ -29,10 +31,26 @@
 
 .btn-guardar {
   background-color: #F76805;
-  border-color: black;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
+.celda-laboral{
+  border-bottom: 1px rgb(190, 190, 190) solid;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 2vh;
+ 
+}
+.cargo{
+  font-size: medium;
+  font-weight: 600;
+}
 
+.fechas{
+  color: rgb(102, 102, 102);
+}
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {

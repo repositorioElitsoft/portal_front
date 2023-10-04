@@ -15,6 +15,19 @@
   
 }
 
+
+.celda-laboral{
+  border-bottom: 1px rgb(190, 190, 190) solid;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 2vh;
+ 
+}
+.cargo{
+  font-size: medium;
+  font-weight: 600;
+}
+
 .btn {
   font-size: 15px;
 }

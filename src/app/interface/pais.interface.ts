@@ -1,4 +1,4 @@
 export interface Pais {
-    pais_id?: bigint;
+    pais_id?: number;
     pais_nom: string;
 }

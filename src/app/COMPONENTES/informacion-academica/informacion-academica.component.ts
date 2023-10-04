@@ -4,6 +4,7 @@ import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { Usuario } from '../../interface/user.interface'
 import { Academica } from 'src/app/interface/academica.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-informacion-academica',
@@ -12,126 +13,106 @@ import { Academica } from 'src/app/interface/academica.interface';
 })
 export class InformacionAcademicaComponent implements OnInit {
 
-  @ViewChild('btnradio1', { static: true }) btnradio1!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio2', { static: true }) btnradio2!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio3', { static: true }) btnradio3!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio4', { static: true }) btnradio4!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio5', { static: true }) btnradio5!: ElementRef<HTMLInputElement>;
+  creationMode: boolean = false;
 
-  usuario: Usuario = {
-    usr_id: -1,
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_pass: '',
-    usr_tel: '',
-    usr_url_link: '',
-    pais_nom: '',
-    pais: { pais_id: undefined,
-            pais_nom: '' } // Asegúrate de tener una instancia de Pais aquí
-  };
+  academicas: Academica[] = []
+  id: number | null | undefined = null
 
-    academica:Academica = {
-    inf_acad_id:-1,
-    titl:'',
-    inf_acad_nom_esc: '',
-    inf_acad_fec_ini:new Date(),
-    inf_acad_fec_fin:new Date(),
-    inf_acad_est:'',
-    usr_id:-1
-    }
-
-    minFecha: string =''; // Representa la fecha mínima permitida
-    selectedEstadoAcademico: string = '';
+  form!: FormGroup
+  minFecha: string = '';
 
 
 
-  constructor(private usuarioService:UsuarioService , private academicaService:AcademicaService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private usuarioService: UsuarioService, 
+    private formBuilder: FormBuilder,
+    private academicaService: AcademicaService, private route: ActivatedRoute, private router: Router) {
+      this.buildForm();
+     }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const usr_id = params['usr_id'];
-      console.log(usr_id)
-      this.usuario.usr_id = usr_id
-      if (usr_id) {
-        this.academica.usr_id = usr_id;
-        if (typeof usr_id === 'number') { // Verificar si usr_id es un número
-          this.obtenerDatosUsuario(usr_id);
-        }
-      }
-    });
-    //const fechaActual = new Date();
-    this.minFecha = '1950-01-01';
+    this.obtenerAcademicasGuardados();
   }
 
-  obtenerDatosUsuario(usuarioId: number) {
-    this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-      (usuario: Usuario) => {
-        this.usuario = usuario; // Almacena los datos del usuario
+  private buildForm(){
+    this.form = this.formBuilder.group({
+      inf_acad_est: ["",[Validators.required]],
+      titl: ["",[Validators.required]],
+      inf_acad_nom_esc: ["",[Validators.required]],
+      inf_acad_fec_ini: ["",[Validators.required]],
+      inf_acad_fec_fin: ["",[Validators.required]],
+    });
+  }
+
+ 
+
+  obtenerAcademicasGuardados(){
+    this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+      next: (data) =>{
+        this.academicas = data;
+      },
+      error: (err)=>{
+        console.log(err)
+      }
+    })
+  }
+
+  goBack(){
+    this.creationMode = false;
+  }
+
+  editarAcademica(id: number | undefined | null){
+    this.id = id;
+
+    const laboralToEdit = this.academicas.find(laboral => laboral.inf_acad_id === this.id);
+    this.form.patchValue({
+      inf_acad_est: laboralToEdit?.inf_acad_est,
+      inf_acad_nom_esc: laboralToEdit?.inf_acad_nom_esc,
+      titl: laboralToEdit?.titl,
+      inf_acad_fec_ini: laboralToEdit?.inf_acad_fec_ini,
+      inf_acad_fec_fin: laboralToEdit?.inf_acad_fec_fin,
+    });
+
+    this.creationMode = !this.creationMode;
+  }
+
+
+  addExperienceRow(){
+    this.id = null;
+    this.form.reset();
+    this.creationMode = !this.creationMode;
+  }
+
+
+  submitForm(event: Event) {
+
+    event.preventDefault();
+
+    const academicaNueva: Academica = this.form.value;
+    console.log(academicaNueva)
+    
+    this.academicaService.guardarAcademica(academicaNueva, this.id).subscribe(
+      (academicaGuardada: Academica) => {
+        console.log('Información laboral guardada:', academicaGuardada);
+        this.creationMode = false;
+        this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+          next:(data)=>{
+            this.academicas = data;
+          },
+          error:(err)=>{
+            console.log(err);
+          }
+        })
       },
       (error) => {
-        console.log('Error al obtener los datos del usuario:', error);
+        console.error('Error al guardar información laboral:', error);
       }
     );
   }
 
-
   navigateToRoute(route: string) {
-    // Navegamos a la ruta proporcionada
     this.router.navigate([route]);
   }
 
-  // Agregamos eventos a cada radio button y navegamos a la ruta correspondiente
-  onRadio1Change() {
-    this.navigateToRoute('/datos_personales');
-  }
 
-  onRadio2Change() {
-    this.navigateToRoute('/herramientas-tecnologias');
-  }
-
-  onRadio3Change() {
-    this.navigateToRoute('/informacion-academica');
-  }
-
-  onRadio4Change() {
-    this.navigateToRoute('/informacion-laboral');
-  }
-
-  onRadio5Change() {
-    this.navigateToRoute('/cargo-usuario');
-  }
-
-
-  // Método para guardar información académica
-  guardarInformacionAcademica() {
-    // Asignar el valor seleccionado del combobox
-    this.academica.inf_acad_est = this.selectedEstadoAcademico;
-
-      // Formatear la fecha antes de guardar
-    const fechaInicio = new Date(this.academica.inf_acad_fec_ini);
-    const fechaFin = new Date(this.academica.inf_acad_fec_fin);
-
-    // Guardar la fecha formateada en el objeto academica
-    this.academica.inf_acad_fec_ini = fechaInicio; // No se necesita .toISOString() aquí
-    this.academica.inf_acad_fec_fin = fechaFin;
-
-    // Verificamos si tenemos un usuario válido antes de guardar
-    if (!this.usuario || this.usuario.usr_id === undefined) {
-      console.log('No se encontró un usuario válido.');
-      return;
-    }
-    this.academicaService.guardarAcademica(this.academica, this.usuario.usr_id).subscribe(
-      (nuevaAcademica: Academica) => {
-        // Aquí puedes hacer lo que necesites después de guardar la información
-        console.log('Información académica guardada:', nuevaAcademica);
-      },
-      (error) => {
-        console.log('Error al guardar la información académica:', error);
-      }
-    );
-  }
 
 }
