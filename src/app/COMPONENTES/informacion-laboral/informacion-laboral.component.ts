@@ -61,6 +61,18 @@ export class InformacionLaboralComponent implements OnInit {
     })
   }
 
+  eliminarLaboral(id: number | undefined | null){
+    this.laboralService.eliminarLaboral(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.obtenerLaboralesGuardados();
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
+  }
+
   goBack(){
     this.creationMode = false;
   }

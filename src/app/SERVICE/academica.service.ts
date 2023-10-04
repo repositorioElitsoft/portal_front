@@ -26,4 +26,9 @@ export class AcademicaService {
   listarAcademicas(): Observable<Academica[]> {
     return this.http.get<Academica[]>(`${this.url}listar`);
   }
+
+  eliminarAcademica(id: number | null | undefined): Observable<Academica> {
+    return this.http.delete<Academica>(`${this.url}${id}`);
+  }
+
 }

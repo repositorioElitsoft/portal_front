@@ -37,4 +37,8 @@ export class LaboralService {
   obtenerNombreProducto(prdId: number): Observable<string> {
     return this.http.get<string>(`${this.url}obtener-nombre-producto/${prdId}`);
   }
+
+  eliminarLaboral(id: number | null | undefined): Observable<Laboral> {
+    return this.http.delete<Laboral>(`${this.url}${id}`);
+  }
 }
