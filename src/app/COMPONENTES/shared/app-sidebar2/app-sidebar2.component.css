@@ -1,8 +1,8 @@
  
 
   /* Ajusta el z-index del sidebar */
-.app-sidebar-admin {
-    z-index: 0;
+  .app-sidebar-admin {
+    z-index: 30;
 }
   
 .navbar {
@@ -85,24 +85,7 @@
 }
 .menu__item:hover {
   background-color: #F57C27;
-  color:#ffff;
 }
-
-.dropdown-toggle,.dropdown-toggle:hover,
-.dropdown-toggle:active  {
-  background-color: transparent;
-  border-color: transparent;
-  color: #333;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.dropdown-item:hover{
-  background-color: #F57C27;
-  color:#ffff;
-}
-
 
 
 @media (min-width: 768px) {

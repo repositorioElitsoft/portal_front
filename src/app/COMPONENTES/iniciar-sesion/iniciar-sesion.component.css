@@ -1,0 +1,85 @@
+.container-bg {
+  padding: 30px; /* Espaciado alrededor del contenido */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el contenedor */
+  max-width: 1200px; /* Ancho máximo del contenedor */
+  height: 800px; /* Altura máxima del contenedor */
+  margin: 0 auto; /* Centrar horizontalmente el contenedor */
+  background-color: rgba(34, 34, 34, 0.8); /* Color de fondo principal gris oscuro con transparencia */
+  background-image: linear-gradient(135deg, #fff, #ccc); /* Gradiente de colores */
+  background-size: 200% 200%; /* Tamaño del gradiente */
+  animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
+  border-radius: 5px;
+  backdrop-filter: blur(10px); /* Efecto de cristal */
+}
+/* Estilos generales */
+body {
+  background-color: #fff;
+  color: #333; /* Color de texto principal */
+}
+
+/* Estilos para la barra de navegación */
+.navbar {
+  background-color: #F76805; /* Color de fondo naranja #F76805 */
+  color: #fff; /* Color de texto en la barra de navegación */
+}
+
+.nav-link {
+  color: #fff !important; /* Color de texto de los enlaces de navegación */
+}
+
+/* Estilos para el formulario */
+.card {
+  border: none; /* Quita el borde de la tarjeta */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra de la tarjeta */
+}
+
+.card-header {
+  background-color: #F76805; /* Color de fondo naranja #F76805 */
+  color: #fff; /* Color de texto en la cabecera de la tarjeta */
+}
+
+.form-group label {
+  color: #333; /* Color de texto de las etiquetas de los campos del formulario */
+}
+
+.form-control {
+  border: 1px solid #ccc; /* Borde de los campos del formulario */
+}
+
+/* Estilos para el botón de registro */
+.btn-primary {
+  background-color: #F76805; /* Color de fondo naranja #F76805 */
+  border: none; /* Quita el borde del botón */
+}
+
+/* Estilos para los mensajes de éxito y error */
+.alert-success {
+  background-color: #D4EDDA; /* Color de fondo verde para mensajes de éxito */
+  color: #155724; /* Color de texto de mensajes de éxito */
+}
+
+.alert-danger {
+  background-color: #F8D7DA; /* Color de fondo rojo para mensajes de error */
+  color: #721C24; /* Color de texto de mensajes de error */
+}
+
+.elitsoft {
+  text-align: center; /* Centrar horizontalmente el contenido */
+  margin-top: 20px; /* Espacio superior para mover la imagen hacia abajo */
+}
+
+.elitsoft img {
+  max-width: 100%; /* Para que la imagen sea responsive */
+  display: block; /* Elimina el espacio debajo de la imagen */
+  margin: 0 auto; /* Centrar horizontalmente la imagen */
+  animation: fadeIn 2s ease-in-out; /* Animación de aparición */
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

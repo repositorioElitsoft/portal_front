@@ -43,10 +43,12 @@ export class IniciarSesionComponent implements OnInit {
       (token) => {
         this.cookieService.set('token', token.Authorization)
         this.router.navigate(['/datos_personales']);
+        
       },
       (e) => {
         console.log(`Error: ${e}`);
       }
+      
     );
 
     // const datosInicioSesion = {

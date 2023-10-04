@@ -1,0 +1,49 @@
+/* Estilo profesional para el elemento */
+.add-categoria-container {
+    background-color: #fff; /* Cambiar el color de fondo a blanco */
+    color:  #FFA500; /* Cambiar el color del texto a naranja */
+    padding: 20px;
+    border: 2px solid  #FFA500; /* Cambiar el color del borde a naranja */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .add-categoria-container h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #000000; /* Cambiar el color del título a naranja */
+  }
+  
+  .add-categoria-container .form-group label {
+    color:  #000000; /* Cambiar el color de las etiquetas a naranja */
+  }
+  
+  .add-categoria-container .form-control {
+    background-color: #fff; /* Cambiar el color de fondo de los campos de entrada a blanco */
+    color: #FFA500; /* Cambiar el color del texto en los campos de entrada a naranja */
+  }
+  
+  .add-categoria-container .btn-primary {
+    background-color:  #FFA500; /* Cambiar el color de fondo del botón a naranja */
+    border-color:  #FFA500; /* Cambiar el color del borde del botón a naranja */
+    color: #fff; /* Cambiar el color del texto del botón a blanco */
+    font-weight: bold;
+  }
+  
+  .add-categoria-container .btn-primary:hover {
+    background-color: #F76805;/* Cambiar el color de fondo del botón al naranja más claro al pasar el ratón */
+    border-color: #FFA500; /* Cambiar el color del borde del botón al naranja más claro al pasar el ratón */
+  }
+  
+  .add-categoria-container .btn-secondary {
+    background-color: #fff; /* Cambiar el color de fondo del segundo botón a blanco */
+    border-color:  #FFA500; /* Cambiar el color del borde del segundo botón a naranja */
+    color:  #FFA500; /* Cambiar el color del texto del segundo botón a naranja */
+    font-weight: bold;
+  }
+  
+  .add-categoria-container .btn-secondary:hover {
+    background-color:   #F76805;/* Cambiar el color de fondo del segundo botón a naranja al pasar el ratón */
+    color: #fff; /* Cambiar el color del texto del segundo botón a blanco al pasar el ratón */
+  }
+  

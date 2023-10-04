@@ -7,27 +7,12 @@
 </head>
 <link rel="stylesheet" href="\datos-personales.component.css">
 <body>
+  <app-app-navbar></app-app-navbar>
+  <app-sidebar-user></app-sidebar-user>
+
+  <app-sidebar-userdesk></app-sidebar-userdesk>
+
   <div class="container-datos-personales">
-
-
-    <div class="div-menu">
-      <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" (change)="onRadio1Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio1">Datos Personales</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" (change)="onRadio2Change()" autocomplete="off"  >
-        <label class="btn btn-outline-secondary" for="btnradio2" >Herramientas y Tecnologias </label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" (change)="onRadio3Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio3">Información Academica</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" (change)="onRadio4Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio4">Información Laboral</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" (change)="onRadio5Change()" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btnradio5">Cargo</label>
-      </div>
-    </div>
 
     <div class="div-inputs">
 
@@ -36,7 +21,7 @@
         <div class="row mb-3">
           <label for="inputRut" class="col-sm-2 col-form-label">RUT:</label>
           <div class="col-sm-10">
-            <input type="rut" class="form-control" id="inputRut" [(ngModel)]="usuarioNuevo.usr_rut" name="inputRut" >
+            <input type="rut" class="form-control" id="inputRut" [(ngModel)]="usuarioNuevo.usr_rut" name="inputRut">
           </div>
         </div>
         <div class="row mb-3">
@@ -77,11 +62,13 @@
         </div>
         <div class="div-form d-grid justify-content-end">
           <button type="submit" class="btn btn-primary btn-guardar" (click)="agregarUsuario()">GUARDAR</button>
+          
         </div>
       </form>
     </div>
 
   </div>
+
 
 
 

@@ -1,39 +1,62 @@
-
-.categorias-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Cambia a "flex-start" para alinear contenido en la parte superior */
-    flex-direction: column; /* Agrega dirección de columna para que los elementos estén uno encima del otro */
-    min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
-    border: 2px solid orange;
-    background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
-  }
-
- 
-  .categoria-item {
-  background-color: #fff;
-  padding: 5px;
-  width: 80%; /* Ajustar el ancho según sea necesario */
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
- 
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5; /* Color de fondo gris claro */
+  margin: 0;
+  padding: 0;
 }
 
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    margin-top: 0; /* Agrega margen superior de 0 para separar del borde superior */
-  }
+/* Estilos para el contenedor de categorías */
+.categorias-container {
+  display: flex;
+  flex-direction: column; /* Cambiamos a dirección de columna para que los elementos estén uno encima del otro */
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
+  min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
+  border: 2px solid orange;
+  background-color: #f5f5f5; /* Color de fondo gris claro */
+  text-align: center; /* Centrar el texto dentro del contenedor */
+  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
+}
 
-  .btn-primary{
-    background-color: orange;
-    border-color: orange;
-  }
+/* Estilos para los elementos de categoría */
+.categoria-item {
+  background-color: #fff; /* Color de fondo blanco */
+  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
+  width: 80%; /* Ajustar el ancho según sea necesario */
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  margin-bottom: 20px; /* Agrega margen inferior para separar las categorías */
+  color: #333; /* Color de texto principal */
+}
 
-  
-  
-  .btn-outline-primary{
-    color:rgb(0, 0, 0);
-    border-color: orange;
-  }
+/* Estilos para el título de categoría */
+.categoria-item h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #F76805; /* Color naranja */
+}
 
+/* Estilos para los botones */
+.btn-primary {
+  background-color: #F76805; /* Color naranja */
+  border-color: #F76805; /* Color naranja */
+  color: #fff; /* Color de texto blanco */
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+  border-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+}
+
+.btn-outline-primary {
+  color: #F76805; /* Color naranja */
+  border-color: #F76805; /* Color naranja */
+  font-weight: bold;
+}
+
+.btn-outline-primary:hover {
+  background-color: #F76805; /* Color naranja */
+  color: #fff; /* Color de texto blanco */
+}

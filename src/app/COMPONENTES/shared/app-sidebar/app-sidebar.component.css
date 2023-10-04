@@ -48,3 +48,14 @@
     margin-top: 10px;
     float: right;
 }
+
+
+@media (max-width: 768px) {
+
+  .sidebar{
+    display: none;
+    pointer-events: none;
+
+  }
+
+}

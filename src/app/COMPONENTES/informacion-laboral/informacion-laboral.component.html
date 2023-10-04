@@ -7,27 +7,10 @@
 </head>
 <link rel="stylesheet" href="\informacion-laboral.component.css">
 <body>
+  <app-app-navbar></app-app-navbar>
+  <app-sidebar-user></app-sidebar-user>
+  <app-sidebar-userdesk></app-sidebar-userdesk>
   <div class="container-datos-personales">
-
-
-    <div class="div-menu">
-      <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" (change)="onRadio1Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio1">Datos Personales</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" (change)="onRadio2Change()" autocomplete="off"  >
-        <label class="btn btn-outline-secondary" for="btnradio2" >Herramientas y Tecnologias </label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" (change)="onRadio3Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio3">Información Academica</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" (change)="onRadio4Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio4">Información Laboral</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" (change)="onRadio5Change()" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btnradio5">Cargo</label>
-      </div>
-    </div>
 
     <div class="div-inputs">
 
@@ -73,7 +56,7 @@
         </div>
 
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar" (click)="guardarLaboral()">GUARDAR</button>
+          <button type="submit" class="btn btn-primary btn-guardar"  (click)="guardarLaboral()">GUARDAR</button>
         </div>
       </form>
     </div>
