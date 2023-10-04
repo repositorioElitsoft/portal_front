@@ -1,5 +1,6 @@
 <div>
     <h2 class="herramientasytecnologiash2">Herramientas y Tecnologias</h2>
+    <br>
     <form class="form-container" [formGroup]="herramientasForm">
         <div formArrayName="rows">
             <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
