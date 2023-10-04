@@ -23,7 +23,8 @@ export class IniciarSesionComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private usuarioService: UsuarioService,
-    private cookieService: CookieService) { 
+    private cookieService: CookieService) 
+    { 
       this.loginForm = this.formBuilder.group({
         email: ['', Validators.required],
         password: ['', Validators.required]
