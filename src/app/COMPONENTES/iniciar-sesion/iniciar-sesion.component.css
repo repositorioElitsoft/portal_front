@@ -50,8 +50,8 @@ body {
 .btn-primary {
   background-color: #F76805; /* Color de fondo naranja #F76805 */
   border: none; /* Quita el borde del botón */
+  width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
 }
-
 /* Estilos para los mensajes de éxito y error */
 .alert-success {
   background-color: #D4EDDA; /* Color de fondo verde para mensajes de éxito */
@@ -74,6 +74,22 @@ body {
   margin: 0 auto; /* Centrar horizontalmente la imagen */
   animation: fadeIn 2s ease-in-out; /* Animación de aparición */
 }
+
+.nav-link2 {
+  color: #333; /* Color de texto por defecto */
+  /* Otros estilos opcionales */
+  text-decoration: none; /* Para quitar la subrayado del enlace */
+  width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+  text-align: center;
+ 
+}
+
+.nav-link2:hover {
+  color: orange; /* Color naranja al hacer hover */
+}
+
+
+
 
 @keyframes fadeIn {
   0% {
