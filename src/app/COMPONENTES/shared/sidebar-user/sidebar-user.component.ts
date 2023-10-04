@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ValidarMailService } from 'src/app/SERVICE/validar-mail.service';
 
 @Component({
   selector: 'app-sidebar-user',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./sidebar-user.component.css']
 })
 export class SidebarUserComponent {
+
 
 }

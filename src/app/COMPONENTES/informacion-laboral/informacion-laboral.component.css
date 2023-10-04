@@ -14,7 +14,9 @@
   border-radius: 10px;
   
 }
-
+.btn-marg{
+  margin-right: 8px;
+}
 .btn {
   font-size: 15px;
 }
@@ -30,7 +32,8 @@
 .btn-guardar {
   background-color: #F76805;
   border: none;
-
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .celda-laboral{

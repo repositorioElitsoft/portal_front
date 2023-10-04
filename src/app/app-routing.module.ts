@@ -28,6 +28,7 @@ import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academi
 import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/informacion-laboral.component';
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
+  {path:'verificar-email', component:ValidarMailComponent},
   {path:'', redirectTo:'datos_personales', pathMatch:'full'},
   {path:'datos_personales', component:DatosPersonalesComponent},
   {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},

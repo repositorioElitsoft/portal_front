@@ -25,9 +25,7 @@ export class InformacionLaboralComponent implements OnInit {
 
   minFecha: string = '';
 
-  herramientasA: Herramientas[] = []; // Lista de herramientas disponibles
-  herramientasSeleccionadas: Herramientas[] = [];
-  burbujas: { id: number, nombre: string }[] = [];
+
 
   constructor(private usuarioService: UsuarioService, 
     private formBuilder: FormBuilder,
@@ -50,16 +48,6 @@ export class InformacionLaboralComponent implements OnInit {
     });
   }
 
-  obtenerDatosUsuario(usuarioId: number) {
-    this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-      (usuario: Usuario) => {
-   
-      },
-      (error) => {
-        console.log('Error al obtener los datos del usuario:', error);
-      }
-    );
-  }
 
   obtenerLaboralesGuardados(){
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
@@ -73,14 +61,35 @@ export class InformacionLaboralComponent implements OnInit {
     })
   }
 
+  goBack(){
+    this.creationMode = false;
+  }
+
   editarLaboral(id: number | undefined | null){
     this.id = id;
+
+    const laboralToEdit = this.laborales.find(laboral => laboral.inf_lab_id === this.id);
+    this.form.patchValue({
+      inf_lab_crg_emp: laboralToEdit?.inf_lab_crg_emp,
+      inf_lab_emp: laboralToEdit?.inf_lab_emp,
+      inf_lab_act: laboralToEdit?.inf_lab_act,
+      inf_lab_fec_ini: laboralToEdit?.inf_lab_fec_ini,
+      inf_lab_fec_fin: laboralToEdit?.inf_lab_fec_fin,
+    });
+
     this.creationMode = !this.creationMode;
   }
 
 
   addExperienceRow(){
-    console.log("click")
+    this.id = null;
+    this.form.patchValue({
+      inf_lab_crg_emp: "",
+      inf_lab_emp: "",
+      inf_lab_act: "",
+      inf_lab_fec_ini:"",
+      inf_lab_fec_fin: "",
+    });
     this.creationMode = !this.creationMode;
   }
 
@@ -90,10 +99,6 @@ export class InformacionLaboralComponent implements OnInit {
     event.preventDefault();
 
     const laboralNueva: Laboral = this.form.value;
-
-
-
-
     this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
       (laboralGuardada: Laboral) => {
         console.log('Información laboral guardada:', laboralGuardada);
