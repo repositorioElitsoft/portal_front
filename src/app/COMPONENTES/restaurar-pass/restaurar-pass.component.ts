@@ -15,8 +15,7 @@ export class RestaurarPassComponent {
 
   constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
-      usr_email: new FormControl('', [Validators.required, Validators.email]),
-      usr_pass: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator });  
   }
