@@ -49,6 +49,10 @@ export class UsuarioService {
     return this.HttpClient.get<string>(`${this.baseUrl}/usuarios/${email}`);
   }
 
+  pedirReinicioPass(email: string){
+    return this.HttpClient.post(`${this.baseUrl}/usuarios/pedir-restauracion-pass`,{usr_email: email});
+  }
+
 //////////////////////////////////
 
   public getCurrentUser(){

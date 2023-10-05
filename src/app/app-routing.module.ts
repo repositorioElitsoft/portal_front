@@ -29,9 +29,11 @@ import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/i
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
+import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
 
 
 const routes: Routes = [
+  {path:'restaurar-contrasena', component:PeticionRestaurarPassComponent},
 
   {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},

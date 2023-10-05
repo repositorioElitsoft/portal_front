@@ -45,6 +45,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { NumericOnlyDirective } from './directives/numeric-only.directive';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
+import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar
     TableHerramientasComponent,
     NumericOnlyDirective,
     ValidarMailComponent,
-    PeticionRestaurarPassComponent
+    PeticionRestaurarPassComponent,
+    RestaurarPassComponent
   ],
   imports: [
     BrowserModule,
