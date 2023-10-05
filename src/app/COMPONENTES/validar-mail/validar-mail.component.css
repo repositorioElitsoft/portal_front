@@ -1,0 +1,14 @@
+.alert {
+    background-color: #f2f2f2; /* Fondo gris claro */
+    color: black; /* Texto negro */
+    border-color: #F57C27; /* Borde naranja */
+}
+
+.alert a {
+    color: #F57C27; /* Enlaces en color naranja */
+    text-decoration: none; /* Quita el subrayado de los enlaces */
+}
+
+.alert a:hover {
+    text-decoration: underline; /* Subraya los enlaces al pasar el mouse sobre ellos */
+}
