@@ -12,9 +12,14 @@ export class AuthService {
     this.currentUser = token ? { token } : null;
   }
   
-  isAuthenticatedUser(): boolean {
+  isAuthenticatedUser() {
     // Evaluamos si existe una propiedad token en currentUser
-    return !!this.currentUser?.token;
+    // return this.currentUser?.token;
+
+    if (this.getToken()) {
+      return true
+    }
+    return false;
   }
 
   getToken(): string {

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
@@ -32,6 +33,7 @@ export class TableHerramientasComponent implements OnInit {
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
     private notification: NotificationService,
+    private router: Router,
   ){}
 
   ngOnInit(): void {
@@ -40,7 +42,6 @@ export class TableHerramientasComponent implements OnInit {
     });
     this.getHerramientas()
     this.getCategories();
-    // this.addRow();
   }
 
   getHerramientas() {
@@ -155,27 +156,35 @@ export class TableHerramientasComponent implements OnInit {
   this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
 }
 
-  guardarDatos() {
-    const herramientas = this.herramientasForm.value.rows;
+  async guardarDatos() {
+    if (this.herramientasForm.invalid) {
+      this.notification.showNotification(
+        'error',
+        'Error al guardar los datos',
+        'Por favor, complete todos los campos antes de guardar.'
+      );
+      return;
+    }
 
-    this.herramientasService.guardarHerramienta(herramientas).subscribe(
-      (nuevaHerramienta: HerramientaData) => {
-        this.notification.showNotification(
-          'success',
-          'Datos guardados',
-          'Las herramientas han sido guardadas correctamente.'
-        );
-        console.log('Herramienta guardada exitosamente:', herramientas);
-      },
-      (error) => {
-        this.notification.showNotification(
-          'error',
-          'Error al guardar los datos',
-          'Ha ocurrido un error al guardar los datos, revise los campos y reintente.'
-        );
-        console.log('Error al guardar herramienta:', error);
+    const herramientas = this.herramientasForm.value.rows;
+    try {
+      this.herramientasService.guardarHerramienta(herramientas).toPromise();  
+      console.log('Herramienta:', herramientas);
+      const isConfirmed = await this.notification.showNotification(
+        'success',
+        'Datos guardados correctamente',
+        'Herramientas guardadas correctamente'
+      )
+      if (isConfirmed) {
+        this.router.navigate(['/informacion-academica']);
       }
-    );
+    } catch (error) {
+      this.notification.showNotification(
+        'error',
+        'Error al guardar los datos',
+        'Ha ocurrido un error al guardar los datos, revise los campos y reintente.'
+      );
+    }
   }
 
   addRow() {

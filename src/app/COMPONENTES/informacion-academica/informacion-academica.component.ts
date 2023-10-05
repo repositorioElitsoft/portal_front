@@ -20,12 +20,12 @@ export class InformacionAcademicaComponent implements OnInit {
 
   form!: FormGroup
   minFecha: string = '';
-
-
+  today: string;
 
   constructor(private usuarioService: UsuarioService, 
     private formBuilder: FormBuilder,
     private academicaService: AcademicaService, private route: ActivatedRoute, private router: Router) {
+      this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
      }
 
@@ -43,7 +43,9 @@ export class InformacionAcademicaComponent implements OnInit {
     });
   }
 
- 
+  redirectTo(){
+    this.navigateToRoute('/informacion-laboral')
+  }
 
   obtenerAcademicasGuardados(){
     this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
@@ -124,7 +126,4 @@ export class InformacionAcademicaComponent implements OnInit {
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
-
-
-
 }

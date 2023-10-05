@@ -1,22 +1,18 @@
 .container-bg {
-  padding: 30px; /* Espaciado alrededor del contenido */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el contenedor */
-  max-width: 1200px; /* Ancho máximo del contenedor */
-  height: 800px; /* Altura máxima del contenedor */
-  margin: 0 auto; /* Centrar horizontalmente el contenedor */
-  background-color: rgba(34, 34, 34, 0.8); /* Color de fondo principal gris oscuro con transparencia */
-  background-image: linear-gradient(135deg, #fff, #ccc); /* Gradiente de colores */
-  background-size: 200% 200%; /* Tamaño del gradiente */
-  animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
-  border-radius: 5px;
-  backdrop-filter: blur(10px); /* Efecto de cristal */
-  padding-top: 10%;
-}
-
-
-
-/* Estilos generales */
-body {
+    padding: 30px; /* Espaciado alrededor del contenido */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el contenedor */
+    max-width: 1200px; /* Ancho máximo del contenedor */
+    height: 800px; /* Altura máxima del contenedor */
+    margin: 0 auto; /* Centrar horizontalmente el contenedor */
+    background-color: rgba(34, 34, 34, 0.8); /* Color de fondo principal gris oscuro con transparencia */
+    background-image: linear-gradient(135deg, #fff, #ccc); /* Gradiente de colores */
+    background-size: 200% 200%; /* Tamaño del gradiente */
+    animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
+    border-radius: 5px;
+    backdrop-filter: blur(10px); /* Efecto de cristal */
+  }
+  /* Estilos generales */
+  body {
     background-color: #fff;
     color: #333; /* Color de texto principal */
   }
@@ -56,7 +52,6 @@ body {
     border: none; /* Quita el borde del botón */
     width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
   }
-  
   /* Estilos para los mensajes de éxito y error */
   .alert-success {
     background-color: #D4EDDA; /* Color de fondo verde para mensajes de éxito */
@@ -80,6 +75,22 @@ body {
     animation: fadeIn 2s ease-in-out; /* Animación de aparición */
   }
   
+  .nav-link2 {
+    color: #333; /* Color de texto por defecto */
+    /* Otros estilos opcionales */
+    text-decoration: none; /* Para quitar la subrayado del enlace */
+    width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+    text-align: center;
+   
+  }
+  
+  .nav-link2:hover {
+    color: orange; /* Color naranja al hacer hover */
+  }
+  
+  
+  
+  
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -89,31 +100,3 @@ body {
     }
   }
   
-
-  .navbar {
-    background-color: #F76805; /* Color de fondo blanco */
-    color: #fff; /* Color de texto negro */
-  }
-  
-
-  
-
-  .nav-link2 {
-    color: #333; /* Color de texto por defecto */
-    /* Otros estilos opcionales */
-    text-decoration: none; /* Para quitar la subrayado del enlace */
-    margin-top: 1vh;
-   
-  }
-  
-  .nav-link2:hover {
-    color: orange; /* Color naranja al hacer hover */
-  }
-
-  
-  @media (max-width: 1200px)  {
-    /* Consulta de medios para dispositivos con un ancho de pantalla entre 768px y 1000px */
-    .nav-link2 {
-        padding-left: 10%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
-    }
-}

@@ -63,13 +63,8 @@
 
 
       <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir experiencia laboral</button>
+      <button class="btn btn-primary btn-guardar ms-3" *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
-
-
-
-
-
-
 
     <div class="div-inputs" *ngIf="creationMode">
 
@@ -96,13 +91,13 @@
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="inf_lab_fec_ini">
+            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="inf_lab_fec_ini" [max]="today">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="inf_lab_fec_fin">
+            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="inf_lab_fec_fin" [max]="today">
           </div>
         </div>
    

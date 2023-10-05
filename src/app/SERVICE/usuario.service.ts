@@ -33,4 +33,8 @@ export class UsuarioService {
   obtenerUsuarioPorId(usuarioId: number): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.url}${usuarioId}`);
   }
+
+  obtenerUsuarioGuardado(): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.url}`);
+  }
 }

@@ -20,6 +20,7 @@ export class InformacionLaboralComponent implements OnInit {
 
   laborales: Laboral[] = []
   id: number | null | undefined = null
+  today;
 
   form!: FormGroup
 
@@ -31,6 +32,7 @@ export class InformacionLaboralComponent implements OnInit {
     private formBuilder: FormBuilder,
     private herramientaService:HerramientasService, 
     private laboralService: LaboralService, private route: ActivatedRoute, private router: Router) {
+      this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
      }
 
@@ -105,6 +107,9 @@ export class InformacionLaboralComponent implements OnInit {
     this.creationMode = !this.creationMode;
   }
 
+  redirectTo(){
+    this.navigateToRoute('/cargo-usuario')
+  }
 
   submitForm(event: Event) {
 
@@ -133,6 +138,4 @@ export class InformacionLaboralComponent implements OnInit {
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
-
-
 }

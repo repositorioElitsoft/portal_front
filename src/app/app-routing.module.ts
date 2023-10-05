@@ -29,20 +29,24 @@ import { InformacionLaboralComponent } from './COMPONENTES/informacion-laboral/i
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
+import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
+import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
 
 
 const routes: Routes = [
+  {path:'restaurar', component:RestaurarPassComponent},
 
-  {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'},
+  {path:'restaurar-contrasena', component:PeticionRestaurarPassComponent},
+
+  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
   {path:'verificar-email', component:ValidarMailComponent},
-  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
-  {path:'datos_personales', component:DatosPersonalesComponent},
-  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
-  {path:'informacion-academica', component:InformacionAcademicaComponent},
-  {path:'informacion-laboral', component:InformacionLaboralComponent},
-  {path:'cargo-usuario', component:CargoUsuarioComponent},
+  {path:'datos_personales', component:DatosPersonalesComponent, canActivate: [AuthGuard]},
+  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent, canActivate: [AuthGuard]},
+  {path:'informacion-academica', component:InformacionAcademicaComponent, canActivate: [AuthGuard]},
+  {path:'informacion-laboral', component:InformacionLaboralComponent, canActivate: [AuthGuard]},
+  {path:'cargo-usuario', component:CargoUsuarioComponent, canActivate: [AuthGuard]},
 
   {
     path: 'user',

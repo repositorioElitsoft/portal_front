@@ -19,7 +19,7 @@ export class DatosPersonalesComponent implements OnInit {
 
   countries: Pais[] = []; 
 
-  usuarioNuevo:Usuario={
+  usuarioGuardado:Usuario={
     usr_rut: '' ,
     usr_nom: '',
     usr_ap_pat: '',
@@ -80,11 +80,36 @@ export class DatosPersonalesComponent implements OnInit {
         console.error('Error fetching countries:', error);
       }
     );
+    this.ObtenerUsuarioGuardado();
   }
 
   navigateToRoute(route: string) {
     // Navegamos a la ruta proporcionada
     this.router.navigate([route]);
+  }
+
+
+  ObtenerUsuarioGuardado(){
+    this.usuarioService.obtenerUsuarioGuardado().subscribe({
+      next: (data) =>{
+        this.usuarioGuardado = data;
+        console.log(this.usuarioGuardado)
+        this.form.patchValue({
+
+          usr_rut: this.usuarioGuardado.usr_rut,
+          usr_nom: this.usuarioGuardado.usr_nom,
+          usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
+          usr_ap_mat: this.usuarioGuardado.usr_ap_mat,
+          pais: this.usuarioGuardado.pais?.pais_id,
+          usr_url_link: this.usuarioGuardado.usr_url_link,
+          usr_tel: this.usuarioGuardado.usr_tel,
+          
+        })
+      },
+      error: (err)=>{
+        console.log(err)
+      }
+    })
   }
 
   async submitForm(event: Event) {
@@ -95,7 +120,7 @@ export class DatosPersonalesComponent implements OnInit {
     console.log(user);
 
     user.pais = {
-      pais_id: this.form.value.pais.pais_id,
+      pais_id: this.form.value.pais,
       pais_nom: ""
     }
 

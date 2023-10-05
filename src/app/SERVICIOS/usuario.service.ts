@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 import { Register } from '../interface/register.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,15 @@ export class UsuarioService {
   baseUrl = 'http://localhost:8080';
   public loginStatusSubjec = new Subject<boolean>();
   
-  constructor(private HttpClient: HttpClient ) { }
+  constructor(private HttpClient: HttpClient,private route: ActivatedRoute, ) { }
 
   public registrarUsuario(registerData: Register){
     return this.HttpClient.post<any>(`${this.baseUrl}/usuarios/`, registerData)
+  }
+
+  public cambiarPassword(newPassword: string){
+    const cod = this.route.snapshot.queryParamMap.get("code");
+    return this.HttpClient.put<any>(`${this.baseUrl}/usuarios/cambiar-password/${cod}`, {pass: newPassword})
   }
   
   public iniciarSesion(datosInicioSesion: any) {
@@ -47,6 +53,10 @@ export class UsuarioService {
 
   obtenerRolUsuario(email: string): Observable<string> {
     return this.HttpClient.get<string>(`${this.baseUrl}/usuarios/${email}`);
+  }
+
+  pedirReinicioPass(email: string){
+    return this.HttpClient.post(`${this.baseUrl}/usuarios/pedir-restauracion-pass`,{usr_email: email});
   }
 
 //////////////////////////////////

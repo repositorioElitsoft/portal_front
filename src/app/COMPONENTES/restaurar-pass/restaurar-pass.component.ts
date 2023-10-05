@@ -1,24 +1,20 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
-import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
 import { Register } from 'src/app/interface/register.interface';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
-  selector: 'app-registrar',
-  templateUrl: './registrar.component.html',
-  styleUrls: ['./registrar.component.css']
+  selector: 'app-restaurar-pass',
+  templateUrl: './restaurar-pass.component.html',
+  styleUrls: ['./restaurar-pass.component.css']
 })
-export class RegistrarComponent {
+export class RestaurarPassComponent {
   registroForm: FormGroup;
 
   constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
-      usr_email: new FormControl('', [Validators.required, Validators.email]),
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator });  
@@ -26,17 +22,26 @@ export class RegistrarComponent {
 
   onSubmit() {
     if (this.registroForm.valid) {
-      const registerData: Register = {
-        usr_email: this.registroForm.get('usr_email')?.value,
-        usr_pass: this.registroForm.get('usr_pass')?.value
-      }
 
-      this.usuarioService.registrarUsuario(registerData).subscribe(
-        () => {
-          this.notification.showNotification(
-            'success',
-            'Registro Exitoso',
-            'Hemos enviado un correo de confirmacion.');
+
+      this.usuarioService.cambiarPassword(this.registroForm.get('usr_pass')?.value).subscribe(
+        async (res) => {
+          try{
+            console.log(res)
+            const isConfirmed = await this.notification.showNotification(
+              "success",
+              "Restauración de Contraseña",
+              "Revisa tu bandeja de entrada, si el email existe recibirás un correo con instrucciones para restaurar tu constraseña."
+            );
+      
+            if (isConfirmed) {
+              this.router.navigate(['/']);
+            }
+          
+          } catch (error) {
+    
+          }
+      
         },
         () => this.notification.showNotification(
           'error',

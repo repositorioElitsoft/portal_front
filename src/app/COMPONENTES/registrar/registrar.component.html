@@ -33,7 +33,7 @@
                 <label for="password">Contraseña:</label>
                 <input type="password" class="form-control" id="usr_pass" formControlName="usr_pass" required [ngClass]="{'is-invalid': registroForm.get('usr_pass')?.invalid && registroForm.get('usr_pass')?.touched}">
                 <div *ngIf="registroForm.get('usr_pass')?.invalid && registroForm.get('usr_pass')?.touched" class="invalid-feedback">
-                  Contraseña inválida (al menos 3 caracteres).
+                  Contraseña inválida (al menos 8 caracteres).
                 </div>
               </div>
               <div class="form-group">
@@ -48,8 +48,15 @@
               
             </form>
             <br>  
-              <a class="nav-link2" routerLink="/iniciar-sesion" routerLinkActive="active">Si tiene una cuenta, inicie sesión aquí</a>     
+            <div class="d-flex justify-content-center align-items-center">
+              <a class="nav-link2 " routerLink="/iniciar-sesion" routerLinkActive="active">Si tiene una cuenta, inicie sesión aquí</a>     
               <br>  
+            </div>
+            <div class="d-flex justify-content-center align-items-center"> 
+              <br>  
+              <a class="nav-link2 " routerLink="/restaurar-contrasena" routerLinkActive="active">Si se ha olvidado de su contraseña ingrese aquí</a>     
+              <br> 
+            </div>
           </div>
         </div>
       </div>

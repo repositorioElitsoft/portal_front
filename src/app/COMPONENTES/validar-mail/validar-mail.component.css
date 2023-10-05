@@ -12,3 +12,13 @@
 .alert a:hover {
     text-decoration: underline; /* Subraya los enlaces al pasar el mouse sobre ellos */
 }
+
+.alerta-custom{
+    margin-top: 18vh;
+}
+
+@media (max-width: 768px)  {
+    .alerta-custom{
+        margin-top: 0vh;
+    }
+}
