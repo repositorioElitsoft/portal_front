@@ -19,7 +19,8 @@ export class RegistrarComponent {
   constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
       usr_email: new FormControl('', [Validators.required, Validators.email]),
-
+      usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator });  
   }
 
@@ -37,7 +38,18 @@ export class RegistrarComponent {
             'Registro Exitoso',
             'Hemos enviado un correo de confirmacion.');
         },
+        () => this.notification.showNotification(
+          'error',
+          'Error al registrar el usuario',
+          'Hubo un error al registrar el usuario. Por favor, inténtalo más tarde.'
+        )
       );
+    } else {
+      this.notification.showNotification(
+        'error',
+        'Error en el formulario',
+        'Hubo al enviar el formulario. Por favor, revisa los campos.'
+      )
     }
   }
 

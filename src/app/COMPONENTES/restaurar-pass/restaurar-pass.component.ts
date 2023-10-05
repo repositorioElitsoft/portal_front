@@ -22,17 +22,26 @@ export class RestaurarPassComponent {
 
   onSubmit() {
     if (this.registroForm.valid) {
-      const registerData: Register = {
-        usr_email: this.registroForm.get('usr_email')?.value,
-        usr_pass: this.registroForm.get('usr_pass')?.value
-      }
 
-      this.usuarioService.registrarUsuario(registerData).subscribe(
-        () => {
-          this.notification.showNotification(
-            'success',
-            'Registro Exitoso',
-            'Hemos enviado un correo de confirmacion.');
+
+      this.usuarioService.cambiarPassword(this.registroForm.get('usr_pass')?.value).subscribe(
+        async (res) => {
+          try{
+            console.log(res)
+            const isConfirmed = await this.notification.showNotification(
+              "success",
+              "Restauración de Contraseña",
+              "Revisa tu bandeja de entrada, si el email existe recibirás un correo con instrucciones para restaurar tu constraseña."
+            );
+      
+            if (isConfirmed) {
+              this.router.navigate(['/']);
+            }
+          
+          } catch (error) {
+    
+          }
+      
         },
         () => this.notification.showNotification(
           'error',

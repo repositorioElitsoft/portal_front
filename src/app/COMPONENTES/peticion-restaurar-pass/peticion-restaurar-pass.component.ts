@@ -32,10 +32,11 @@ export class PeticionRestaurarPassComponent {
   ngOnInit() {
   }
 
-  async onSubmit() {
+  onSubmit() {
    
     this.usuarioService.pedirReinicioPass(this.loginForm.get('email')?.value).subscribe(
-      (res) => {
+      async (res) => {
+        try{
         console.log(res)
         const isConfirmed = await this.notification.showNotification(
           "success",
@@ -46,6 +47,11 @@ export class PeticionRestaurarPassComponent {
         if (isConfirmed) {
           this.router.navigate(['/']);
         }
+      
+      } catch (error) {
+
+      }
+        
       },
       (e) => {
         console.log(`Error: ${e}`);

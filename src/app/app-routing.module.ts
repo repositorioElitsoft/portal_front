@@ -30,9 +30,12 @@ import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario
 import { AuthGuard } from './core/guards/auth.guard';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
+import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
 
 
 const routes: Routes = [
+  {path:'restaurar', component:RestaurarPassComponent},
+
   {path:'restaurar-contrasena', component:PeticionRestaurarPassComponent},
 
   {path:'', redirectTo:'datos_personales', pathMatch:'full'},

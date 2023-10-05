@@ -17,7 +17,7 @@
         <div class="col-md-6">
           <div class="card">
             <div class="card-header">
-              <h3>Iniciar Sesión</h3>
+              <h3>Escriba correo electrónico</h3>
             </div>
             <div class="card-body">
               <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
@@ -31,7 +31,7 @@
                    >
                 </div>
                 <!-- Botón de inicio de sesión -->
-                <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary mt-3">Enviar Correo</button>
                 <div *ngIf="error" class="error">{{ error }}</div>
   
          
@@ -40,9 +40,7 @@
               
               </form>
          
-              <br>
-                  <a class="nav-link2 position-fixed top-50 start-50 translate-middle-x" routerLink="/registrar" routerLinkActive="active" >Si no está registrado, regístrese aquí</a> 
-                  <br>    
+            
             </div>
           </div>
         </div>
