@@ -80,7 +80,7 @@ body {
   color: #333; /* Color de texto por defecto */
     /* Otros estilos opcionales */
     text-decoration: none; /* Para quitar la subrayado del enlace */
-    padding-left: 25%;
+   margin-top: 1vh;
  
 }
 
