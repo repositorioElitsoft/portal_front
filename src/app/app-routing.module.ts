@@ -33,16 +33,15 @@ import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.co
 
 const routes: Routes = [
 
-  {path:'', redirectTo:'iniciar-sesion', pathMatch:'full'},
+  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
   {path:'verificar-email', component:ValidarMailComponent},
-  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
-  {path:'datos_personales', component:DatosPersonalesComponent},
-  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
-  {path:'informacion-academica', component:InformacionAcademicaComponent},
-  {path:'informacion-laboral', component:InformacionLaboralComponent},
-  {path:'cargo-usuario', component:CargoUsuarioComponent},
+  {path:'datos_personales', component:DatosPersonalesComponent, canActivate: [AuthGuard]},
+  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent, canActivate: [AuthGuard]},
+  {path:'informacion-academica', component:InformacionAcademicaComponent, canActivate: [AuthGuard]},
+  {path:'informacion-laboral', component:InformacionLaboralComponent, canActivate: [AuthGuard]},
+  {path:'cargo-usuario', component:CargoUsuarioComponent, canActivate: [AuthGuard]},
 
   {
     path: 'user',
