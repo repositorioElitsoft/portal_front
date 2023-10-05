@@ -169,7 +169,7 @@ export class TableHerramientasComponent implements OnInit {
     const herramientas = this.herramientasForm.value.rows;
     try {
       this.herramientasService.guardarHerramienta(herramientas).toPromise();  
-
+      console.log('Herramienta:', herramientas);
       const isConfirmed = await this.notification.showNotification(
         'success',
         'Datos guardados correctamente',

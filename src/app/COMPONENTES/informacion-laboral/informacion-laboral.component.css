@@ -14,6 +14,11 @@
   border-radius: 10px;
   
 }
+
+.div-inputs{
+  width: 100%;
+}
+
 .btn-marg{
   margin-right: 8px;
 }
@@ -35,6 +40,18 @@
   background-color: #F57C27;
   border-color: #F57C27;
 }
+
+.btn-danger{
+  font-size: 14px;
+   padding: 8px 16px;
+   margin: 5%;
+ }
+ .btn-warning{
+  font-size: 14px;
+   padding: 8px 16px;
+   margin: 5%;
+ }
+
 
 .celda-laboral{
   border-bottom: 1px rgb(190, 190, 190) solid;
