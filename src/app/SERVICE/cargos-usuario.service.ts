@@ -23,4 +23,8 @@ export class CargosUsuarioService {
   listarCargos(): Observable<CargoUsuario[]> {
     return this.http.get<CargoUsuario[]>(`${this.url}listar`);
   }
+
+  getCargosByUserId(){
+    return this.http.get<CargoUsuario>(`${this.url}`);
+  }
 }
