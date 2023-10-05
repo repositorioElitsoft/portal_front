@@ -10,6 +10,7 @@
   animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
   border-radius: 5px;
   backdrop-filter: blur(10px); /* Efecto de cristal */
+  padding-top: 10%;
 }
 /* Estilos generales */
 body {
@@ -77,10 +78,9 @@ body {
 
 .nav-link2 {
   color: #333; /* Color de texto por defecto */
-  /* Otros estilos opcionales */
-  text-decoration: none; /* Para quitar la subrayado del enlace */
-  width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
-  text-align: center;
+    /* Otros estilos opcionales */
+    text-decoration: none; /* Para quitar la subrayado del enlace */
+    padding-left: 25%;
  
 }
 
@@ -91,11 +91,10 @@ body {
 
 
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
+  
+@media (max-width: 1200px)  {
+  /* Consulta de medios para dispositivos con un ancho de pantalla entre 768px y 1000px */
+  .nav-link2 {
+      padding-left: 10%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
   }
 }

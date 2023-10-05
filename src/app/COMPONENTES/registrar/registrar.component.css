@@ -10,6 +10,7 @@
   animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
   border-radius: 5px;
   backdrop-filter: blur(10px); /* Efecto de cristal */
+  padding-top: 10%;
 }
 
 
@@ -113,6 +114,6 @@ body {
   @media (max-width: 1200px)  {
     /* Consulta de medios para dispositivos con un ancho de pantalla entre 768px y 1000px */
     .nav-link2 {
-        padding-left: 15%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
+        padding-left: 10%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
     }
 }
