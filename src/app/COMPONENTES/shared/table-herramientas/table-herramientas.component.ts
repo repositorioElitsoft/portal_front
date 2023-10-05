@@ -26,7 +26,6 @@ export class TableHerramientasComponent implements OnInit {
   versionByRow: VersionProducto[][] = [];
   selectedCategoriaId: any;
 
-
   constructor(
     private formBuilder: FormBuilder,
     private herramientasService: HerramientasService,
@@ -39,9 +38,26 @@ export class TableHerramientasComponent implements OnInit {
     this.herramientasForm = this.formBuilder.group({
       rows: this.formBuilder.array([])
     });
-
+    this.getHerramientas()
     this.getCategories();
-    this.addRow();
+    // this.addRow();
+  }
+
+  getHerramientas() {
+    this.herramientasService.getHerramientasByUserId().subscribe(
+      (herramientas: HerramientaData[]) => {
+        if (herramientas.length > 0) {
+          console.log('respuesta: ', herramientas);
+          this.herramientas = herramientas;
+          this.createFormRows();
+        } else {
+          this.addRow();
+        }
+      },
+      (error) => {
+        console.error('Error al obtener herramientas:', error);
+      }
+    );
   }
 
   get rowsFormArray() {
@@ -61,7 +77,7 @@ export class TableHerramientasComponent implements OnInit {
 
   getProducts(index: number) {
     const row = this.rowsFormArray.at(index);
-    const selectedCategoriaIdControl = row.get('selectedCategoriaId');    
+    const selectedCategoriaIdControl = row.get('herr_cat_name');    
     const selectedCategoriaIdValue = selectedCategoriaIdControl?.value;
 
     if (!selectedCategoriaIdValue) {
@@ -83,7 +99,7 @@ export class TableHerramientasComponent implements OnInit {
     
   getVersion(index: number) {
     const row = this.rowsFormArray.at(index);
-    const selectedProductoIdControl = row.get('selectedProductoId');
+    const selectedProductoIdControl = row.get('herr_prd_name');
     const selectedProductoIdValue = selectedProductoIdControl?.value;
 
     if (!selectedProductoIdValue) {
@@ -101,6 +117,43 @@ export class TableHerramientasComponent implements OnInit {
       }
     );
   }
+
+  createFormRows() {
+    const rowsArray = this.herramientas.map((herramienta, index) => {
+      console.log('Nombre categoria:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_nom);
+      console.log('Nombre Producto:', herramienta.versionProducto.prd.prd_nom);
+      console.log('Herramienta:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_id)
+      this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
+        next: (data: Producto[]) => {
+          this.productByRow[index] = data;
+        },
+        error: (error) => {
+          console.log('Error al obtener productos:', error);
+        }
+      });
+      this.productoService.getVersionByProduct(herramienta.versionProducto.prd.prd_id).subscribe({
+        next: (data: VersionProducto[]) => {
+          this.versionByRow[index] = data;
+        },
+        error: (error) => {
+          console.log('Error al obtener versiones:', error);
+        }
+      })
+      const row = this.formBuilder.group({
+        herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
+        herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
+        herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
+        versionProducto: this.formBuilder.group({
+          vrs_id: [herramienta.versionProducto.vrs_id, Validators.required]
+        }),
+        herr_is_cert: [herramienta.herr_is_cert],
+        herr_nvl: [herramienta.herr_nvl]
+      });
+      return row;
+  });
+
+  this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
+}
 
   guardarDatos() {
     const herramientas = this.herramientasForm.value.rows;
@@ -127,18 +180,18 @@ export class TableHerramientasComponent implements OnInit {
 
   addRow() {
     const newRow = this.formBuilder.group({
-      selectedCategoriaId: [{ value: '', disabled: false }, Validators.required],
-      selectedProductoId: [{ value: '', disabled: true }, Validators.required],
+      herr_cat_name: [{ value: '', disabled: false }, Validators.required],
+      herr_prd_name: [{ value: '', disabled: true }, Validators.required],
       herr_usr_anos_exp: [''],
-      herr_is_cert: [false],
-      herr_nvl: [''],
       versionProducto: this.formBuilder.group({
         vrs_id: [{ value: 0, disabled: true }, Validators.required]
-      })
+      }),
+      herr_is_cert: [false],
+      herr_nvl: [''],
     });
   
-    newRow.get('selectedCategoriaId')?.valueChanges.subscribe((value) => {
-      const selectedProductoIdControl = newRow.get('selectedProductoId');
+    newRow.get('herr_cat_name')?.valueChanges.subscribe((value) => {
+      const selectedProductoIdControl = newRow.get('herr_prd_name');
       if (value) {
         selectedProductoIdControl?.enable();
       } else {
@@ -146,7 +199,7 @@ export class TableHerramientasComponent implements OnInit {
       }
     });
   
-    newRow.get('selectedProductoId')?.valueChanges.subscribe((value) => {
+    newRow.get('herr_prd_name')?.valueChanges.subscribe((value) => {
       const versionProductoControl = newRow.get('versionProducto.vrs_id');
       if (value) {
         versionProductoControl?.enable();

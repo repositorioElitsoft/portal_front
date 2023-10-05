@@ -7,6 +7,7 @@ import { PaisService } from 'src/app/service/pais.service';
 import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
+import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
   selector: 'app-datos-personales',
@@ -14,9 +15,6 @@ import * as intlTelInput from 'intl-tel-input';
   styleUrls: ['./datos-personales.component.css']
 })
 export class DatosPersonalesComponent implements OnInit {
-
-
-
   form!: FormGroup;
 
   countries: Pais[] = []; 
@@ -44,6 +42,7 @@ export class DatosPersonalesComponent implements OnInit {
     private usuarioService: UsuarioService, 
     private paisService: PaisService, 
     private toastr:ToastrService,
+    private notification: NotificationService,
     private route: ActivatedRoute) 
     { 
       this.buildForm();
@@ -83,15 +82,12 @@ export class DatosPersonalesComponent implements OnInit {
     );
   }
 
-
-
-
   navigateToRoute(route: string) {
     // Navegamos a la ruta proporcionada
     this.router.navigate([route]);
   }
 
-  submitForm(event: Event) {
+  async submitForm(event: Event) {
     event.preventDefault();
 
     const user: Usuario = this.form.value;
@@ -104,15 +100,20 @@ export class DatosPersonalesComponent implements OnInit {
     }
 
     console.log(user);
+    try{
+      this.usuarioService.updateUsuario(user).toPromise()
+      const isConfirmed = await this.notification.showNotification(
+        "success",
+        "Datos guardados",
+        "Datos actualizados correctamente"
+      );
 
-    this.usuarioService.updateUsuario(user).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {
-        console.log(error);
+      if (isConfirmed) {
+        this.router.navigate(['/herramientas-tecnologias']);
       }
-    });
+    } catch (error) {
+
+    }
 
     /*
     this.paisService.obtenerPaisPorNombre(this.usuarioNuevo.pais_nom).subscribe(

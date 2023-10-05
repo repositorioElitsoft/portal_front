@@ -4,15 +4,15 @@
     <form class="form-container" [formGroup]="herramientasForm">
         <div formArrayName="rows">
             <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox" >
                     <label class="form-label" for="categoria">Categoría</label>
-                    <select class="form-control" id="categoria" formControlName="selectedCategoriaId" (change)="getProducts(i)" name="categoria">
+                    <select class="form-control" id="categoria" formControlName="herr_cat_name" (change)="getProducts(i)" name="categoria">
                         <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="producto">Producto</label>
-                    <select class="form-control" id="producto" formControlName="selectedProductoId" name="producto" (change)="getVersion(i)">
+                    <select class="form-control" id="producto" formControlName="herr_prd_name" name="producto" (change)="getVersion(i)">
                         <option *ngFor="let producto of productByRow[i]" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
                     </select>
                 </div>
@@ -42,7 +42,7 @@
                     <input type="text" class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button type="button" class="custom-button" (click)="removeRow(i)">-</button>
+                    <button *ngIf="i !== 0" type="button" class="custom-button" (click)="removeRow(i)">-</button>
 
                 </div>
                 <div class="mt-4 col-md-1">

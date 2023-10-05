@@ -35,10 +35,7 @@ export class IniciarSesionComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
-      return;
-    }
-
+   
     this.loginService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
       (token) => {
         this.cookieService.set('token', token.Authorization)
@@ -47,6 +44,7 @@ export class IniciarSesionComponent implements OnInit {
       },
       (e) => {
         console.log(`Error: ${e}`);
+        this.inicioSesionFallido= true 
       }
       
     );

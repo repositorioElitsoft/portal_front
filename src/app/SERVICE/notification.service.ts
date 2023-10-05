@@ -8,11 +8,13 @@ export class NotificationService {
 
   constructor() { }
 
-  showNotification(icon: SweetAlertIcon, title: string, text: string) {
-    Swal.fire({
+  async showNotification(icon: SweetAlertIcon, title: string, text: string) {
+    const result = await Swal.fire({
       icon,
       title,
       text,
     });
+
+    return result.isConfirmed
   }
 }
