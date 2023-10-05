@@ -4,6 +4,13 @@
 .app-sidebar-admin {
     z-index: 0;
 }
+
+.hamburger-menu
+{  background-color: white; /* Fondo blanco */
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Sombreado oscuro en la parte inferior */
+  height: 50px;
+  width: 100%;
+  position: fixed;}
   
 .navbar {
     margin-top: 10px;
@@ -105,7 +112,7 @@
 
 
 
-@media (min-width: 768px) {
+@media (min-width: 1300px) {
 
     .menu__btn{
       display: none;

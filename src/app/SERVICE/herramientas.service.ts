@@ -26,12 +26,15 @@ export class HerramientasService {
     return this.http.get<Herramientas>(`${this.url}${herramientaId}`);
   }
 
-
   obtenerHerramientasConProductosPorUsuario(usuarioId: number): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}por-usuario-con-productos/${usuarioId}`);
   }
 
   listarHerramientas(): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}lista-herramientas`);
+  }
+
+  getHerramientasByUserId(): Observable<HerramientaData[]> {
+    return this.http.get<HerramientaData[]>(this.url);
   }
 }

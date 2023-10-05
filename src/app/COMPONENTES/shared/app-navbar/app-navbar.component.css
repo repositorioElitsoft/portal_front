@@ -3,6 +3,9 @@
     background-color: white; /* Fondo blanco */
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Sombreado oscuro en la parte inferior */
     padding: 30px 0; /* Aumentar el espacio vertical (ajusta según tus necesidades) */
+    position: fixed;
+    z-index: 10;
+    width: 100%;
   }
   
   /* Centrar el contenido en la barra de navegación */
@@ -54,7 +57,7 @@
   }
   
   
-  @media (max-width: 768px) {
+  @media (max-width: 1300px) {
 
     .navbar{
       display: none;

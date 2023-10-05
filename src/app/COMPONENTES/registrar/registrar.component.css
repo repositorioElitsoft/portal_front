@@ -53,6 +53,7 @@ body {
   .btn-primary {
     background-color: #F76805; /* Color de fondo naranja #F76805 */
     border: none; /* Quita el borde del botón */
+    width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
   }
   
   /* Estilos para los mensajes de éxito y error */
@@ -93,7 +94,25 @@ body {
     color: #fff; /* Color de texto negro */
   }
   
-  .nav-link {
-    color: #fff !important; /* Color de texto de los enlaces de navegación en negro */
+
+  
+
+  .nav-link2 {
+    color: #333; /* Color de texto por defecto */
+    /* Otros estilos opcionales */
+    text-decoration: none; /* Para quitar la subrayado del enlace */
+    padding-left: 25%;
+   
   }
   
+  .nav-link2:hover {
+    color: orange; /* Color naranja al hacer hover */
+  }
+
+  
+  @media (max-width: 1200px)  {
+    /* Consulta de medios para dispositivos con un ancho de pantalla entre 768px y 1000px */
+    .nav-link2 {
+        padding-left: 15%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
+    }
+}
