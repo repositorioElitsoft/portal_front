@@ -105,6 +105,9 @@ export class InformacionLaboralComponent implements OnInit {
     this.creationMode = !this.creationMode;
   }
 
+  redirectTo(){
+    this.navigateToRoute('/cargo-usuario')
+  }
 
   submitForm(event: Event) {
 
@@ -133,6 +136,4 @@ export class InformacionLaboralComponent implements OnInit {
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
-
-
 }

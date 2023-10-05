@@ -7,6 +7,9 @@
 </head>
 <link rel="stylesheet" href="\informacion-academica.component.css">
 <body>
+  <app-sidebar-user></app-sidebar-user>
+  <br>
+  <app-sidebar-userdesk></app-sidebar-userdesk>
   <br><br><br>
   <div class="container-datos-personales">
 
@@ -53,6 +56,7 @@
         No has definido ninguna experiencia académica
       </div>
       <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir estudios</button>
+      <button class="btn btn-primary btn-guardar" *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
 
     <div class="div-inputs" *ngIf="creationMode">
@@ -74,13 +78,13 @@
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputApellidop" formControlName="inf_acad_fec_ini" [min]="minFecha" name="inputFechaini">
+            <input type="date" class="form-control" id="inputFechain" formControlName="inf_acad_fec_ini" [min]="minFecha" [max]="today" name="inputFechaini">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" formControlName="inf_acad_fec_fin" [min]="minFecha" name="inputFechafin">
+            <input type="date" class="form-control" id="inputFechafin" formControlName="inf_acad_fec_fin" [min]="minFecha" [max]="today" name="inputFechafin">
           </div>
         </div>
         <div class="row mb-3">

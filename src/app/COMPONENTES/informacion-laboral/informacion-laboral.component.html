@@ -7,8 +7,10 @@
 </head>
 <link rel="stylesheet" href="\informacion-laboral.component.css">
 <body>
+  <app-sidebar-user></app-sidebar-user>
+  <br>
+  <app-sidebar-userdesk></app-sidebar-userdesk>
   <br><br><br>
-  
   <div class="container-datos-personales">
 
 
@@ -61,13 +63,8 @@
 
 
       <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir experiencia laboral</button>
+      <button class="btn btn-primary btn-guardar ms-3" *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
-
-
-
-
-
-
 
     <div class="div-inputs" *ngIf="creationMode">
 
