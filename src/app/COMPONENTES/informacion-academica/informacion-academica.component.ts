@@ -58,6 +58,18 @@ export class InformacionAcademicaComponent implements OnInit {
     })
   }
 
+  eliminarAcademica(id: number | undefined | null){
+    this.academicaService.eliminarAcademica(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.obtenerAcademicasGuardados();
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
+  }
+
   goBack(){
     this.creationMode = false;
   }
