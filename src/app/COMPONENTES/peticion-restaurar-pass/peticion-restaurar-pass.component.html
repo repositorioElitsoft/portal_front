@@ -1,0 +1,54 @@
+<div class="container-bg">
+    <nav class="navbar navbar-expand">
+      <div class="container">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  <div class="container mt-5">
+      <!-- Aquí sigue el formulario de inicio de sesión -->
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3>Iniciar Sesión</h3>
+            </div>
+            <div class="card-body">
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <!-- Campos del formulario -->
+                <div class="form-group">
+                  <label for="email">Correo electrónico:</label>
+                  <input type="email" class="form-control" id="email" formControlName="email"
+                   [(ngModel)]="email" name="email" required
+                   [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+                   
+                   >
+                </div>
+                <!-- Botón de inicio de sesión -->
+                <button type="submit" class="btn btn-primary mt-3">Iniciar Sesión</button>
+                <div *ngIf="error" class="error">{{ error }}</div>
+  
+         
+  
+               <!--  <button type="submit"  onclick="limpiarCampos()">Limpiar</button> -->
+              
+              </form>
+         
+              <br>
+                  <a class="nav-link2 position-fixed top-50 start-50 translate-middle-x" routerLink="/registrar" routerLinkActive="active" >Si no está registrado, regístrese aquí</a> 
+                  <br>    
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="elitsoft">
+        <img src="https://static.wixstatic.com/media/5a9998_6a14b7ced59447ae8f4bceee9e8d1478~mv2.png/v1/fill/w_182,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/elitesoft%201.png" alt="Elitesoft Logo">
+      </div>
+    </div>
+  </div>

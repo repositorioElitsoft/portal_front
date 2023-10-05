@@ -44,6 +44,7 @@ import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-side
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { NumericOnlyDirective } from './directives/numeric-only.directive';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
+import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.co
     SidebarUserComponent,
     TableHerramientasComponent,
     NumericOnlyDirective,
-    ValidarMailComponent
+    ValidarMailComponent,
+    PeticionRestaurarPassComponent
   ],
   imports: [
     BrowserModule,
