@@ -21,6 +21,7 @@
   padding: 8px 16px;
   background-color: #F57C27;
   border-color: #F57C27;
+  font-family: 'Meera Inimai', sans-serif;
 }
 
 .btn-guardar {
@@ -32,6 +33,12 @@
 
 .form-control{
   max-width: 260px;
+}
+
+
+.col-form-label{
+  color: #333;   font-family: 'Meera Inimai', sans-serif;
+  font-size: 14px;
 }
 
 
