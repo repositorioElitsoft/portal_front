@@ -46,6 +46,8 @@ import { NumericOnlyDirective } from './directives/numeric-only.directive';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
 import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -99,6 +101,8 @@ import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-p
     ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
     BrowserAnimationsModule,
     FormsModule,
+    MatTableModule,
+    MatPaginatorModule,
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'

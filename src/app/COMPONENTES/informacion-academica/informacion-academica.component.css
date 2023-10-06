@@ -44,13 +44,19 @@
 }
 
 .btn-guardar {
-  font-size: 14px;
+  font-size: 12px;
   padding: 8px 16px;
   background-color: #F57C27;
   border-color: #F57C27;
   margin-left: 5px;
 }
-
+.btn-guardar2 {
+  font-size: 12px;
+  padding: 8px 16px;
+  background-color: #F57C27;
+  border-color: #F57C27;
+  margin-left: 5px;
+}
 .btn-primary{
  font-size: 14px;
  
@@ -58,16 +64,55 @@
   background-color: #F57C27;
   border-color: #F57C27;
 }
-.btn-danger{
+
+/* Estilos para los botones */
+.btn-danger {
+  font-size: 12px;
+  margin: 2%;
+
+}
+.btn-danger:hover {
+
+  animation: pulse 1s infinite; /* Aplicar la animación de pulso */
+}
+
+.btn-warning {
   font-size: 14px;
-   padding: 8px 16px;
-   margin: 5%;
+  margin: 5%;
+
+}
+
+.btn-warning:hover {
+
+  animation: pulse 1s infinite; /* Aplicar la animación de pulso */
+}
+ .Titulos{
+  font-size: 12px;
+  font-family: 'Meera Inimai', sans-serif;
+  font-weight: bold;
  }
- .btn-warning{
+
+ .fechas2 {
   font-size: 14px;
-   padding: 8px 16px;
-   margin: 5%;
- }
+  font-family: 'Meera Inimai', sans-serif;
+
+}
+
+
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
@@ -79,6 +124,23 @@
     padding-bottom: 5%;
     align-items: center;
   }
-
+  .Titulos{
+    font-size: 10px;
+    font-family: 'Meera Inimai', sans-serif;
+    align-items: center; 
+    justify-content: center;
+   }
+  
+   .fechas2 {
+    font-size: 10px;
+    font-family: 'Meera Inimai', sans-serif;
+    align-items: center; 
+    justify-content: center;
+  
+  }
+  
+  
+  
 
 }
+

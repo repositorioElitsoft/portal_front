@@ -33,25 +33,58 @@
 .form {
   width: fit-content;
 }
-
-.btn-guardar {
+.btn-primary{
   font-size: 14px;
+  
+   padding: 8px 16px;
+   background-color: #F57C27;
+   border-color: #F57C27;
+ }
+ 
+ /* Estilos para los botones */
+ .btn-danger {
+   font-size: 12px;
+   margin: 2%;
+ 
+ }
+ .btn-danger:hover {
+ 
+   animation: pulse 1s infinite; /* Aplicar la animación de pulso */
+ }
+ 
+ .btn-warning {
+   font-size: 14px;
+   margin: 5%;
+ 
+ }
+ 
+
+ .btn-danger2{
+ color:#fff;
   padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-}
+  background-color: red;
 
-.btn-danger{
-  font-size: 14px;
-   padding: 8px 16px;
-   margin: 5%;
- }
- .btn-warning{
-  font-size: 14px;
-   padding: 8px 16px;
-   margin: 5%;
  }
 
+  .btn-danger2:hover{
+ color:#fff;
+  padding: 8px 16px;
+  background-color: red;
+
+ }
+
+
+ .btn-danger2:action{
+  color:#fff;
+   padding: 8px 16px;
+   background-color: rgb(65, 14, 14);
+
+  }
+
+ .btn-warning:hover {
+ 
+   animation: pulse 1s infinite; /* Aplicar la animación de pulso */
+ }
 
 .celda-laboral{
   border-bottom: 1px rgb(190, 190, 190) solid;
@@ -65,9 +98,19 @@
   font-weight: 600;
 }
 
-.fechas{
-  color: rgb(102, 102, 102);
+
+.Titulos{
+  font-size: 12px;
+  font-family: 'Meera Inimai', sans-serif;
+  font-weight: bold;
+ }
+
+ .fechas2 {
+  font-size: 14px;
+  font-family: 'Meera Inimai', sans-serif;
+
 }
+
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
@@ -79,6 +122,14 @@
     padding-bottom: 5%;
     align-items: center;
   }
+
+  .fechas2{
+    font-size: 12px;
+    font-family: 'Meera Inimai', sans-serif;
+    font-weight: bold;
+   }
+  
+
 
 
 }

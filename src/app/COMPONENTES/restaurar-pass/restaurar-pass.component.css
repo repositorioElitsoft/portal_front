@@ -10,7 +10,7 @@
     animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
     border-radius: 5px;
     backdrop-filter: blur(10px); /* Efecto de cristal */
-    padding-top: 10%;
+    padding-top:16vh;
   }
   
   

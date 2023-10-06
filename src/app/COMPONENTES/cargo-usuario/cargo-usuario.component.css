@@ -2,16 +2,18 @@
 .container-datos-personales {
   display: flex;
   align-items: center;
+  justify-content: center;
   font-family: 'Meera Inimai', sans-serif;
   padding-top: 10px;
-  padding-bottom: 10px;
   font-size: 12px;
  padding: 5%;
  margin-top: 5%;
  margin-left: 20%;
  margin-right: 20%;
+
   border: 2px solid orange;
   border-radius: 10px;
+  
   
 }
 
@@ -34,6 +36,10 @@
   border-color: #F57C27;
 }
 
+.col-form-label{
+  color: #333;   font-family: 'Meera Inimai', sans-serif;
+  font-size: 14px;
+}
 
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */

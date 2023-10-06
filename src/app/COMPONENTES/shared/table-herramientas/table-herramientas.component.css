@@ -87,6 +87,11 @@
   /* Aplica un efecto de escala para el efecto "pulse" */
   transform: scale(1.1);
 }
+
+
+.box-box{
+  margin-top: 10vh;
+}
 @media screen and (min-width: 1300px) and (max-width: 1600px) {
   .form-container {
     margin-left: 150px;
@@ -104,4 +109,5 @@
     .combobox {
       flex-basis: calc(50% - 20px); /* 50% de ancho para 2 elementos por fila */
     }
+
   }

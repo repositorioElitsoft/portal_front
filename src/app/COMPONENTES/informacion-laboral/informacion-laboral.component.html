@@ -22,15 +22,22 @@
         
         <div class="row celda-laboral">
           <div class="col-6 cargo">
+            <h4 class="Titulos mb-5">Cargo</h4>
               <p>{{ labor.inf_lab_crg_emp}}</p>
           </div>
 
-          <div class="col-4 fechas">
-           {{ labor.inf_lab_fec_ini}}
-            {{ labor.inf_lab_fec_fin}}
+          <div class="col-2 fechas">
+            <h4 class="Titulos mb-5">Fecha Inicio</h4>
+            <p class="fechas2">{{ labor.inf_lab_fec_ini}}</p>
+          </div>
+          <div class="col-2 fechas">
+            <h4 class="Titulos mb-5">Fecha Fin</h4>
+            <p class="fechas2">
+            {{ labor.inf_lab_fec_fin}}</p>
           </div>
           <div class="col-2">
           <div class="flex">
+            <h4 class="Titulos  mb-4">Acciones</h4>
 
            <button class="btn btn-warning" (click)="editarLaboral(labor.inf_lab_id)"> 
             <svg fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +125,7 @@
        
         <div class="div-form d-grid justify-content-end">
           <div class="flex">
-            <button (click)="goBack()" class="btn btn-danger btn-marg" >Cancelar</button>
+            <button (click)="goBack()" class="btn btn-danger2 btn-marg" >Cancelar</button>
             <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Guardar</button>
           </div>
         </div>
