@@ -147,11 +147,21 @@
     align-items: center;
   }
 
-  .fechas2{
-    font-size: 12px;
+  .Titulos{
+    font-size: 10px;
     font-family: 'Meera Inimai', sans-serif;
-    font-weight: bold;
+    align-items: center; 
+    justify-content: center;
    }
+  
+   .fechas2 {
+    font-size: 10px;
+    font-family: 'Meera Inimai', sans-serif;
+    align-items: center; 
+    justify-content: center;
+  
+  }
+  
   
 
 
