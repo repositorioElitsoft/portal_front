@@ -6,8 +6,9 @@ import { HerramientasService } from 'src/app/service/herramientas.service';
 import { Usuario } from '../../interface/user.interface'
 import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Laboral } from 'src/app/interface/laboral.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
+
 
 
 @Component({
@@ -27,7 +28,10 @@ export class InformacionLaboralComponent implements OnInit {
 
   minFecha: string = '';
 
+  checkboxFormCreated = false;
+
   herramientasDisponibles!: HerramientaData[];
+  herrIdList: number[] = [];
 
 
   constructor(private usuarioService: UsuarioService, 
@@ -41,6 +45,7 @@ export class InformacionLaboralComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerLaboralesGuardados();
+   
   }
 
   private buildForm(){
@@ -51,6 +56,8 @@ export class InformacionLaboralComponent implements OnInit {
       inf_lab_fec_ini: ["",[Validators.required]],
       inf_lab_fec_fin: ["",[Validators.required]],
     });
+
+    this.generateHerrForm()
   }
 
 
@@ -92,20 +99,57 @@ export class InformacionLaboralComponent implements OnInit {
       inf_lab_act: laboralToEdit?.inf_lab_act,
       inf_lab_fec_ini: laboralToEdit?.inf_lab_fec_ini,
       inf_lab_fec_fin: laboralToEdit?.inf_lab_fec_fin,
+
     });
+
+
+    this.herrIdList.forEach(herrId =>{
+      this.form.get(herrId.toString())?.patchValue(false);
+    })
+
+    laboralToEdit?.herramientas?.forEach(herr =>{
+      if(this.herrIdList.find((herrID) => herrID === herr.herr_usr_id)){
+        this.form.get(herr.herr_usr_id.toString())?.patchValue(true);
+      }
+    })
+    
+    
+  
+    
+
+    this.creationMode = !this.creationMode;
+  }
+
+  generateHerrForm(){
+
     
     this.herramientaService.getHerramientasByUserId().subscribe({
       next:(data)=>{
         
+        console.log("recieved data herramientas: ",data)
         this.herramientasDisponibles = data;
+   
+        this.herramientasDisponibles.forEach((herramienta)=>{
+
+          let wasCheckedAlready = false
+
+      
+          
+          const newControl = new FormControl(wasCheckedAlready);
+          this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
+  
+          this.herrIdList.push(herramienta.herr_usr_id)
+       
+
+        })
+     
+        this.checkboxFormCreated = true;
       },
       error:(err)=>{
         console.log(err)
       }
     })
 
-
-    this.creationMode = !this.creationMode;
   }
 
 
@@ -118,6 +162,12 @@ export class InformacionLaboralComponent implements OnInit {
       inf_lab_fec_ini:"",
       inf_lab_fec_fin: "",
     });
+
+    
+    this.herrIdList.forEach(herrId =>{
+      this.form.get(herrId.toString())?.patchValue(false);
+    })
+
     this.creationMode = !this.creationMode;
   }
 
@@ -128,8 +178,42 @@ export class InformacionLaboralComponent implements OnInit {
   submitForm(event: Event) {
 
     event.preventDefault();
+    console.log("Form guardado:",this.form.value)
 
     const laboralNueva: Laboral = this.form.value;
+
+    let herramientasFinal: HerramientaData[] = [];
+    this.herrIdList.forEach(id =>{
+      
+
+      let herra: HerramientaData = {
+          herr_usr_id: id,
+          herr_is_cert: false,
+          herr_nvl: "",
+          herr_usr_anos_exp: "",
+          versionProducto: {
+            vrs_id: 0,
+            vrs_name: "",
+            prd: {
+              prd_id:0,
+              prd_nom:"",
+              cat_prod_id:{
+                cat_prod_id: 0,
+                cat_prod_nom: ""
+              }
+            }
+          }
+      }
+
+      if (this.form.get(id.toString())?.value == true) {
+        herramientasFinal.push(herra);
+      }
+      
+    })
+
+    laboralNueva.herramientas = herramientasFinal;
+
+    console.log("Laboral final guardada", laboralNueva)
     this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
       (laboralGuardada: Laboral) => {
         console.log('Información laboral guardada:', laboralGuardada);

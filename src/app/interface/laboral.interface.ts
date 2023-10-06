@@ -1,3 +1,6 @@
+
+import { HerramientaData } from "./herramienta-data.interface";
+
 import { Herramientas } from "./herramientas.interface";
 
 export interface Laboral{
@@ -9,5 +12,5 @@ export interface Laboral{
     inf_lab_fec_fin:Date,
     usr_id?:number,
     herr_usr_id?:number
-    herramientas?: Herramientas[];
+    herramientas?: HerramientaData[];
 }
