@@ -7,6 +7,7 @@ import { Usuario } from '../../interface/user.interface'
 import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 
 
 @Component({
@@ -26,12 +27,14 @@ export class InformacionLaboralComponent implements OnInit {
 
   minFecha: string = '';
 
+  herramientasDisponibles!: HerramientaData[];
 
 
   constructor(private usuarioService: UsuarioService, 
     private formBuilder: FormBuilder,
     private herramientaService:HerramientasService, 
-    private laboralService: LaboralService, private route: ActivatedRoute, private router: Router) {
+    private laboralService: LaboralService, 
+    private route: ActivatedRoute, private router: Router) {
       this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
      }
@@ -90,6 +93,17 @@ export class InformacionLaboralComponent implements OnInit {
       inf_lab_fec_ini: laboralToEdit?.inf_lab_fec_ini,
       inf_lab_fec_fin: laboralToEdit?.inf_lab_fec_fin,
     });
+    
+    this.herramientaService.getHerramientasByUserId().subscribe({
+      next:(data)=>{
+        
+        this.herramientasDisponibles = data;
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+    })
+
 
     this.creationMode = !this.creationMode;
   }
