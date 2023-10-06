@@ -24,6 +24,15 @@
   font-family: 'Meera Inimai', sans-serif;
 }
 
+.btn-primary:hover {
+  background-color: #ffffff;
+  border-color: #F57C27;
+  color: #F57C27;
+
+}
+
+
+
 .btn-guardar {
   font-size: 14px;
   padding: 8px 16px;

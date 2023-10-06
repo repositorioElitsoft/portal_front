@@ -53,8 +53,15 @@
     /* Estilos para el botón de registro */
     .btn-primary {
       background-color: #F76805; /* Color de fondo naranja #F76805 */
-      border: none; /* Quita el borde del botón */
+      border-color: #F57C27;
       width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
+    }
+    
+    .btn-primary:hover {
+      background-color: #ffffff;
+      border-color: #F57C27;
+      color: #F57C27;
+    
     }
     
     /* Estilos para los mensajes de éxito y error */

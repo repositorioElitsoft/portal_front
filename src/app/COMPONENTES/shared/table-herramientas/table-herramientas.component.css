@@ -34,7 +34,16 @@
     padding: 8px 16px;
     background-color: #F57C27;
     border-color: #F57C27;
+    font-family: 'Meera Inimai', sans-serif;
   }
+  
+  .btn-primary:hover {
+    background-color: #ffffff;
+    border-color: #F57C27;
+    color: #F57C27;
+  
+  }
+  
   
   .container {
     padding-top: 189px;
