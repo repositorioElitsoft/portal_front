@@ -1,59 +1,59 @@
-body {
+/* body {
   background-color: white;
   font-family: Arial, sans-serif;
-}
+} */
 
-.admin-panel-text {
+/* .admin-panel-text {
   font-size: 24px;
   font-weight: bold;
-  color: #F76805; /* Color naranja */
-}
+  color: #F76805; 
+} */
 
-.container {
+/* .container {
   background-color: white;
   padding: 20px;
   border: 2px solid orange;
   margin: 20px;
-}
+} */
 
-h1 {
+/* h1 {
   font-size: 28px;
   color: black;
-}
+} */
 
-table {
+/* table {
   width: 100%;
   border-collapse: collapse;
-}
+} */
 
-th, td {
+/* th, td {
   border: 1px solid orange;
-  padding: 10px;
-  text-align: left;
-}
+  /* padding: 10px; */
+  /* text-align: left; 
+} */
 
-th {
+/* th {
   background-color: orange;
   color: white;
-}
+} */
 
-tr:nth-child(even) {
+/* tr:nth-child(even) {
   background-color: #f2f2f2;
-}
+} */
 
-.btn {
+/* .btn {
   background-color: orange;
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   margin-right: 5px;
-}
-
+} */
+/* 
 .btn-primary {
   background-color: orange;
-}
+} */
 
-.btn-danger {
+/* .btn-danger {
   background-color: red;
-}
+} */
