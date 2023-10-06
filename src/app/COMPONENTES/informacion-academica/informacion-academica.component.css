@@ -65,6 +65,19 @@
   border-color: #F57C27;
 }
 
+.btn-danger2{
+  color:#fff;
+   padding: 8px 16px;
+   background-color: red;
+ 
+  }
+ 
+  .btn-danger2:hover{
+    color:#fff;
+     padding: 8px 16px;
+     background-color: rgb(61, 15, 15);
+   
+    }
 /* Estilos para los botones */
 .btn-danger {
   font-size: 12px;

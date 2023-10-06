@@ -66,13 +66,12 @@
 
  }
 
-  .btn-danger2:hover{
- color:#fff;
-  padding: 8px 16px;
-  background-color: red;
-
- }
-
+   .btn-danger2:hover{
+    color:#fff;
+     padding: 8px 16px;
+     background-color: rgb(61, 15, 15);
+   
+    }
 
  .btn-danger2:action{
   color:#fff;
