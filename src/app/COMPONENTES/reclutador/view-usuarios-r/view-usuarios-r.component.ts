@@ -46,6 +46,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.dataSource.sort = this.sort;
     this.obtenerUsuarios();
   }
  
