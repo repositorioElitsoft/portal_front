@@ -118,5 +118,8 @@
       pointer-events: none;
 
     }
-
+    .menu__box{
+      display: none;
+      pointer-events: none;
+    }
 }
