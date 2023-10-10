@@ -7,73 +7,127 @@
 </head>
 <link rel="stylesheet" href="\informacion-laboral.component.css">
 <body>
+  <app-sidebar-user></app-sidebar-user>
+  <br>
+  <app-sidebar-userdesk></app-sidebar-userdesk>
+  <br><br><br>
   <div class="container-datos-personales">
 
 
-    <div class="div-menu">
-      <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" (change)="onRadio1Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio1">Datos Personales</label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" (change)="onRadio2Change()" autocomplete="off"  >
-        <label class="btn btn-outline-secondary" for="btnradio2" >Herramientas y Tecnologias </label>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" (change)="onRadio3Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio3">Información Academica</label>
+    <div class="div-inputs" *ngIf="!creationMode" >
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" (change)="onRadio4Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio4">Información Laboral</label>
+      <div *ngFor="let labor of laborales">
+        
+        <div class="row celda-laboral">
+          <div class="col-6 cargo">
+            <h4 class="Titulos mb-5">Cargo</h4>
+              <p>{{ labor.inf_lab_crg_emp}}</p>
+          </div>
 
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" (change)="onRadio5Change()" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btnradio5">Cargo</label>
+          <div class="col-2 fechas">
+            <h4 class="Titulos mb-5">Fecha Inicio</h4>
+            <p class="fechas2">{{ labor.inf_lab_fec_ini}}</p>
+          </div>
+          <div class="col-2 fechas">
+            <h4 class="Titulos mb-5">Fecha Fin</h4>
+            <p class="fechas2">
+            {{ labor.inf_lab_fec_fin}}</p>
+          </div>
+          <div class="col-2">
+          <div class="flex">
+            <h4 class="Titulos  mb-4">Acciones</h4>
+
+           <button class="btn btn-warning" (click)="editarLaboral(labor.inf_lab_id)"> 
+            <svg fill="#000000" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+              <title>pencil</title>
+              <path d="M0 32l12-4 20-20-8-8-20 20zM4 28l2.016-5.984 4 4zM8 20l12-12 4 4-12 12z"></path>
+              </svg>
+           </button>
+
+           <button class="btn btn-danger" (click)="eliminarLaboral(labor.inf_lab_id)"> 
+            <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 12V17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M4 7H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+           </button>
+
+          </div>
+
+
+          </div>
+        </div>
       </div>
+      
+      <div *ngIf="laborales.length === 0">
+        No has definido ninguna experiencia laboral
+      </div>
+      
+
+
+      <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir experiencia laboral</button>
+      <button class="btn btn-primary btn-guardar ms-3" *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
 
-    <div class="div-inputs">
+    <div class="div-inputs" *ngIf="creationMode">
 
-      <form>
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
         <div class="row mb-3">
           <label for="inputCargo" class="col-sm-2 col-form-label">Cargo:</label>
           <div class="col-sm-10">
-            <input type="inputCargo" class="form-control" id="inputCargo" [(ngModel)]="laboral.inf_lab_crg_emp" name="inputCargo" >
+            <input type="inputCargo" class="form-control" id="inputCargo" formControlName="inf_lab_crg_emp">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputNomEmp" class="col-sm-2 col-form-label">Nombre Empresa:</label>
           <div class="col-sm-10">
-            <input type="inputNomEmp" class="form-control" id="inputNomEmp" [(ngModel)]="laboral.inf_lab_emp" name="inputNomEmp">
+            <input type="inputNomEmp" class="form-control" id="inputNomEmp" formControlName="inf_lab_emp">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputActRea" class="col-sm-2 col-form-label">Actividades Realizadas:</label>
           <div class="col-sm-10">
-            <input type="inputActRea" class="form-control" id="inputActRea" [(ngModel)]="laboral.inf_lab_act" name="inputActRea">
+            <input type="inputActRea" class="form-control" id="inputActRea" formControlName="inf_lab_act">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechaini" [(ngModel)]="laboral.inf_lab_fec_ini" [min]="minFecha" name="inputFechaini">
+            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="inf_lab_fec_ini" [max]="today">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" [(ngModel)]="laboral.inf_lab_fec_fin" [min]="minFecha" name="inputFechafin">
+            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="inf_lab_fec_fin" [max]="today">
           </div>
         </div>
-        <div class="form-group">
-          <label for="herramienta">Herramienta:</label>
-          <select class="form-control" id="herramienta" [(ngModel)]="herramientas.herr_usr_id" name="productos">
-            <option *ngFor="let herramienta of herramientasA" [value]="herramienta.herr_usr_id">
-              {{ herramienta.prd_nom }}
-            </option>
-          </select>
-        </div>
 
+
+        <div class="row mb-3">
+          <label for="inputHerramientas" class="col-sm-2 col-form-label">Tecnologías Utilizadas:</label>
+          <div class="col-sm-10">
+            <div *ngIf="herramientasDisponibles && checkboxFormCreated">
+              <div  *ngFor="let herramienta of herramientasDisponibles; let i = index">
+                <input type="checkbox"  [formControlName]="herramienta.herr_usr_id">
+                {{ herramienta.versionProducto.prd.prd_nom }} (  {{ herramienta.versionProducto.vrs_name }})
+              </div>
+            </div>
+          </div>
+        </div>
+   
+
+       
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar" (click)="guardarLaboral()">GUARDAR</button>
+          <div class="flex">
+            <button (click)="goBack()" class="btn btn-danger2 btn-marg" >Cancelar</button>
+            <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Guardar</button>
+          </div>
         </div>
       </form>
     </div>

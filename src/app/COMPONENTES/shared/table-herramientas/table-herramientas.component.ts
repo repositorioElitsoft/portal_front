@@ -1,18 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
-import { CertificacionService } from 'src/app/service/certificacion.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { NivelService } from 'src/app/service/nivel.service';
 import { ProductoService } from 'src/app/service/producto.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
-import { Usuario } from 'src/app/interface/user.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { Certificacion } from 'src/app/interface/certificacion.interface';
-import { Herramientas } from 'src/app/interface/herramientas.interface';
-import { Niveles } from 'src/app/interface/niveles.interface';
 import { Producto } from 'src/app/interface/producto.interface';
+import { VersionProducto } from 'src/app/interface/version.interface';
+import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
+import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
   selector: 'app-table-herramientas',
@@ -21,86 +19,53 @@ import { Producto } from 'src/app/interface/producto.interface';
 })
 export class TableHerramientasComponent implements OnInit {
 
-  herramienta: Herramientas = {
-    herr_usr_anos_exp: '',
-    herr_usr_vrs: '',
-    usr_id: -1
-  };
-
-  usuario: Usuario = {
-    usr_id: -1,
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_pass: '',
-    usr_tel: '',
-    usr_url_link: '',
-    pais_nom: '',
-    pais: { pais_id: undefined,
-            pais_nom: '' } // Asegúrate de tener una instancia de Pais aquí
-  };
-
-  selectedCategoriaId: number | undefined;
-  selectedProductoId: number | undefined;
-  selectedCertificadoId: number | undefined;
-  selectedNivelId: number | undefined;
-
+  herramientasForm!: FormGroup;
+  herramientas: HerramientaData[] = []
   categorias: CategoriaProducto[] = [];
-  productos: Producto[] = [];
-  certificados: Certificacion[] = [];
-  niveles: Niveles[] = [];
-  public rows: any[] = [];
-
-  @ViewChild('btnradio1', { static: true }) btnradio1!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio2', { static: true }) btnradio2!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio3', { static: true }) btnradio3!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio4', { static: true }) btnradio4!: ElementRef<HTMLInputElement>;
-  @ViewChild('btnradio5', { static: true }) btnradio5!: ElementRef<HTMLInputElement>;
+  rows: any[] = [];
+  productByRow: Producto[][] = [];
+  versionByRow: VersionProducto[][] = [];
+  selectedCategoriaId: any;
 
   constructor(
-    private router: Router,
+    private formBuilder: FormBuilder,
     private herramientasService: HerramientasService,
     private categoriaProductoService: CategoriaProductoService,
-    private certificacionService: CertificacionService,
-    private nivelService: NivelService,
     private productoService: ProductoService,
-    private route: ActivatedRoute,
-    private usuarioService:UsuarioService
+    private notification: NotificationService,
+    private router: Router,
   ){}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const usr_id = params['usr_id'];
-      console.log(usr_id)
-      this.usuario.usr_id = usr_id
-      if (usr_id) {
-        this.herramienta.usr_id = usr_id;
-        if (typeof usr_id === 'number') { // Verificar si usr_id es un número
-          this.obtenerDatosUsuario(usr_id);
-        }
-      }
-      this.obtenerCategorias();
-      this.obtenerProductos();
-      this.obtenerCertificaciones();
-      this.obtenerNiveles();
+    this.herramientasForm = this.formBuilder.group({
+      rows: this.formBuilder.array([])
     });
+    this.getHerramientas()
+    this.getCategories();
   }
 
-  obtenerDatosUsuario(usuarioId: number) {
-    this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-      (usuario: Usuario) => {
-        this.usuario = usuario; // Almacena los datos del usuario
+  getHerramientas() {
+    this.herramientasService.getHerramientasByUserId().subscribe(
+      (herramientas: HerramientaData[]) => {
+        if (herramientas.length > 0) {
+          console.log('respuesta: ', herramientas);
+          this.herramientas = herramientas;
+          this.createFormRows();
+        } else {
+          this.addRow();
+        }
       },
       (error) => {
-        console.log('Error al obtener los datos del usuario:', error);
+        console.error('Error al obtener herramientas:', error);
       }
     );
   }
 
+  get rowsFormArray() {
+    return this.herramientasForm.get('rows') as FormArray;
+  }
 
-  obtenerCategorias() {
+  getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
       (data: CategoriaProducto[]) => {
         this.categorias = data;
@@ -111,124 +76,152 @@ export class TableHerramientasComponent implements OnInit {
     );
   }
 
-  obtenerProductos() {
-    if (!this.selectedCategoriaId) {
-      // Si no hay categoría seleccionada, no se realiza la llamada
-      this.productos = []; // Limpiamos el arreglo de productos
+  getProducts(index: number) {
+    const row = this.rowsFormArray.at(index);
+    const selectedCategoriaIdControl = row.get('herr_cat_name');    
+    const selectedCategoriaIdValue = selectedCategoriaIdControl?.value;
+
+    if (!selectedCategoriaIdValue) {
+      console.log('No se ha seleccionado una categoría');
+      this.productByRow[index] = [];
       return;
     }
 
-    this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
+    this.productoService.obtenerProductosPorCategoria(selectedCategoriaIdValue).subscribe(
       (data: Producto[]) => {
-        this.productos = data;
-        console.log('Productos cargados:', this.productos);
+        this.productByRow[index] = data;
+        console.log('Productos cargados para la fila ' + index + ':', this.productByRow[index]);
       },
       (error) => {
         console.log('Error al obtener productos:', error);
       }
     );
   }
+    
+  getVersion(index: number) {
+    const row = this.rowsFormArray.at(index);
+    const selectedProductoIdControl = row.get('herr_prd_name');
+    const selectedProductoIdValue = selectedProductoIdControl?.value;
 
-  obtenerCertificaciones() {
-    this.certificacionService.obtenerTodosLosCertificados().subscribe(
-      (data: Certificacion[]) => {
-        this.certificados = data;
-        console.log('Certificaciones cargadas:', this.certificados);
+    if (!selectedProductoIdValue) {
+      console.log('No se ha seleccionado un producto');
+      return;
+    }
+    
+    this.productoService.getVersionByProduct(selectedProductoIdValue).subscribe(
+      (data: VersionProducto[]) => {
+        this.versionByRow[index] = data;
+        console.log(`Versiones cargadas para la fila ${index}:`, this.versionByRow[index]);
       },
       (error) => {
-        console.log('Error al obtener certificaciones:', error);
+        console.log(`Error al obtener las versiones: ${error}`);
       }
     );
   }
 
-  obtenerNiveles() {
-    this.nivelService.listarNiveles().subscribe(
-      (data: Niveles[]) => {
-        this.niveles = data;
-        console.log('Niveles cargados:', this.niveles);
-      },
-      (error) => {
-        console.log('Error al obtener niveles:', error);
+  createFormRows() {
+    const rowsArray = this.herramientas.map((herramienta, index) => {
+      console.log('Nombre categoria:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_nom);
+      console.log('Nombre Producto:', herramienta.versionProducto.prd.prd_nom);
+      console.log('Herramienta:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_id)
+      this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
+        next: (data: Producto[]) => {
+          this.productByRow[index] = data;
+        },
+        error: (error) => {
+          console.log('Error al obtener productos:', error);
+        }
+      });
+      this.productoService.getVersionByProduct(herramienta.versionProducto.prd.prd_id).subscribe({
+        next: (data: VersionProducto[]) => {
+          this.versionByRow[index] = data;
+        },
+        error: (error) => {
+          console.log('Error al obtener versiones:', error);
+        }
+      })
+      const row = this.formBuilder.group({
+        herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
+        herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
+        herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
+        versionProducto: this.formBuilder.group({
+          vrs_id: [herramienta.versionProducto.vrs_id, Validators.required]
+        }),
+        herr_is_cert: [herramienta.herr_is_cert],
+        herr_nvl: [herramienta.herr_nvl]
+      });
+      return row;
+  });
+
+  this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
+}
+
+  async guardarDatos() {
+    if (this.herramientasForm.invalid) {
+      this.notification.showNotification(
+        'error',
+        'Error al guardar los datos',
+        'Por favor, complete todos los campos antes de guardar.'
+      );
+      return;
+    }
+
+    const herramientas = this.herramientasForm.value.rows;
+    try {
+      this.herramientasService.guardarHerramienta(herramientas).toPromise();  
+      console.log('Herramienta:', herramientas);
+      const isConfirmed = await this.notification.showNotification(
+        'success',
+        'Datos guardados correctamente',
+        'Herramientas guardadas correctamente'
+      )
+      if (isConfirmed) {
+        this.router.navigate(['/informacion-academica']);
       }
-    );
-  }
-
-  navigateToRoute(route: string) {
-    // Navegamos a la ruta proporcionada
-    this.router.navigate([route]);
-  }
-
-  // Agregamos eventos a cada radio button y navegamos a la ruta correspondiente
-  onRadio1Change() {
-    this.navigateToRoute('/datos_personales');
-  }
-
-  onRadio2Change() {
-    this.navigateToRoute('/herramientas-tecnologias');
-  }
-
-  onRadio3Change() {
-    this.navigateToRoute('/informacion-academica');
-  }
-
-  onRadio4Change() {
-    this.navigateToRoute('/informacion-laboral');
-  }
-
-  onRadio5Change() {
-    this.navigateToRoute('/cargo-usuario');
-  }
-
-  guardarDatos() {
-    // Verificamos si se ha seleccionado una categoría
-    if (!this.selectedCategoriaId) {
-      console.log('Seleccione una categoría antes de guardar.');
-      return;
+    } catch (error) {
+      this.notification.showNotification(
+        'error',
+        'Error al guardar los datos',
+        'Ha ocurrido un error al guardar los datos, revise los campos y reintente.'
+      );
     }
-
-    // Verificamos si se ha seleccionado un producto
-    if (!this.selectedProductoId) {
-      console.log('Seleccione un producto antes de guardar.');
-      return;
-    }
-
-    // Verificamos si se ha seleccionado una certificación
-    if (!this.selectedCertificadoId) {
-      console.log('Seleccione una certificación antes de guardar.');
-      return;
-    }
-
-    // Verificamos si se ha seleccionado un nivel
-    if (!this.selectedNivelId) {
-      console.log('Seleccione un nivel antes de guardar.');
-      return;
-    }
-
-    // Verificamos si tenemos un usuario válido antes de guardar
-    if (!this.usuario || this.usuario.usr_id === undefined) {
-      console.log('No se encontró un usuario válido.');
-      return;
-    }
-
-    // Completamos los datos de la herramienta con las selecciones
-    this.herramienta.cat_prod_id = this.selectedCategoriaId;
-    this.herramienta.prd_id = this.selectedProductoId;
-    this.herramienta.cert_id = this.selectedCertificadoId;
-    this.herramienta.nvl_id = this.selectedNivelId;
-
-    // Llamamos al servicio para guardar la herramienta
-    this.herramientasService.guardarHerramienta(this.herramienta, this.usuario.usr_id).subscribe(
-      (nuevaHerramienta: Herramientas) => {
-        console.log('Herramienta guardada exitosamente:', nuevaHerramienta);
-        // Puedes redirigir al usuario a otra página o realizar alguna otra acción después de guardar.
-      },
-      (error) => {
-        console.log('Error al guardar herramienta:', error);
-      }
-    );
   }
 
   addRow() {
-    this.rows.push({});
+    const newRow = this.formBuilder.group({
+      herr_cat_name: [{ value: '', disabled: false }, Validators.required],
+      herr_prd_name: [{ value: '', disabled: true }, Validators.required],
+      herr_usr_anos_exp: [''],
+      versionProducto: this.formBuilder.group({
+        vrs_id: [{ value: 0, disabled: true }, Validators.required]
+      }),
+      herr_is_cert: [false],
+      herr_nvl: [''],
+    });
+  
+    newRow.get('herr_cat_name')?.valueChanges.subscribe((value) => {
+      const selectedProductoIdControl = newRow.get('herr_prd_name');
+      if (value) {
+        selectedProductoIdControl?.enable();
+      } else {
+        selectedProductoIdControl?.disable();
+      }
+    });
+  
+    newRow.get('herr_prd_name')?.valueChanges.subscribe((value) => {
+      const versionProductoControl = newRow.get('versionProducto.vrs_id');
+      if (value) {
+        versionProductoControl?.enable();
+      } else {
+        versionProductoControl?.disable();
+      }
+    });
+  
+    this.rowsFormArray.push(newRow);
+    console.log('Filas', this.rowsFormArray.value);
+  }
+
+  removeRow(index: number) {
+    this.rowsFormArray.removeAt(index);
   }
 }

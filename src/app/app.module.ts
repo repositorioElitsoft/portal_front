@@ -39,10 +39,39 @@ import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sideba
 import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
 import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
 import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
+import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
+import { AppSidebar2Component } from './COMPONENTES/shared/app-sidebar2/app-sidebar2.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { NumericOnlyDirective } from './directives/numeric-only.directive';
+import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
+import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
+import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
+import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
+import { SidebarComponent } from './COMPONENTES/pages/admin/sidebar/sidebar.component';
+import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
+import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sidebar/sidebar.component';
+import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
+import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
+import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
+import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
+    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -74,9 +103,33 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     CargoUsuarioComponent,
     AppNavbarComponent,
     AppSidebarComponent,
+    AppSidebar2Component,
     AppFooterComponent,
+    SidebarUserDeskComponent,
     SidebarUserComponent,
-    TableHerramientasComponent
+    TableHerramientasComponent,
+    NumericOnlyDirective,
+    ValidarMailComponent,
+    PeticionRestaurarPassComponent,
+    RestaurarPassComponent,
+    DashboardComponent,
+    UserDashboardComponent,
+    ProfileComponent,
+    SidebarComponent,
+    WelcomeComponent,
+    ViewCategoriasComponent,
+    AddCategoriaComponent,
+    ViewExamenesComponent,
+    AddExamenComponent,
+    ActualizarExamenComponent,
+    ViewExamenPreguntasComponent,
+    AddPreguntaComponent,
+    ActualizarPreguntaComponent,
+    UserSidebar,
+    LoadExamenComponent,
+    InstruccionesComponent,
+    StartComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,10 +139,21 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
     BrowserAnimationsModule,
     FormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
+
   ],
   providers: [
     {

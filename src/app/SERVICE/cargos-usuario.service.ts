@@ -12,8 +12,8 @@ export class CargosUsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  guardarCargo(cargo: CargoUsuario, usuarioId: number): Observable<CargoUsuario> {
-    return this.http.post<CargoUsuario>(`${this.url}?usr_id=${usuarioId}`, cargo);
+  guardarCargo(cargo: CargoUsuario): Observable<CargoUsuario> {
+    return this.http.post<CargoUsuario>(this.url, cargo);
   }
 
   obtenerCargosPorUsuario(usuarioId: number): Observable<CargoUsuario[]> {
@@ -22,5 +22,9 @@ export class CargosUsuarioService {
 
   listarCargos(): Observable<CargoUsuario[]> {
     return this.http.get<CargoUsuario[]>(`${this.url}listar`);
+  }
+
+  getCargosByUserId(){
+    return this.http.get<CargoUsuario>(`${this.url}`);
   }
 }

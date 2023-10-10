@@ -1,21 +1,135 @@
-/* Estilo para las burbujas */
-.bubble {
-  display: inline-block;
-  padding: 5px 10px;
-  margin: 5px;
-  border-radius: 20px;
-  background-color: #007bff;
-  color: white;
+/* Estilos para la franja naranja en pantallas más grandes (por defecto) */
+.container-datos-personales {
+  display: flex;
+  align-items: center;
+  font-family: 'Meera Inimai', sans-serif;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 12px;
+ padding: 5%;
+ margin-top: 5%;
+ margin-left: 20%;
+ margin-right: 20%;
+  border: 2px solid orange;
+  border-radius: 10px;
+  
+}
+
+.div-inputs{
+  width: 100%;
+}
+
+.btn-marg{
+  margin-right: 8px;
+}
+.btn {
+  font-size: 15px;
+}
+
+.div-menu {
+  margin: 50px;
+}
+
+.form {
+  width: fit-content;
+}
+.btn-primary{
   font-size: 14px;
-  cursor: pointer;
+  
+   padding: 8px 16px;
+   background-color: #F57C27;
+   border-color: #F57C27;
+ }
+ 
+ /* Estilos para los botones */
+ .btn-danger {
+   font-size: 12px;
+   margin: 2%;
+ 
+ }
+ .btn-danger:hover {
+ 
+   animation: pulse 1s infinite; /* Aplicar la animación de pulso */
+ }
+ 
+ .btn-warning {
+   font-size: 14px;
+   margin: 5%;
+ 
+ }
+ 
+
+ .btn-danger2{
+ color:#fff;
+  padding: 8px 16px;
+  background-color: red;
+
+ }
+
+  .btn-danger2:hover{
+ color:#fff;
+  padding: 8px 16px;
+  background-color: red;
+
+ }
+
+
+ .btn-danger2:action{
+  color:#fff;
+   padding: 8px 16px;
+   background-color: rgb(65, 14, 14);
+
+  }
+
+ .btn-warning:hover {
+ 
+   animation: pulse 1s infinite; /* Aplicar la animación de pulso */
+ }
+
+.celda-laboral{
+  border-bottom: 1px rgb(190, 190, 190) solid;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 2vh;
+ 
+}
+.cargo{
+  font-size: medium;
+  font-weight: 600;
 }
 
-/* Estilo cuando el mouse está sobre la burbuja */
-.bubble:hover {
-  background-color: #0056b3;
+
+.Titulos{
+  font-size: 12px;
+  font-family: 'Meera Inimai', sans-serif;
+  font-weight: bold;
+ }
+
+ .fechas2 {
+  font-size: 14px;
+  font-family: 'Meera Inimai', sans-serif;
+
 }
 
 
+/* Media Query para pantallas más pequeñas (resolución móvil) */
+@media (max-width: 768px) {
+  .container-datos-personales {
+    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    margin-left: 5%;
+    padding-right: 100px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    align-items: center;
+  }
+
+  .fechas2{
+    font-size: 12px;
+    font-family: 'Meera Inimai', sans-serif;
+    font-weight: bold;
+   }
+  
 
 
 
+}

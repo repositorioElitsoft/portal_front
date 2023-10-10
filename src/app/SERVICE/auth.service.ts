@@ -8,13 +8,18 @@ export class AuthService {
   private currentUser: any = null;
 
   constructor( private cookieService: CookieService) {
-    const token = localStorage.getItem('token');
+    const token = this.getToken();
     this.currentUser = token ? { token } : null;
   }
   
-  isAuthenticatedUser(): boolean {
+  isAuthenticatedUser() {
     // Evaluamos si existe una propiedad token en currentUser
-    return !!this.currentUser?.token;
+    // return this.currentUser?.token;
+
+    if (this.getToken()) {
+      return true
+    }
+    return false;
   }
 
   getToken(): string {

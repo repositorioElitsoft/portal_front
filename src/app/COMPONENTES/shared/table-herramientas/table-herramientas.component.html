@@ -1,80 +1,67 @@
 <div>
-    <h2>Herramientas y Tecnologias</h2>
-    <form class="form-container" > 
-        <div class="row">
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                <label class="form-label" for="categoria">Categoría</label>
-                <select class="form-control" id="categoria" [(ngModel)]="selectedCategoriaId" (change)="obtenerProductos()" name="categoria">
-                    <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</option>
-                </select>
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                <label class="form-label" for="producto">Producto</label>
-                <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto">
-                    <option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
-                </select>
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version">
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                <label class="form-label" for="certificado">Certificado</label>
-                <select class="form-control" id="certificado" [(ngModel)]="selectedCertificadoId" name="certificado">
-                    <option *ngFor="let certificado of certificados" [value]="certificado.cert_id">{{ certificado.cert }}</option>
-                </select>
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                <label class="form-label" for="nivel">Nivel</label>
-                <select class="form-control" id="nivel" [(ngModel)]="selectedNivelId" name="nivel">
-                    <option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</option>
-                </select>
-            </div>
-            <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
-                <input type="text" class="form-control" id="expLaboral" [(ngModel)]="herramienta.herr_usr_anos_exp" name="expLaboral">
-            </div>
-            <div class="mt-4 col-md-1">
-                <button type="button" class="btn btn-success rounded-circle btn-sm" id="addRow" (click)="addRow()">
-                    <i class="fas fa-plus"></i> +
-                </button>
-            </div>
-        </div>
-        <div class="mt-3" *ngFor="let row of rows; let i = index">
-            <div class="row">
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
+    <h2 class="herramientasytecnologiash2">Herramientas y Tecnologias</h2>
+    <br>
+    <form class="form-container" [formGroup]="herramientasForm">
+        <div formArrayName="rows">
+            <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox" >
                     <label class="form-label" for="categoria">Categoría</label>
-                    <select class="form-control" id="categoria" [(ngModel)]="selectedCategoriaId" (change)="obtenerProductos()" name="categoria">
+                    <select class="form-control" id="categoria" formControlName="herr_cat_name" (change)="getProducts(i)" name="categoria">
+                        <option value="" selected>Selecciona una opcion</option>
                         <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="producto">Producto</label>
-                    <select class="form-control" id="producto" [(ngModel)]="selectedProductoId" name="producto">
-                        <option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
+                    <select class="form-control" id="producto" formControlName="herr_prd_name" name="producto" (change)="getVersion(i)">
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option *ngFor="let producto of productByRow[i]" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
+                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="versionProducto">
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                    <input type="text" class="form-control" id="version" [(ngModel)]="herramienta.herr_usr_vrs" name="version">
+                    <select class="form-control" id="version" formControlName="vrs_id" name="version">
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option *ngFor="let version of versionByRow[i]" [value]="version.vrs_id">{{ version.vrs_name }}</option>
+                    </select>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="certificado">Certificado</label>
-                    <select class="form-control" id="certificado" [(ngModel)]="selectedCertificadoId" name="certificado">
-                        <option *ngFor="let certificado of certificados" [value]="certificado.cert_id">{{ certificado.cert }}</option>
+                    <select class="form-control" id="certificado" formControlName="herr_is_cert" name="certificado">
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option [ngValue]="false">No</option>
+                        <option [ngValue]="true">Si</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                     <label class="form-label" for="nivel">Nivel</label>
-                    <select class="form-control" id="nivel" [(ngModel)]="selectedNivelId" name="nivel">
-                        <option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</option>
+                    <select class="form-control" id="nivel" formControlName="herr_nvl" name="nivel">
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option value="alto">Alto</option>
+                        <option value="medio">Medio</option>
+                        <option value="bajo">Bajo</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
-                    <input type="text" class="form-control" id="expLaboral" [(ngModel)]="herramienta.herr_usr_anos_exp" name="expLaboral">
+                    <select class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option value="1 - 3 Años">1 - 3 Años</option>
+                        <option value="3 - 5 Años">3 - 5 Años</option>
+                        <option value="5 - 7 Años">5 - 7 Años</option>
+                        <option value="7 - 9 Años">7 - 9 Años</option>
+                        <option value="10 Años o más">10 Años o más</option>
+                    </select>
                 </div>
-                <div class="col-md-1"></div>
+                <div class="mt-4 col-md-1">
+                    <button *ngIf="i !== 0" type="button" class="custom-button" (click)="removeRow(i)">-</button>
+
+                </div>
+                <div class="mt-4 col-md-1">
+                    <button *ngIf="i === 0" type="button" class="custom-button2" id="addRow" (click)="addRow()">
+                        <i class="fas fa-plus"></i> +
+                    </button>
+                </div>
             </div>
         </div>
         <div class="row mt-5">

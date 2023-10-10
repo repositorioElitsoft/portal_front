@@ -15,22 +15,19 @@ export class LaboralService {
 
   constructor(private http: HttpClient) { }
 
-  guardarLaboral(laboral: Laboral, usrId: number, herrUsrId: number): Observable<Laboral> {
-    const body = {
-      laboral: laboral,
-      usr_id: usrId,
-      herr_usr_id: herrUsrId
-    };
-
-    return this.http.post<Laboral>(this.url, body);
+  guardarLaboral(laboral: Laboral | undefined, id: number | null | undefined): Observable<Laboral> {
+    if(id){
+      return this.http.put<Laboral>(`${this.url}${id}`, laboral);
+    }
+    return this.http.post<Laboral>(this.url, laboral);
   }
 
   obtenerHerramientasPorUsuario(usuarioId: number): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}por-usuario/${usuarioId}`);
   }
 
-  obtenerListaLaboralPorUsuario(usuarioId: number): Observable<Laboral[]> {
-    return this.http.get<Laboral[]>(`${this.url}listar-por-usuario/${usuarioId}`);
+  obtenerListaLaboralPorUsuario(): Observable<Laboral[]> {
+    return this.http.get<Laboral[]>(`${this.url}`);
   }
 
   obtenerListaLaboral(): Observable<Laboral[]> {
@@ -39,5 +36,9 @@ export class LaboralService {
 
   obtenerNombreProducto(prdId: number): Observable<string> {
     return this.http.get<string>(`${this.url}obtener-nombre-producto/${prdId}`);
+  }
+
+  eliminarLaboral(id: number | null | undefined): Observable<Laboral> {
+    return this.http.delete<Laboral>(`${this.url}${id}`);
   }
 }

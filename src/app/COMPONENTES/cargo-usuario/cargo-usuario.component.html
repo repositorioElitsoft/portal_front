@@ -7,51 +7,48 @@
 </head>
 <link rel="stylesheet" href="\cargo-usuario.component.css">
 <body>
+  <app-sidebar-user></app-sidebar-user>
+  <br>
+  <app-sidebar-userdesk></app-sidebar-userdesk>
+  <br><br><br>
   <div class="container-datos-personales">
-
-
-    <div class="div-menu">
-      <div class="btn-group-vertical" role="group" aria-label="Basic radio toggle button group">
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" (change)="onRadio1Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio1">Datos Personales</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" (change)="onRadio2Change()" autocomplete="off"  >
-        <label class="btn btn-outline-secondary" for="btnradio2" >Herramientas y Tecnologias </label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio3" (change)="onRadio3Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio3">Información Academica</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio4" (change)="onRadio4Change()" autocomplete="off" >
-        <label class="btn btn-outline-secondary" for="btnradio4">Información Laboral</label>
-
-        <input type="radio" class="btn-check" name="btnradio" id="btnradio5" (change)="onRadio5Change()" autocomplete="off">
-        <label class="btn btn-outline-secondary" for="btnradio5">Cargo</label>
-      </div>
-    </div>
-
     <div class="div-inputs">
-
-      <form>
-
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
-          <label for="input" class="col-sm-2 col-form-label">RUT:</label>
-          <div class="combobox">
-            <label for="cargosE">Cargos:</label>
-            <select class="form-control" id="cargosE" [(ngModel)]="selectedCargoElitsoft" name="cargosE">
+          <label for="cargosE"  class="col-m-2 col-form-label">Cargos Elitsoft:</label>
+          <div class="combobox col-sm-10">
+            <select class="form-control" id="cargosE" formControlName="crg_elit_id" name="cargosE">
               <option *ngFor="let cargo of cargosElitsoft" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</option>
             </select>
+            
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputPretension" class="col-sm-2 col-form-label">Pretensión de renta:</label>
+          <label for="inputPretension" class="col-m-2 col-form-label">Pretensión de renta:</label>
           <div class="col-sm-10">
-            <input type="renta" class="form-control" id="inputPretension" [(ngModel)]="cargo.crg_usr_pret" name="inputPretension" placeholder="CLP">
+            <input appNumericOnly type="text" class="form-control" id="inputPretension" formControlName="crg_usr_pret" name="inputPretension" placeholder="CLP"
+            [ngClass]="{'is-invalid': form.get('crg_usr_pret')?.invalid && form.get('crg_usr_pret')?.touched}" >
+            <div *ngIf="form.get('crg_usr_pret')?.hasError('pattern') && form.get('crg_usr_pret')?.touched" class="invalid-feedback">
+              Ingresar solamente valores númericos
+            </div>
           </div>
+      
+        </div>
+        <div class="row mb-3">
+          <label for="inputPretension" class="col-m-2 col-form-label">Cargo preferente:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" formControlName="crg_prf" placeholder="Opcional"
+            [ngClass]="{'is-invalid': form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched}" >
+            <div *ngIf="form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched" class="invalid-feedback">
+          
+            </div>
+          </div>
+         
         </div>
 
 
         <div class="div-form d-grid justify-content-end">
-          <button type="submit" class="btn btn-primary btn-guardar" (click)="guardarCargo()">GUARDAR</button>
+          <button  [disabled]="!form.valid" type="submit" (click)="successMessage()" class="btn btn-primary btn-guardar"> Finalizar</button>
         </div>
       </form>
     </div>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/SERVICE/login.service';
 import { CookieService } from 'ngx-cookie-service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -36,6 +37,7 @@ export class IniciarSesionComponent implements OnInit {
       (token) => {
         this.cookieService.set('token', token.Authorization);
         this.router.navigate(['/datos_personales']);
+
       },
       (e) => {
         console.log(`Error: ${e}`);

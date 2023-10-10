@@ -3,9 +3,11 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 import { Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
+
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Register } from 'src/app/interface/register.interface';
+import { NotificationService } from 'src/app/SERVICE/notification.service';
+import { UsuarioService } from 'src/app/SERVICE/usuario.service';
 
 @Component({
   selector: 'app-registrar',
@@ -15,7 +17,7 @@ import { Register } from 'src/app/interface/register.interface';
 export class RegistrarComponent {
   registroForm: FormGroup;
 
-  constructor(private usuarioService: UsuarioService, private router: Router){
+  constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
       usr_email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(30)]),
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(5)]),
@@ -33,20 +35,19 @@ export class RegistrarComponent {
 
       this.usuarioService.registrarUsuario(registerData).subscribe(
         () => {
-          this.popUp(
-          'success',
-          'Registro Exitoso',
-          'Hemos enviado un correo de confirmacion.')
-          this.router.navigate(['/iniciar-sesion'])
+          this.notification.showNotification(
+            'success',
+            'Registro Exitoso',
+            'Hemos enviado un correo de confirmacion.');
         },
-        () => this.popUp(
+        () => this.notification.showNotification(
           'error',
           'Error al registrar el usuario',
           'Hubo un error al registrar el usuario. Por favor, inténtalo más tarde.'
         )
       );
     } else {
-      this.popUp(
+      this.notification.showNotification(
         'error',
         'Error en el formulario',
         'Hubo al enviar el formulario. Por favor, revisa los campos.'

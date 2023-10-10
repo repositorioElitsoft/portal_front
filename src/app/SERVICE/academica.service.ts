@@ -12,15 +12,23 @@ export class AcademicaService {
 
   constructor(private http: HttpClient) { }
 
-  guardarAcademica(academica: Academica, usuarioId: number): Observable<Academica> {
-    return this.http.post<Academica>(`${this.url}?usr_id=${usuarioId}`, academica);
+  guardarAcademica(academica: Academica, usuarioId: number | undefined | null): Observable<Academica> {
+    if (usuarioId){
+      return this.http.put<Academica>(`${this.url}${usuarioId}`, academica);
+    }
+    return this.http.post<Academica>(`${this.url}`, academica);
   }
 
-  obtenerAcademicasPorUsuario(usuarioId: number): Observable<Academica[]> {
-    return this.http.get<Academica[]>(`${this.url}por-usuario/${usuarioId}`);
+  obtenerListaAcademicasPorUsuario(): Observable<Academica[]> {
+    return this.http.get<Academica[]>(`${this.url}`);
   }
 
   listarAcademicas(): Observable<Academica[]> {
     return this.http.get<Academica[]>(`${this.url}listar`);
   }
+
+  eliminarAcademica(id: number | null | undefined): Observable<Academica> {
+    return this.http.delete<Academica>(`${this.url}${id}`);
+  }
+
 }

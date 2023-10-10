@@ -6,7 +6,7 @@
     left: 0;
     background-color: #fff; /* Cambia el color de fondo a blanco */
     border-right: 3px solid orange; /* Añade un contorno naranja */
-    padding-top: 20px;
+    padding-top: 14vh;
     /* Asegura que el sidebar esté detrás del contenido */
 
     z-index: 0;
@@ -47,4 +47,15 @@
 .navbar {
     margin-top: 10px;
     float: right;
+}
+
+
+@media (max-width: 1300px) {
+
+  .sidebar{
+    display: none;
+    pointer-events: none;
+
+  }
+
 }

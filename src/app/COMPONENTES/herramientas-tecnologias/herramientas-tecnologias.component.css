@@ -26,7 +26,7 @@
 .form-select {
   font-size: 14px;
   width: 300%;
-  max-width: 100px; /* Ancho máximo para que no se vean muy anchos */
+  max-width: 100px; /* Ancho máximo para que no se vean muy ancho*/
 }
 
 .btn-primary {
@@ -39,4 +39,5 @@
 .container {
   padding-top: 189px;
 }
+
 
