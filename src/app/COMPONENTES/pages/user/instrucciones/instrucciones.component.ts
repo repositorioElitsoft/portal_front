@@ -21,7 +21,7 @@ export class InstruccionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.examenId = this.route.snapshot.params['examenId'];
+    this.examenId = this.route.snapshot.params['exam_id'];
     this.examenService.obtenerExamen(this.examenId).subscribe(
       (data:any) => {
         console.log(data);

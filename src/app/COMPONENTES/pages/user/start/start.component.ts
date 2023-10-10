@@ -41,7 +41,7 @@ export class StartComponent implements OnInit {
 
   ngOnInit(): void {
     this.prevenirElBotonDeRetroceso();
-    this.examenId = this.route.snapshot.params['examenId'];
+    this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
 
