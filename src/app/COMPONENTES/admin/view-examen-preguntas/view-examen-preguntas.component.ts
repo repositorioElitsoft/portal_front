@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PreguntaService } from 'src/app/SERVICIOS/pregunta.service';
+import { PreguntaService } from 'src/app/SERVICE/pregunta.service';
+
 import Swal from 'sweetalert2';
 
 

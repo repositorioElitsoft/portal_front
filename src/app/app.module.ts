@@ -48,6 +48,26 @@ import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar
 import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
+import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
+import { SidebarComponent } from './COMPONENTES/pages/admin/sidebar/sidebar.component';
+import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
+import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sidebar/sidebar.component';
+import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
+import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
+import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
+import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCardModule} from '@angular/material/card';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -91,7 +111,25 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NumericOnlyDirective,
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
-    RestaurarPassComponent
+    RestaurarPassComponent,
+    DashboardComponent,
+    UserDashboardComponent,
+    ProfileComponent,
+    SidebarComponent,
+    WelcomeComponent,
+    ViewCategoriasComponent,
+    AddCategoriaComponent,
+    ViewExamenesComponent,
+    AddExamenComponent,
+    ActualizarExamenComponent,
+    ViewExamenPreguntasComponent,
+    AddPreguntaComponent,
+    ActualizarPreguntaComponent,
+    UserSidebar,
+    LoadExamenComponent,
+    InstruccionesComponent,
+    StartComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,10 +141,19 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FormsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatProgressSpinnerModule,
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
+
   ],
   providers: [
     {

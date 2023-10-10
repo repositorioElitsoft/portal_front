@@ -76,9 +76,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
         this.usuario.usr_id = usr_id
         if (usr_id) {
           this.herramienta.usr_id = usr_id;
-          if (typeof usr_id === 'number') { // Verificar si usr_id es un número
-            this.obtenerDatosUsuario(usr_id);
-          }
         }
         this.obtenerCategorias();
         this.obtenerProductos();
@@ -87,16 +84,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
       });
     }
 
-    obtenerDatosUsuario(usuarioId: number) {
-      this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-        (usuario: Usuario) => {
-          this.usuario = usuario; // Almacena los datos del usuario
-        },
-        (error) => {
-          console.log('Error al obtener los datos del usuario:', error);
-        }
-      );
-    }
 
 
     obtenerCategorias() {

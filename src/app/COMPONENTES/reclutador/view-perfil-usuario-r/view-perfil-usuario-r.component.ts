@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
+
 
 @Component({
   selector: 'app-view-perfil-usuario-r',

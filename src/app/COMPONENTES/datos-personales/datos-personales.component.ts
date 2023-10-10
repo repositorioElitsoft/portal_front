@@ -1,13 +1,15 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UsuarioService } from 'src/app/service/usuario.service';
+
 import { Usuario } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaisService } from 'src/app/service/pais.service';
+
 import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
+import { PaisService } from 'src/app/SERVICE/pais.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
   selector: 'app-datos-personales',
