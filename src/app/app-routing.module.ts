@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
 import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-sesion.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
-import { AdminGuard } from './SERVICIOS/admin.guard';
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { ProfileAdminComponent } from './COMPONENTES/admin/profile-admin/profile-admin.component';
 import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/view-categorias.component';
@@ -31,6 +30,13 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
 import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
+import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
+import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
+import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
+import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
+import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
+import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
+import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
 
 
 const routes: Routes = [
@@ -63,7 +69,6 @@ const routes: Routes = [
   {
     path:'admin',
     component:DashboardComponent,
-   // canActivate:[AdminGuard],
     children:[
       {
         path:'welcome-admin',
@@ -142,7 +147,79 @@ const routes: Routes = [
         component:ViewPerfilUsuarioRComponent
       }
     ]
-  }
+  },
+  {
+    path:'admin-examen',
+    component:DashboardComponent,
+    canActivate:[AuthGuard],
+    children:[
+      {
+        path:'profile',
+        component:ProfileComponent
+      },
+      {
+        path:'',
+        component:WelcomeComponent
+      },
+      {
+        path:'categorias',
+        component: ViewCategoriasComponent
+      },
+      {
+        path:'add-categoria',
+        component:AddCategoriaComponent
+      },
+      {
+        path:'examenes',
+        component:ViewExamenesComponent
+      },
+      {
+        path:'add-examen',
+        component:AddExamenComponent
+      },
+      {
+        path:'examen/:examenId',
+        component:ActualizarExamenComponent
+      },
+      {
+        path:'ver-preguntas/:examenId/:titulo',
+        component:ViewExamenPreguntasComponent
+      },
+      {
+        path:'add-pregunta/:examenId/:titulo',
+        component:AddPreguntaComponent
+      },
+      {
+        path:'pregunta/:preguntaId',
+        component:ActualizarPreguntaComponent
+      }
+    ]
+  },
+  {
+    path:'user-dashboard',
+    component:UserDashboardComponent,
+    canActivate:[AuthGuard],
+    children : [
+      {
+        path:':catId',
+        component:LoadExamenComponent
+      },
+      {
+        path:'instrucciones/:examenId',
+        component:InstruccionesComponent
+      },
+      {
+        path:'user-profile',
+        component:UserProfileComponent
+      },
+      
+    ]
+  },
+  {
+    path:"start/:examenId",
+    component:StartComponent,
+    canActivate:[AuthGuard]
+  },
 
 ];
 

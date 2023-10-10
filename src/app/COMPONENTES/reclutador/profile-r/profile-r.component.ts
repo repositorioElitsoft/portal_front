@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ReclutadorService } from 'src/app/SERVICIOS/reclutador.service';
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
+import { ReclutadorService } from 'src/app/SERVICE/reclutador.service';
+
 
 @Component({
   selector: 'app-profile-r',

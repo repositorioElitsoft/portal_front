@@ -107,6 +107,19 @@
             <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="inf_lab_fec_fin" [max]="today">
           </div>
         </div>
+
+
+        <div class="row mb-3">
+          <label for="inputHerramientas" class="col-sm-2 col-form-label">Tecnologías Utilizadas:</label>
+          <div class="col-sm-10">
+            <div *ngIf="herramientasDisponibles && checkboxFormCreated">
+              <div  *ngFor="let herramienta of herramientasDisponibles; let i = index">
+                <input type="checkbox"  [formControlName]="herramienta.herr_usr_id">
+                {{ herramienta.versionProducto.prd.prd_nom }} (  {{ herramienta.versionProducto.vrs_name }})
+              </div>
+            </div>
+          </div>
+        </div>
    
 
        
