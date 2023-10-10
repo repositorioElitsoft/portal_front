@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpCli
 
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Register } from 'src/app/interface/register.interface';
-import { NotificationService } from 'src/app/SERVICE/notification.service';
-import { UsuarioService } from 'src/app/SERVICE/usuario.service';
+import { NotificationService } from 'src/app/service/notification.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
   selector: 'app-registrar',

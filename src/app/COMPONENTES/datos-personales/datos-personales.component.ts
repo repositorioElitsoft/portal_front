@@ -8,7 +8,7 @@ import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-import { PaisService } from 'src/app/SERVICE/pais.service';
+import { PaisService } from 'src/app/service/pais.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
 
-  countries: Pais[] = []; 
+  countries: Pais[] = [];
 
   usuarioGuardado:Usuario={
     usr_rut: '' ,
@@ -41,12 +41,12 @@ export class DatosPersonalesComponent implements OnInit {
 
     private formBuilder: FormBuilder,
     private router: Router,
-    private usuarioService: UsuarioService, 
-    private paisService: PaisService, 
+    private usuarioService: UsuarioService,
+    private paisService: PaisService,
     private toastr:ToastrService,
     private notification: NotificationService,
-    private route: ActivatedRoute) 
-    { 
+    private route: ActivatedRoute)
+    {
       this.buildForm();
     }
 
@@ -105,7 +105,7 @@ export class DatosPersonalesComponent implements OnInit {
           pais: this.usuarioGuardado.pais?.pais_id,
           usr_url_link: this.usuarioGuardado.usr_url_link,
           usr_tel: this.usuarioGuardado.usr_tel,
-          
+
         })
       },
       error: (err)=>{

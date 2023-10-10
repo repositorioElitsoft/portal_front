@@ -4,7 +4,7 @@ import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnInit } from '@angular/core';
 
 import Swal from 'sweetalert2';
-import { PreguntaService } from 'src/app/SERVICE/pregunta.service';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 
 //se declara fuera de la clase de forma global
 let vecesEnviado = 0;
@@ -28,15 +28,15 @@ export class StartComponent implements OnInit {
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-  
 
 
-  
+
+
 
   constructor(
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
-    private preguntaService:PreguntaService   
+    private preguntaService:PreguntaService
       ) { }
 
   ngOnInit(): void {
@@ -44,17 +44,17 @@ export class StartComponent implements OnInit {
     this.examenId = this.route.snapshot.params['examenId'];
     console.log(this.examenId);
     this.cargarPreguntas();
-   
+
   }
 
-  
+
   cargarPreguntas(){
     this.preguntaService.listarPreguntasDelExamenParaLaPrueba(this.examenId).subscribe(
       (data:any) => {
         console.log(data);
         //this.preguntas = data;
         this.preguntas = this.shuffleArray(data).slice(0, 5);
-       
+
         this.timer = this.preguntas.length * 60;
 
         this.preguntas.forEach((p:any) => {
@@ -74,23 +74,23 @@ export class StartComponent implements OnInit {
     let currentIndex = array.length;
     let temporaryValue: any;
     let randomIndex: number;
-  
+
     // While there remain elements to shuffle
     while (0 !== currentIndex) {
       // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
-  
+
       // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
     }
-  
+
     return array;
   }
-  
-  
+
+
 
   iniciarTemporizador(){
     let t = window.setInterval(() => {
@@ -121,11 +121,11 @@ export class StartComponent implements OnInit {
       if(e.isConfirmed){
         this.evaluarExamen();
         vecesEnviado++;
-        
+
         this.vecesEnviado = vecesEnviado;
        // this.enviosTotales = this.vecesEnviado;
-        
-        
+
+
       }
     })
   }
@@ -150,12 +150,12 @@ export class StartComponent implements OnInit {
         console.log(error);
 
       }
-      
-      
+
+
     ) */
-    
+
     this.esEnviado = true;
-    
+
     this.preguntas.forEach((p:any) => {
       if(p.respuestaDada == p.respuesta){
         this.respuestasCorrectas ++;
@@ -165,14 +165,14 @@ export class StartComponent implements OnInit {
 
       if(p.respuestaDada.trim() != ''){
         this.preguntasTotales ++;
-       
+
       }
     });
     //const newLocal = this.enviosTotales = this.vecesEnviado;
     console.log("Respuestas correctas : " + this.respuestasCorrectas);
     console.log("Puntos conseguidos : " + this.puntosConseguidos);
     console.log("Intentos : " + this.preguntasTotales);
-    console.log(this.preguntas); 
+    console.log(this.preguntas);
   }
 
   obtenerHoraFormateada(){

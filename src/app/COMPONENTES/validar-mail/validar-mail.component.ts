@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ValidarMailService } from 'src/app/SERVICE/validar-mail.service';
+import { ValidarMailService } from 'src/app/service/validar-mail.service';
 
 @Component({
   selector: 'app-validar-mail',
@@ -16,7 +16,7 @@ export class ValidarMailComponent {
   ){}
 
   ngOnInit(){
-    
+
     this.validarEmailService.verificarEmail().subscribe({
       next:(res)=>{
         console.log(res.status)

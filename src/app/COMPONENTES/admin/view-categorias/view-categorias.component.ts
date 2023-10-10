@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/SERVICE/categoria.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
 
 import Swal from 'sweetalert2';
 
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
 export class ViewCategoriasComponent implements OnInit {
 
   categorias:any = [
-    
+
 
   ]
 
