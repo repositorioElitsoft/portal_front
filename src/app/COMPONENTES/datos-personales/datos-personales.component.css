@@ -1,20 +1,5 @@
 /* Estilos para la franja naranja en pantallas más grandes (por defecto) */
-.container-datos-personales {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Meera Inimai', sans-serif;
-  padding-top: 10px;
-  font-size: 12px;
- padding: 5%;
- margin-top: 5%;
- margin-left: 20%;
- margin-right: 20%;
 
-  border: 2px solid orange;
-  border-radius: 10px;
-  
-}
 
 .btn-primary {
   font-size: 14px;
@@ -29,6 +14,7 @@
   padding: 8px 16px;
   background-color: #F57C27;
   border-color: #F57C27;
+  width: 100%;
 }
 
 .form-control{
@@ -60,6 +46,7 @@
     border: 2px solid orange;
     border-radius: 10px;
     margin-inline: 1vw;
+    
   }
 
 }
