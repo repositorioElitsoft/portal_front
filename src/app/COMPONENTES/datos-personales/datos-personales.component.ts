@@ -20,6 +20,7 @@ export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
 
   countries: Pais[] = [];
+  isLoaded: boolean = true
 
   usuarioGuardado:Usuario={
     usr_rut: '' ,
@@ -63,16 +64,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const inputElement = document.getElementById("inputTelefono");
-    console.log(inputElement)
-    if(inputElement){
-      intlTelInput(inputElement,{
-        initialCountry: "cl",
-        separateDialCode: true,
-        utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
-        placeholderNumberType: "UNKNOWN"
-      })
-    }
+  
 
     this.paisService.obtenerPaises().subscribe(
       (data: any[]) => {
@@ -107,11 +99,24 @@ export class DatosPersonalesComponent implements OnInit {
           usr_tel: this.usuarioGuardado.usr_tel,
 
         })
+        this.isLoaded= true;
+        const inputElement = document.getElementById("inputTelefono");
+        console.log(inputElement)
+        if(inputElement){
+          intlTelInput(inputElement,{
+            initialCountry: "cl",
+            separateDialCode: true,
+            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+            placeholderNumberType: "UNKNOWN"
+          })
+        }
       },
       error: (err)=>{
         console.log(err)
+
       }
     })
+
   }
 
   async submitForm(event: Event) {
