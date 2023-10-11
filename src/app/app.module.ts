@@ -132,6 +132,9 @@ import {MatListModule} from '@angular/material/list';
     UserProfileComponent,
   ],
   imports: [
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

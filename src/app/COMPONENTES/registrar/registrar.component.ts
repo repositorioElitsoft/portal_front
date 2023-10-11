@@ -6,8 +6,9 @@ import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpCli
 
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Register } from 'src/app/interface/register.interface';
-import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { NotificationService } from 'src/app/service/notification.service';
+
 
 @Component({
   selector: 'app-registrar',
@@ -19,12 +20,11 @@ export class RegistrarComponent {
 
   constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
-      usr_email: new FormControl('', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/), Validators.maxLength(30)]),
-      usr_pass: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(5)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(5)])
-    }, { validators: this.passwordMatchValidator });
+      usr_email: new FormControl('', [Validators.required, Validators.email]),
+      usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: new FormControl('', [Validators.required])
+    }, { validators: this.passwordMatchValidator });  
   }
-
 
   onSubmit() {
     if (this.registroForm.valid) {
@@ -60,18 +60,10 @@ export class RegistrarComponent {
     const confirmPass = control.get('confirmPassword')?.value;
 
     const isMismatch = pass !== confirmPass;
-    // console.log('Contraseña:', pass);
-    // console.log('Confirmar contraseña:', confirmPass);
-    // console.log('Contraseña coincide:', !isMismatch);
+    console.log('Contraseña:', pass);
+    console.log('Confirmar contraseña:', confirmPass);
+    console.log('Contraseña coincide:', !isMismatch);
 
     return pass === confirmPass ? null : { passwordMismatch: true };
   };
-
-  private popUp(icon: SweetAlertIcon, title: string, text: string) {
-    Swal.fire({
-      icon,
-      title,
-      text,
-    });
-  }
 }

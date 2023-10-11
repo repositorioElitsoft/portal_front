@@ -33,7 +33,7 @@
 
   .elitsoft {
     text-align: center; /* Centrar horizontalmente el contenido */
-    margin-top: 20px; /* Espacio superior para mover la imagen hacia abajo */
+
     display: flex;
     flex-direction: column;
     align-items: flex-end; /* Centrar verticalmente y alinear a la derecha horizontalmente */
@@ -41,7 +41,7 @@
 }
 
 .elitsoft img {
-    max-width: 100%; /* Para que la imagen sea responsive */
+    max-width: 60%; /* Para que la imagen sea responsive */
     display: block; /* Elimina el espacio debajo de la imagen */
     position: relative; /* Necesario para la animación */
     animation: reveal 2s ease-in-out forwards; /* Animación de revelación (1 vez) */
