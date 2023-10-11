@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el ReactiveFormsModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatButtonModule } from '@angular/material/button';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-sesion.component';
@@ -48,6 +49,7 @@ import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar
 import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -98,10 +100,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
+    MatButtonModule,
+    MatIconModule,
     MatPaginatorModule,
     HttpClientModule,
     ToastrModule.forRoot({
@@ -115,6 +119,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
