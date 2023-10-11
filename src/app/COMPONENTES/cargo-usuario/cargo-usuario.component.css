@@ -1,19 +1,3 @@
-/* Estilos para la franja naranja en pantallas más grandes (por defecto) */
-.container-datos-personales {
-  display: flex;
-  align-items: center;
-  font-family: 'Meera Inimai', sans-serif;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 12px;
- padding: 5%;
- margin-top: 5%;
- margin-left: 20%;
- margin-right: 20%;
-  border: 2px solid orange;
-  border-radius: 10px;
-  
-}
 
 .btn {
   font-size: 15px;
@@ -34,6 +18,10 @@
   border-color: #F57C27;
 }
 
+.col-form-label{
+  color: #333;   font-family: 'Meera Inimai', sans-serif;
+  font-size: 14px;
+}
 
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoriaService } from 'src/app/SERVICIOS/categoria.service';
-import { ExamenService } from 'src/app/SERVICIOS/examen.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
+import { ExamenService } from 'src/app/service/examen.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -27,7 +28,7 @@ export class AddExamenComponent implements OnInit {
 
   constructor(
     private categoriaService:CategoriaService,
-    
+
     private examenService:ExamenService,
     private router:Router) { }
 
@@ -50,7 +51,7 @@ export class AddExamenComponent implements OnInit {
       return;
     }
 
-    
+
 
     this.examenService.agregarExamen(this.examenData).subscribe(
       (data) => {

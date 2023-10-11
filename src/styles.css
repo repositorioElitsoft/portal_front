@@ -9,4 +9,32 @@
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+body { margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: #E0EAFC;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #efefef, #c7c7c7);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #efefef, #c7c7c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ }
+
+
+ .container-datos-personales {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Meera Inimai', sans-serif;
+  padding-top: 10px;
+  font-size: 12px;
+ padding: 5%;
+ margin-left: 20%;
+ margin-right: 20%;
+ background-color: white;
+
+  border-radius: 10px;
+  
+}
+
+.spinner-color{
+  color: black;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamenService } from 'src/app/SERVICIOS/examen.service';
+import { ExamenService } from 'src/app/service/examen.service';
+
 import Swal from 'sweetalert2';
 
 @Component({

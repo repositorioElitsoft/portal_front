@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
@@ -29,7 +29,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   constructor(private usuarioService: UsuarioService,
     private _liveAnnouncer: LiveAnnouncer,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
 
   ngOnInit(): void {

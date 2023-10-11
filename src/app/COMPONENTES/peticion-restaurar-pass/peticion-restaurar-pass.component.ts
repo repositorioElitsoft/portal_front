@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
+
 import { LoginService } from 'src/app/service/login.service';
 import { NotificationService } from 'src/app/service/notification.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
   selector: 'app-peticion-restaurar-pass',

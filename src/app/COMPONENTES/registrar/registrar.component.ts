@@ -3,10 +3,12 @@ import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors }
 import { Router } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service'; // Importa el servicio UsuarioService
+
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Register } from 'src/app/interface/register.interface';
+import { UsuarioService } from 'src/app/service/usuario.service';
 import { NotificationService } from 'src/app/service/notification.service';
+
 
 @Component({
   selector: 'app-registrar',

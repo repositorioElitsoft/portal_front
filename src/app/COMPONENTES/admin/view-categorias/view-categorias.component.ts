@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/SERVICIOS/categoria.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 export class ViewCategoriasComponent implements OnInit {
 
   categorias:any = [
-    
+
 
   ]
 
@@ -40,6 +41,7 @@ export class ViewCategoriasComponent implements OnInit {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+          /* TODO
             this.categoriaService.eliminarCategoria(cat_exam_id).subscribe(
                 () => {
                     this.categorias = this.categorias.filter((categoria: any) => categoria.cat_exam_id !== cat_exam_id);
@@ -49,6 +51,7 @@ export class ViewCategoriasComponent implements OnInit {
                     Swal.fire('Error', 'Error al eliminar la categoría', 'error');
                 }
             );
+            */
         }
     });
 }

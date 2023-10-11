@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ReclutadorService } from 'src/app/SERVICIOS/reclutador.service';
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
+import { ReclutadorService } from 'src/app/service/reclutador.service';
+
 
 @Component({
   selector: 'app-profile-r',
@@ -20,7 +20,7 @@ export class ProfileRComponent implements OnInit {
      };
 
   constructor(private reclutadorService: ReclutadorService) { }
-  
+
     ngOnInit(): void {
       // Obtener el perfil del usuario admin
       const email = 'juan.perez4@example.com'; // Reemplaza con el email del usuario admin
@@ -34,7 +34,7 @@ export class ProfileRComponent implements OnInit {
       );
     }
 
-  
+
 }
 
 

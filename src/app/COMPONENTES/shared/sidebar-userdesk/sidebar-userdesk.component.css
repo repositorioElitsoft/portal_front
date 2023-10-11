@@ -11,6 +11,10 @@
 
 }
 
+.custom-icon{
+  margin-right: 4px;
+}
+
 .sidebar-header {
   text-align: center;
   padding-bottom: 20px;
@@ -23,7 +27,10 @@
   color: #6c757d; /* Cambia el color del texto a gris */
   text-decoration: none;
   transition: background-color 0.3s;
+  display: flex;
+  align-self: center;
 }
+
 
 .list-unstyled li a:hover {
   background-color: #555;

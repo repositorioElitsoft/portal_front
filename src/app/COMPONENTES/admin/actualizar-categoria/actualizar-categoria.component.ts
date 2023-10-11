@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriaService } from 'src/app/SERVICIOS/categoria.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,6 +24,7 @@ export class ActualizarCategoriaComponent implements OnInit {
 
   ngOnInit(): void {
     const cat_exam_id = this.route.snapshot.paramMap.get('cat_exam_id');
+    /*
     this.categoriaService.obtenerCategoriaPorId(cat_exam_id).subscribe(
       (data: any) => {
         this.categoria = data;
@@ -32,7 +34,8 @@ export class ActualizarCategoriaComponent implements OnInit {
         Swal.fire('Error', 'Error al cargar la categoría', 'error');
       }
     );
-  }
+    */
+  }/*
 
   actualizarCategoria() {
     this.categoriaService.actualizarCategoria(this.categoria).subscribe(
@@ -51,5 +54,6 @@ export class ActualizarCategoriaComponent implements OnInit {
     // Redirige al usuario a la lista de exámenes
     this.router.navigate(['/admin/view-categorias']);
   }
+  */
 }
 

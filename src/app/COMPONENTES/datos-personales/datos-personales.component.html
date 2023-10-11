@@ -14,7 +14,9 @@
   <br><br><br>
   <div class="container-datos-personales">
 
-    <div class="div-inputs">
+    <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
+
+    <div class="div-inputs"  *ngIf="isLoaded">
 
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
@@ -87,7 +89,7 @@
 
       
         
-        <div class="div-form d-grid justify-content-end">
+        <div class="div-form d-grid ">
           <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Siguiente</button>
         </div>
 

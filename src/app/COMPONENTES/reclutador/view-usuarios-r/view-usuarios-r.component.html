@@ -1,9 +1,7 @@
 <br><br><br><br><br><br><br><br>
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
        class="mat-elevation-z8">
-
-  <!--- Note that these columns can be defined in any order.
-        The actual rendered columns are set as a property on the row definition" -->
+   <!-- Resto del código -->
 
   <!-- Position Column -->
   <ng-container matColumnDef="usr_nom">
@@ -39,11 +37,10 @@
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
 </table>
 <input (input)="filter($event)" type="text">
 
 <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
-  </mat-paginator>
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>

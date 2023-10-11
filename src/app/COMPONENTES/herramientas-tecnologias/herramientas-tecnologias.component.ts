@@ -68,7 +68,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
     private productoService: ProductoService,
     private route: ActivatedRoute,
     private usuarioService:UsuarioService) { }
-
+   
     ngOnInit(): void {
       this.route.queryParams.subscribe(params => {
         const usr_id = params['usr_id'];
@@ -76,9 +76,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
         // this.usuario.usr_id = usr_id
         if (usr_id) {
           this.herramienta.usr_id = usr_id;
-          if (typeof usr_id === 'number') { // Verificar si usr_id es un número
-            this.obtenerDatosUsuario(usr_id);
-          }
         }
         this.obtenerCategorias();
         this.obtenerProductos();
@@ -86,18 +83,16 @@ export class HerramientasTecnologiasComponent implements OnInit {
         this.obtenerNiveles();
       });
     }
-
-    obtenerDatosUsuario(usuarioId: number) {
-      this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-        (usuario: Usuario) => {
-          // this.usuario = usuario; // Almacena los datos del usuario
-        },
-        (error) => {
-          console.log('Error al obtener los datos del usuario:', error);
-        }
-      );
-    }
-
+    // obtenerDatosUsuario(usuarioId: number) {
+    //   this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
+    //     (usuario: Usuario) => {
+    //       // this.usuario = usuario; // Almacena los datos del usuario
+    //     },
+    //     (error) => {
+    //       console.log('Error al obtener los datos del usuario:', error);
+    //     }
+    //   );
+    // }
 
     obtenerCategorias() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
@@ -122,6 +117,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
           console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
           console.log('Productos cargados:', this.productos);
+  
         },
         (error) => {
           console.log('Error al obtener productos:', error);

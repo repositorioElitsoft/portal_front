@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'src/app/SERVICIOS/usuario.service';
-import { LoginService } from 'src/app/service/login.service';
+
 import { CookieService } from 'ngx-cookie-service';
+import { LoginService } from 'src/app/service/login.service';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
   selector: 'app-iniciar-sesion',

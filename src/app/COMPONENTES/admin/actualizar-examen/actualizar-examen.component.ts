@@ -2,8 +2,9 @@ import  Swal  from 'sweetalert2';
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExamenService } from 'src/app/SERVICIOS/examen.service';
-import { CategoriaService } from 'src/app/SERVICIOS/categoria.service';
+import { ExamenService } from 'src/app/service/examen.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
+
 
 @Component({
   selector: 'app-actualizar-examen',
