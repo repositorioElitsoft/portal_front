@@ -19,7 +19,7 @@ export class IniciarSesionComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router, private loginService: LoginService, private cookieService: CookieService) {
     this.loginForm = this.formBuilder.group({
       usr_email: ['', [Validators.required, Validators.email, Validators.maxLength(30)]],
-      usr_pass: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(5)]]
+      usr_pass: ['', [Validators.required, Validators.minLength(8),]]
     });
   }
 

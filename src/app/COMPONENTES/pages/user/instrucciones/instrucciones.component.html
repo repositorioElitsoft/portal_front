@@ -10,17 +10,17 @@
             </mat-card-header>
             <mat-card-subtitle>.</mat-card-subtitle>
             <mat-card-content class="ml30">
-              <h1>{{ examen.exam_titl }}</h1>
-              <p>{{ examen.exam_desc }}</p>
+              <h1>{{ examen.titulo }}</h1>
+              <p>{{ examen.descripcion }}</p>
               <mat-divider></mat-divider>
             <br>
             <h1>Instrucciones importantes</h1>
 
             <ul>
               <li>Este exámen es solo para fines de práctica</li>
-              <li>Tienes que enviar el exámen en <b>{{ examen.exam_n_preg }} minutos</b></li>
+              <li>Tienes que enviar el exámen en <b>{{ examen.numeroDePreguntas }} minutos</b></li>
               <!--<li> </li> -->
-              <li>Hay <b>{{ examen.exam_ptos_max/examen.exam_n_preg }} puntos por pregunta</b></li>
+              <li>Hay <b>{{ examen.puntosMaximos/examen.numeroDePreguntas }} puntos por pregunta</b></li>
             </ul>
             <mat-divider></mat-divider>
             <br>

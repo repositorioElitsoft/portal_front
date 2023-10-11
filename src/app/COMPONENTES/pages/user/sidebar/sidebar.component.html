@@ -8,8 +8,8 @@
       <button routerLink="/user-dashboard/0" mat-list-item>
         <mat-icon mat-list-icon>quiz</mat-icon>Exámenes
       </button>
-      <button [routerLink] = "'/user-dashboard/'+c.cat_examen_id" mat-list-item *ngFor = "let c of categorias">
-        <mat-icon mat-list-icon>account_circle</mat-icon> {{ c.cat_exam_titl }}
+      <button [routerLink] = "'/user-dashboard/'+c.categoriaId" mat-list-item *ngFor = "let c of categorias">
+        <mat-icon mat-list-icon>account_circle</mat-icon> {{ c.titulo }}
       </button>
       <button mat-list-item (click) = "logout()">
         <mat-icon mat-list-icon>logout</mat-icon>Salir

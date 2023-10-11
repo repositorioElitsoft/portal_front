@@ -2,10 +2,11 @@
 .navbar {
     background-color: white; /* Fondo blanco */
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Sombreado oscuro en la parte inferior */
-    padding: 30px 0; /* Aumentar el espacio vertical (ajusta según tus necesidades) */
+    padding: 0px 0; /* Aumentar el espacio vertical (ajusta según tus necesidades) */
     position: fixed;
     z-index: 10;
     width: 100%;
+    font-size: small;
   }
   
   /* Centrar el contenido en la barra de navegación */
