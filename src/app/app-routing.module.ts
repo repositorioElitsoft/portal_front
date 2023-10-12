@@ -216,7 +216,7 @@ const routes: Routes = [
     ]
   },
   {
-    path:"start/:examenId",
+    path:"start/:exam_id",
     component:StartComponent,
     canActivate:[AuthGuard]
   },

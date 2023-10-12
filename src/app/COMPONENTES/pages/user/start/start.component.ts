@@ -58,7 +58,7 @@ export class StartComponent implements OnInit {
         this.timer = this.preguntas.length * 60;
 
         this.preguntas.forEach((p:any) => {
-          p['respuestaDada'] = '';
+          p['prg_resp'] = '';
         })
         console.log(this.preguntas);
         this.iniciarTemporizador();
@@ -157,9 +157,9 @@ export class StartComponent implements OnInit {
     this.esEnviado = true;
 
     this.preguntas.forEach((p:any) => {
-      if(p.respuestaDada == p.respuesta){
+      if(p.respuestaDada == p.prg_resp){
         this.respuestasCorrectas ++;
-        let puntos = this.preguntas[0].examen.puntosMaximos/this.preguntas.length;
+        let puntos = this.preguntas[0].examen.exam_ptos_max/this.preguntas.length;
         this.puntosConseguidos += puntos;
       }
 
