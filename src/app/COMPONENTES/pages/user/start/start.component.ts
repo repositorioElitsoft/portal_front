@@ -122,8 +122,11 @@ export class StartComponent implements OnInit {
         this.evaluarExamen();
 
         const resultados = {
-          resultados_examen:this.puntosConseguidos,
+          resultadosExamen:this.puntosConseguidos,
           tiempo:100-this.timer,
+          examen:{
+            examenId: this.examenId
+          }
         }
 
         this.preguntaService.guardarResultados(resultados).subscribe({
