@@ -41,7 +41,7 @@ export class StartComponent implements OnInit {
 
   ngOnInit(): void {
     this.prevenirElBotonDeRetroceso();
-    this.examenId = this.route.snapshot.params['examenId'];
+    this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
 
@@ -58,7 +58,7 @@ export class StartComponent implements OnInit {
         this.timer = this.preguntas.length * 60;
 
         this.preguntas.forEach((p:any) => {
-          p['prg_resp'] = '';
+          p['respuestaDada'] = '';
         })
         console.log(this.preguntas);
         this.iniciarTemporizador();
