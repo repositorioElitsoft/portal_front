@@ -4,49 +4,54 @@ import { Observable, Subject } from 'rxjs';
 import { Register } from '../interface/register.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Usuario } from '../interface/user.interface';
+import { environment } from 'src/environments/environment';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-  baseUrl = 'http://localhost:8080';
+
+  readonly url = `${environment.URL_HOST}`
+
   public loginStatusSubjec = new Subject<boolean>();
-  
+
   constructor(private HttpClient: HttpClient,private route: ActivatedRoute, ) { }
 
   public registrarUsuario(registerData: Register){
-    return this.HttpClient.post<any>(`${this.baseUrl}/usuarios/`, registerData)
+    return this.HttpClient.post<any>(`${this.url}/usuarios/`, registerData)
   }
 
   public cambiarPassword(newPassword: string){
     const cod = this.route.snapshot.queryParamMap.get("code");
-    return this.HttpClient.put<any>(`${this.baseUrl}/usuarios/cambiar-password/${cod}`, {pass: newPassword})
+    return this.HttpClient.put<any>(`${this.url}/usuarios/cambiar-password/${cod}`, {pass: newPassword})
   }
-  
+
   public iniciarSesion(datosInicioSesion: any) {
-    return this.HttpClient.post(`${this.baseUrl}/usuarios/iniciar-sesion/`, datosInicioSesion);
+    return this.HttpClient.post(`${this.url}/usuarios/iniciar-sesion/`, datosInicioSesion);
   }
 
   obtenerPerfil(email: string): Observable<any> {
-    return this.HttpClient.get<any>(`${this.baseUrl}/usuarios/email/${email}`);
+    return this.HttpClient.get<any>(`${this.url}/usuarios/email/${email}`);
   }
 
   obtenerUsuarios(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.baseUrl}/usuarios/`);
+    return this.HttpClient.get<any[]>(`${this.url}/usuarios/`);
   }
 
   eliminarUsuario(usr_id: number) {
-    return this.HttpClient.delete(`${this.baseUrl}/usuarios/${usr_id}`);
+    return this.HttpClient.delete(`${this.url}/usuarios/${usr_id}`);
 }
 
   guardarUsuarioEnLocalStorage(usuario: any) {
     localStorage.setItem('usuario', JSON.stringify(usuario));
   }
   obtenerUsuarioGuardado() {
-    return this.HttpClient.get<Usuario>(`${this.baseUrl}/usuarios/`);
+    return this.HttpClient.get<Usuario>(`${this.url}/usuarios/`);
   }
   updateUsuario(user: Usuario){
-    return this.HttpClient.put<Usuario>(`${this.baseUrl}/usuarios/`,user);
+    return this.HttpClient.put<Usuario>(`${this.url}/usuarios/`,user);
   }
 
   obtenerUsuarioDesdeLocalStorage() {
@@ -59,22 +64,23 @@ export class UsuarioService {
   }
 
   obtenerRolUsuario(email: string): Observable<string> {
-    return this.HttpClient.get<string>(`${this.baseUrl}/usuarios/${email}`);
+    return this.HttpClient.get<string>(`${this.url}/usuarios/${email}`);
   }
 
   pedirReinicioPass(email: string){
-    return this.HttpClient.post(`${this.baseUrl}/usuarios/pedir-restauracion-pass`,{usr_email: email});
+    return this.HttpClient.post(`${this.url}/usuarios/pedir-restauracion-pass`,{usr_email: email});
   }
 
 //////////////////////////////////
 
   public getCurrentUser(){
-    return this.HttpClient.get(`${this.baseUrl}/actual-usuario`);
+    return this.HttpClient.get(`${this.url}/actual-usuario`);
   }
-   public logout() {
-     localStorage.removeItem('user');
-     return true;
-   }
+
+  public logout() {
+    localStorage.removeItem('user');
+    return true;
+  }
 
   public setUser(user:any){
     localStorage.setItem('user', JSON.stringify(user));
