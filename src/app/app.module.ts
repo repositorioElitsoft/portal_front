@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el ReactiveFormsModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatButtonModule } from '@angular/material/button';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-sesion.component';
@@ -61,13 +62,13 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -140,10 +141,12 @@ import {MatListModule} from '@angular/material/list';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
+    MatButtonModule,
+    MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
     MatCardModule,
@@ -153,6 +156,7 @@ import {MatListModule} from '@angular/material/list';
     MatSlideToggleModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatSortModule,
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
@@ -166,6 +170,7 @@ import {MatListModule} from '@angular/material/list';
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
