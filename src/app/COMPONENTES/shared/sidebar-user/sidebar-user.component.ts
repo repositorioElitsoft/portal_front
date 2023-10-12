@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { ValidarMailService } from 'src/app/SERVICE/validar-mail.service';
+import { ValidarMailService } from 'src/app/service/validar-mail.service';
 
 @Component({
   selector: 'app-sidebar-user',
@@ -10,7 +10,7 @@ import { ValidarMailService } from 'src/app/SERVICE/validar-mail.service';
 })
 export class SidebarUserComponent implements OnInit  {
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
   private cookieService: CookieService){}
 
   ngOnInit(): void {

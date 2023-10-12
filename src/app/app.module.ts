@@ -56,7 +56,6 @@ import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sideba
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -68,6 +67,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+
 
 @NgModule({
   declarations: [
@@ -129,9 +129,12 @@ import {MatListModule} from '@angular/material/list';
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
-    UserProfileComponent,
+   
   ],
   imports: [
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

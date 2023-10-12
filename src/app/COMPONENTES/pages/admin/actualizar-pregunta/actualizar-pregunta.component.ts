@@ -2,7 +2,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { PreguntaService } from 'src/app/SERVICE/pregunta.service';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 
 @Component({
   selector: 'app-actualizar-pregunta',

@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { ExamenService } from 'src/app/SERVICE/examen.service';
+import { ExamenService } from 'src/app/service/examen.service';
 
 @Component({
   selector: 'app-instrucciones',
@@ -21,7 +21,7 @@ export class InstruccionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.examenId = this.route.snapshot.params['examenId'];
+    this.examenId = this.route.snapshot.params['exam_id'];
     this.examenService.obtenerExamen(this.examenId).subscribe(
       (data:any) => {
         console.log(data);

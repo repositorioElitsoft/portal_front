@@ -1,6 +1,7 @@
 <div class="bootstrap-wrapper">
     <div class="container-fluid">
-      <h1>Exámenes disponibles</h1>
+      <h2 style="color: #fff;">Exámenes disponibles</h2>
+      <br>
       <div class="row mt20" *ngIf = "examenes">
         <div class="col-md-6" *ngFor = "let e of examenes">
           <mat-card class="mb20">
@@ -28,7 +29,7 @@
         <div class="col-md-12" *ngIf = "examenes.length == 0">
           <mat-card>
             <mat-card-content>
-              <h1>No hay exámenes en esta categoría</h1>
+              <h3>No hay exámenes en esta categoría</h3>
             </mat-card-content>
           </mat-card>
         </div>

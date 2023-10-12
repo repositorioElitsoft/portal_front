@@ -1,0 +1,20 @@
+    .bootstrap-wrapper {
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+    }
+    .container-fluid {
+      width: 100%;
+    }
+ 
+    .col-md-9 {
+      background-color: #f39c12;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    mat-card {
+      margin-bottom: 20px;
+    }

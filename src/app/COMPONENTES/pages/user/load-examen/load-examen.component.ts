@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ExamenService } from 'src/app/SERVICE/examen.service';
+import { ExamenService } from 'src/app/service/examen.service';
 
 
 @Component({
@@ -16,13 +16,14 @@ export class LoadExamenComponent implements OnInit {
   constructor(
     private route:ActivatedRoute,
     private examenService:ExamenService
-    
+
   ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.catId = params['catId'];
 
+      console.log(this.catId + "this cat id");
       if(this.catId == 0){
         console.log("Cargando todos los exámenes");
         this.examenService.obtenerExamenesActivos().subscribe(

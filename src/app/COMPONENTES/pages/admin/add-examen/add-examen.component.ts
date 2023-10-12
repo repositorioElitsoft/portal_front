@@ -4,8 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import  Swal  from 'sweetalert2';
 
 import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/SERVICE/categoria.service';
-import { ExamenService } from 'src/app/SERVICE/examen.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
+import { ExamenService } from 'src/app/service/examen.service';
 
 @Component({
   selector: 'app-add-examen',

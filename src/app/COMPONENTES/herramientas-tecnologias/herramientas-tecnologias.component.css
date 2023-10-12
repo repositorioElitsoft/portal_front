@@ -8,6 +8,7 @@
   display: flex; /* Establece el contenedor como un flexbox */
   flex-wrap: wrap; /* Permite que los elementos se ajusten a la línea siguiente si no caben en una sola línea */
   gap: 40px; /* Espacio entre los elementos */
+  background-color: white;
 }
 
 .combobox {

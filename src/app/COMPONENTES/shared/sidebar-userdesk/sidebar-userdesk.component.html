@@ -3,23 +3,42 @@
 
     <ul class="list-unstyled components">
         <li>
-            <a routerLink="/datos_personales"routerLinkActive="active">Datos Personales</a>
+            <a routerLink="/datos_personales"routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">assignment_ind</mat-icon>  Datos Personales
+            </a>
         </li>
       <li>
-        <a routerLink="/herramientas-tecnologias"routerLinkActive="active">Herramientas y Tecnologias</a>
+        <a routerLink="/herramientas-tecnologias"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">build</mat-icon>  Herramientas y Tecnologias
+        </a>
       </li>
       <li>
-        <a routerLink="/informacion-academica"routerLinkActive="active">Información Academica</a>
+        <a routerLink="/informacion-academica"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">school</mat-icon>  Información Academica
+        </a>
       </li>
       <li>
-        <a routerLink="/informacion-laboral"routerLinkActive="active">Información Laboral</a>
+        <a routerLink="/informacion-laboral"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">work</mat-icon>  Información Laboral
+        </a>
       </li>
       <li>
-        <a routerLink="/cargo-usuario"routerLinkActive="active">Cargo</a>
+        <a routerLink="/cargo-usuario"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">person_pin</mat-icon>  Cargo
+        </a>
       </li>
+      <li>
+        <a routerLink="/user-dashboard/0"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">question_answer</mat-icon> Portal de Exámenes
+        </a>
+      </li>
+      <br><br><br><br><br><br><br><br><br><br>
+      
       <li class="nav-item">
-        <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">Cerrar Sesión</a>
-      </li>      
+        <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">
+          <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon>  Cerrar Sesión
+        </a>
+      </li>
  
     </ul>
     

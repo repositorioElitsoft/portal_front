@@ -112,7 +112,16 @@
 
 
 @media (min-width: 1300px) {
+   .hamburger-menu{
+    display: none;
+    pointer-events: none;
 
+  }
+  .navbar {
+    display: none;
+    pointer-events: none;
+
+  }
     .menu__btn{
       display: none;
       pointer-events: none;
