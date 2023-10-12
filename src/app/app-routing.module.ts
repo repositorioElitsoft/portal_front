@@ -201,7 +201,7 @@ const routes: Routes = [
     canActivate:[AuthGuard],
     children : [
       {
-        path:':cat_examen_id',
+        path:':catId',
         component:LoadExamenComponent
       },
       {

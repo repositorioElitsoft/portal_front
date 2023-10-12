@@ -68,7 +68,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
     private productoService: ProductoService,
     private route: ActivatedRoute,
     private usuarioService:UsuarioService) { }
-
+   
     ngOnInit(): void {
       this.route.queryParams.subscribe(params => {
         const usr_id = params['usr_id'];
@@ -109,6 +109,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
           console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
           console.log('Productos cargados:', this.productos);
+  
         },
         (error) => {
           console.log('Error al obtener productos:', error);

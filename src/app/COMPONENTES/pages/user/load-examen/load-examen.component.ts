@@ -21,7 +21,7 @@ export class LoadExamenComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.catId = params['cat_examen_id'];
+      this.catId = params['catId'];
 
       console.log(this.catId + "this cat id");
       if(this.catId == 0){
