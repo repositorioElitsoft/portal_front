@@ -38,8 +38,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
   }
   
   filter(event: Event) {
@@ -70,6 +69,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
             .join(', '),
         }));
 
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         this.originalDataCopy = usuarios;
         this.dataSource.data = usuarios;
       },

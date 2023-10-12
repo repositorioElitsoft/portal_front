@@ -1,4 +1,4 @@
-body {
+/* body {
   background-color: white;
   font-family: Arial, sans-serif;
 }
@@ -6,7 +6,7 @@ body {
 .admin-panel-text {
   font-size: 24px;
   font-weight: bold;
-  color: #F76805; /* Color naranja */
+  color: #F76805;
 }
 
 .container {
@@ -24,7 +24,7 @@ h1 {
 table {
   width: 100%;
   border-collapse: collapse;
-}
+} */
 
 /* th, td {
   border: 1px solid orange;
@@ -32,7 +32,7 @@ table {
   /* text-align: left; 
 } */
 
-th {
+/* th {
   background-color: orange;
   color: white;
 }
@@ -56,4 +56,4 @@ tr:nth-child(even) {
 
 .btn-danger {
   background-color: red;
-}
+} */
