@@ -1,0 +1,17 @@
+   /* Estilo para el contenedor principal */
+   .bootstrap-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: orange; /* Color de fondo naranja */
+    color: black; /* Color del texto negro */
+    height: 100vh; /* Esto asegura que el contenedor ocupa toda la altura de la pantalla */
+  }
+
+  /* Estilo para el contenedor del contenido */
+  .container-fluid {
+    background-color: white; /* Color de fondo blanco */
+    padding: 20px; /* Espaciado interno para el contenido */
+    border: 1px solid black; /* Borde negro alrededor del contenido */
+  }
