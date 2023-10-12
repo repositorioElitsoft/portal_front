@@ -38,4 +38,7 @@ export class PreguntaService {
   public evaluarExamen(preguntas:any){
     return this.http.post(`${this.baserUrl}/pregunta/evaluar-examen`,preguntas);
   }
+  public guardarResultados(resultados:any){
+    return this.http.post(`${this.baserUrl}/resultados/`, resultados);
+    }
 }

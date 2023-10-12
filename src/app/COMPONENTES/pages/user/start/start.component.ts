@@ -120,6 +120,24 @@ export class StartComponent implements OnInit {
     }).then((e) => {
       if(e.isConfirmed){
         this.evaluarExamen();
+
+        const resultados = {
+          resultados_examen:this.puntosConseguidos,
+          tiempo:100-this.timer,
+        }
+
+        this.preguntaService.guardarResultados(resultados).subscribe({
+          next:(respuesta)=>{
+          console.log("Resultados")
+          console.log(respuesta)
+          },
+          error:(err)=>{
+          console.log("hay un error")
+          console.log(err)
+
+          }
+        })
+
         vecesEnviado++;
 
         this.vecesEnviado = vecesEnviado;
