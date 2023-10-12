@@ -15,3 +15,6 @@
     padding: 20px; /* Espaciado interno para el contenido */
     border: 1px solid black; /* Borde negro alrededor del contenido */
   }
+.main{
+    margin-top: 10vh;
+}

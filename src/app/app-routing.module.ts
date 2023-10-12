@@ -141,7 +141,7 @@ const routes: Routes = [
       {
         path:'view-usuarios-r',
         component:ViewUsuariosRComponent
-      },  
+      },
       {
         path:'view-perfil-usuario-r/:email',
         component:ViewPerfilUsuarioRComponent
@@ -205,14 +205,14 @@ const routes: Routes = [
         component:LoadExamenComponent
       },
       {
-        path:'instrucciones/:examenId',
+        path:'instrucciones/:exam_id',
         component:InstruccionesComponent
       },
       {
         path:'user-profile',
         component:UserProfileComponent
       },
-      
+
     ]
   },
   {

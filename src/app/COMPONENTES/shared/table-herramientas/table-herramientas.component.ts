@@ -27,6 +27,8 @@ export class TableHerramientasComponent implements OnInit {
   versionByRow: VersionProducto[][] = [];
   selectedCategoriaId: any;
 
+  isLoaded: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private herramientasService: HerramientasService,
@@ -54,6 +56,7 @@ export class TableHerramientasComponent implements OnInit {
         } else {
           this.addRow();
         }
+        this.isLoaded = true;
       },
       (error) => {
         console.error('Error al obtener herramientas:', error);
@@ -69,6 +72,7 @@ export class TableHerramientasComponent implements OnInit {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
       (data: CategoriaProducto[]) => {
         this.categorias = data;
+
       },
       (error) => {
         console.log('Error al obtener categorías:', error);
@@ -87,10 +91,12 @@ export class TableHerramientasComponent implements OnInit {
       return;
     }
 
+
     this.productoService.obtenerProductosPorCategoria(selectedCategoriaIdValue).subscribe(
       (data: Producto[]) => {
         this.productByRow[index] = data;
         console.log('Productos cargados para la fila ' + index + ':', this.productByRow[index]);
+     
       },
       (error) => {
         console.log('Error al obtener productos:', error);

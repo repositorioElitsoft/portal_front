@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoriaService } from 'src/app/SERVICE/categoria.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
 
 import Swal from 'sweetalert2';
 
@@ -10,14 +10,14 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-categoria.component.css']
 })
 export class AddCategoriaComponent implements OnInit {
-  
+
 
   categoria = {
     cat_exam_titl : '',  //titulo
     cat_exam_desc : ''   //descripción
   }
 
-  
+
   constructor(private categoriaService:CategoriaService,private router:Router) { }
 
   ngOnInit(): void {

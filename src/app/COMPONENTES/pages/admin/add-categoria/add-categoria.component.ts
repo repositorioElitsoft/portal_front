@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/SERVICE/categoria.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
 
 @Component({
   selector: 'app-add-categoria',

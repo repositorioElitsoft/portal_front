@@ -36,10 +36,10 @@ export class ExamenService {
   }
 
   public obtenerExamenesActivos(){
-    return this.http.get(`${this.baserUrl}/examen/activo`);
+    return this.http.get(`${this.baserUrl}/examen/`);
   }
 
   public obtenerExamenesActivosDeUnaCategoria(categoriaId:any){
-    return this.http.get(`${this.baserUrl}/examen/categoria/activo/${categoriaId}`);
+    return this.http.get(`${this.baserUrl}/examen/categoria/${categoriaId}`);
   }
 }

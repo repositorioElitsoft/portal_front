@@ -1,7 +1,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/SERVICE/categoria.service';
+import { CategoriaService } from 'src/app/service/categoria.service';
 import { LoginService } from 'src/app/service/login.service';
 
 
@@ -23,9 +23,11 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.categoriaService.listarCategorias().subscribe(
       (data:any) => {
+        console.log(data);
         this.categorias = data;
       },
       (error) => {
+        console.log(error);
         this.snack.open('Error al cargar las categorías','',{
           duration:3000
         })
