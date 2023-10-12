@@ -5,6 +5,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
+import { ExamenService } from 'src/app/service/examen.service';
 
 //se declara fuera de la clase de forma global
 let vecesEnviado = 0;
@@ -18,17 +19,18 @@ export class StartComponent implements OnInit {
 
   examenId:any;
   preguntas:any;
+ 
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
   preguntasTotales = 0;
 
   esEnviado = false;
   timer:any;
-  examen: any;
+  examen!: any;
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-
+  
 
 
 
@@ -36,7 +38,8 @@ export class StartComponent implements OnInit {
   constructor(
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
-    private preguntaService:PreguntaService
+    private preguntaService:PreguntaService,
+    private examenService:ExamenService
       ) { }
 
   ngOnInit(): void {
@@ -49,6 +52,18 @@ export class StartComponent implements OnInit {
 
 
   cargarPreguntas(){
+
+    this.examenService.obtenerExamen(this.examenId).subscribe({
+      next: (data)=>{
+        this.examen = data
+        console.log(this.examen)
+      },
+      error: (err) =>{
+        console.log(err)
+      }
+    })
+  
+
     this.preguntaService.listarPreguntasDelExamenParaLaPrueba(this.examenId).subscribe(
       (data:any) => {
         console.log(data);
@@ -123,7 +138,7 @@ export class StartComponent implements OnInit {
 
         const resultados = {
           resultadosExamen:this.puntosConseguidos,
-          tiempo:100-this.timer,
+          tiempo: Math.abs(100-this.timer),
           examen:{
             examenId: this.examenId
           }
