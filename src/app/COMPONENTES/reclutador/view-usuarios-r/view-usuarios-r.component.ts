@@ -23,7 +23,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtrados: string = '';
   originalDataCopy: Usuario[] = [];
-
+  usuarios: Usuario[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -86,5 +86,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+  botonEstadistica(event: Event){
+    event.preventDefault()
+    const elementId = (event.target as HTMLButtonElement).id; 
+    console.log('Element ID:', elementId);
+
+    const elementValue = (event.target as HTMLButtonElement).value; 
+    console.log('Element VALUE:', elementValue);
+    
+    
   }
 }
