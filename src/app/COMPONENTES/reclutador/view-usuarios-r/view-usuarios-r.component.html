@@ -27,10 +27,7 @@
       <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
         <mat-icon>menu</mat-icon>
       </button>
-      <button mat-mini-fab id="{element.usr_email}" value="{{element.usr_email}}" (click)="botonEstadistica($event)" color="secundary" aria-label="Example icon button with a menu icon">
-        <mat-icon>bar_chart</mat-icon>
-        
-      </button>
+
     </td>
   </ng-container>
 
@@ -48,3 +45,9 @@
                showFirstLastButtons
                aria-label="Select page of periodic elements">
 </mat-paginator>
+
+
+<button mat-mini-fab (click)="botonEstadistica($event)" color="secundary" aria-label="Example icon button with a menu icon">
+  <mat-icon>bar_chart</mat-icon>
+  
+</button>

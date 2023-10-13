@@ -87,13 +87,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-  botonEstadistica(event: Event){
+  botonEstadistica(event: any){
     event.preventDefault()
-    const elementId = (event.target as HTMLButtonElement).id; 
+    const elementId = event.target.parentElement.id
     console.log('Element ID:', elementId);
 
-    const elementValue = (event.target as HTMLButtonElement).value; 
-    console.log('Element VALUE:', elementValue);
+  this.router.navigate([
+    "reclutador/estadisticas"
+
+  ])
     
     
   }

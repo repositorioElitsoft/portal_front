@@ -69,6 +69,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 
 
 @NgModule({
@@ -132,6 +133,7 @@ import { MatSortModule } from '@angular/material/sort';
     InstruccionesComponent,
     StartComponent,
     UserProfileComponent,
+    EstadisticasComponent,
   ],
   imports: [
     MatButtonModule,
