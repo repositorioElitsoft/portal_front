@@ -38,6 +38,7 @@ import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/i
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
 
 
+
 const routes: Routes = [
   {path:'restaurar', component:RestaurarPassComponent},
 

@@ -67,7 +67,11 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-
+import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { RouterOutlet } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -106,7 +110,6 @@ import {MatListModule} from '@angular/material/list';
     AppSidebar2Component,
     AppFooterComponent,
     SidebarUserDeskComponent,
-    SidebarUserComponent,
     TableHerramientasComponent,
     NumericOnlyDirective,
     ValidarMailComponent,
@@ -129,6 +132,9 @@ import {MatListModule} from '@angular/material/list';
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
+    SidebarUserComponent,
+
+   
    
   ],
   imports: [
@@ -138,6 +144,7 @@ import {MatListModule} from '@angular/material/list';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    NavbarResponsiveComponent,
     HttpClientModule,
     ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
     BrowserAnimationsModule,
@@ -145,14 +152,18 @@ import {MatListModule} from '@angular/material/list';
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     HttpClientModule,
+    RouterOutlet,
+    MatDialogModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
