@@ -70,6 +70,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 
 
 @NgModule({
@@ -136,6 +137,7 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     EstadisticasComponent,
   ],
   imports: [
+    MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
