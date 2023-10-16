@@ -205,4 +205,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     
     
   }
+  openUserProfile(event: any){
+    const email = event.target.parentElement.id
+    console.log(email)
+
+    this.router.navigate(["/reclutador/view-perfil-usuario-r/"+email])
+  }
 }

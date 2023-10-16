@@ -23,3 +23,14 @@
     align-items: center;
     padding: 10px;
   }
+
+  .chips{
+    font-size: 12px; /* Adjust the font size as needed */
+    padding: 2px 4px; 
+    height: auto;
+  }
+
+  .chips-container{
+    margin-top: 1vh;
+  }
+
