@@ -1,57 +1,72 @@
-import { MediaMatcher } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {ChangeDetectorRef, Component,OnInit} from '@angular/core';
+import {MatListModule} from '@angular/material/list';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {NgIf, NgFor} from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/service/login.service';
-import { MatDialog } from '@angular/material/dialog';  // Importar correctamente MatDialog
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 
 @Component({
-  selector: 'app-sidebar-user',
-  templateUrl: './sidebar-user.component.html',
-  styleUrls: ['./sidebar-user.component.css'],
-  
+  selector: 'app-navbar-responsive',
+  templateUrl: './navbar-responsive.component.html',
+  styleUrls: ['./navbar-responsive.component.css'],
+  standalone: true,
+  imports: [
+    NgIf,
+    RouterModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatMenuModule,
+    NgFor,
+  ],
 })
-export class SidebarUserComponent implements OnInit {
+export class NavbarResponsiveComponent implements OnInit  {
   mobileQuery: MediaQueryList;
+
+
+
   private _mobileQueryListener: () => void;
- 
-  
 
-    
-
-  constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    private categoriaService: CategoriaService,
-    public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
-    private snack: MatSnackBar,
-    public login: LoginService,
-    media: MediaMatcher
-  ) {
+  constructor(changeDetectorRef: ChangeDetectorRef,
+    private categoriaService:CategoriaService,
+    private snack:MatSnackBar,
+    public login:LoginService,
+    media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 1300px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    
   }
+ 
+  categorias:any;
 
-  categorias: any;
+
 
   ngOnInit(): void {
     this.categoriaService.listarCategorias().subscribe(
-      (data: any) => {
+      (data:any) => {
         console.log(data);
         this.categorias = data;
       },
       (error) => {
         console.log(error);
-        this.snack.open('Error al cargar las categorías', '', {
-          duration: 3000,
-        });
+        this.snack.open('Error al cargar las categorías','',{
+          duration:3000
+        })
         console.log(error);
       }
-    );
+    )
   }
 
   ngOnDestroy(): void {
@@ -60,9 +75,6 @@ export class SidebarUserComponent implements OnInit {
 
   shouldRun = true;
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    // Tu código para abrir el diálogo
-  }
 
   cerrarSesion(): void {
     const confirmacion = window.confirm('¿Deseas cerrar la sesión?');
@@ -81,4 +93,7 @@ export class SidebarUserComponent implements OnInit {
     }
   }
 
+  
 }
+
+

@@ -11,7 +11,7 @@ html, body { height: 100%; }
 
 
 body { margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Meera Inimai', sans-serif;
   background: #E0EAFC;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #efefef, #c7c7c7);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #efefef, #c7c7c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -29,11 +29,14 @@ body { margin: 0;
  margin-left: 20%;
  margin-right: 20%;
  background-color: white;
-
+  box-shadow: 6px #0f0f0f;
   border-radius: 10px;
+  border: 1px solid #F57C27;
+
   
 }
 
 .spinner-color{
   color: black;
 }
+

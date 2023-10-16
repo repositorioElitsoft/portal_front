@@ -9,7 +9,6 @@ import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-ses
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
 import { ProfileAdminComponent } from './COMPONENTES/admin/profile-admin/profile-admin.component';
-import { SidebarAdminComponent } from './COMPONENTES/admin/sidebar-admin/sidebar-admin.component';
 import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
@@ -56,7 +55,6 @@ import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sideba
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -68,7 +66,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-
+import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { RouterOutlet } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +82,6 @@ import {MatListModule} from '@angular/material/list';
     WelcomeAdminComponent,
     DashboardComponent,
     ProfileAdminComponent,
-    SidebarAdminComponent,
     ViewCategoriasComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
@@ -107,7 +109,6 @@ import {MatListModule} from '@angular/material/list';
     AppSidebar2Component,
     AppFooterComponent,
     SidebarUserDeskComponent,
-    SidebarUserComponent,
     TableHerramientasComponent,
     NumericOnlyDirective,
     ValidarMailComponent,
@@ -130,7 +131,11 @@ import {MatListModule} from '@angular/material/list';
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
-    UserProfileComponent,
+    SidebarUserComponent,
+    SidebarRResponsiveComponent, 
+
+   
+   
   ],
   imports: [
     MatButtonModule,
@@ -139,6 +144,7 @@ import {MatListModule} from '@angular/material/list';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    NavbarResponsiveComponent,
     HttpClientModule,
     ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
     BrowserAnimationsModule,
@@ -146,14 +152,18 @@ import {MatListModule} from '@angular/material/list';
     MatTableModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     HttpClientModule,
+    RouterOutlet,
+    MatDialogModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
