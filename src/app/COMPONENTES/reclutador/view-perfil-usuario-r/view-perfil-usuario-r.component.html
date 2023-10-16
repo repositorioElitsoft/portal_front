@@ -3,47 +3,117 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
-          <div class="card-header">
-            <h4>Perfil de Usuario</h4>
+          <div class="card-header ">
+            <div class="card-custom">
+              <button mat-mini-fab color="primary" class="btn-custom" (click)="regresar()"
+              aria-label="Example icon button with a menu icon">
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+      
+            <h2 class="card-title-custom">Perfil de Usuario </h2>
+            </div>
           </div>
           <div class="card-body">
             <div class="user-profile">
-              <div class="profile-item">
-                <label>Nombre:</label>
-                <p>{{ usuario.usr_nom }}</p>
-              </div>
-              <div class="profile-item">
-                <label>Apellidos:</label>
-                <p>{{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</p>
-              </div>
-              <div class="profile-item">
-                <label>RUT:</label>
-                <p>{{ usuario.usr_rut }}</p>
-              </div>
-              <div class="profile-item">
-                <label>Correo Electrónico:</label>
-                <p>{{ usuario.email }}</p>
-              </div>
-              <div class="profile-item">
-                <label>Teléfono:</label>
-                <p>{{ usuario.usr_tel }}</p>
-              </div>
-              <div class="profile-item">
-                <label>URL de LinkedIn:</label>
-                <p>{{ usuario.usr_url_link }}</p>
-              </div>
-              <div class="profile-item">
-                <label>Rol:</label>
-                <p>{{ rol }}</p>
-              </div>
+           
               <!-- Agrega más campos del perfil según tu entidad Usuario -->
-            </div>
+             
+          <mat-tab-group>
+       
+            <mat-tab label="Datos Personales">
+              <mat-list>
+              <mat-list-item>
+                <span matListItemTitle>{{ usuario.usr_nom }} {{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</span>
+                <span matListItemLine>Nombre</span>
+                <div matListItemIcon>
+                  <mat-icon>person</mat-icon>
+                </div>
+    
+              </mat-list-item>
+              <mat-list-item>
+                <span matListItemTitle>{{ usuario.usr_rut }}</span>
+                <span matListItemLine>Rut</span>
+                <div matListItemIcon>
+                  <mat-icon>credit_card</mat-icon>
+                </div>
+              </mat-list-item>
+              <mat-list-item>
+                <span matListItemTitle>{{ usuario.usr_email}}</span>
+                <span matListItemLine>Correo Electrónico</span>
+                <div matListItemIcon>
+                  <mat-icon>email</mat-icon>
+                </div>
+              </mat-list-item>
+              <mat-list-item>
+                <span matListItemTitle>{{ usuario.usr_tel}}</span>
+                <span matListItemLine>Teléfono</span>
+                <div matListItemIcon>
+                  <mat-icon>phone</mat-icon>
+                </div>
+              </mat-list-item>
+              <mat-list-item>
+                <span matListItemTitle *ngIf="usuario.usr_url_link">{{ usuario.usr_url_link}}</span>
+                <span matListItemTitle *ngIf="!usuario.usr_url_link">No especificado</span>
+                <span matListItemLine>LinkedIn</span>
+            
+                <div matListItemIcon>
+                  <mat-icon>public</mat-icon>
+                </div>
+              </mat-list-item>
+              </mat-list>
+            </mat-tab>
+            <mat-tab label="Información Laboral">
+              <mat-list>
+                <mat-list-item *ngFor="let laboral of usuario.laborales">
+                  <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
+      
+                  <span matListItemLine>
+                    {{ laboral.inf_lab_emp }}
+                  </span>
+                  
+               
+        
+                    <div *ngFor="let h of laboral.herramientas; let i = index" matListItemLine>
+                      <mat-chip  class="chips" > 
+                        {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})
+                      </mat-chip>
+                    </div>
+
+                  <div matListItemIcon>
+                    <mat-icon>work</mat-icon>
+                  </div>
+ 
+                  <span matListItemMeta> <div>Desde</div> {{ laboral.inf_lab_fec_ini }} </span>
+                  <span matListItemMeta> <div>Hasta</div> {{ laboral.inf_lab_fec_fin }} </span>
+                </mat-list-item>
+           
+              </mat-list>
+            </mat-tab>
+            <mat-tab label="Información Académica">
+              <mat-list>
+              <mat-list-item *ngFor="let academica of usuario.academicas">
+                <span matListItemTitle>{{ academica.titl }}</span>
+    
+                <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
+
+                <span matListItemLine>{{academica.inf_acad_est }}</span>
+
+                <div matListItemIcon>
+                  <mat-icon>school</mat-icon>
+                </div>
+                <span matListItemMeta> <div>Desde</div> {{ academica.inf_acad_fec_ini }} </span>
+                <span matListItemMeta> <div>Hasta</div> {{ academica.inf_acad_fec_fin }} </span>
+             
+              </mat-list-item>
+            </mat-list>
+            </mat-tab>
+          </mat-tab-group>
+        
+           </div>
           </div>
         </div>
       </div>
-      <div class="card-footer">
-        <button class="btn btn-secondary" (click)="regresar()">Regresar</button>
-      </div>
+     
     </div>
  </div>
   

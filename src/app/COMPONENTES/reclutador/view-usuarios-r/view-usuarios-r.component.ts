@@ -26,6 +26,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
+  usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
@@ -36,7 +37,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
 
-  usuarios: Usuario[] = [];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -204,5 +204,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   ])
     
     
+  }
+  openUserProfile(event: any){
+    const email = event.target.parentElement.id
+    console.log(email)
+
+    this.router.navigate(["/reclutador/view-perfil-usuario-r/"+email])
   }
 }

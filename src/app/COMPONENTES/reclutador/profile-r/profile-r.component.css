@@ -76,3 +76,6 @@ body {
     background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
   }
   
+  .no-mouse-action {
+    pointer-events: none;
+  }

@@ -23,3 +23,35 @@
     align-items: center;
     padding: 10px;
   }
+
+  .chips{
+    font-size: 12px; /* Adjust the font size as needed */
+    padding: 2px 4px; 
+    height: auto;
+  }
+
+  .chips-container{
+    margin-top: 1vh;
+  }
+
+  .card-custom{
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+ 
+  }
+  .card-title-custom{
+    align-self: baseline; 
+    justify-self: end;
+    color: rgb(65, 65, 65);
+    font-weight: bolder;
+  }
+  .btn-custom{
+    background-color: transparent!important;
+    color: black!important;
+  }
+
+  .card-header{
+    background-color: rgb(255, 197, 90);
+  }
+  

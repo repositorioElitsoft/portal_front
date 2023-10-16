@@ -25,6 +25,7 @@
         <div class="row mb-3">
           <label for="inputRut" class="col-sm-2 col-form-label">RUT:</label>
           <div class="col-sm-10">
+            
             <input type="rut" class="form-control" id="inputRut" formControlName="usr_rut" name="inputRut"
               [ngClass]="{'is-invalid': form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched}" >
               <div *ngIf="form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched" class="invalid-feedback">

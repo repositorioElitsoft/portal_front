@@ -74,7 +74,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatChipsModule} from '@angular/material/chips'; 
+import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 
 @NgModule({
   declarations: [
@@ -141,8 +145,10 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
    
    
     EstadisticasComponent,
+  
   ],
   imports: [
+    MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -169,9 +175,13 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatTabsModule,
     HttpClientModule,
     RouterOutlet,
     MatDialogModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatTooltipModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
