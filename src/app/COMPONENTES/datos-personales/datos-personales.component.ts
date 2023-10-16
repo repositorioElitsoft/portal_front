@@ -35,7 +35,9 @@ export class DatosPersonalesComponent implements OnInit {
       pais_id: undefined,
       pais_nom: ''
     },
-    pais_nom: ''
+    pais_nom: '',
+    usr_herr: '',
+    herr_ver: ''
   };
 
   constructor(
