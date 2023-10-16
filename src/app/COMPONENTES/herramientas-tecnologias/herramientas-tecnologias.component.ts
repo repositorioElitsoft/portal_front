@@ -83,17 +83,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
         this.obtenerNiveles();
       });
     }
-    // obtenerDatosUsuario(usuarioId: number) {
-    //   this.usuarioService.obtenerUsuarioPorId(usuarioId).subscribe(
-    //     (usuario: Usuario) => {
-    //       // this.usuario = usuario; // Almacena los datos del usuario
-    //     },
-    //     (error) => {
-    //       console.log('Error al obtener los datos del usuario:', error);
-    //     }
-    //   );
-    // }
-
+    
     obtenerCategorias() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
         (data: CategoriaProducto[]) => {

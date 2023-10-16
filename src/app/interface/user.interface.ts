@@ -15,4 +15,5 @@ export interface Usuario {
     pais?: Pais; // Agregar esta línea para definir la propiedad pais
     herramientas?: HerramientaData[];
     usr_herr: string;
+    herr_ver: string;
 }
