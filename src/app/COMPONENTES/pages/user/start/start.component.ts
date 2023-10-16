@@ -195,7 +195,7 @@ export class StartComponent implements OnInit {
     this.preguntas.forEach((p:any) => {
       if(p.respuestaDada == p.respuesta){
         this.respuestasCorrectas ++;
-        let puntos = this.preguntas[0].examen.puntosMaximos/this.preguntas.length;
+        let puntos = this.examen.puntosMaximos/this.preguntas.length;
         this.puntosConseguidos += puntos;
       }
 
