@@ -142,7 +142,7 @@ export class DatosPersonalesComponent implements OnInit {
       );
 
       if (isConfirmed) {
-        this.router.navigate(['/herramientas-tecnologias']);
+        this.router.navigate(['/reclutador']);
       }
     } catch (error) {
 
