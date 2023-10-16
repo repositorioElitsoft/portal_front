@@ -9,7 +9,6 @@ import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-ses
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
 import { ProfileAdminComponent } from './COMPONENTES/admin/profile-admin/profile-admin.component';
-import { SidebarAdminComponent } from './COMPONENTES/admin/sidebar-admin/sidebar-admin.component';
 import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
@@ -72,6 +71,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
+import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +82,6 @@ import {MatDialogModule} from '@angular/material/dialog';
     WelcomeAdminComponent,
     DashboardComponent,
     ProfileAdminComponent,
-    SidebarAdminComponent,
     ViewCategoriasComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
@@ -133,6 +132,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     InstruccionesComponent,
     StartComponent,
     SidebarUserComponent,
+    SidebarRResponsiveComponent, 
 
    
    
