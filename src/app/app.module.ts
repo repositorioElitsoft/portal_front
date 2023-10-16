@@ -74,6 +74,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs'; 
 import {MatChipsModule} from '@angular/material/chips'; 
 import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 
 @NgModule({
   declarations: [
@@ -168,6 +169,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     HttpClientModule,
     MatChipsModule,
     MatExpansionModule,
+    MatTooltipModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),

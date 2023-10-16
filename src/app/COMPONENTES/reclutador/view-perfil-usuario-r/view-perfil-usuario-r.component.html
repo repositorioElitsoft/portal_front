@@ -3,15 +3,23 @@
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
-          <div class="card-header">
-            <h4>Perfil de Usuario</h4>
+          <div class="card-header ">
+            <div class="card-custom">
+              <button mat-mini-fab color="primary" class="btn-custom" (click)="regresar()"
+              aria-label="Example icon button with a menu icon">
+              <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+      
+            <h2 class="card-title-custom">Perfil de Usuario </h2>
+            </div>
           </div>
           <div class="card-body">
             <div class="user-profile">
            
               <!-- Agrega más campos del perfil según tu entidad Usuario -->
-    
+             
           <mat-tab-group>
+       
             <mat-tab label="Datos Personales">
               <mat-list>
               <mat-list-item>
@@ -74,10 +82,9 @@
                   <div matListItemIcon>
                     <mat-icon>work</mat-icon>
                   </div>
-
-                  <span matListItemMeta>  {{ laboral.inf_lab_fec_ini }}- {{ laboral.inf_lab_fec_fin }} </span>
-                  
-
+ 
+                  <span matListItemMeta> <div>Desde</div> {{ laboral.inf_lab_fec_ini }} </span>
+                  <span matListItemMeta> <div>Hasta</div> {{ laboral.inf_lab_fec_fin }} </span>
                 </mat-list-item>
            
               </mat-list>
@@ -87,29 +94,26 @@
               <mat-list-item *ngFor="let academica of usuario.academicas">
                 <span matListItemTitle>{{ academica.titl }}</span>
     
-                <span matListItemLine>
-                  {{ academica.inf_acad_nom_esc }}
-                </span>
+                <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
 
-                <span matListItemLine>
-                  {{ academica.inf_acad_est }}
-                </span>
+                <span matListItemLine>{{academica.inf_acad_est }}</span>
+
                 <div matListItemIcon>
                   <mat-icon>school</mat-icon>
                 </div>
-                <span matListItemMeta>  {{ academica.inf_acad_fec_fin }} - {{ academica.inf_acad_fec_ini }} </span>
-                
+                <span matListItemMeta> <div>Desde</div> {{ academica.inf_acad_fec_ini }} </span>
+                <span matListItemMeta> <div>Hasta</div> {{ academica.inf_acad_fec_fin }} </span>
+             
               </mat-list-item>
             </mat-list>
             </mat-tab>
           </mat-tab-group>
+        
            </div>
           </div>
         </div>
       </div>
-      <div class="card-footer">
-        <button class="btn btn-secondary" (click)="regresar()">Regresar</button>
-      </div>
+     
     </div>
  </div>
   
