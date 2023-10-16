@@ -1,25 +1,80 @@
-table {
-  width: 100%;
+/* body {
+  background-color: white;
+  font-family: Arial, sans-serif;
+}
+
+.admin-panel-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #F76805;
+}
+
+.container {
   background-color: white;
   padding: 20px;
   border: 2px solid orange;
-  background-color: #f2f2f2;
+  margin: 20px;
+}
+
+h1 {
+  font-size: 28px;
+  color: black;
+}
+
+table {
+  width: 100%;
   border-collapse: collapse;
-  margin:0;
-  
+} */
+
+.filter-container {
+  display: flex;
+  align-items: center;
 }
 
-th, td {
+.filter-input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.filter-select {
+  width: 230px;
+  margin-right: 10px;
+}
+
+/* th, td {
   border: 1px solid orange;
-  padding: 10px;
-  text-align: left;
-}
+  /* padding: 10px; */
+  /* text-align: left; 
+} */
 
-th {
+/* th {
   background-color: orange;
-  color: #333;
+  color: white;
 }
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+.btn {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: orange;
+}
+
+.btn-danger {
+  background-color: red;
+} */
+
+.stats-btn{
+  background-color: orange!important;
+  color: white!important;
+  margin-bottom: 2vh;
 }

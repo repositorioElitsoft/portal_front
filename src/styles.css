@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
 .admin-panel-text {
     color: orange;
@@ -38,3 +39,5 @@ box-shadow: 6px #0f0f0f;
 .spinner-color{
   color: black;
 }
+
+

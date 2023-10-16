@@ -30,36 +30,23 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = this.route.snapshot.params['email'];
-
-    const email = this.usuario.email; // Ajusta esto para obtener el correo electrónico del usuario
-    this.usuarioService.obtenerRolUsuario(email).subscribe(
-      (rol: string) => {
-        this.rol = rol;
-      },
-      (error) => {
-        console.error('Error obteniendo el rol del usuario', error);
-      }
-    );
     this.obtenerPerfilUsuario();
-
     
   }
 
   obtenerPerfilUsuario(): void {
-    this.usuarioService.obtenerPerfil(this.email).subscribe(
-      (data) => {
+    this.usuarioService.obtenerPerfil(this.email).subscribe({
+      next:(data) => {
         this.usuario = data;
         console.log('Usuario con rol:', this.usuario);
         console.log('Rol del usuario:', this.usuario.rol); // Acceder al campo "rol"
-        //
 
-        //
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al obtener el perfil del usuario:', error);
         // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
       }
-    );
+    });
   }
 
   regresar() {

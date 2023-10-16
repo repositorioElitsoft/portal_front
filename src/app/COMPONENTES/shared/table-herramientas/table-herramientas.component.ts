@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { NivelService } from 'src/app/service/nivel.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
@@ -125,42 +124,40 @@ export class TableHerramientasComponent implements OnInit {
     );
   }
 
-  createFormRows() {
-    const rowsArray = this.herramientas.map((herramienta, index) => {
-      console.log('Nombre categoria:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_nom);
-      console.log('Nombre Producto:', herramienta.versionProducto.prd.prd_nom);
-      console.log('Herramienta:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_id)
-      this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
-        next: (data: Producto[]) => {
-          this.productByRow[index] = data;
-        },
-        error: (error) => {
-          console.log('Error al obtener productos:', error);
-        }
-      });
-      this.productoService.getVersionByProduct(herramienta.versionProducto.prd.prd_id).subscribe({
-        next: (data: VersionProducto[]) => {
-          this.versionByRow[index] = data;
-        },
-        error: (error) => {
-          console.log('Error al obtener versiones:', error);
-        }
-      })
-      const row = this.formBuilder.group({
-        herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
-        herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
-        herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
-        versionProducto: this.formBuilder.group({
-          vrs_id: [herramienta.versionProducto.vrs_id, Validators.required]
-        }),
-        herr_is_cert: [herramienta.herr_is_cert],
-        herr_nvl: [herramienta.herr_nvl]
-      });
-      return row;
-  });
+    createFormRows() {
+      const rowsArray = this.herramientas.map((herramienta, index) => {
+        this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
+          next: (data: Producto[]) => {
+            this.productByRow[index] = data;
+          },
+          error: (error) => {
+            console.log('Error al obtener productos:', error);
+          }
+        });
+        this.productoService.getVersionByProduct(herramienta.versionProducto.prd.prd_id).subscribe({
+          next: (data: VersionProducto[]) => {
+            this.versionByRow[index] = data;
+          },
+          error: (error) => {
+            console.log('Error al obtener versiones:', error);
+          }
+        })
+        const row = this.formBuilder.group({
+          herr_usr_id:[herramienta.herr_usr_id],
+          herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
+          herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
+          herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
+          versionProducto: this.formBuilder.group({
+            vrs_id: [herramienta.versionProducto.vrs_id, Validators.required]
+          }),
+          herr_is_cert: [herramienta.herr_is_cert],
+          herr_nvl: [herramienta.herr_nvl]
+        });
+        return row;
+    });
 
-  this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
-}
+      this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
+    }
 
   async guardarDatos() {
     if (this.herramientasForm.invalid) {
