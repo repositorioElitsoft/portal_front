@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { NivelService } from 'src/app/service/nivel.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
@@ -127,9 +126,6 @@ export class TableHerramientasComponent implements OnInit {
 
     createFormRows() {
       const rowsArray = this.herramientas.map((herramienta, index) => {
-        // console.log('Nombre categoria:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_nom);
-        // console.log('Nombre Producto:', herramienta.versionProducto.prd.prd_nom);
-        // console.log('Herramienta:', herramienta.versionProducto.prd.cat_prod_id.cat_prod_id)
         this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
           next: (data: Producto[]) => {
             this.productByRow[index] = data;
