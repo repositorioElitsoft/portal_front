@@ -1,7 +1,7 @@
 /* Estilo para el contenedor del iframe */
 .graficos.container {
-    width:4000vw;
-    height: 1080px;
+    width:100vw;
+    height: 100vh;
     position: relative;
     overflow: hidden;
    

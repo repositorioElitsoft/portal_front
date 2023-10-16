@@ -29,7 +29,7 @@
               "src/custom-theme.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/intl-tel-input/build/css/intlTelInput.css",
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": [
               
