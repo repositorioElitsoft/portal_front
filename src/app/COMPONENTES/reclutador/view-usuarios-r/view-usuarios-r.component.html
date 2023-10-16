@@ -1,4 +1,7 @@
 <br><br><br><br><br><br><br><br>
+<button mat-raised-button (click)="botonEstadistica($event)" class="stats-btn" aria-label="Example icon button with a menu icon">
+  <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
+</button>
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
        class="mat-elevation-z8">
    <!-- Resto del código -->
@@ -47,7 +50,3 @@
 </mat-paginator>
 
 
-<button mat-mini-fab (click)="botonEstadistica($event)" color="secundary" aria-label="Example icon button with a menu icon">
-  <mat-icon>bar_chart</mat-icon>
-  
-</button>
