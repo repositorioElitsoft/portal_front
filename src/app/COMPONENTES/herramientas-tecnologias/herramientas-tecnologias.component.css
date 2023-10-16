@@ -4,11 +4,10 @@
   padding: 20px;
   border: 1px solid #F57C27;
   border-radius: 5px;
-  background-color: #f9f9f9;
   display: flex; /* Establece el contenedor como un flexbox */
   flex-wrap: wrap; /* Permite que los elementos se ajusten a la línea siguiente si no caben en una sola línea */
   gap: 40px; /* Espacio entre los elementos */
-  background-color: white;
+ 
 }
 
 .combobox {
@@ -35,4 +34,8 @@
   padding-top: 189px;
 }
 
-
+@media screen and (max-width: 768px) {
+  .container {
+    padding-top: 10vh;
+  }
+}

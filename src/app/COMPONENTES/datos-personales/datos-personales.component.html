@@ -12,11 +12,13 @@
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
   <br><br><br>
-  <div class="container-datos-personales">
+  <mat-card class="container-datos-personales">
 
     <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
 
     <div class="div-inputs"  *ngIf="isLoaded">
+
+
 
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
@@ -95,9 +97,10 @@
 
         
       </form>
+      
     </div>
 
-  </div>
+  </mat-card>
 
 
 

@@ -1,5 +1,5 @@
 <br><br><br><br><br><br><br><br>
-
+<mat-card>
 <div class="filter-container">
   <mat-form-field class="filter-input" >
     <input matInput (input)="filterInput()" placeholder="Filtrar..." [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0 ">
@@ -37,15 +37,17 @@
     </mat-select>
   </mat-form-field>
 </div>
-
+</mat-card>
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
        class="mat-elevation-z8">
    <!-- Resto del código -->
-
+ 
   <!-- Position Column -->
+
   <ng-container matColumnDef="usr_nom">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
     <td mat-cell *matCellDef="let element"> {{element.usr_nom}} </td>
+
   </ng-container>
 
   <!-- Name Column -->
@@ -92,3 +94,5 @@
                showFirstLastButtons
                aria-label="Select page of periodic elements">
 </mat-paginator>
+
+

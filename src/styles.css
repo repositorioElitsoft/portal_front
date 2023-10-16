@@ -32,12 +32,37 @@ body { margin: 0;
  background-color: white;
   box-shadow: 6px #0f0f0f;
   border-radius: 10px;
-  border: 1px solid #F57C27;
-
+  border: 2px solid #F57C27;
+  border-radius: 10px;
   
 }
 
 .spinner-color{
   color: black;
 }
+
+
+
+/* Media Query para pantallas más pequeñas (resolución móvil) */
+@media (max-width: 600px) {
+  .container-datos-personales {
+    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    margin-left: 5%;
+    padding-right: 100px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: flex;
+    font-family: 'Meera Inimai', sans-serif;
+    padding-top: 10px;
+    font-size: 12px;
+    padding: 5%;
+    margin-top: 50px;
+    border: 2px solid #F57C27;
+    border-radius: 10px;
+    margin-inline: 1vw;
+    
+  }
+
+}
+
 

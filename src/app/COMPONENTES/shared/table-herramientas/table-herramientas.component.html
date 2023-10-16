@@ -1,7 +1,8 @@
-<div>
+
     <h2 class="herramientasytecnologiash2">Herramientas y Tecnologias</h2>
     <br>
     <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
+    <mat-card>
     <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
         <div formArrayName="rows">
             <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
@@ -76,4 +77,4 @@
             </div>
         </div>
     </form>
-</div>
+</mat-card>

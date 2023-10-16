@@ -45,9 +45,7 @@
   }
   
   
-  .container {
-    padding-top: 189px;
-  }
+  
 
 
 /* Establece el fondo naranja */
@@ -100,16 +98,54 @@
 
 .box-box{
   margin-top: 10vh;
+
+
+  .container-datos-personales {
+  
+    border: 1px solid #F57C27;
+    border-radius: 10px;
+  
+    
+  }
+  
+  @media (max-width: 600px) {
+    .container-datos-personales {
+    
+      border: 1px solid #F57C27;
+      border-radius: 10px;
+   
+      
+    }
+  
+  }
+  
 }
 @media screen and (min-width: 1300px) and (max-width: 1600px) {
   .form-container {
     margin-left: 150px;
+    
  
+  }
+
+  .container-datos-personales {
+    
+    border: 1px solid #F57C27;
+    border-radius: 10px;
+ 
+    
   }
   .herramientasytecnologiash2{ margin-left: 150px;}
 
   .combobox {
     flex-basis: calc(35% - 30px); /* 25% de ancho para 4 elementos por fila */
+  }
+
+  .container-datos-personales {
+    
+    border: 1px solid #F57C27;
+    border-radius: 10px;
+ 
+    
   }
 }
 
@@ -117,6 +153,14 @@
   @media screen and (max-width: 1200px) {
     .combobox {
       flex-basis: calc(50% - 20px); /* 50% de ancho para 2 elementos por fila */
+    }
+
+    .container-datos-personales {
+    
+      border: 1px solid #F57C27;
+      border-radius: 10px;
+   
+      
     }
 
   }

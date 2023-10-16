@@ -122,6 +122,18 @@
 }
 
 
+
+.container-datos-personales {
+  
+  border: 1px solid #F57C27;
+  border-radius: 10px;
+
+  
+}
+
+
+
+
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
   .container-datos-personales {
@@ -131,6 +143,9 @@
     padding-top: 5%;
     padding-bottom: 5%;
     align-items: center;
+    border: 1px solid #F57C27;
+    border-radius: 10px;
+ 
   }
   .Titulos{
     font-size: 10px;
