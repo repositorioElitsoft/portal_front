@@ -12,7 +12,7 @@ export class ProfileRComponent implements OnInit {
 
  // perfilr: any;
  perfilr: any = {
-    usr_nom: this.usr_nom,
+    usr_nom: '',
     usr_ap_pat: '',
     usr_ap_mat: '',
     usr_rut: '',
