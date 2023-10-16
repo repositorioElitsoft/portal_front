@@ -12,6 +12,7 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
+import { NgModel } from '@angular/forms';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -29,10 +30,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
+  selectedAniosExpRange: number[] = [1, 10];
 
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
+  selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
 
@@ -57,6 +60,40 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+  filterData() {
+    let filteredArray = this.originalDataCopy;
+  
+    // Filtro por producto
+    if (this.selectedProducto > 0) {
+      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
+      if (selectedProduct) {
+        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
+      }
+    }
+  
+    // Filtro por versión
+    if (this.selectedVersion > 0) {
+      const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
+      if (selectedVersion) {
+        filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
+      }
+    }
+  
+    // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
+    if (this.selectedVersion > 0) {
+      const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
+      filteredArray = filteredArray.filter(element => {
+        const anosExp = element.herr_exp.split(', ').map(Number); // Dividimos la propiedad 'herr_exp' en un array de numeros
+        return anosExp.some(anos => anos >= min && anos <= max); // Verificamos si alguno de los numeros en el arreglo 'anosExp' se encuentra dentro del rango seleccionado
+      });
+    }
+
+    console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
+    console.log('Usuarios filtrados:', filteredArray);
+  
+    this.dataSource.data = filteredArray;
+  }
+
   filterInput() {
     let filteredArray = this.originalDataCopy;
 
@@ -68,34 +105,30 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.data = filteredArray;
   }
   
-  filterProducto() {
-    let filteredArray = this.originalDataCopy;
-
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
-      }
+  formatLabel(value: number): string {
+    if (value >= 1000) {
+      return Math.round(value / 1000) + 'k';
     }
 
-    this.dataSource.data = filteredArray;
+    return `${value}`;
+  }
+  
+  filterProducto() {
+    this.filterData();
   }
 
   filterVersion() {
-    let filteredArray = this.originalDataCopy;
-
-    if (this.selectedVersion > 0) {
-      const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
-  
-      if (selectedVersion) {
-        filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
-      }
+    if (this.selectedVersion === 0) {
+      this.selectedAniosExpRange = [1, 10]; // Restablece el rango predeterminado
     }
 
-    this.dataSource.data = filteredArray;
+    this.filterData();
   }
-  
+
+  filterAniosExp() {
+    this.filterData();
+  }
+
   obtenerUsuarios(): void {
     this.usuarioService.obtenerUsuarios().subscribe(
       (data: any[]) => {
@@ -112,7 +145,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
             .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
             .join(', '),
-          herr_exp: usuario.herramientas //TODO: Agregar los años de experiencia
+          herr_exp: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
             .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
             .join(', ')
