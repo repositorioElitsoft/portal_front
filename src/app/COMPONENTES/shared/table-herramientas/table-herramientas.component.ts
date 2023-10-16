@@ -143,6 +143,7 @@ export class TableHerramientasComponent implements OnInit {
           }
         })
         const row = this.formBuilder.group({
+          herr_usr_id:[herramienta.herr_usr_id],
           herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
           herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
           herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],

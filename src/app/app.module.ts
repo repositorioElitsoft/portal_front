@@ -73,6 +73,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 
 
 @NgModule({
@@ -138,6 +139,8 @@ import { MatSortModule } from '@angular/material/sort';
 
    
    
+   
+    EstadisticasComponent,
   ],
   imports: [
     MatButtonModule,

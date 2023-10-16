@@ -17,3 +17,37 @@
 
 
 
+<<<<<<< HEAD
+=======
+/* th {
+  background-color: orange;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.btn {
+  background-color: orange;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: orange;
+}
+
+.btn-danger {
+  background-color: red;
+} */
+
+.stats-btn{
+  background-color: orange!important;
+  color: white!important;
+  margin-bottom: 2vh;
+}
+>>>>>>> feature/cristian

@@ -36,6 +36,7 @@ import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 
 
 
@@ -145,7 +146,14 @@ const routes: Routes = [
       {
         path:'view-perfil-usuario-r/:email',
         component:ViewPerfilUsuarioRComponent
+      },
+
+      {
+        path:'estadisticas',
+        component:EstadisticasComponent
       }
+
+
     ]
   },
   {
