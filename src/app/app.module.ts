@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el ReactiveFormsModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatButtonModule } from '@angular/material/button';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-sesion.component';
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
 import { ProfileAdminComponent } from './COMPONENTES/admin/profile-admin/profile-admin.component';
-import { SidebarAdminComponent } from './COMPONENTES/admin/sidebar-admin/sidebar-admin.component';
 import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
@@ -56,26 +56,25 @@ import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sideba
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
+
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
-import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
+
 import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
+
 
 
 @NgModule({
@@ -87,7 +86,6 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     WelcomeAdminComponent,
     DashboardComponent,
     ProfileAdminComponent,
-    SidebarAdminComponent,
     ViewCategoriasComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
@@ -115,7 +113,6 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     AppSidebar2Component,
     AppFooterComponent,
     SidebarUserDeskComponent,
-    SidebarUserComponent,
     TableHerramientasComponent,
     NumericOnlyDirective,
     ValidarMailComponent,
@@ -139,10 +136,7 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     InstruccionesComponent,
     StartComponent,
     SidebarUserComponent,
-    SidebarRResponsiveComponent,
     AddUsuariosComponent,
-
-
 
   ],
   imports: [
@@ -153,20 +147,27 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule, // Agrega el ReactiveFormsModule a los imports del módulo
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
+    MatButtonModule,
+    MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
+    MatSortModule,
     HttpClientModule,
+    RouterOutlet,
+    MatDialogModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
@@ -179,6 +180,7 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

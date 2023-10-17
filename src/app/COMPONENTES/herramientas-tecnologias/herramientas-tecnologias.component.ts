@@ -27,20 +27,20 @@ export class HerramientasTecnologiasComponent implements OnInit {
     usr_id: -1
   };
 
-  usuario: Usuario = {
-    usr_id: -1,
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_pass: '',
-    usr_tel: '',
-    usr_url_link: '',
-    pais_nom: '',
-    pais: { pais_id: undefined,
-            pais_nom: '' } // Asegúrate de tener una instancia de Pais aquí
-  };
+  // usuario: Usuario = {
+  //   usr_id: -1,
+  //   usr_rut: '',
+  //   usr_nom: '',
+  //   usr_ap_pat: '',
+  //   usr_ap_mat: '',
+  //   usr_email: '',
+  //   usr_pass: '',
+  //   usr_tel: '',
+  //   usr_url_link: '',
+  //   pais_nom: '',
+  //   pais: { pais_id: undefined,
+  //           pais_nom: '' } // Asegúrate de tener una instancia de Pais aquí
+  // };
 
 
   selectedCategoriaId: number | undefined;
@@ -68,12 +68,12 @@ export class HerramientasTecnologiasComponent implements OnInit {
     private productoService: ProductoService,
     private route: ActivatedRoute,
     private usuarioService:UsuarioService) { }
-   
+
     ngOnInit(): void {
       this.route.queryParams.subscribe(params => {
         const usr_id = params['usr_id'];
         console.log(usr_id)
-        this.usuario.usr_id = usr_id
+        // this.usuario.usr_id = usr_id
         if (usr_id) {
           this.herramienta.usr_id = usr_id;
         }
@@ -83,8 +83,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
         this.obtenerNiveles();
       });
     }
-
-
 
     obtenerCategorias() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
@@ -109,7 +107,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
           console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
           console.log('Productos cargados:', this.productos);
-  
+
         },
         (error) => {
           console.log('Error al obtener productos:', error);
@@ -193,10 +191,10 @@ export class HerramientasTecnologiasComponent implements OnInit {
     }
 
     // Verificamos si tenemos un usuario válido antes de guardar
-    if (!this.usuario || this.usuario.usr_id === undefined) {
-      console.log('No se encontró un usuario válido.');
-      return;
-    }
+    // if (!this.usuario || this.usuario.usr_id === undefined) {
+    //   console.log('No se encontró un usuario válido.');
+    //   return;
+    // }
 
     // Completamos los datos de la herramienta con las selecciones
     this.herramienta.cat_prod_id = this.selectedCategoriaId;
@@ -216,5 +214,4 @@ export class HerramientasTecnologiasComponent implements OnInit {
     // );
   }
 }
-
 
