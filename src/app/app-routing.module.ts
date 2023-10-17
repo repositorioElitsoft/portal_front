@@ -88,8 +88,8 @@ const routes: Routes = [
         component:AddCategoriaComponent
       },
       {
-        path:'actualizar-categoria/:cat_exam_id',
-        component:ActualizarCategoriaComponent
+        path:'actualizar-categoria/:catId',
+        component:AddCategoriaComponent
       },
       {
         path:'view-examenes',

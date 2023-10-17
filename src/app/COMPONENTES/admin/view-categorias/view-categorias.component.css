@@ -60,3 +60,11 @@ body {
   background-color: #F76805; /* Color naranja */
   color: #fff; /* Color de texto blanco */
 }
+
+.custom-btn{
+  background-color: orange!important;
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+  color: white!important;
+  margin-left: 2vw;
+}

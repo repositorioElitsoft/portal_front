@@ -79,6 +79,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips'; 
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
+import { MatSliderModule } from '@angular/material/slider';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
 
 @NgModule({
   declarations: [
@@ -145,6 +148,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
    
    
     EstadisticasComponent,
+    AdvertenciaEliminarComponent,
   
   ],
   imports: [
@@ -176,12 +180,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatProgressSpinnerModule,
     MatSortModule,
     MatTabsModule,
+    MatSliderModule,
     HttpClientModule,
     RouterOutlet,
     MatDialogModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatDialogModule,
+    TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
