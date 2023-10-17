@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Examen } from '../interface/examen.interface';
 
 
 @Injectable({
@@ -35,7 +37,7 @@ export class ExamenService {
     return this.http.get(`${this.baserUrl}/examen/categoria/${categoriaId}`);
   }
 
-  public obtenerExamenesActivos(){
+  public obtenerExamenesActivos():Observable<any>{
     return this.http.get(`${this.baserUrl}/examen/`);
   }
 

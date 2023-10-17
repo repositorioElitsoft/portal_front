@@ -16,4 +16,5 @@ export interface Usuario {
     herramientas?: HerramientaData[];
     usr_herr: string;
     herr_ver: string;
+    herr_exp: string;
 }

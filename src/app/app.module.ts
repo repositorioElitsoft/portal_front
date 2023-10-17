@@ -75,7 +75,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips'; 
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
-
+import {MatDialogModule} from '@angular/material/dialog'; 
+import { MatSliderModule } from '@angular/material/slider';
+import {TextFieldModule} from '@angular/cdk/text-field'; 
 @NgModule({
   declarations: [
     NumericOnlyDirective,
@@ -166,10 +168,13 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatProgressSpinnerModule,
     MatSortModule,
     MatTabsModule,
+    MatSliderModule,
     HttpClientModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatDialogModule,
+    TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
