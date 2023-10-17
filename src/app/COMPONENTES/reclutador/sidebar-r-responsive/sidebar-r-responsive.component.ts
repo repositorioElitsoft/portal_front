@@ -3,18 +3,17 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/service/login.service';
-import { MatDialog } from '@angular/material/dialog';  // Importar correctamente MatDialog
-import { CookieService } from 'ngx-cookie-service';
+import { MatDialog } from '@angular/material/dialog';  //
 import { Router } from '@angular/router';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
-  selector: 'app-sidebar-user',
-  templateUrl: './sidebar-user.component.html',
-  styleUrls: ['./sidebar-user.component.css'],
-  
+  selector: 'app-sidebar-r-responsive',
+  templateUrl: './sidebar-r-responsive.component.html',
+  styleUrls: ['./sidebar-r-responsive.component.css']
 })
-export class SidebarUserComponent implements OnInit {
+export class SidebarRResponsiveComponent implements OnInit {
+
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
  

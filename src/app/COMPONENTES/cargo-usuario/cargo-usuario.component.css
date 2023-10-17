@@ -11,12 +11,21 @@
   width: fit-content;
 }
 
-.btn-guardar {
+.btn-guardar{
   font-size: 14px;
   padding: 8px 16px;
   background-color: #F57C27;
   border-color: #F57C27;
+  font-family: 'Meera Inimai', sans-serif;
 }
+
+.btn-guardar:hover {
+  background-color: #ffffff;
+  border-color: #F57C27;
+  color: #F57C27;
+
+}
+
 
 .col-form-label{
   color: #333;   font-family: 'Meera Inimai', sans-serif;

@@ -83,7 +83,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
         this.obtenerNiveles();
       });
     }
-
     obtenerCategorias() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
         (data: CategoriaProducto[]) => {

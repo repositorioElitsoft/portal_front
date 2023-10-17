@@ -1,22 +1,32 @@
-<mat-card>
-    <mat-action-list>
-     <!-- <div mat-subheader>Menu</div>
-      <button mat-list-item routerLink="/user-dashboard/user-profile">
-        <mat-icon mat-list-icon>account_circle</mat-icon>Perfil
-      </button> -->
-      <div mat-subheader>Categorías disponibles</div>
-      <button routerLink="/" mat-list-item>
-        <mat-icon mat-list-icon>quiz</mat-icon>Perfil
-      </button>
-      <button routerLink="/user-dashboard/0" mat-list-item>
-        <mat-icon mat-list-icon>quiz</mat-icon>Exámenes
-      </button>
-      <button [routerLink] = "'/user-dashboard/'+c.categoriaId" mat-list-item *ngFor = "let c of categorias">
-        <mat-icon mat-list-icon>account_circle</mat-icon> {{ c.titulo }}
-      </button>
-      <button mat-list-item (click) = "logout()">
-        <mat-icon mat-list-icon>logout</mat-icon>Salir
-      </button>
-    </mat-action-list>
-  </mat-card>
+  <nav class="sidebar">
 
+    <ul class="list-unstyled components">
+        <li>
+            <a routerLink="/datos_personales" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">account_circle</mat-icon>  Perfil
+            </a>
+        </li>
+      <li>
+        <a routerLink="/user-dashboard/0"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">assignment</mat-icon>  Exámenes
+        </a>
+      </li>
+      <mat-divider></mat-divider>
+      <li>
+        <a [routerLink]="'/user-dashboard/'+c.categoriaId" mat-list-item *ngFor = "let c of categorias">
+            <mat-icon mat-list-icon class="custom-icon2">quiz</mat-icon> {{ c.titulo }}
+        </a>
+      </li>
+   
+      <br><br><br><br><br><br><br>
+      
+      
+      <li class="nav-item">
+        <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">
+          <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon>  Cerrar Sesión
+        </a>
+      </li>
+ 
+    </ul>
+    
+  </nav>

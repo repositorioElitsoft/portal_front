@@ -1,8 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa el ReactiveFormsModule
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatButtonModule } from '@angular/material/button';
 import { MatButtonModule } from '@angular/material/button';
 import { RegistrarComponent } from './COMPONENTES/registrar/registrar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -148,13 +150,17 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatButtonModule,
+    MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatMenuModule,
     MatCardModule,
     MatToolbarModule,
@@ -163,9 +169,13 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     MatSlideToggleModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatSortModule,
     HttpClientModule,
+    RouterOutlet,
+    MatDialogModule,
     RouterOutlet,
     MatDialogModule,
     ToastrModule.forRoot({
