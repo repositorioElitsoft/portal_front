@@ -51,3 +51,15 @@
 
 }
 
+
+.select-tel{
+  width: 80px;
+  background-color: #e8e8e8!important;
+  color: rgb(71, 71, 71);
+  font-size: medium;
+  font-weight: 200!important;
+}
+
+.select-tel-input{
+  width: 180px;
+}

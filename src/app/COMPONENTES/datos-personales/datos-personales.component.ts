@@ -183,18 +183,15 @@ export class DatosPersonalesComponent implements OnInit {
 }
 
 function rutValido(control: AbstractControl): ValidationErrors | null {
+
+  if(!control.value.includes("-")){
+    return {badRut : true}
+  }
+
   if (control.value && !validarRut(control.value)) {
     // Validation failed, return an error object
     return { badRut: true };
   }
-
-  /*
-  if (control.value && /\s/.test(control.value)) {
-    // Validation failed, return an error object
-    return { noSpace: true };
-  }*/
-
-  // Validation passed, return null
   return null;
 }
 

@@ -13,6 +13,9 @@ import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { NgModel } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -27,6 +30,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
+  usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
@@ -46,7 +50,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
   ) {}
 
 
@@ -225,4 +231,46 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
+  botonEstadistica(event: any){
+    event.preventDefault()
+    const elementId = event.target.parentElement.id
+    console.log('Element ID:', elementId);
+
+  this.router.navigate([
+    "reclutador/estadisticas"
+
+  ])
+    
+    
+  }
+  openUserProfile(event: any){
+    const email = event.target.parentElement.id;
+    
+
+    this.usuarioService.obtenerPerfil(email).subscribe({
+      next:(user) => {
+        const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent,{
+          data: user
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+
+      },
+      error: (error) => {
+        console.error('Error al obtener el perfil del usuario:', error);
+        // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
+      }
+    });
+  }
+
+  openUserDialog(event: any) {
+
+
+    
+
+
+  }
+
+
 }

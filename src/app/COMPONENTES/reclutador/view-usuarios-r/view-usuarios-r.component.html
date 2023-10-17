@@ -1,4 +1,7 @@
 <br><br><br><br><br><br><br><br>
+<button mat-raised-button (click)="botonEstadistica($event)" class="stats-btn" aria-label="Example icon button with a menu icon">
+  <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
+</button>
 
 <div class="filter-container">
   <mat-form-field class="filter-input" >
@@ -64,7 +67,8 @@
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+      <button mat-mini-fab color="primary" id="{{element.usr_email}}" (click)="openUserProfile($event)"
+      aria-label="Example icon button with a menu icon">
         <mat-icon>menu</mat-icon>
       </button>
     </td>
@@ -93,3 +97,5 @@
                showFirstLastButtons
                aria-label="Select page of periodic elements">
 </mat-paginator>
+
+

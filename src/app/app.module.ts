@@ -69,10 +69,17 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatChipsModule} from '@angular/material/chips'; 
+import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
 
 @NgModule({
   declarations: [
@@ -136,8 +143,12 @@ import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-mo
     StartComponent,
     UserProfileComponent,
     ExamenModalComponent,
+    EstadisticasComponent,
+    AdvertenciaEliminarComponent,
+  
   ],
   imports: [
+    MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -161,10 +172,16 @@ import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-mo
     MatSelectModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatTabsModule,
     MatSliderModule,
     HttpClientModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatDialogModule,
+    TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
