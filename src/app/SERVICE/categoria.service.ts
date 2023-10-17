@@ -13,8 +13,8 @@ export class CategoriaService {
 
   constructor(private http:HttpClient) { }
 
-  public listarCategorias(): Observable<any>{
-    return this.http.get(`${this.baserUrl}/categoria/`);
+  public listarCategorias(): Observable <CategoriaExamen[]>{
+    return this.http.get<CategoriaExamen[]>(`${this.baserUrl}/categoria/`);
   }
 
   public agregarCategoria(categoria:CategoriaExamenCreateDTO){

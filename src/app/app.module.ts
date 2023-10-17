@@ -80,8 +80,10 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { MatSliderModule } from '@angular/material/slider';
+import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
+
 
 @NgModule({
   declarations: [
@@ -147,6 +149,8 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
    
    
    
+    ProfileComponent,
+    ExamenModalComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
   
@@ -184,6 +188,8 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     HttpClientModule,
     RouterOutlet,
     MatDialogModule,
+    MatDialogModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,
