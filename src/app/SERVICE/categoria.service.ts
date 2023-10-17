@@ -21,8 +21,16 @@ export class CategoriaService {
     return this.http.post(`${this.baserUrl}/categoria/`,categoria);
   }
 
-  public elimarCategoria(){
-    //TODO
+  public actualizarCategoria(categoria:CategoriaExamenCreateDTO, categoriaId: number){
+    return this.http.put(`${this.baserUrl}/categoria/actualizar/${categoriaId}`,categoria);
+  }
+
+  public eliminarCategoria(categoriaId: number): Observable<any>{
+    return this.http.delete(`${this.baserUrl}/categoria/eliminar/${categoriaId}`)
+  }
+
+  public getCategoria(categoriaId: number):Observable<any>{
+    return this.http.get(`${this.baserUrl}/categoria/${categoriaId}`)
   }
 
 }

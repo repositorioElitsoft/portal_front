@@ -77,7 +77,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import {MatDialogModule} from '@angular/material/dialog'; 
 import { MatSliderModule } from '@angular/material/slider';
-import {TextFieldModule} from '@angular/cdk/text-field'; 
+import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
+
 @NgModule({
   declarations: [
     NumericOnlyDirective,
@@ -140,6 +142,7 @@ import {TextFieldModule} from '@angular/cdk/text-field';
     StartComponent,
     UserProfileComponent,
     EstadisticasComponent,
+    AdvertenciaEliminarComponent,
   
   ],
   imports: [

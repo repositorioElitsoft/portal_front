@@ -1,5 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, AfterViewInit,ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,6 +9,8 @@ import { CategoriaExamen } from 'src/app/interface/categoria-examen.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 
 import Swal from 'sweetalert2';
+import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 const ELEMENT_DATA: CategoriaExamen[] = [];
@@ -38,8 +41,39 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
   constructor(private categoriaExamenService: CategoriaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar
  
   ) {}
+
+
+
+  openDialogEliminar(event: any) {
+
+
+
+    const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if(result){
+        //#endregionconsole.log()
+        this.categoriaExamenService.eliminarCategoria(event.target.parentElement.id).subscribe({
+          next:()=>{
+            this._snackBar.open("Categoría eliminada","Cerrar",{
+              duration: 4000
+            })
+            this.getExamCategories();
+          },
+          error:()=>{
+            this._snackBar.open("Error al eliminar categoría","Cerrar",{
+              duration: 4000
+            })
+          }
+        })
+      }
+    });
+  }
 
 
   ngOnInit(): void {
@@ -119,11 +153,11 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editExamen(event: any){
-    const email = event.target.parentElement.id
-    console.log(email)
+  editCategoria(event: any){
+    const id = event.target.parentElement.id
+    
 
-    this.router.navigate(["/reclutador/view-perfil-usuario-r/"+email])
+    this.router.navigate(["/admin/actualizar-categoria/"+id])
   }
 }
 
