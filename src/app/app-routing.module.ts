@@ -37,6 +37,7 @@ import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-e
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 
 
 const routes: Routes = [
@@ -87,8 +88,8 @@ const routes: Routes = [
         component:AddCategoriaComponent
       },
       {
-        path:'actualizar-categoria/:cat_exam_id',
-        component:ActualizarCategoriaComponent
+        path:'actualizar-categoria/:catId',
+        component:AddCategoriaComponent
       },
       {
         path:'view-examenes',
@@ -145,7 +146,14 @@ const routes: Routes = [
       {
         path:'view-perfil-usuario-r/:email',
         component:ViewPerfilUsuarioRComponent
+      },
+
+      {
+        path:'estadisticas',
+        component:EstadisticasComponent
       }
+
+
     ]
   },
   {
