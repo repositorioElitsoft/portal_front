@@ -58,6 +58,20 @@ body { margin: 0;
   font-size: 1.3em !important;
 }
 
+.minifab{
+  background-color: #F57C27 !important;
+}
+.minifab:hover {
+  transform: scale(1.1); /* Escalar el botón un 10% más grande en hover */
+}
+
+.minifabdanger{
+  background-color: 
+  #f44336 !important;
+}
+.minifabdanger:hover {
+  transform: scale(1.1); /* Escalar el botón un 10% más grande en hover */
+}
 
 
 .botonprimario:hover{
@@ -66,7 +80,17 @@ body { margin: 0;
   
 }
 
-
+.botonprimario:disabled {
+  background-color: #773e16 !important; /* Cambiar a un tono de gris más oscuro */
+  color: #fff !important;
+}
+.bootstrap-wrapper {
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 2vh;
+  padding-right: 10vh;
+  display: flex;
+}
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 600px) {
@@ -98,6 +122,15 @@ body { margin: 0;
     font-size: 1em !important;
   }
   
+
+  
+.bootstrap-wrapper {
+  padding: 20px;
+
+  margin-top: 5vh;
+  padding-right: 2vh;
+  display: flex;
+}
 
 }
 

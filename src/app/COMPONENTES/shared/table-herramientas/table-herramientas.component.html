@@ -61,12 +61,12 @@
                     </select>
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button *ngIf="i !== 0" type="button" class="custom-button" (click)="removeRow(i)">-</button>
+                    <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete_sweep</mat-icon></button>
 
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button *ngIf="i === 0" type="button" class="custom-button2" id="addRow" (click)="addRow()">
-                        <i class="fas fa-plus"></i> +
+                    <button mat-mini-fab  class="minifab" *ngIf="i === 0" type="button" id="addRow" (click)="addRow()">
+                        <mat-icon>library_add</mat-icon>
                     </button>
                 </div>
             </div>

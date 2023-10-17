@@ -1,5 +1,5 @@
 <div id="exam-page" #examPage>
-<div class="bootstrap-wrapper" *ngIf = "!esEnviado">
+<div *ngIf = "!esEnviado">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-2">
@@ -45,13 +45,13 @@
             </mat-card-content>
           </mat-card>
   
-          <div class="container text-center mt-2 mb-2">
-            <button (click) = "enviarCuestionario()" mat-raised-button color="primary">Enviar cuestionario</button>
+          <div class="container text-center mt-4 mb-4">
+            <button (click) = "enviarCuestionario()" mat-raised-button class="botonprimario">Enviar cuestionario</button>
           </div>
         </div>
         <div class="col-md-3">
           <!--Progreso-->
-          <mat-card style ="margin-top:70px;">
+          <mat-card class ="mt-5 mb-5">
             <mat-card-header>
               <mat-card-title>
                 Temporizador
@@ -77,8 +77,8 @@
       <div class="col-md-6 offset-md-3">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>
-              Resultado de la prueba <b>{{ examen.titulo }}</b>
+            <mat-card-title class="text-center">
+              <p>Resultado de la prueba <b>{{ examen.titulo }}</b></p> 
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="text-center">
@@ -89,8 +89,8 @@
             
           </mat-card-content>
           <mat-card-actions class="text-center">
-            <button (click) = "imprimirPagina()" mat-raised-button color="primary">Imprimir</button>
-            <button mat-raised-button color="accent" [routerLink] = "'/user-dashboard/0'">Inicio</button>
+            <button (click) = "imprimirPagina()"   mat-raised-button class="botonprimario m-2">Imprimir</button>
+            <button button  mat-raised-button class="botonprimario m-2" [routerLink] = "'/user-dashboard/0'">Inicio</button>
           </mat-card-actions>
         </mat-card>
       </div>

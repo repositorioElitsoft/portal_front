@@ -20,7 +20,8 @@ export class ProfileRComponent implements OnInit {
     usr_ap_mat: '',
     usr_email: '',
     usr_herr: '',
-    herr_ver: ''
+    herr_ver: '',
+    herr_exp: ''
   };
   router: any;
 

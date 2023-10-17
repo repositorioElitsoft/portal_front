@@ -15,5 +15,15 @@
 }
 
 
+table {
+  width: 100%;
+}
 
+button {
+  margin: 16px 8px;
+}
 
+.container-lista{
+
+  margin-top: 10vh;
+}

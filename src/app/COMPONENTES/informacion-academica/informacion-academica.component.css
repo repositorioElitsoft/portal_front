@@ -28,72 +28,7 @@
   width: fit-content;
 }
 
-.btn-guardar {
-  font-size: 12px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  margin-left: 5px;
-}
-.btn-guardar2 {
-  font-size: 12px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  margin-left: 5px;
-}
 
-
-.btn-primary {
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  font-family: 'Meera Inimai', sans-serif;
-}
-
-.btn-primary:hover {
-  background-color: #ffffff;
-  border-color: #F57C27;
-  color: #F57C27;
-
-}
-
-
-.btn-danger2{
-  color:#fff;
-   padding: 8px 16px;
-   background-color: red;
- 
-  }
- 
-  .btn-danger2:hover{
-    color:#fff;
-     padding: 8px 16px;
-     background-color: rgb(61, 15, 15);
-   
-    }
-/* Estilos para los botones */
-.btn-danger {
-  font-size: 12px;
-  margin: 2%;
-
-}
-.btn-danger:hover {
-
-  animation: pulse 1s infinite; /* Aplicar la animación de pulso */
-}
-
-.btn-warning {
-  font-size: 14px;
-  margin: 5%;
-
-}
-
-.btn-warning:hover {
-
-  animation: pulse 1s infinite; /* Aplicar la animación de pulso */
-}
  .Titulos{
   font-size: 12px;
   font-family: 'Meera Inimai', sans-serif;
