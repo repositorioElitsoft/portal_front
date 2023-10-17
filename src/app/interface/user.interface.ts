@@ -1,3 +1,4 @@
+import { HerramientaData } from "./herramienta-data.interface"
 import { Pais } from "./pais.interface"
 
 export interface Usuario {
@@ -12,4 +13,7 @@ export interface Usuario {
     usr_url_link:string
     pais_nom: string;
     pais?: Pais; // Agregar esta línea para definir la propiedad pais
+    herramientas?: HerramientaData[];
+    usr_herr: string;
+    herr_ver: string;
 }

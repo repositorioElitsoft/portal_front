@@ -56,10 +56,27 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+
+
   obtenerUsuarios(): void {
     this.usuarioService.obtenerUsuarios().subscribe(
-      (data) => {
-        this.usuarios = data;
+      (data: any[]) => {
+        console.log('data:', data);
+        const usuarios = data.map((usuario) => ({
+          usr_nom: usuario.usr_nom,
+          usr_tel: usuario.usr_tel || '',
+          usr_email: usuario.usr_email || '',
+          usr_herr: usuario.herramientas,
+
+          herr_ver: usuario.herramientas,
+
+          herr_exp: usuario.herramientas, //TODO: Agregar los años de experiencia
+
+
+        }));
+
+        this.originalDataCopy = usuarios;
+        this.dataSource.data = usuarios;
       },
       (error) => {
         console.log(error);
@@ -67,7 +84,18 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
-  /** Announce the change in sort state for assistive technology. */
+  getCategories() {
+    this.categoriaProductoService.getCategoriasDisponibles().subscribe(
+      (data: CategoriaProducto[]) => {
+        this.categorias = data;
+      },
+      () => {
+        console.log('Error al obtener categorías:');
+      }
+    );
+  }
+
+
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);

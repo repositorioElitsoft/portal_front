@@ -35,8 +35,9 @@ import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.comp
 import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
-import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
+
 
 
 const routes: Routes = [
@@ -117,6 +118,10 @@ const routes: Routes = [
       {
         path:'view-usuarios',
         component:ViewUsuariosComponent
+      },
+      {
+        path:'add-usuarios',
+        component:AddUsuariosComponent
       },
       {
         path:'view-perfil-usuario/:email',
@@ -208,10 +213,7 @@ const routes: Routes = [
         path:'instrucciones/:exam_id',
         component:InstruccionesComponent
       },
-      {
-        path:'user-profile',
-        component:UserProfileComponent
-      },
+
 
     ]
   },

@@ -68,6 +68,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { RouterOutlet } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
+import { MatSortModule } from '@angular/material/sort';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 
 
 @NgModule({
@@ -96,7 +104,7 @@ import {MatListModule} from '@angular/material/list';
     WelcomeReclutadorComponent,
     ProfileRComponent,
     ViewUsuariosRComponent,
-    ViewPerfilUsuarioRComponent,    
+    ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
@@ -130,7 +138,12 @@ import {MatListModule} from '@angular/material/list';
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
-    UserProfileComponent,
+    SidebarUserComponent,
+    SidebarRResponsiveComponent,
+    AddUsuariosComponent,
+
+
+
   ],
   imports: [
     MatButtonModule,

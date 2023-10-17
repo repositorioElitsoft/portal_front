@@ -1,0 +1,70 @@
+<div class="space"></div>
+<p class="admin-panel-text">Panel de Administrador</p>
+<div class="container mt-4">
+  <h2>Agregar Usuario</h2>
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
+        <div class="mb-3">
+          <label for="usr_nom" class="form-label">Nombre</label>
+          <input type="text" class="form-control" id="usr_nom" formControlName="usr_nom" required maxlength="30">
+          <div *ngIf="userDataForm.get('usr_nom')?.invalid && (userDataForm.get('usr_nom')?.dirty || userDataForm.get('usr_nom')?.touched)" class="text-danger">
+            <div *ngIf="userDataForm.get('usr_nom')?.hasError('required')">*Nombre es requerido.</div>
+            <div *ngIf="userDataForm.get('usr_nom')?.hasError('maxlength')">*Nombre no debe exceder 30 caracteres</div>
+            <div *ngIf="userDataForm.get('usr_nom')?.hasError('minlength')">*Nombre debe tener minimo 5 caracteres</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="usr_ap_pat" class="form-label">Apellido Paterno</label>
+          <input type="text" class="form-control" id="usr_ap_pat" formControlName="usr_ap_pat" required maxlength="30">
+          <div *ngIf="userDataForm.get('usr_ap_pat')?.invalid && (userDataForm.get('usr_ap_pat')?.dirty || userDataForm.get('usr_ap_pat')?.touched)" class="text-danger">
+            <div *ngIf="userDataForm.get('usr_ap_pat')?.hasError('required')">*Apellido Paterno es requerido</div>
+            <div *ngIf="userDataForm.get('usr_ap_pat')?.hasError('maxlength')">*Apellido Paterno no debe exceder 30 caracteres</div>
+            <div *ngIf="userDataForm.get('usr_ap_pat')?.hasError('minlength')">*Apellido Paterno debe tener minimo 3 caracteres</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="usr_ap_mat" class="form-label">Apellido Materno</label>
+          <input type="text" class="form-control" id="usr_ap_mat" formControlName="usr_ap_mat" required maxlength="30">
+          <div *ngIf="userDataForm.get('usr_ap_mat')?.invalid && (userDataForm.get('usr_ap_mat')?.dirty || userDataForm.get('usr_ap_mat')?.touched)" class="text-danger">
+            <div *ngIf="userDataForm.get('usr_ap_mat')?.hasError('required')">*Apellido Materno es requerido</div>
+            <div *ngIf="userDataForm.get('usr_ap_mat')?.hasError('maxlength')">*Apellido Materno no debe exceder 30 caracteres</div>
+            <div *ngIf="userDataForm.get('usr_ap_mat')?.hasError('minlength')">*Apellido Materno debe tener minimo 3 caracteres</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="usr_email" class="form-label">Email </label>
+          <input type="text" class="form-control" id="usr_email" formControlName="usr_email" required maxlength="30">
+          <div *ngIf="userDataForm.get('usr_email')?.invalid && (userDataForm.get('usr_email')?.dirty || userDataForm.get('usr_email')?.touched)" class="text-danger">
+            <div *ngIf="userDataForm.get('usr_email')?.hasError('required')">*Email es requerido</div>
+            <div *ngIf="userDataForm.get('usr_email')?.hasError('maxlength')">*Email no debe exceder 30 caracteres</div>
+            <div *ngIf="userDataForm.get('usr_email')?.hasError('minlength')">*Email debe tener minimo 3 caracteres</div>
+            <div *ngIf="userDataForm.get('usr_email')?.hasError('email')">*Email no es válido</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="usr_pass" class="form-label">Contraseña</label>
+          <input type="text" class="form-control" id="usr_pass" formControlName="usr_pass" required maxlength="8">
+          <div *ngIf="userDataForm.get('usr_pass')?.invalid && (userDataForm.get('usr_pass')?.dirty || userDataForm.get('usr_pass')?.touched)" class="text-danger">
+            <div *ngIf="userDataForm.get('usr_pass')?.hasError('required')">*Contraseña es requerida</div>
+            <div *ngIf="userDataForm.get('usr_pass')?.hasError('maxlength')">*Contraseña no debe exceder 8 caracteres</div>
+            <div *ngIf="userDataForm.get('usr_pass')?.hasError('minlength')">*Contraseña debe tener minimo 3 caracteres</div>
+          </div>
+        </div>
+        <select class="form-control" id="rol" formControlName="usr_rol">
+          <option value="" disabled selected>Seleccione un Rol</option>
+          <option value="ADMIN">Administrador</option>
+          <option value="REC">Reclutador</option>
+        </select>
+        <div *ngIf="userDataForm.get('usr_rol')?.invalid && (userDataForm.get('usr_rol')?.dirty || userDataForm.get('usr_rol')?.touched)" class="text-danger">
+          <div *ngIf="userDataForm.get('usr_rol')?.hasError('required')">*Rol es requerido</div>
+        </div>
+        <br>
+        <div class="d-flex justify-content-between">
+          <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+          <button type="button" class="btn btn-secondary" (click)="cancelar()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
