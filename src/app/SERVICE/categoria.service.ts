@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Categoria } from '../interface/categoria.interface';
 
 
 @Injectable({
@@ -11,8 +13,8 @@ export class CategoriaService {
 
   constructor(private http:HttpClient) { }
 
-  public listarCategorias(){
-    return this.http.get(`${this.baserUrl}/categoria/`);
+  public listarCategorias(): Observable <Categoria[]>{
+    return this.http.get<Categoria[]>(`${this.baserUrl}/categoria/`);
   }
 
   public agregarCategoria(categoria:any){

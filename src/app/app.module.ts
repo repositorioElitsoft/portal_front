@@ -70,6 +70,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 
 @NgModule({
   declarations: [
@@ -132,6 +135,7 @@ import { MatSliderModule } from '@angular/material/slider';
     InstruccionesComponent,
     StartComponent,
     UserProfileComponent,
+    ExamenModalComponent,
   ],
   imports: [
     MatButtonModule,
@@ -159,6 +163,8 @@ import { MatSliderModule } from '@angular/material/slider';
     MatSortModule,
     MatSliderModule,
     HttpClientModule,
+    MatDialogModule,
+    MatCheckboxModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),
