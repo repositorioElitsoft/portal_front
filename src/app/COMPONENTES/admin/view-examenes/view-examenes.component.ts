@@ -1,6 +1,8 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { Component, OnInit, AfterViewInit,ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -16,6 +18,7 @@ import { ProductoService } from 'src/app/service/producto.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 import Swal from 'sweetalert2';
+import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
 
 const ELEMENT_DATA: Examen[] = [];
 
@@ -47,7 +50,8 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
   constructor(private examenService: ExamenService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
- 
+    public dialog: MatDialog,
+    private _snackBar: MatSnackBar,
     private productoService: ProductoService
   ) {}
 
@@ -114,6 +118,32 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
+  openDialogEliminar(event: any) {
+    const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+
+      if(result){
+        //#endregionconsole.log()
+        this.examenService.eliminarExamen(event.target.parentElement.id).subscribe({
+          next:()=>{
+            this._snackBar.open("Examen eliminado","Cerrar",{
+              duration: 4000
+            })
+            this.getExams();
+          },
+          error:(err)=>{
+            console.log(err)
+            this._snackBar.open("Error al eliminar examen","Cerrar",{
+              duration: 4000
+            })
+          }
+        })
+      }
+    });
+  }
+
 
 
 

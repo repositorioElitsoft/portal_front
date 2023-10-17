@@ -27,7 +27,12 @@
   <!-- Weight Column -->
   <ng-container matColumnDef="usr_email">
     <th mat-header-cell *matHeaderCellDef> Categoría </th>
-    <td mat-cell *matCellDef="let element"> {{element.categoria.titulo}} </td>
+    <td mat-cell *matCellDef="let element"> 
+      
+      <div *ngIf="element.categoria">{{element.categoria.titulo}} </div>
+      <div *ngIf="!element.categoria">Sin categoría</div>
+    </td>
+    
   </ng-container>
 
   <ng-container matColumnDef="acciones">
@@ -37,7 +42,7 @@
       aria-label="Example icon button with a menu icon">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-mini-fab color="warn" id="{{element.examenId}}" (click)="editExamen($event)"
+      <button mat-mini-fab color="warn" id="{{element.examenId}}"  (click)="openDialogEliminar($event)"
       aria-label="Example icon button with a menu icon">
         <mat-icon>delete</mat-icon>
       </button>

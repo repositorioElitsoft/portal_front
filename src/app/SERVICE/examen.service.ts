@@ -22,7 +22,7 @@ export class ExamenService {
   }
 
   public eliminarExamen(examenId:any){
-    return this.http.delete(`${this.baserUrl}/examen/${examenId}`);
+    return this.http.delete(`${this.baserUrl}/examen/eliminar/${examenId}`);
   }
 
   public obtenerExamen(examenId:any){
