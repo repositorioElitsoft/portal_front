@@ -43,6 +43,7 @@ export class ProfileRComponent implements OnInit {
 
   ngOnInit(): void {
     this.ObtenerUsuarioGuardado();
+    this.form.disable();
   }
 
   ObtenerUsuarioGuardado() {

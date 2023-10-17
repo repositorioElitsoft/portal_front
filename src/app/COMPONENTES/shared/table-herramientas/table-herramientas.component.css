@@ -45,12 +45,12 @@
   }
   
   
-  
+
 
 
 /* Establece el fondo naranja */
 .custom-button {
-  background-color: orange;
+  background-color: #F57C27;
   /* Haz que los bordes sean redondeados */
   border-radius: 5px;
   /* Haz que la forma sea cuadrada ajustando el ancho y el alto */
@@ -96,9 +96,10 @@
 }
 
 
-.box-box{
-  margin-top: 10vh;
-
+  
+.botonprimario{
+  font-size: 1em !important;
+}
 
   .container-datos-personales {
   
@@ -119,7 +120,7 @@
   
   }
   
-}
+
 @media screen and (min-width: 1300px) and (max-width: 1600px) {
   .form-container {
     margin-left: 150px;

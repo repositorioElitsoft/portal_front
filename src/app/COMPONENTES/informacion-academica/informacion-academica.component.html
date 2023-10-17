@@ -10,14 +10,15 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
-  <br><br><br>
+
 
 
   
   <mat-card class="container-datos-personales">
+    
 
     <div class="div-inputs" *ngIf="!creationMode" >
-
+      <h4 class="perfilr">Información académica</h4>
       <div *ngFor="let academica of academicas">
         
         <div class="row celda-laboral">
@@ -64,10 +65,11 @@
       <div *ngIf="academicas.length === 0">
         No has definido ninguna experiencia académica
       </div>
-      <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir estudios</button>
-      <button class="btn btn-primary btn-guardar" *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
+      
+      <button mat-raised-button class="botonprimario m-2"  (click)="addExperienceRow()">+ Añadir estudios</button>
+     
+      <button  mat-raised-button class="botonprimario m-2"  *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
-
     <div class="div-inputs" *ngIf="creationMode">
 
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">

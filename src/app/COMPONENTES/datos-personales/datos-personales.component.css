@@ -1,47 +1,4 @@
-/* Estilos para la franja naranja en pantallas más grandes (por defecto) */
 
-
-.btn-primary {
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  font-family: 'Meera Inimai', sans-serif;
-}
-
-.btn-primary:hover {
-  background-color: #ffffff;
-  border-color: #F57C27;
-  color: #F57C27;
-
-}
-
-
-.btn-guardar {
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  width: 100%;
-}
-
-.form-control{
-  max-width: 260px;
-}
-
-
-.col-form-label{
-  color: #333;   font-family: 'Meera Inimai', sans-serif;
-  font-size: 14px;
-}
-
-.container-datos-personales {
-  
-  border: 1px solid #F57C27;
-  border-radius: 10px;
-
-  
-}
 
 @media (max-width: 600px) {
   .container-datos-personales {
@@ -53,3 +10,5 @@
   }
 
 }
+
+

@@ -79,3 +79,31 @@ body {
   .no-mouse-action {
     pointer-events: none;
   }
+
+  .container-datos-personales {
+  
+    border: 1px solid #F57C27;
+    border-radius: 10px;
+  
+    
+  }
+  
+
+
+.perfilr{
+  font-weight: bold;
+  font-size: 2em;
+
+
+} 
+
+  @media (max-width: 600px) {
+    .container-datos-personales {
+    
+      border: 1px solid #F57C27;
+      border-radius: 10px;
+   
+    }
+  
+  }
+  

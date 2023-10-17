@@ -10,14 +10,14 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
-  <br><br><br>
+
   <div class="container-datos-personales">
 
 
 
 
     <div class="div-inputs" *ngIf="!creationMode" >
-
+      <h4 class="perfilr">Información Laboral</h4>
       <div *ngFor="let labor of laborales">
         
         <div class="row celda-laboral">
@@ -69,10 +69,11 @@
       
 
 
-      <button class="btn btn-primary btn-guardar" (click)="addExperienceRow()"> + Añadir experiencia laboral</button>
-      <button class="btn btn-primary btn-guardar ms-3" *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
+      <button  class="botonprimario m-2"mat-raised-button  (click)="addExperienceRow()" > + Añadir experiencia laboral</button>
+      <button class="botonprimario m-2" mat-raised-button *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
 
+    
     <div class="div-inputs" *ngIf="creationMode">
 
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
