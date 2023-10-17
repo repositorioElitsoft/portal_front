@@ -73,6 +73,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 
 
 @NgModule({
@@ -135,6 +136,7 @@ import { MatSortModule } from '@angular/material/sort';
     StartComponent,
     SidebarUserComponent,
     SidebarRResponsiveComponent,
+    AddUsuariosComponent,
 
 
 

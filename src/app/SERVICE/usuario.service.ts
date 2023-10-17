@@ -40,9 +40,9 @@ export class UsuarioService {
     return this.HttpClient.get<any[]>(`${this.url}/usuarios/usuarios-herramientas`);
   }
 
-  eliminarUsuario(usr_id: number) {
-    return this.HttpClient.delete(`${this.url}/usuarios/${usr_id}`);
-}
+  eliminarUsuarioId(usuarioId: number): Observable<string> {
+    return this.HttpClient.delete<string>(`${this.url}/usuarios/eliminar/${usuarioId}`);
+  }
 
   guardarUsuarioEnLocalStorage(usuario: any) {
     localStorage.setItem('usuario', JSON.stringify(usuario));
@@ -70,6 +70,15 @@ export class UsuarioService {
   pedirReinicioPass(email: string){
     return this.HttpClient.post(`${this.url}/usuarios/pedir-restauracion-pass`,{usr_email: email});
   }
+
+  guardarAdmin(usuario: Usuario): Observable<Usuario> {
+    return this.HttpClient.post<Usuario>(`${this.url}/usuarios/admin`, usuario);
+  }
+
+  guardarRec(usuario: Usuario): Observable<Usuario> {
+    return this.HttpClient.post<Usuario>(`${this.url}/usuarios/rec`, usuario);
+  }
+
 
 //////////////////////////////////
 

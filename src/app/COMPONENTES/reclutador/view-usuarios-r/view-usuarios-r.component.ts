@@ -18,7 +18,7 @@ const ELEMENT_DATA: Usuario[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
   templateUrl: './view-usuarios-r.component.html',
-  styleUrls: ['./view-usuarios-r.component.css'], 
+  styleUrls: ['./view-usuarios-r.component.css'],
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
@@ -57,45 +57,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  filterInput() {
-    let filteredArray = this.originalDataCopy;
 
-    if (this.filtro && this.filtro.trim() !== '') {
-      const filtroLowerCase = this.filtro.toLowerCase();
-      filteredArray = filteredArray.filter(element => element.usr_herr.toLowerCase().includes(filtroLowerCase));
-    }
 
-    this.dataSource.data = filteredArray;
-  }
-  
-  filterProducto() {
-    let filteredArray = this.originalDataCopy;
-
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
-      }
-    }
-
-    this.dataSource.data = filteredArray;
-  }
-
-  filterVersion() {
-    let filteredArray = this.originalDataCopy;
-
-    if (this.selectedVersion > 0) {
-      const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
-  
-      if (selectedVersion) {
-        filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
-      }
-    }
-
-    this.dataSource.data = filteredArray;
-  }
-  
   obtenerUsuarios(): void {
     this.usuarioService.obtenerUsuarios().subscribe(
       (data: any[]) => {
@@ -104,18 +67,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           usr_nom: usuario.usr_nom,
           usr_tel: usuario.usr_tel || '',
           usr_email: usuario.usr_email || '',
-          usr_herr: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
-            .join(', '),
-          herr_ver: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
-            .join(', '),
-          herr_exp: usuario.herramientas //TODO: Agregar los años de experiencia
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-            .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
-            .join(', ')
+          usr_herr: usuario.herramientas,
+
+          herr_ver: usuario.herramientas,
+
+          herr_exp: usuario.herramientas, //TODO: Agregar los años de experiencia
+
 
         }));
 
@@ -139,51 +96,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getProductos(categoriaId: number){
-    console.log('categoria id:', categoriaId)
-
-    this.selectedProducto = 0;
-    this.selectedVersion = 0;
-    this.selectedProductoNombre = '';
-    this.filterInput();
-    if (categoriaId) {
-      this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
-        (productos: Producto[]) => {
-          this.productos = productos;
-          this.selectedProducto = 0; 
-          this.versiones = [];
-          this.originalDataCopy = this.dataSource.data;
-          this.filterProducto();
-          this.selectedProductoNombre = this.productos.find((producto) => producto.prd_id === this.selectedProducto)?.prd_nom;
-          this.getVersion(this.selectedProducto);
-        },
-        (error) => {
-          console.log('Error al cargar productos ', error);
-        }
-      );
-    } else {
-      this.selectedProducto = 0;
-      this.versiones = [];
-      this.productos = [];
-      this.selectedProductoNombre = '';
-      this.originalDataCopy = this.dataSource.data;
-      this.filterProducto();
-    }
-  }
-    
-  getVersion(productoId: number) {
-    if (productoId) {
-      this.productoService.getVersionByProduct(productoId).subscribe(
-        (data: VersionProducto[]) => {
-          this.versiones = data;
-          // this.filter(new Event('input'));
-        },
-        (error) => {
-          console.log('Error al cargar version ', error);
-        }
-      );
-    }
-  }
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
