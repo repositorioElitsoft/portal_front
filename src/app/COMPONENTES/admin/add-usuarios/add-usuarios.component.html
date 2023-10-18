@@ -7,7 +7,7 @@
       <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
         <div class="mb-3">
           <label for="usr_nom" class="form-label">Nombre</label>
-          <input type="text" class="form-control" id="usr_nom" formControlName="usr_nom" required maxlength="30">
+          <input type="text" class="form-control" id="usr_nom" formControlName="usr_nom" required maxlength="30" appCaracterOnly >
           <div *ngIf="userDataForm.get('usr_nom')?.invalid && (userDataForm.get('usr_nom')?.dirty || userDataForm.get('usr_nom')?.touched)" class="text-danger">
             <div *ngIf="userDataForm.get('usr_nom')?.hasError('required')">*Nombre es requerido.</div>
             <div *ngIf="userDataForm.get('usr_nom')?.hasError('maxlength')">*Nombre no debe exceder 30 caracteres</div>
@@ -16,7 +16,7 @@
         </div>
         <div class="mb-3">
           <label for="usr_ap_pat" class="form-label">Apellido Paterno</label>
-          <input type="text" class="form-control" id="usr_ap_pat" formControlName="usr_ap_pat" required maxlength="30">
+          <input type="text" class="form-control" id="usr_ap_pat" formControlName="usr_ap_pat" required maxlength="30" appCaracterOnly >
           <div *ngIf="userDataForm.get('usr_ap_pat')?.invalid && (userDataForm.get('usr_ap_pat')?.dirty || userDataForm.get('usr_ap_pat')?.touched)" class="text-danger">
             <div *ngIf="userDataForm.get('usr_ap_pat')?.hasError('required')">*Apellido Paterno es requerido</div>
             <div *ngIf="userDataForm.get('usr_ap_pat')?.hasError('maxlength')">*Apellido Paterno no debe exceder 30 caracteres</div>
@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
           <label for="usr_ap_mat" class="form-label">Apellido Materno</label>
-          <input type="text" class="form-control" id="usr_ap_mat" formControlName="usr_ap_mat" required maxlength="30">
+          <input type="text" class="form-control" id="usr_ap_mat" formControlName="usr_ap_mat" required maxlength="30" appCaracterOnly>
           <div *ngIf="userDataForm.get('usr_ap_mat')?.invalid && (userDataForm.get('usr_ap_mat')?.dirty || userDataForm.get('usr_ap_mat')?.touched)" class="text-danger">
             <div *ngIf="userDataForm.get('usr_ap_mat')?.hasError('required')">*Apellido Materno es requerido</div>
             <div *ngIf="userDataForm.get('usr_ap_mat')?.hasError('maxlength')">*Apellido Materno no debe exceder 30 caracteres</div>
@@ -34,7 +34,7 @@
         </div>
         <div class="mb-3">
           <label for="usr_email" class="form-label">Email </label>
-          <input type="text" class="form-control" id="usr_email" formControlName="usr_email" required maxlength="30">
+          <input type="text" class="form-control" id="usr_email" formControlName="usr_email" required maxlength="30"  >
           <div *ngIf="userDataForm.get('usr_email')?.invalid && (userDataForm.get('usr_email')?.dirty || userDataForm.get('usr_email')?.touched)" class="text-danger">
             <div *ngIf="userDataForm.get('usr_email')?.hasError('required')">*Email es requerido</div>
             <div *ngIf="userDataForm.get('usr_email')?.hasError('maxlength')">*Email no debe exceder 30 caracteres</div>

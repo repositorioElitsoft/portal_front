@@ -41,11 +41,11 @@ export class AddUsuariosComponent implements OnInit {
       usr_nom: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
       usr_ap_pat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       usr_ap_mat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
+      usr_email: ['', [Validators.required, Validators.email, Validators.maxLength(30), Validators.minLength(3)]],
       usr_pass: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(3)]],
       usr_rol: ['', Validators.required],
     });
   }
-
 
 
     ngOnInit(): void {
@@ -80,6 +80,7 @@ export class AddUsuariosComponent implements OnInit {
     if(this.usrId){
 
       this.usuario=this.userDataForm.value;
+      console.log(this.usuario, 'usuario para act')
       this.usuarioService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
         next:(dato:any) => {
           this._snackBar.open("Usuario actualizado con éxito","Cerrar",{

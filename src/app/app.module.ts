@@ -85,6 +85,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material/slider';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
+import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 
 @NgModule({
   declarations: [
@@ -148,6 +149,7 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     AddUsuariosComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
+    CaracterOnlyDirective,
 
   ],
   imports: [
