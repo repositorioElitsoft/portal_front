@@ -19,3 +19,6 @@ export interface Usuario {
     herr_exp: string;
 }
 
+
+export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
+

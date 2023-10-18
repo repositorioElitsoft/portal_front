@@ -125,6 +125,10 @@ const routes: Routes = [
         component:AddUsuariosComponent
       },
       {
+        path:'actualizar-usuario/:usuarioId',
+        component:AddUsuariosComponent
+      },
+      {
         path:'view-perfil-usuario/:email',
         component:ViewPerfilUsuarioComponent
       }

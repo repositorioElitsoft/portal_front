@@ -3,7 +3,7 @@ import { HttpClient} from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 import { Register } from '../interface/register.interface';
 import { ActivatedRoute } from '@angular/router';
-import { Usuario } from '../interface/user.interface';
+import { UserEditarDTO, Usuario } from '../interface/user.interface';
 import { environment } from 'src/environments/environment';
 
 
@@ -78,6 +78,15 @@ export class UsuarioService {
   guardarRec(usuario: Usuario): Observable<Usuario> {
     return this.HttpClient.post<Usuario>(`${this.url}/usuarios/rec`, usuario);
   }
+
+  public getUsuarioId(usuarioId: number):Observable<any>{
+    return this.HttpClient.get(`${this.url}/usuarios/${usuarioId}`)
+  }
+
+  public actualizarUsuarioAdmin(usuarioId: number, usuario: UserEditarDTO): Observable<UserEditarDTO> {
+    return this.HttpClient.put<UserEditarDTO>(`${this.url}/usuarios/actualizar/${usuarioId}`, usuario);
+  }
+
 
 
 //////////////////////////////////
