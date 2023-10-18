@@ -10,7 +10,6 @@ import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-ses
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
 import { ProfileAdminComponent } from './COMPONENTES/admin/profile-admin/profile-admin.component';
-import { SidebarAdminComponent } from './COMPONENTES/admin/sidebar-admin/sidebar-admin.component';
 import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
@@ -57,7 +56,6 @@ import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sideba
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -68,6 +66,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { RouterOutlet } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
@@ -76,10 +80,11 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { MatSliderModule } from '@angular/material/slider';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
+
+
 
 @NgModule({
   declarations: [
@@ -90,11 +95,10 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     WelcomeAdminComponent,
     DashboardComponent,
     ProfileAdminComponent,
-    SidebarAdminComponent,
     ViewCategoriasComponent,
     AddExamenComponent,
     ActualizarCategoriaComponent,
-    ActualizarExamenComponent,
+
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
     SidebarRComponent,
@@ -113,7 +117,6 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     AppSidebar2Component,
     AppFooterComponent,
     SidebarUserDeskComponent,
-    SidebarUserComponent,
     TableHerramientasComponent,
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
@@ -132,7 +135,8 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
-    UserProfileComponent,
+    SidebarUserComponent,
+    SidebarRResponsiveComponent, 
     ExamenModalComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
@@ -146,32 +150,30 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    NavbarResponsiveComponent,
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    FormsModule,
     MatTableModule,
-    MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule,
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
     MatTabsModule,
     MatSliderModule,
-    HttpClientModule,
+    RouterOutlet,
     MatDialogModule,
-    MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatDialogModule,
     TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'

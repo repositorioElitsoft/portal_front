@@ -13,7 +13,7 @@ html, body { height: 100%; }
 
 
 body { margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: 'Meera Inimai', sans-serif;
   background: #E0EAFC;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #efefef, #c7c7c7);  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to right, #efefef, #c7c7c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
@@ -25,19 +25,114 @@ body { margin: 0;
   align-items: center;
   justify-content: center;
   font-family: 'Meera Inimai', sans-serif;
-  padding-top: 10px;
   font-size: 12px;
  padding: 5%;
  margin-left: 20%;
  margin-right: 20%;
+  margin-top: 10vh;
  background-color: white;
-
+  box-shadow: 6px #0f0f0f;
   border-radius: 10px;
+  border: 1px solid #F57C27!important;
+  border-radius: 10px!important;
   
 }
 
 .spinner-color{
   color: black;
+}
+
+.perfilr{
+  padding-bottom: 5%;
+  color:#F57C27;
+  font-family: 'Meera Inimai', sans-serif;
+  font-weight: bold!important;
+  font-size: 2em!important;
+}
+
+
+
+
+.botonprimario{
+  background-color: #F57C27 !important;
+  color: #fff !important;
+  font-size: 1.3em !important;
+}
+
+.minifab{
+  background-color: #F57C27 !important;
+}
+.minifab:hover {
+  transform: scale(1.1); /* Escalar el botón un 10% más grande en hover */
+}
+
+.minifabdanger{
+  background-color: 
+  #f44336 !important;
+}
+.minifabdanger:hover {
+  transform: scale(1.1); /* Escalar el botón un 10% más grande en hover */
+}
+
+
+.botonprimario:hover{
+  background-color: #fff !important;
+    color: #F57C27 !important;
+  
+}
+
+.botonprimario:disabled {
+  background-color: #773e16 !important; /* Cambiar a un tono de gris más oscuro */
+  color: #fff !important;
+}
+.bootstrap-wrapper {
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 2vh;
+  padding-right: 10vh;
+  display: flex;
+}
+
+/* Media Query para pantallas más pequeñas (resolución móvil) */
+@media (max-width: 600px) {
+  .container-datos-personales {
+    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    margin-left: 5%;
+    padding-right: 100px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    display: flex;
+    font-family: 'Meera Inimai', sans-serif;
+    padding-top: 10px;
+    font-size: 12px;
+    padding: 5%;
+    margin-top: 50px;
+    border: 2px solid #F57C27;
+    border-radius: 10px;
+    margin-inline: 1vw;
+    
+  }
+
+  .perfilr{
+  
+    font-size: 1.5em!important;
+  }
+  
+  .botonprimario{
+   
+    font-size: 1em !important;
+  }
+  
+
+  
+.bootstrap-wrapper {
+  padding: 20px;
+
+  margin-top: 5vh;
+  padding-right: 2vh;
+  display: flex;
+}
+
 }
 
 

@@ -1,30 +1,38 @@
-<nav class="sidebar">
-    <!-- Logo o encabezado de la barra lateral -->
-   <!-- <div class="sidebar-header">
-        
-      <h3></h3>
-    </div> -->
-  
-    <!-- Opciones del menú -->
-    <ul class="list-unstyled components">
-        <li>
-            <a routerLink="/reclutador/welcome-reclutador"routerLinkActive="active">Inicio</a>
-        </li>
-      <li>
-        <a routerLink="/reclutador/profile-r"routerLinkActive="active">Perfil</a>
-      </li>
-      <li>
-        <a routerLink="/reclutador/view-usuarios-r"routerLinkActive="active">Ver listado de Usuarios</a>
-      </li>
-      
-      <li>
-          
-      <a (click)="cerrarSesion()">Salir</a>
-    </li>
-      <!-- Agrega más opciones del menú según tus necesidades -->
-    </ul>
-    
-  </nav>
-  
 
+<nav class="sidebar">
+
+  <ul class="list-unstyled components">
+      <li>
+          <a routerLink="/reclutador/welcome-reclutador"routerLinkActive="active">
+            <mat-icon mat-list-icon class="custom-icon">home</mat-icon>  Inicio
+          </a>
+      </li>
+    <li>
+      <a routerLink="/reclutador/profile-r"routerLinkActive="active">
+        <mat-icon mat-list-icon class="custom-icon">assignment_ind</mat-icon>  Perfil
+      </a>
+    </li>
+    <li>
+      <a routerLink="/reclutador/view-usuarios-r"routerLinkActive="active">
+        <mat-icon mat-list-icon class="custom-icon">supervisor_account</mat-icon>  Ver listado de Usuarios
+      </a>
+    </li>
+
+    <li>
+      <a routerLink="/reclutador/estadisticas"routerLinkActive="active">
+        <mat-icon mat-list-icon class="custom-icon">bar_chart</mat-icon>  Ver Estadísticas
+      </a>
+    </li>
+   
+    <br><br><br><br><br><br><br><br><br><br>
+    
+    <li class="nav-item">
+      <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">
+        <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon>  Cerrar Sesión
+      </a>
+    </li>
+
+  </ul>
+  
+</nav>
 

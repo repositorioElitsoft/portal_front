@@ -10,8 +10,9 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
-  <br><br><br>
-  <div class="container-datos-personales">
+
+  <mat-card class="container-datos-personales">
+    <h4 class="perfilr">Cargo</h4>
     <div class="div-inputs">
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
@@ -48,14 +49,14 @@
 
 
         <div class="div-form d-grid justify-content-end">
-          <button  [disabled]="!form.valid" type="submit" (click)="successMessage()" class="btn btn-primary btn-guardar"> Finalizar</button>
+          <button  mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit" (click)="successMessage()"> Finalizar</button>
         </div>
       </form>
     </div>
 
-  </div>
+  
 
-
+</mat-card>
 
 
 </body>

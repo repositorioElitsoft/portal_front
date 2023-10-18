@@ -1,51 +1,11 @@
-/* Estilos para la franja naranja en pantallas más grandes (por defecto) */
 
 
-.btn-primary {
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  font-family: 'Meera Inimai', sans-serif;
-}
-
-.btn-guardar {
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  width: 100%;
-}
-
-.form-control{
-  max-width: 260px;
-}
-
-
-.col-form-label{
-  color: #333;   font-family: 'Meera Inimai', sans-serif;
-  font-size: 14px;
-}
-
-
-
-/* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 600px) {
   .container-datos-personales {
-    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
-    margin-left: 5%;
-    padding-right: 100px;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    display: flex;
-    font-family: 'Meera Inimai', sans-serif;
-    padding-top: 10px;
-    font-size: 12px;
-    padding: 5%;
-    margin-top: 50px;
-    border: 2px solid orange;
+  
+    border: 1px solid #F57C27;
     border-radius: 10px;
-    margin-inline: 1vw;
+ 
     
   }
 

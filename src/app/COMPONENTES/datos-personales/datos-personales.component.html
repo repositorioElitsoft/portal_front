@@ -11,12 +11,15 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
-  <br><br><br>
-  <div class="container-datos-personales">
+ 
 
+  <mat-card class="container-datos-personales">
+    <h4 class="perfilr">Datos Personales</h4>
     <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
 
     <div class="div-inputs"  *ngIf="isLoaded">
+
+
 
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
@@ -116,14 +119,18 @@
       
         
         <div class="div-form d-grid ">
-          <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Siguiente</button>
+
+          <button  mat-raised-button class="botonprimario m-2"  [disabled]="!form.valid" type="submit" >Siguiente</button>
+
+          
         </div>
 
         
       </form>
+      
     </div>
 
-  </div>
+  </mat-card>
 
 
 

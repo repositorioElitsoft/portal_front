@@ -19,6 +19,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
 
+
   countries: Pais[] = [];
   isLoaded: boolean = true
 
