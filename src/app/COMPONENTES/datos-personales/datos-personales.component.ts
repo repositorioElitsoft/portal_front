@@ -68,7 +68,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
 
     this.paisService.obtenerPaises().subscribe(
       (data: any[]) => {

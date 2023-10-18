@@ -73,6 +73,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
+
+
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs'; 
@@ -82,9 +85,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
-import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
-
-
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
+import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,7 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     WelcomeReclutadorComponent,
     ProfileRComponent,
     ViewUsuariosRComponent,
-    ViewPerfilUsuarioRComponent,    
+    ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
@@ -138,9 +140,11 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     SidebarUserComponent,
     SidebarRResponsiveComponent, 
     ExamenModalComponent,
+    AddUsuariosComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
-  
+    CaracterOnlyDirective,
+
   ],
   imports: [
     MatCheckboxModule,
@@ -150,14 +154,17 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NavbarResponsiveComponent,
     HttpClientModule,
+    ReactiveFormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatIconModule,
+    MatButtonModule,
+    MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatMenuModule,
     MatCardModule,
     MatToolbarModule,
@@ -165,8 +172,12 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     MatSlideToggleModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatSortModule,
+    HttpClientModule,
+    MatDialogModule,
     MatTabsModule,
     MatSliderModule,
     RouterOutlet,

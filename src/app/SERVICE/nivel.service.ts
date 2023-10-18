@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Niveles } from '../interface/niveles.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NivelService {
 
-  //Implementamos nuestro servicio
-  url = "http://localhost:8080/niveles/";
+
+  readonly url = `${environment.URL_HOST}niveles/`
 
   constructor(private http: HttpClient) { }
 

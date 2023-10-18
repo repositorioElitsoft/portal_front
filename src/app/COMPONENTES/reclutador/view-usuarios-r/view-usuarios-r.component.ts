@@ -22,7 +22,7 @@ const ELEMENT_DATA: Usuario[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
   templateUrl: './view-usuarios-r.component.html',
-  styleUrls: ['./view-usuarios-r.component.css'], 
+  styleUrls: ['./view-usuarios-r.component.css'],
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
@@ -68,7 +68,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   filterData() {
     let filteredArray = this.originalDataCopy;
-  
+
     // Filtro por producto
     if (this.selectedProducto > 0) {
       const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
@@ -76,7 +76,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
       }
     }
-  
+
     // Filtro por versión
     if (this.selectedVersion > 0) {
       const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
@@ -84,7 +84,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
-  
+
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
       const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
@@ -96,7 +96,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
-  
+
     this.dataSource.data = filteredArray;
   }
 
@@ -110,7 +110,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     this.dataSource.data = filteredArray;
   }
-  
+
   formatLabel(value: number): string {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -118,7 +118,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     return `${value}`;
   }
-  
+
   filterProducto() {
     this.filterData();
   }
@@ -189,7 +189,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
         (productos: Producto[]) => {
           this.productos = productos;
-          this.selectedProducto = 0; 
+          this.selectedProducto = 0;
           this.versiones = [];
           this.originalDataCopy = this.dataSource.data;
           this.filterProducto();
@@ -210,6 +210,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
   }
     
+
     getVersion(productoId: number) {
       if (productoId) {
         this.productoService.getVersionByProduct(productoId).subscribe(
@@ -240,12 +241,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     "reclutador/estadisticas"
 
   ])
-    
-    
+
+
   }
   openUserProfile(event: any){
     const email = event.target.parentElement.id;
-    
+
 
     this.usuarioService.obtenerPerfil(email).subscribe({
       next:(user) => {
@@ -267,7 +268,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   openUserDialog(event: any) {
 
 
-    
+
 
 
   }

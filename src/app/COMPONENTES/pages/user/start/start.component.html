@@ -23,7 +23,7 @@
               En curso <b>{{ examen.titulo }}</b>
             </h1>
           </ng-container>
-  
+
           <mat-card *ngFor = "let p of preguntas;let i = index">
             <mat-card-content>
               <p><b>{{ i+1 }} </b> <span [innerHTML] = "p.contenido"></span></p>
@@ -85,8 +85,8 @@
             <h1>Has conseguido un total de {{ puntosConseguidos }} puntos de {{examen.puntosMaximos}}</h1>
             <h1>Respuestas correctas : {{ respuestasCorrectas }} <!--de {{ preguntasTotales }}--></h1>
             <h1>Has realizado el exámen {{ vecesEnviado }} veces </h1>
-          
-            
+
+
           </mat-card-content>
           <mat-card-actions class="text-center">
             <button (click) = "imprimirPagina()"   mat-raised-button class="botonprimario m-2">Imprimir</button>
@@ -96,4 +96,4 @@
       </div>
     </div>
   </div>
-  
+

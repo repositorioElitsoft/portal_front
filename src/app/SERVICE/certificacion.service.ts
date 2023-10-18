@@ -2,14 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Certificacion } from '../interface/certificacion.interface';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CertificacionService {
 
-  //Implementamos nuestro servicio
-  url = "http://localhost:8080/certificados/";
+
+  readonly url = `${environment.URL_HOST}certificados/`
 
   constructor(private http: HttpClient) { }
 

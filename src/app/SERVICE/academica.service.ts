@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Academica } from '../interface/academica.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AcademicaService {
 
-  url = "http://localhost:8080/academicas/"
+  readonly url = `${environment.URL_HOST}academicas/`
 
   constructor(private http: HttpClient) { }
 

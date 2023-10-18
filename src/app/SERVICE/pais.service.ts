@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Pais } from '../interface/pais.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PaisService {
 
-  //Implementamos nuestro servicio
-  url = "http://localhost:8080/paises/";
+
+  readonly url = `${environment.URL_HOST}paises/`
 
   constructor(private http: HttpClient) { }
 

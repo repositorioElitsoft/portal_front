@@ -36,8 +36,9 @@ import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 
 
 const routes: Routes = [
@@ -118,6 +119,14 @@ const routes: Routes = [
       {
         path:'view-usuarios',
         component:ViewUsuariosComponent
+      },
+      {
+        path:'add-usuarios',
+        component:AddUsuariosComponent
+      },
+      {
+        path:'actualizar-usuario/:usuarioId',
+        component:AddUsuariosComponent
       },
       {
         path:'view-perfil-usuario/:email',
@@ -216,12 +225,12 @@ const routes: Routes = [
         path:'instrucciones/:exam_id',
         component:InstruccionesComponent
       },
-      
+
 
     ]
   },
   {
-    path:"start/:examenId",
+    path:"start/:exam_id",
     component:StartComponent,
     canActivate:[AuthGuard]
   },

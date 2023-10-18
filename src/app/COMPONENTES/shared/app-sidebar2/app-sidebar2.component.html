@@ -1,10 +1,17 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
-  <mat-toolbar class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <div class="elitsoft">
-      <img src="https://static.wixstatic.com/media/5a9998_6a14b7ced59447ae8f4bceee9e8d1478~mv2.png/v1/fill/w_182,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/elitesoft%201.png" alt="Elitesoft Logo">
+<div class="hamburger-menu">
+  <input id="menu__toggle" type="checkbox" />
+  <label class="menu__btn" for="menu__toggle">
+    <span></span>
+  </label>
 
-    </div>  </mat-toolbar>
+  <ul class="menu__box">
+    <li>
+      <a routerLink="/admin/welcome-admin" routerLinkActive="active" class="menu__item">
+      Inicio
+      </a>
+    </li>
+    <li><a routerLink="/admin/profile-admin" routerLinkActive="active" class="menu__item">Perfil</a></li>
+    <li><a routerLink="/admin/view-categorias" routerLinkActive="active" class="menu__item">Categorías</a></li>
 
   <mat-sidenav-container class="example-sidenav-container"
                          [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
@@ -50,26 +57,13 @@
           <a href="#" mat-menu-item>Trabaja con Nosotros</a>
           <a href="https://www.elitsoft.cl/blog" mat-menu-item>Blog</a>
 
-          </mat-menu>
-
-          </li>
-        
-     
-        <br><br><br><br><br><br><br>
-        
-        
-        <li class="nav-item">
-          <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">
-            <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon>  Cerrar Sesión
-          </a>
-        </li>
-
-
-      
-   
       </ul>
-      </mat-nav-list> 
-    </mat-sidenav>
+    </div></a></li>
+    <li class="nav-item">
+      <a (click)="cerrarSesion()" class="nav-link menu__item" style="cursor: pointer;">Cerrar Sesión</a>
+    </li>
+  </ul>
 
-  </mat-sidenav-container>
 </div>
+
+
