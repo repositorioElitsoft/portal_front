@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Categoria } from 'src/app/interface/categoria.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ExamenService } from 'src/app/service/examen.service';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -22,7 +23,8 @@ export class ExamenModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     private examenService: ExamenService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private preguntaService: PreguntaService
   ) {
     this.examenForm = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -64,15 +66,18 @@ export class ExamenModalComponent implements OnInit {
     if (this.examenForm.valid) {
       if (this.examen) {
         console.log('Esto estamos mandando', this.examenForm.value)
-        this.examenService.actualizarExamen(this.examenForm.value, this.examen.examenId).subscribe(
+        let examen = this.examenForm.value;
+        examen["examenId"] = this.examen.examenId
+        this.examenService.actualizarExamen(examen, this.examen.examenId).subscribe(
           (data) => {
             console.log('response', data);
             this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 });
           },
           (error) => {
+            console.log('Error al actualizar el examen', error);
             this.snackBar.open('Error al actualizar el examen', 'OK', { duration: 3000 });
           }
-        )
+        );
       }
       else {
         console.log('Esto estamos mandando', this.examenForm.value);
@@ -94,7 +99,20 @@ export class ExamenModalComponent implements OnInit {
   }
 
   deletePregunta(index: number) {
-    this.preguntas.removeAt(index);
+    const preguntaId = this.preguntas.value[index].preguntaId;
+    if (preguntaId) {
+      this.preguntaService.eliminarPregunta(preguntaId).subscribe(
+        (data) => {
+          this.preguntas.removeAt(index);
+          console.log('Pregunta eliminada', preguntaId);
+        },
+        (error) => {
+          console.log('Error al eliminar la pregunta', error);
+        }
+      )
+    } else {
+      this.preguntas.removeAt(index);
+    }
   }
 
   closeModal() {
