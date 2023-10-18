@@ -17,8 +17,8 @@ let vecesEnviado = 0;
 })
 export class StartComponent implements OnInit {
 
-  examenId:any;
-  preguntas:any;
+  examenId :number=0;
+  preguntas?:any;
  
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
