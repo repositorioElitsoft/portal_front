@@ -93,6 +93,7 @@ export class ProfileAdminComponent implements OnInit {
     event.preventDefault();
     const user: Usuario = this.form.value;
     // Guardar los cambios en el servicio
+    console.log(user)
     try {
       await this.usuarioService.updateUsuario(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
