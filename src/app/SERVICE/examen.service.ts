@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { Examen } from '../interface/examen.interface';
 
 
 @Injectable({
@@ -22,7 +24,7 @@ export class ExamenService {
   }
 
   public eliminarExamen(examenId:any){
-    return this.http.delete(`${this.url}/examen/${examenId}`);
+    return this.http.delete(`${this.url}/examen/eliminar/${examenId}`);
   }
 
   public obtenerExamen(examenId:any){
@@ -37,7 +39,7 @@ export class ExamenService {
     return this.http.get(`${this.url}/examen/categoria/${categoriaId}`);
   }
 
-  public obtenerExamenesActivos(){
+  public obtenerExamenesActivos():Observable<any>{
     return this.http.get(`${this.url}/examen/`);
   }
 

@@ -72,3 +72,9 @@ tr:nth-child(even) {
 .btn-danger {
   background-color: red;
 } */
+
+.stats-btn{
+  background-color: orange!important;
+  color: white!important;
+  margin-bottom: 2vh;
+}

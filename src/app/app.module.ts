@@ -70,12 +70,21 @@ import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatDialogModule} from '@angular/material/dialog';
 
 import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 
 
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatSliderModule } from '@angular/material/slider';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
 
 @NgModule({
   declarations: [
@@ -137,9 +146,12 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     StartComponent,
     SidebarUserComponent,
     AddUsuariosComponent,
+    EstadisticasComponent,
+    AdvertenciaEliminarComponent,
 
   ],
   imports: [
+    MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -176,6 +188,14 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
     MatDialogModule,
     RouterOutlet,
     MatDialogModule,
+    MatTabsModule,
+    MatSliderModule,
+    HttpClientModule,
+    MatChipsModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatDialogModule,
+    TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),

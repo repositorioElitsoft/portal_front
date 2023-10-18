@@ -32,8 +32,13 @@
     </mat-select>
   </mat-form-field>
 
+<<<<<<< HEAD
   <div class="filter-slider d-flex flex-column align-items-center">
     <mat-label>Años de Experiencia: </mat-label>
+=======
+  <div class="filter-slider">
+    <mat-label>Años de Experiencia: {{ selectedAniosExpRange[0] }} - {{ selectedAniosExpRange[1] }}</mat-label>
+>>>>>>> feature/fdiaz
     <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
       <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
       <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
@@ -100,3 +105,7 @@
                aria-label="Select page of periodic elements">
 </mat-paginator>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/fdiaz
