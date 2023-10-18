@@ -74,7 +74,6 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
 
 @NgModule({
   declarations: [
-    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -111,7 +110,6 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     SidebarUserDeskComponent,
     SidebarUserComponent,
     TableHerramientasComponent,
-    NumericOnlyDirective,
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,
