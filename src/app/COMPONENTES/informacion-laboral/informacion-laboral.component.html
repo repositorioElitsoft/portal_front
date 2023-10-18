@@ -10,8 +10,7 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
-
-  <div class="container-datos-personales">
+  <mat-card class="container-datos-personales">
 
 
 
@@ -117,16 +116,16 @@
        
         <div class="div-form d-grid justify-content-end">
           <div class="flex">
-            <button (click)="goBack()" class="btn btn-danger2 btn-marg" >Cancelar</button>
-            <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar2"> Guardar</button>
+            <button class="botonprimario m-2" mat-raised-button (click)="goBack()"  >Cancelar</button>
+            <button  class="botonprimario m-2" mat-raised-button [disabled]="!form.valid" type="submit"> Guardar</button>
           </div>
         </div>
       </form>
     </div>
 
-  </div>
 
 
+</mat-card>
 
 
 </body>

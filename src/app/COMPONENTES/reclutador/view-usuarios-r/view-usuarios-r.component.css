@@ -1,29 +1,21 @@
 
+/* Estilos para el contenedor de filtros */
 .filter-container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
+  margin: 20px 0;
 }
 
-.filter-input {
+/* Estilos para los campos de filtro */
+.filter-input, .filter-select {
+  margin-right: 20px;
   flex: 1;
-  margin-right: 10px;
 }
 
-.filter-select {
-  width: 230px;
-  margin-right: 10px;
-}
-
-
-table {
+/* Estilos para el deslizador de años de experiencia */
+.filter-slider {
+  margin-top: 20px;
   width: 100%;
 }
 
-button {
-  margin: 16px 8px;
-}
-
-.container-lista{
-
-  margin-top: 10vh;
-}

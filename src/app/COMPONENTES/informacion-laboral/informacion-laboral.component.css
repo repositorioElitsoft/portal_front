@@ -141,6 +141,8 @@
 
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
+
+/* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
   .container-datos-personales {
     margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
@@ -151,8 +153,8 @@
     align-items: center;
     border: 1px solid #F57C27;
     border-radius: 10px;
+ 
   }
-
   .Titulos{
     font-size: 10px;
     font-family: 'Meera Inimai', sans-serif;
@@ -169,7 +171,6 @@
   }
   
   
-
-
+  
 
 }
