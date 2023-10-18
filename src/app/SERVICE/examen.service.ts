@@ -29,8 +29,8 @@ export class ExamenService {
     return this.http.get(`${this.baserUrl}/examen/${examenId}`);
   }
 
-  public actualizarExamen(examen:any){
-    return this.http.put(`${this.baserUrl}/examen/`,examen);
+  public actualizarExamen(examen:any, examenId: number){
+    return this.http.put(`${this.baserUrl}/examen/actualizar/${examenId}`,examen);
   }
 
   public listarExamenesDeUnaCategoria(categoriaId:any){

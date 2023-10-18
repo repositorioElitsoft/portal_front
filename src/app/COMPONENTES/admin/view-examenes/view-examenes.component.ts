@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, AfterViewInit,ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, AfterViewInit,ViewChild, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -19,6 +19,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 
 import Swal from 'sweetalert2';
 import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
+import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
 
 const ELEMENT_DATA: Examen[] = [];
 
@@ -36,6 +37,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
   originalDataCopy: Examen[] = [];
   usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
+  
 
 
   selectedAniosExpRange: number[] = [1, 10];
@@ -52,7 +54,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
     private router: Router,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private productoService: ProductoService
+    private productoService: ProductoService,
   ) {}
 
 
@@ -103,6 +105,30 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
     return `${value}`;
   }
   
+  editExamen(event: any) {
+    const examenId = event.target.parentElement.id;
+    const examen: Examen | undefined = undefined;
+
+    if (examenId) {
+      this.examenService.obtenerExamen(examenId).subscribe({
+        next:(data) => {
+          console.log('Data llegada:', data);
+          const examenes = data 
+          const dialogRef = this.dialog.open(ExamenModalComponent, {
+            width: '800px', 
+            height: '700px',
+            data: data
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+          });
+        },
+        error:(error) => {
+          console.log(error);
+        }
+      });
+    }
+  }
 
   getExams(): void {
     this.examenService.obtenerExamenesActivos().subscribe({
@@ -144,9 +170,15 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
-
+  saveExamen() {
+    const dialogRef = this.dialog.open(ExamenModalComponent, {
+      width: '800px', 
+      height: '700px',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
 
   announceSortChange(sortState: Sort) {
@@ -155,12 +187,5 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
-  }
-
-  editExamen(event: any){
-    const email = event.target.parentElement.id
-    console.log(email)
-
-    this.router.navigate(["/reclutador/view-perfil-usuario-r/"+email])
   }
 }

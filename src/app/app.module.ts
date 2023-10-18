@@ -75,8 +75,9 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips'; 
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
-import {MatDialogModule} from '@angular/material/dialog'; 
 import { MatSliderModule } from '@angular/material/slider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
 
@@ -141,6 +142,7 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     InstruccionesComponent,
     StartComponent,
     UserProfileComponent,
+    ExamenModalComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
   
@@ -173,6 +175,8 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     MatTabsModule,
     MatSliderModule,
     HttpClientModule,
+    MatDialogModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,
