@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Categoria } from 'src/app/interface/categoria.interface';
+import { Examen } from 'src/app/interface/examen.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import Swal from 'sweetalert2';
@@ -63,19 +64,27 @@ export class ExamenModalComponent implements OnInit {
   saveExamen(){
     if (this.examenForm.valid) {
       if (this.examen) {
-        console.log('Esto estamos mandando', this.examenForm.value)
-        this.examenService.actualizarExamen(this.examenForm.value, this.examen.examenId).subscribe(
+
+
+
+        console.log('Esto estamos mandando  para actualizar', this.examenForm.value)
+
+        let examen = this.examenForm.value;
+        examen["examenId"] = this.examen.examenId
+
+        this.examenService.actualizarExamen(examen, this.examen.examenId).subscribe(
           (data) => {
             console.log('response', data);
             this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 });
           },
           (error) => {
+            console.log('response error:', error);
             this.snackBar.open('Error al actualizar el examen', 'OK', { duration: 3000 });
           }
         )
       }
       else {
-        console.log('Esto estamos mandando', this.examenForm.value);
+        console.log('Esto estamos mandando para guardar', this.examenForm.value);
         this.examenService.agregarExamen(this.examenForm.value).subscribe(
           (data) => {
             console.log(data);
