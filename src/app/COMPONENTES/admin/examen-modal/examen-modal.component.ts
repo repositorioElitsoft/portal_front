@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 export class ExamenModalComponent implements OnInit {
   examenForm: FormGroup;
   categorias: Categoria[] = [];
+  @Output() examenActualizado: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     public dialogRef: MatDialogRef<ExamenModalComponent>,
@@ -71,7 +72,7 @@ export class ExamenModalComponent implements OnInit {
         this.examenService.actualizarExamen(examen, this.examen.examenId).subscribe(
           (data) => {
             console.log('response', data);
-            this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 });
+            this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 }); 
           },
           (error) => {
             console.log('Error al actualizar el examen', error);
@@ -86,6 +87,7 @@ export class ExamenModalComponent implements OnInit {
             console.log(data);
             Swal.fire('Examen guardado','El examen ha sido guardado con éxito','success');
             this.dialogRef.close(this.examenForm.value);
+            this.examenActualizado.emit();
           },
           (error) => {
             console.log('Error al aguardar examen', error);
