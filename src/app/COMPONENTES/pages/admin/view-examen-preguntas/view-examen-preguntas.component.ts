@@ -1,8 +1,9 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PreguntaService } from './../../../services/pregunta.service';
+
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 
 @Component({
   selector: 'app-view-examen-preguntas',
@@ -27,7 +28,7 @@ export class ViewExamenPreguntasComponent implements OnInit {
         console.log(data);
         this.preguntas = data;
       },
-      (error) => {
+      (error:any) => {
         console.log(error);
       }
     )
