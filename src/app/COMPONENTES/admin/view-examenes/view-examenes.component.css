@@ -1,64 +1,72 @@
 .card {
-    border: 1px solid #cccccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-  }
-  
-  .card-header {
-    background-color: #f8f9fa;
-  }
-  
-  .card-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .card-subtitle {
-    font-size: 1rem;
-    color: #6c757d;
-  }
-  
-  .card-body {
-    padding: 1rem;
-  }
-  
-  .card-footer {
-    background-color: #f8f9fa;
-    padding: 0.75rem;
-  }
+  border: 1px solid #cccccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
 
-  .btn-primary{
-    background-color: orange;
-    border-color: orange;
-  }
+.card-header {
+  background-color: #f8f9fa;
+}
 
-  
-  
-  .btn-outline-primary{
-    color:rgb(0, 0, 0);
-    border-color: orange;
-  }
-  
-  .btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-  }
-  
-  .ml-2 {
-    margin-left: 0.5rem;
-  }
+.card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
 
-  .container {
-    margin-top: 40px;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  
-  .custom-btn{
-    background-color: orange!important;
-    margin-right: 1vw;
-    margin-bottom: 1vh;
-  }
+.card-subtitle {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  padding: 0.75rem;
+}
+
+.btn-primary{
+  background-color: orange;
+  border-color: orange;
+}
+
+.btn-outline-primary{
+  color:rgb(0, 0, 0);
+  border-color: orange;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+.custom-btn{
+  background-color: orange!important;
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+  color: white!important;
+  margin-left: 2vw;
+}
+
+mat-form-field {
+  border-radius: 10px;
+}
+
+.mat-input-element {
+  border-radius: 10px;
+}

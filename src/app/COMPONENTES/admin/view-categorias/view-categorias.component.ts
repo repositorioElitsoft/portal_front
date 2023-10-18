@@ -141,10 +141,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
-
-
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
@@ -155,8 +151,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
 
   editCategoria(event: any){
     const id = event.target.parentElement.id
-    
-
     this.router.navigate(["/admin/actualizar-categoria/"+id])
   }
 }
