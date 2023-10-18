@@ -47,7 +47,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private usuarioService: UsuarioService,
-  constructor(private usuarioService: UsuarioService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
