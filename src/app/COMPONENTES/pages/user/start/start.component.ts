@@ -134,6 +134,7 @@ export class StartComponent implements OnInit {
       icon:'info'
     }).then((e) => {
       if(e.isConfirmed){
+
         this.evaluarExamen();
 
         const resultados = {
@@ -191,12 +192,18 @@ export class StartComponent implements OnInit {
     ) */
 
     this.esEnviado = true;
-
+      
+    console.log("tis preguntas", this.preguntas)
     this.preguntas.forEach((p:any) => {
-      if(p.respuestaDada == p.prg_resp){
+      console.log("The p es", p)
+
+      if(p.respuestaDada == p.respuesta){
         this.respuestasCorrectas ++;
+        console.log("resp corretas:",this.respuestasCorrectas)
         let puntos = this.examen.puntosMaximos/this.preguntas.length;
+        console.log("this.examen.puntosMaximos: ",this.examen.puntosMaximos)
         this.puntosConseguidos += puntos;
+        console.log("conseguidos: ",this.puntosConseguidos)
       }
 
       if(p.respuestaDada.trim() != ''){

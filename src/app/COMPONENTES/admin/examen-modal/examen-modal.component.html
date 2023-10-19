@@ -2,25 +2,25 @@
     <div class="card-body d-flex justify-content-center align-items-center">
       <form [formGroup]="examenForm" (ngSubmit)="saveExamen()">
         <div class="form-group">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="field-custom">
             <mat-label>Título del Examen</mat-label>
             <input matInput formControlName="titulo" name="titulo" required>
           </mat-form-field>
         </div>
         <div class="form-group">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="field-custom">
             <mat-label>Descripción</mat-label>
             <textarea matInput formControlName="descripcion" name="descripcion" rows="2"></textarea>
           </mat-form-field>
         </div>
         <div class="form-group">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="field-custom">
             <mat-label>Puntos máximos</mat-label>
             <input matInput formControlName="puntosMaximos" name="puntosMaximos" required>
           </mat-form-field>
         </div>
         <div formGroupName="categoria" class="form-group">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="field-custom">
             <mat-label>Categoría</mat-label>
             <mat-select formControlName="categoriaId">
               <mat-option value="">Seleccione un categoría</mat-option>
@@ -39,37 +39,37 @@
                 </button>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill" class="field-custom">
                   <mat-label>Contenido de la pregunta</mat-label>
                   <input matInput formControlName="contenido" required>
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill"  class="field-custom">
                   <mat-label>Respuesta</mat-label>
                   <textarea matInput formControlName="respuesta" name="exam_desc" rows="2"></textarea>
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill"  class="field-custom">
                   <mat-label>Opción 1</mat-label>
                   <input matInput formControlName="opcion1" required>
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill"  class="field-custom">
                   <mat-label>Opción 2</mat-label>
                   <input matInput formControlName="opcion2" required>
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill"  class="field-custom">
                   <mat-label>Opción 3</mat-label>
                   <input matInput formControlName="opcion3" required>
                 </mat-form-field>
               </div>
               <div class="form-group">
-                <mat-form-field appearance="fill">
+                <mat-form-field appearance="fill"  class="field-custom">
                   <mat-label>Opción 4</mat-label>
                   <input matInput formControlName="opcion4" required>
                 </mat-form-field>
