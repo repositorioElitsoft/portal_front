@@ -29,11 +29,6 @@ describe('ProfileComponent', () => {
     // Crea una instancia del componente y su fixture
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
-
-    const myServiceObj = jasmine.createSpyObj('LoginService', [
-      'selectType',
-      'getData',
-    ]);
   });
 
   it('should create', () => {
