@@ -65,7 +65,6 @@ import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-respo
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatDialogModule} from '@angular/material/dialog';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
@@ -82,6 +81,7 @@ import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-mo
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
 import { CaracterOnlyDirective } from './directives/caracter-only-directive';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -171,7 +171,6 @@ import { CaracterOnlyDirective } from './directives/caracter-only-directive';
     MatTabsModule,
     MatSliderModule,
     RouterOutlet,
-    MatDialogModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,

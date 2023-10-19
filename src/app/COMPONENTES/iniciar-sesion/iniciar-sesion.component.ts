@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from 'src/app/service/login.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { AuthService } from 'src/app/service/auth.service';
+import jwtDecode from 'jwt-decode';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -24,7 +26,9 @@ export class IniciarSesionComponent implements OnInit {
     private router: Router,
     private loginService: LoginService,
     private usuarioService: UsuarioService,
-    private cookieService: CookieService) 
+    private cookieService: CookieService,
+    private authService: AuthService
+    ) 
     { 
       this.loginForm = this.formBuilder.group({
         email: ['', Validators.required],
@@ -36,22 +40,28 @@ export class IniciarSesionComponent implements OnInit {
   }
 
   onSubmit() {
-   
     this.loginService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
       (token) => {
-        this.cookieService.set('token', token.Authorization)
-        console.log(token.Role)
-        if(token.Role === "ROLE_GUEST")
-          this.router.navigate(['/datos_personales']);
-        if(token.Role === "ROLE_ADMIN")
-          this.router.navigate(['/admin/welcome-admin']);
-        if(token.Role === "ROLE_REC")
-          this.router.navigate(['/reclutador/welcome-reclutador']);
-        
+        this.cookieService.set('token', token.Authorization);
+        const tokenDecode = jwtDecode(this.authService.getToken());
+        this.authService.currentUser = tokenDecode;
+
+        const userRole = this.authService.currentUser.roles;
+        console.log(`userRole: ${userRole}`);
+
+        if ( userRole === 'ROLE_ADMIN' ) {
+          this.router.navigate(['/admin/welcome-admin']); 
+        }
+        else if ( userRole === 'ROLE_REC' ) {
+          this.router.navigate(['/reclutador/welcome-reclutador']); 
+        }
+        else {
+          this.router.navigate(['/user/datos_personales']);
+        }        
       },
       (e) => {
         console.log(`Error: ${e}`);
-        this.inicioSesionFallido= true 
+        this.inicioSesionFallido = true 
       }
       
     );
