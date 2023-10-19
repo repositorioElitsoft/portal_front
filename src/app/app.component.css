@@ -11,3 +11,10 @@
 
 
 }
+
+.content {
+  visibility: hidden;
+}
+.content {
+  display: none;
+}

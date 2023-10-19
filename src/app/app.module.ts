@@ -46,9 +46,7 @@ import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-p
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
-import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
-import { SidebarComponent } from './COMPONENTES/pages/admin/sidebar/sidebar.component';
-import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
+
 import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sidebar/sidebar.component';
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
@@ -120,9 +118,6 @@ import { CaracterOnlyDirective } from './directives/caracter-only-directive';
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,
     UserDashboardComponent,
-    ProfileComponent,
-    SidebarComponent,
-    WelcomeComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
 

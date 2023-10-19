@@ -10,7 +10,8 @@ describe('AppComponent', () => {
         RouterTestingModule, AppNavbarComponent
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        AppNavbarComponent // Agrega 'app-app-navbar' a las declaraciones
       ],
     }).compileComponents();
   });

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ValidarMailComponent } from './validar-mail.component';
 import { ValidarMailService } from 'src/app/service/validar-mail.service';
 
