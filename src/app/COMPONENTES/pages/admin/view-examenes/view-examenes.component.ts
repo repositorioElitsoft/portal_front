@@ -46,7 +46,11 @@ export class ViewExamenesComponent implements OnInit {
             this.examenes = this.examenes.filter((examen:any) => examen.examenId != examenId);
             Swal.fire('Examen eliminado','El examen ha sido eliminado de la base de datos','success');
           },
+<<<<<<< HEAD
           (data:any) => {
+=======
+          (error:any) => {
+>>>>>>> feature/cristian
             Swal.fire('Error','Error al eliminar el examen','error');
           }
         )

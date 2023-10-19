@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { MatCardModule } from '@angular/material/card'; // Importa MatCardModule
 import { AddUsuariosComponent } from './add-usuarios.component';
 
 describe('AddUsuariosComponent', () => {
@@ -8,7 +9,8 @@ describe('AddUsuariosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddUsuariosComponent ]
+      declarations: [],
+      imports: [MatCardModule], // Usa MatCardModule en lugar de MatCard
     })
     .compileComponents();
 

@@ -90,7 +90,6 @@ import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 
 @NgModule({
   declarations: [
-    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
