@@ -7,8 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { CategoriaExamen } from 'src/app/interface/categoria-examen.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
-
-import Swal from 'sweetalert2';
 import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 

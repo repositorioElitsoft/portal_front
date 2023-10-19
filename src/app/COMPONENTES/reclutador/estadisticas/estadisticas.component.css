@@ -1,0 +1,20 @@
+
+  /* Estilo para el iframe */
+  .iframe {
+    width: 100%;
+     height: 90vh;
+      margin-left: -5vh; 
+      padding: 0;
+  }
+
+  @media (max-width: 600px) {
+    .iframe {
+      width: 100%;
+      height: 90vh;
+  
+      padding: 0;
+      
+    }
+  
+  }
+  

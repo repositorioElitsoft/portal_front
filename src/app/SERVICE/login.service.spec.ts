@@ -1,22 +1,21 @@
 import { TestBed } from '@angular/core/testing';
-
-import { ReclutadorService } from './reclutador.service';
+import { LoginService } from './login.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
-describe('ReclutadorService', () => {
-  let service:  ReclutadorService;
+describe('LoginService ', () => {
+  let service: LoginService ;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        ReclutadorService,
+        LoginService,
         { provide: ActivatedRoute,HttpClient , useValue: {} }, // Mock ActivatedRoute
       ],
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject( ReclutadorService);
+    service = TestBed.inject(LoginService);
   });
 
   it('should be created', () => {

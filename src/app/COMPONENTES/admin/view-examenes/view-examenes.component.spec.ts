@@ -2,6 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewExamenesComponent } from './view-examenes.component';
 
+
+
+
+class HttpClientMock {
+  get = jasmine.createSpy('httpClient.get');
+}
+
 describe('ViewExamenesComponent', () => {
   let component: ViewExamenesComponent;
   let fixture: ComponentFixture<ViewExamenesComponent>;

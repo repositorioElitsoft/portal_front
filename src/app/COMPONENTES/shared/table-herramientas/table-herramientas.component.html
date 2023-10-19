@@ -1,8 +1,9 @@
-<div>
-    <h2 class="herramientasytecnologiash2">Herramientas y Tecnologias</h2>
-    <br>
+
     <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
+    <mat-card>
+        
     <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
+        <h4 class="perfilr">Herramientas y Tecnologías</h4>
         <div formArrayName="rows">
             <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox" >
@@ -60,20 +61,21 @@
                     </select>
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button *ngIf="i !== 0" type="button" class="custom-button" (click)="removeRow(i)">-</button>
+                    <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete_sweep</mat-icon></button>
 
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button *ngIf="i === 0" type="button" class="custom-button2" id="addRow" (click)="addRow()">
-                        <i class="fas fa-plus"></i> +
+                    <button mat-mini-fab  class="minifab" *ngIf="i === 0" type="button" id="addRow" (click)="addRow()">
+                        <mat-icon>library_add</mat-icon>
                     </button>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-2 offset-md-5">
-                <button class="btn btn-primary" type="button" (click)="guardarDatos()">Guardar</button>
+                <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>
+                
             </div>
         </div>
     </form>
-</div>
+</mat-card>

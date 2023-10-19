@@ -11,13 +11,10 @@ import { Examen } from 'src/app/interface/examen.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 import { Usuario } from 'src/app/interface/user.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
-import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import { ProductoService } from 'src/app/service/producto.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
 
-import Swal from 'sweetalert2';
+
 import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
 import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
 

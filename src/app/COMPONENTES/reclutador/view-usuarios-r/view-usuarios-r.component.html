@@ -1,7 +1,11 @@
-<br><br><br><br><br><br><br><br>
-<button mat-raised-button (click)="botonEstadistica($event)" class="stats-btn" aria-label="Example icon button with a menu icon">
+
+<br><br><br><br><br><br><br>
+
+
+<button  button  mat-raised-button class="botonprimario m-2" (click)="botonEstadistica($event)"  aria-label="Example icon button with a menu icon">
   <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
 </button>
+
 
 <div class="filter-container">
   <mat-form-field class="filter-input" >
@@ -42,14 +46,17 @@
 
 </div>
 
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
-       class="mat-elevation-z8">
-   <!-- Resto del código -->
 
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
+       class="mat-elevation-z8" style="width: 40%;">
+   <!-- Resto del código -->
+ 
   <!-- Position Column -->
+
   <ng-container matColumnDef="usr_nom">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
     <td mat-cell *matCellDef="let element"> {{element.usr_nom}} </td>
+
   </ng-container>
 
   <!-- Name Column -->

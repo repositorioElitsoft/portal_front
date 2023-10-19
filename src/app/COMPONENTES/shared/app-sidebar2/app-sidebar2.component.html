@@ -1,44 +1,85 @@
-  <div class="hamburger-menu">
-    <input id="menu__toggle" type="checkbox" />
-    <label class="menu__btn" for="menu__toggle">
-      <span></span>
-    </label>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+  <mat-toolbar class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <div class="elitsoft">
+      <img src="https://static.wixstatic.com/media/5a9998_6a14b7ced59447ae8f4bceee9e8d1478~mv2.png/v1/fill/w_182,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/elitesoft%201.png" alt="Elitesoft Logo">
 
-    <ul class="menu__box">
+    </div>  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <ul class="list-unstyled components">
+          <li>
+            <a routerLink="/admin/welcome-admin"routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">home</mat-icon>  Inicio
+            </a>
+        </li>
+        <li>
+          <a routerLink="/admin/profile-admin"routerLinkActive="active">
+            <mat-icon mat-list-icon class="custom-icon">assignment_ind</mat-icon>  Perfil
+          </a>
+      </li>
       <li>
-        <a routerLink="/admin/welcome-admin" routerLinkActive="active" class="menu__item">
-        Inicio
+        <a routerLink="/admin/view-categorias"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">folder</mat-icon>  Categorías
         </a>
       </li>
-      <li><a routerLink="/admin/profile-admin" routerLinkActive="active" class="menu__item">Perfil</a></li>
-      <li><a routerLink="/admin/view-categorias" routerLinkActive="active" class="menu__item">Categorías</a></li>
-
-      <li><a routerLink="/admin/view-examenes" routerLinkActive="active" class="menu__item">Exámenes</a></li>
-      <li><a routerLink="/admin/add-examen" routerLinkActive="active" class="menu__item">Agregar Exámen</a></li>
-      <li><a routerLink="/admin/view-usuarios" routerLinkActive="active" class="menu__item">Usuarios</a></li>
-      <li><a class="menu__item"><div class="dropdown">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Sub-Menú
+      <li>
+        <a routerLink="/admin/add-categoria"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">create_new_folder</mat-icon>  Agregar Categorías
         </a>
+      </li>
+      <li>
+        <a routerLink="/admin/view-examenes"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">assignment</mat-icon>  Exámenes
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/add-examen"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">note_add</mat-icon>  Agregar Exámen
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/view-usuarios"routerLinkActive="active">
+          <mat-icon mat-list-icon class="custom-icon">supervised_user_circle</mat-icon> Usuarios
+        </a>
+      </li>
+              <mat-divider></mat-divider>
+        <li style="cursor: pointer;">
+          
+          <a [matMenuTriggerFor]="afterMenu"><mat-icon mat-list-icon class="custom-icon">list</mat-icon> Submenú</a>
+          <mat-menu #afterMenu="matMenu" xPosition="after">
+            <a href="https://www.elitsoft.cl/" mat-menu-item>Inicio</a>
+          <a href="https://www.elitsoft.cl/nosotros" mat-menu-item>Nosotros</a>
+          <a href="https://www.elitsoft.cl/servicios" mat-menu-item>Servicios</a>
+          <a href="https://www.elitsoft.cl/tecnologías" mat-menu-item>Tecnologías</a>
+          <a href="https://www.elitsoft.cl/contacto" mat-menu-item>Contacto</a>
+          <a href="#" mat-menu-item>Trabaja con Nosotros</a>
+          <a href="https://www.elitsoft.cl/blog" mat-menu-item>Blog</a>
+
+          </mat-menu>
+
+          </li>
+        
+     
+        <br><br><br><br><br><br><br>
+        
+        
+        <li class="nav-item">
+          <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">
+            <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon>  Cerrar Sesión
+          </a>
+        </li>
+
+
       
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="https://www.elitsoft.cl/">Inicio</a></li>
-          <li><a class="dropdown-item" href="https://www.elitsoft.cl/nosotros">Nosotros</a></li>
-          <li><a class="dropdown-item" href="https://www.elitsoft.cl/servicios">Servicios</a></li>
-          <li><a class="dropdown-item" href="https://www.elitsoft.cl/tecnologías">Tecnologías</a></li>
-          <li><a class="dropdown-item" href="https://www.elitsoft.cl/contacto">Contacto</a></li>
-          <li><a class="dropdown-item" href="#">Trabaja con Nostros</a></li>
-          <li><a class="dropdown-item" href=" https://www.elitsoft.cl/blog
-            ">Blog</a></li>
-         
-        </ul>
-      </div></a></li>
-      <li class="nav-item">
-        <a (click)="cerrarSesion()" class="nav-link menu__item" style="cursor: pointer;">Cerrar Sesión</a>
-      </li>
-    </ul>
-    
-  </div>
+   
+      </ul>
+      </mat-nav-list> 
+    </mat-sidenav>
 
-
-
+  </mat-sidenav-container>
+</div>

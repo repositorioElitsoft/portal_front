@@ -2,6 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
+// Importa el componente 'app-app-navbar'
+import { AppNavbarComponent } from  './COMPONENTES/shared/app-navbar/app-navbar.component';// Asegúrate de que la ruta sea correcta
+
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -9,7 +12,8 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        AppNavbarComponent // Agrega 'app-app-navbar' a las declaraciones
       ],
     }).compileComponents();
   });
