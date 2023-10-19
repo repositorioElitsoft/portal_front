@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CargosUsuarioService {
 
-  readonly url = `${environment.URL_HOST}cargos/`
+  readonly url = `${environment.URL_HOST}/cargos/`
 
   constructor(private http: HttpClient) {}
 

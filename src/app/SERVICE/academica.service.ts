@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AcademicaService {
 
-  readonly url = `${environment.URL_HOST}academicas/`
+  readonly url = `${environment.URL_HOST}/academicas/`
 
   constructor(private http: HttpClient) { }
 

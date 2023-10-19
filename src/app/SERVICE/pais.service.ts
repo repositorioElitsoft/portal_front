@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class PaisService {
 
 
-  readonly url = `${environment.URL_HOST}paises/`
+  readonly url = `${environment.URL_HOST}/paises/`
 
   constructor(private http: HttpClient) { }
 

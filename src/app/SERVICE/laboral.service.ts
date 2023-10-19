@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class LaboralService {
 
 
-  readonly url = `${environment.URL_HOST}laboral/`
+  readonly url = `${environment.URL_HOST}/laboral/`
 
   constructor(private http: HttpClient) { }
 

@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CargosElitsoftService {
 
-  readonly url = `${environment.URL_HOST}cargoselitsoft/`
+  readonly url = `${environment.URL_HOST}/cargoselitsoft/`
 
   constructor(private http: HttpClient) { }
 

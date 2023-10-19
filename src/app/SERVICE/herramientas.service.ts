@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class HerramientasService {
 
 
-  readonly url = `${environment.URL_HOST}herramientas/`
+  readonly url = `${environment.URL_HOST}/herramientas/`
 
   constructor(private http: HttpClient) { }
 

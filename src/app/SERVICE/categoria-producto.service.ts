@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class CategoriaProductoService {
 
 
-  readonly url = `${environment.URL_HOST}categoria-productos`
+  readonly url = `${environment.URL_HOST}/categoria-productos`
 
   constructor(private http: HttpClient) { }
 

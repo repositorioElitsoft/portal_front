@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class NivelService {
 
 
-  readonly url = `${environment.URL_HOST}niveles/`
+  readonly url = `${environment.URL_HOST}/niveles/`
 
   constructor(private http: HttpClient) { }
 

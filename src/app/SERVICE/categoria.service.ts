@@ -10,7 +10,7 @@ import { CategoriaExamen, CategoriaExamenCreateDTO } from '../interface/categori
 })
 export class CategoriaService {
 
-  readonly url = `${environment.URL_HOST}categoria-productos`
+  readonly url = `${environment.URL_HOST}`
 
   constructor(private http:HttpClient) { }
 
