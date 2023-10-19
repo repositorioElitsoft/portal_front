@@ -4,7 +4,7 @@ import { Pais } from "./pais.interface"
 export interface Usuario {
     usr_id?:number
     usr_rut?:string
-    usr_nom?:string
+    usr_nom:string
     usr_ap_pat?:string
     usr_ap_mat?:string
     usr_email:string
