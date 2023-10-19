@@ -37,7 +37,7 @@ export class UsuarioService {
 
   eliminarUsuario(usr_id: number) {
     return this.HttpClient.delete(`${this.baseUrl}/usuarios/${usr_id}`);
-}
+  }
 
   guardarUsuarioEnLocalStorage(usuario: any) {
     localStorage.setItem('usuario', JSON.stringify(usuario));

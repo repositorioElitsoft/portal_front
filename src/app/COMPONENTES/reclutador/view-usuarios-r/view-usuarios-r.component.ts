@@ -103,9 +103,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterInput() {
     let filteredArray = this.originalDataCopy;
 
-    if (this.filtro && this.filtro.trim() !== '') {
+    if (this.filtro) { 
       const filtroLowerCase = this.filtro.toLowerCase();
-      filteredArray = filteredArray.filter(element => element.usr_herr.toLowerCase().includes(filtroLowerCase));
+      filteredArray = filteredArray.filter(element => {
+        if (element.usr_nom) { 
+          return element.usr_nom.toLowerCase().includes(filtroLowerCase);
+        }
+        return false;
+      });
     }
 
     this.dataSource.data = filteredArray;
