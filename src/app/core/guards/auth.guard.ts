@@ -12,14 +12,20 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authService.isAuthenticatedUser()) {
       const requiredRole = route.data['role'];
-      const userRole = this.authService.currentUser.role;
+      const userRole = this.authService.currentUser.roles;
 
-      if (requiredRole === userRole) {
-        return true;
-      } else {
-        this.router.navigate(['/']);
-        return false;
+      console.log('usuario role: ', userRole);
+      console.log('rol requerido: ', requiredRole);
+
+      if (requiredRole != undefined) {
+        if (requiredRole === userRole) {
+          return true;
+        } else {
+          this.router.navigate(['/']);
+          return false;
+        }
       }
+      return true;
     }
     
     this.router.navigate(['/iniciar-sesion']);

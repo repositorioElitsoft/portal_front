@@ -58,6 +58,7 @@ const routes: Routes = [
   {
     path: 'user',
     canActivate: [AuthGuard],
+    data: { role: 'ROLE_GUEST' },
     children: [
       {
         path: 'datos_personales',
@@ -71,7 +72,7 @@ const routes: Routes = [
     path:'admin',
     component:DashboardComponent,
     canActivate: [AuthGuard],
-    // data: { role: 'ADMIN' },
+    data: { role: 'ROLE_ADMIN' },
     children:[
       {
         path:'welcome-admin',
@@ -131,7 +132,8 @@ const routes: Routes = [
   {
     path:'reclutador',
     component:DashboardRComponent,
-   // canActivate:[AdminGuard],
+    canActivate:[AuthGuard],
+    data: { role: 'ROLE_REC' },
     children:[
       {
         path:'welcome-reclutador',
