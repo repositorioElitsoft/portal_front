@@ -14,11 +14,8 @@ import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/vie
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
 import { AddExamenComponent } from './COMPONENTES/admin/add-examen/add-examen.component';
-import { ActualizarCategoriaComponent } from './COMPONENTES/admin/actualizar-categoria/actualizar-categoria.component';
-import { ActualizarExamenComponent } from './COMPONENTES/admin/actualizar-examen/actualizar-examen.component';
 import { AddPreguntaComponent } from './COMPONENTES/admin/add-pregunta/add-pregunta.component';
 import { ViewExamenPreguntasComponent } from './COMPONENTES/admin/view-examen-preguntas/view-examen-preguntas.component';
-import { ActualizarPreguntaComponent } from './COMPONENTES/admin/actualizar-pregunta/actualizar-pregunta.component';
 import { ViewUsuariosComponent } from './COMPONENTES/admin/view-usuarios/view-usuarios.component';
 import { ViewPerfilUsuarioComponent } from './COMPONENTES/admin/view-perfil-usuario/view-perfil-usuario.component';
 import { SidebarRComponent } from './COMPONENTES/reclutador/sidebar-r/sidebar-r.component';
@@ -98,7 +95,7 @@ import { CaracterOnlyDirective } from './directives/caracter-only-directive';
     ProfileAdminComponent,
     ViewCategoriasComponent,
     AddExamenComponent,
-    ActualizarCategoriaComponent,
+
 
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
@@ -128,10 +125,9 @@ import { CaracterOnlyDirective } from './directives/caracter-only-directive';
     WelcomeComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
-    ActualizarExamenComponent,
+
     ViewExamenPreguntasComponent,
     AddPreguntaComponent,
-    ActualizarPreguntaComponent,
     UserSidebar,
     LoadExamenComponent,
     InstruccionesComponent,

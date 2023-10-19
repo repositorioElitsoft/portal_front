@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewExamenesComponent } from './view-examenes.component';
+import { ExamenService } from 'src/app/service/examen.service';
 
 describe('ViewExamenesComponent', () => {
   let component: ViewExamenesComponent;
@@ -8,7 +9,8 @@ describe('ViewExamenesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewExamenesComponent ]
+      declarations: [ ViewExamenesComponent ],
+      providers:[ExamenService]
     })
     .compileComponents();
 

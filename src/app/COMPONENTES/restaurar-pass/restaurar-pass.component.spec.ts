@@ -7,6 +7,7 @@ import { ActivatedRoute, ParamMap, Router, convertToParamMap } from '@angular/ro
 import { NotificationService } from 'src/app/service/notification.service';
 import { Observable, of } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 
 class MockActivatedRoute {
   paramMap: Observable<ParamMap> = of(convertToParamMap({ id: 'your-test-id' }));
@@ -19,7 +20,7 @@ describe('RestaurarPassComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ RestaurarPassComponent ],
-      imports:[HttpClientModule, ReactiveFormsModule],
+      imports:[HttpClientModule, ReactiveFormsModule, MatCardModule],
       providers:[UsuarioService,Router,NotificationService,{ provide: ActivatedRoute, useClass: MockActivatedRoute }]
     })
     .compileComponents();

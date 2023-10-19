@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardComponent } from './dashboard.component';
+import { AppSidebarComponent } from 'src/app/COMPONENTES/shared/app-sidebar/app-sidebar.component';
+import { AppNavbarComponent } from 'src/app/COMPONENTES/shared/app-navbar/app-navbar.component';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -8,7 +10,7 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
+      declarations: [ DashboardComponent, AppSidebarComponent, AppNavbarComponent  ]
     })
     .compileComponents();
   });

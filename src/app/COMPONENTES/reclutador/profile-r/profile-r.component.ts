@@ -11,17 +11,10 @@ import { UsuarioService } from 'src/app/service/usuario.service';
   styleUrls: ['./profile-r.component.css']
 })
 export class ProfileRComponent implements OnInit {
-<<<<<<< HEAD
   editable: boolean = false;
   form!: FormGroup;
   isLoaded: boolean = true;
   usuarioGuardado: Usuario = {
-=======
-
-
- // perfilr: any;
-    perfilr: any = {
->>>>>>> feature/cristian
     usr_nom: '',
     usr_ap_pat: '',
     usr_ap_mat: '',
@@ -88,13 +81,9 @@ export class ProfileRComponent implements OnInit {
     } else {
       this.form.disable();
     }
-<<<<<<< HEAD
   }
   
   
-=======
-   
->>>>>>> feature/cristian
 
   async submitForm(event: Event) {
     event.preventDefault();

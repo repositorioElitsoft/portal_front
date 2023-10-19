@@ -6,6 +6,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SidebarRComponent } from '../sidebar-r/sidebar-r.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
+import { SidebarRResponsiveComponent } from '../sidebar-r-responsive/sidebar-r-responsive.component';
 
 
 class ActivatedRouteStub {
@@ -19,7 +20,7 @@ describe('DashboardRComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DashboardRComponent, SidebarRComponent],
+      declarations: [DashboardRComponent, SidebarRComponent, SidebarRResponsiveComponent],
       imports: [HttpClientTestingModule, RouterModule],
       providers: [Router, HttpClient,{ provide: ActivatedRoute, useClass: ActivatedRouteStub }
       ],

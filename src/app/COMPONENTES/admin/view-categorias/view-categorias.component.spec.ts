@@ -15,6 +15,13 @@ describe('ViewCategoriasComponent', () => {
       providers:[CategoriaService,HttpClient],
     })
     .compileComponents();
+
+    fixture = TestBed.createComponent(ViewCategoriasComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

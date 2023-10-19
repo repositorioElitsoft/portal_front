@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-<<<<<<< HEAD
 import { LoginService } from './login.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
@@ -16,16 +15,6 @@ describe('LoginService ', () => {
       ],
       imports: [HttpClientTestingModule],
     });
-=======
-
-import { LoginService } from './login.service';
-
-describe('LoginService', () => {
-  let service: LoginService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
->>>>>>> feature/cristian
     service = TestBed.inject(LoginService);
   });
 
