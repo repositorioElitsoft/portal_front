@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class CategoriaProductoService {
 
 
-  readonly url = `${environment.URL_HOST}/categoria-productos`
+  readonly url = `${environment.URL_HOST}/categoria-productos/`
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class CategoriaProductoService {
   }
 
   getProductosPorCategoria(categoriaId: number): Observable<Producto[]> {
-    const url = `${this.url}${categoriaId}/productos`;
+    const url = `${this.url}${categoriaId}productos`;
     return this.http.get<Producto[]>(url);
   }
 }
