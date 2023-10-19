@@ -26,7 +26,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'usr_herr', 'herr_ver', 'herr_exp'];
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', ]; //'usr_herr', 'herr_ver', 'herr_exp'
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];

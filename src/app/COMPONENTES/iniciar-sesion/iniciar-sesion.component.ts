@@ -40,7 +40,13 @@ export class IniciarSesionComponent implements OnInit {
     this.loginService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
       (token) => {
         this.cookieService.set('token', token.Authorization)
-        this.router.navigate(['/datos_personales']);
+        console.log(token.Role)
+        if(token.Role === "ROLE_GUEST")
+          this.router.navigate(['/datos_personales']);
+        if(token.Role === "ROLE_ADMIN")
+          this.router.navigate(['/admin/welcome-admin']);
+        if(token.Role === "ROLE_REC")
+          this.router.navigate(['/reclutador/welcome-reclutador']);
         
       },
       (e) => {
