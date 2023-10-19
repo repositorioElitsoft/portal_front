@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WelcomeComponent } from './welcome.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDivider, MatDividerModule } from '@angular/material/divider';
 
 describe('WelcomeComponent', () => {
   let component: WelcomeComponent;
@@ -8,7 +10,9 @@ describe('WelcomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WelcomeComponent ]
+      declarations: [ WelcomeComponent ],
+      imports:[MatCardModule, MatDividerModule],
+      providers:[],
     })
     .compileComponents();
 

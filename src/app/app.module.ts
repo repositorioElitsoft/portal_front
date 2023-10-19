@@ -88,7 +88,6 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
 
 @NgModule({
   declarations: [
-    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -123,7 +122,6 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     AppFooterComponent,
     SidebarUserDeskComponent,
     TableHerramientasComponent,
-    NumericOnlyDirective,
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,

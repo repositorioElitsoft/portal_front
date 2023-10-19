@@ -2,8 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing'; // Importa RouterModuleTestingModule
 import { RegistrarComponent } from './registrar.component';
-import { MatCardModule } from '@angular/material/card';
-import { FormGroup } from '@angular/forms';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/service/notification.service';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RegistrarComponent', () => {
   let component: RegistrarComponent;
@@ -11,10 +15,11 @@ describe('RegistrarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RegistrarComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule,MatCardModule,FormGroup], // Agrega HttpClientTestingModule y RouterModuleTestingModule,
-
-    }).compileComponents();
+      declarations: [ RegistrarComponent ],
+      imports:[ReactiveFormsModule, HttpClientTestingModule],
+      providers:[UsuarioService, Router, NotificationService,HttpClient],
+    })
+    .compileComponents();
 
     fixture = TestBed.createComponent(RegistrarComponent);
     component = fixture.componentInstance;

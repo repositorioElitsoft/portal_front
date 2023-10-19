@@ -1,6 +1,8 @@
 import  Swal  from 'sweetalert2';
 
+
 import { Component, OnInit } from '@angular/core';
+import { ExamenService } from 'src/app/service/examen.service';
 import { ExamenService } from 'src/app/service/examen.service';
 
 @Component({
@@ -23,6 +25,7 @@ export class ViewExamenesComponent implements OnInit {
         console.log(this.examenes);
       },
       (error:any) => {
+      (error:any) => {
         console.log(error);
         Swal.fire('Error','Error al cargar los exámenes','error');
       }
@@ -42,6 +45,7 @@ export class ViewExamenesComponent implements OnInit {
     }).then((result) => {
       if(result.isConfirmed){
         this.examenService.eliminarExamen(examenId).subscribe(
+          (data:any) => {
           (data:any) => {
             this.examenes = this.examenes.filter((examen:any) => examen.examenId != examenId);
             Swal.fire('Examen eliminado','El examen ha sido eliminado de la base de datos','success');

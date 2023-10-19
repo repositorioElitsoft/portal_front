@@ -1,20 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('CargosUsuarioService', () => {
+import { AuthService } from './auth.service';
+
+describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        AuthService,
-        { provide: ActivatedRoute,HttpClient , useValue: {} }, // Mock ActivatedRoute
-      ],
-      imports: [HttpClientTestingModule],
-    });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
   });
 

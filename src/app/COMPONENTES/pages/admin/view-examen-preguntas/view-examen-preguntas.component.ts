@@ -47,13 +47,13 @@ export class ViewExamenPreguntasComponent implements OnInit {
     }).then((resultado) => {
       if(resultado.isConfirmed){
         this.preguntaService.eliminarPregunta(preguntaId).subscribe(
-          (data) => {
+          (data:any) => {
             this.snack.open('Pregunta eliminada','',{
               duration:3000
             })
             this.preguntas = this.preguntas.filter((pregunta:any) => pregunta.preguntaId != preguntaId);
           },
-          (error) => {
+          (error:any) => {
             this.snack.open('Error al eliminar la pregunta','',{
               duration:3000
             })
