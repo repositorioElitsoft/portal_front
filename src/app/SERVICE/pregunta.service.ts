@@ -21,7 +21,7 @@ export class PreguntaService {
   }
 
   public eliminarPregunta(preguntaId:any){
-    return this.http.delete(`${this.url}/pregunta/${preguntaId}`);
+    return this.http.delete(`${this.url}/pregunta/eliminar/${preguntaId}`);
   }
 
   public actualizarPregunta(pregunta:any){

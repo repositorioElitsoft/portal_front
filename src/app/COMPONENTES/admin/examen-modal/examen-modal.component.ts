@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,6 +6,7 @@ import { Categoria } from 'src/app/interface/categoria.interface';
 import { Examen } from 'src/app/interface/examen.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ExamenService } from 'src/app/service/examen.service';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,6 +17,7 @@ import Swal from 'sweetalert2';
 export class ExamenModalComponent implements OnInit {
   examenForm: FormGroup;
   categorias: Categoria[] = [];
+  @Output() examenActualizado: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     public dialogRef: MatDialogRef<ExamenModalComponent>,
@@ -23,7 +25,8 @@ export class ExamenModalComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     private examenService: ExamenService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private preguntaService: PreguntaService
   ) {
     this.examenForm = this.formBuilder.group({
       titulo: ['', Validators.required],
@@ -64,24 +67,19 @@ export class ExamenModalComponent implements OnInit {
   saveExamen(){
     if (this.examenForm.valid) {
       if (this.examen) {
-
-
-
-        console.log('Esto estamos mandando  para actualizar', this.examenForm.value)
-
+        console.log('Esto estamos mandando', this.examenForm.value)
         let examen = this.examenForm.value;
         examen["examenId"] = this.examen.examenId
-
         this.examenService.actualizarExamen(examen, this.examen.examenId).subscribe(
           (data) => {
             console.log('response', data);
-            this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 });
+            this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 }); 
           },
           (error) => {
-            console.log('response error:', error);
+            console.log('Error al actualizar el examen', error);
             this.snackBar.open('Error al actualizar el examen', 'OK', { duration: 3000 });
           }
-        )
+        );
       }
       else {
         console.log('Esto estamos mandando para guardar', this.examenForm.value);
@@ -90,6 +88,7 @@ export class ExamenModalComponent implements OnInit {
             console.log(data);
             Swal.fire('Examen guardado','El examen ha sido guardado con éxito','success');
             this.dialogRef.close(this.examenForm.value);
+            this.examenActualizado.emit();
           },
           (error) => {
             console.log('Error al aguardar examen', error);
@@ -103,7 +102,20 @@ export class ExamenModalComponent implements OnInit {
   }
 
   deletePregunta(index: number) {
-    this.preguntas.removeAt(index);
+    const preguntaId = this.preguntas.value[index].preguntaId;
+    if (preguntaId) {
+      this.preguntaService.eliminarPregunta(preguntaId).subscribe(
+        (data) => {
+          this.preguntas.removeAt(index);
+          console.log('Pregunta eliminada', preguntaId);
+        },
+        (error) => {
+          console.log('Error al eliminar la pregunta', error);
+        }
+      )
+    } else {
+      this.preguntas.removeAt(index);
+    }
   }
 
   closeModal() {

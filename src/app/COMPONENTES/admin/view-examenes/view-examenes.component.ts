@@ -126,7 +126,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
+  
   getExams(): void {
     this.examenService.obtenerExamenesActivos().subscribe({
       next:(data: Examen[]) => {
@@ -172,6 +172,11 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       width: '800px', 
       height: '700px',
     });
+
+    dialogRef.componentInstance?.examenActualizado.subscribe(() => {
+      this.getExams();
+    });
+
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
