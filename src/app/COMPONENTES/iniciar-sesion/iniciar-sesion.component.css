@@ -1,27 +1,12 @@
-.container-bg {
-  padding: 30px; /* Espaciado alrededor del contenido */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para el contenedor */
-  max-width: 1200px; /* Ancho máximo del contenedor */
-  height: 800px; /* Altura máxima del contenedor */
-  margin: 0 auto; /* Centrar horizontalmente el contenedor */
-  background-color: rgba(34, 34, 34, 0.8); /* Color de fondo principal gris oscuro con transparencia */
-  background-image: linear-gradient(135deg, #fff, #ccc); /* Gradiente de colores */
-  background-size: 200% 200%; /* Tamaño del gradiente */
-  animation: gradientAnimation 15s ease infinite; /* Animación del gradiente */
-  border-radius: 5px;
-  backdrop-filter: blur(10px); /* Efecto de cristal */
-  padding-top: 10%;
-}
-/* Estilos generales */
-body {
-  background-color: #fff;
-  color: #333; /* Color de texto principal */
-}
+
+
+
 
 /* Estilos para la barra de navegación */
 .navbar {
-  background-color: #F76805; /* Color de fondo naranja #F76805 */
+  background-color: #F57C27; /* Color de fondo naranja #F76805 */
   color: #fff; /* Color de texto en la barra de navegación */
+
 }
 
 .nav-link {
@@ -35,7 +20,7 @@ body {
 }
 
 .card-header {
-  background-color: #F76805; /* Color de fondo naranja #F76805 */
+  background-color: #F57C27; /* Color de fondo naranja #F76805 */
   color: #fff; /* Color de texto en la cabecera de la tarjeta */
 }
 
@@ -49,7 +34,7 @@ body {
 
 /* Estilos para el botón de registro */
 .btn-primary {
-  background-color: #F76805; /* Color de fondo naranja #F76805 */
+  background-color:#F57C27; /* Color de fondo naranja #F76805 */
   border-color: #F57C27;
   width: 100%; /* Hace que el botón ocupe todo el ancho disponible */
 }
@@ -84,6 +69,16 @@ body {
   animation: fadeIn 2s ease-in-out; /* Animación de aparición */
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 .nav-link2 {
   color: #333; /* Color de texto por defecto */
     /* Otros estilos opcionales */
@@ -97,12 +92,21 @@ body {
 }
 
 
-
+.botonprimario{
+  width: 100%;
+}
 
   
 @media (max-width: 1200px)  {
   /* Consulta de medios para dispositivos con un ancho de pantalla entre 768px y 1000px */
   .nav-link2 {
       padding-left: 10%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
+  }
+
+  .container-bg {
+
+    padding-top: 0;
+    padding-bottom: 10vh;
+  
   }
 }
