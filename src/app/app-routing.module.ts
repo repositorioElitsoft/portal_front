@@ -70,6 +70,8 @@ const routes: Routes = [
   {
     path:'admin',
     component:DashboardComponent,
+    canActivate: [AuthGuard],
+    // data: { role: 'ADMIN' },
     children:[
       {
         path:'welcome-admin',

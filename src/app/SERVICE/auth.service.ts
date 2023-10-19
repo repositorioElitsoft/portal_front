@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUser: any = null;
+  public currentUser: any = null;
 
   constructor( private cookieService: CookieService) {
     const token = this.getToken();
@@ -13,10 +14,9 @@ export class AuthService {
   }
   
   isAuthenticatedUser() {
-    // Evaluamos si existe una propiedad token en currentUser
-    // return this.currentUser?.token;
-
     if (this.getToken()) {
+      const token = jwtDecode(this.getToken());
+      this.currentUser = token;
       return true
     }
     return false;
