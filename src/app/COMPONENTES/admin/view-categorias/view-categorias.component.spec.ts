@@ -13,7 +13,7 @@ describe('ViewCategoriasComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ViewCategoriasComponent ],
       imports:[HttpClientTestingModule],
-      providers:[CategoriaService,HttpClient],
+      providers:[CategoriaService],
     })
     .compileComponents();
 

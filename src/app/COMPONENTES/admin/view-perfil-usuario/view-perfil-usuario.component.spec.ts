@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 
 class ActivatedRouteStub{
 
-  params= of({/* */})
+  params= of({/* */});
 }
 describe('ViewPerfilUsuarioComponent', () => {
   let component: ViewPerfilUsuarioComponent;
