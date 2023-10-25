@@ -9,11 +9,8 @@ import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/vie
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
 import { AddExamenComponent } from './COMPONENTES/admin/add-examen/add-examen.component';
-import { ActualizarCategoriaComponent } from './COMPONENTES/admin/actualizar-categoria/actualizar-categoria.component';
-import { ActualizarExamenComponent } from './COMPONENTES/admin/actualizar-examen/actualizar-examen.component';
 import { ViewExamenPreguntasComponent } from './COMPONENTES/admin/view-examen-preguntas/view-examen-preguntas.component';
 import { AddPreguntaComponent } from './COMPONENTES/admin/add-pregunta/add-pregunta.component';
-import { ActualizarPreguntaComponent } from './COMPONENTES/admin/actualizar-pregunta/actualizar-pregunta.component';
 import { ViewUsuariosComponent } from './COMPONENTES/admin/view-usuarios/view-usuarios.component';
 import { ViewPerfilUsuarioComponent } from './COMPONENTES/admin/view-perfil-usuario/view-perfil-usuario.component';
 import { DashboardRComponent } from './COMPONENTES/reclutador/dashboard-r/dashboard-r.component';
@@ -30,8 +27,6 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { ValidarMailComponent } from './COMPONENTES/validar-mail/validar-mail.component';
 import { PeticionRestaurarPassComponent } from './COMPONENTES/peticion-restaurar-pass/peticion-restaurar-pass.component';
 import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-pass.component';
-import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
-import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
 import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
@@ -103,20 +98,12 @@ const routes: Routes = [
         component:AddExamenComponent
       },
       {
-        path:'actualizar-examen/:exam_id',
-        component:ActualizarExamenComponent
-      },
-      {
         path:'view-examen-preguntas/:exam_id/:exam_titl',
         component:ViewExamenPreguntasComponent
       },
       {
         path:'add-pregunta/:exam_id/:exam_titl',
         component:AddPreguntaComponent
-      },
-      {
-        path:'actualizar-pregunta/:prg_id',
-        component:ActualizarPreguntaComponent
       },
       {
         path:'view-usuarios',
@@ -158,53 +145,6 @@ const routes: Routes = [
       }
 
 
-    ]
-  },
-  {
-    path:'admin-examen',
-    component:DashboardComponent,
-    canActivate:[AuthGuard],
-    children:[
-      {
-        path:'profile',
-        component:ProfileComponent
-      },
-      {
-        path:'',
-        component:WelcomeComponent
-      },
-      {
-        path:'categorias',
-        component: ViewCategoriasComponent
-      },
-      {
-        path:'add-categoria',
-        component:AddCategoriaComponent
-      },
-      {
-        path:'examenes',
-        component:ViewExamenesComponent
-      },
-      {
-        path:'add-examen',
-        component:AddExamenComponent
-      },
-      {
-        path:'examen/:examenId',
-        component:ActualizarExamenComponent
-      },
-      {
-        path:'ver-preguntas/:examenId/:titulo',
-        component:ViewExamenPreguntasComponent
-      },
-      {
-        path:'add-pregunta/:examenId/:titulo',
-        component:AddPreguntaComponent
-      },
-      {
-        path:'pregunta/:preguntaId',
-        component:ActualizarPreguntaComponent
-      }
     ]
   },
   {

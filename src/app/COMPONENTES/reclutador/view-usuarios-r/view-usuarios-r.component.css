@@ -19,3 +19,8 @@
   width: 100%;
 }
 
+.small-spinner {
+  width: 100px; /* Ajusta el ancho según tus preferencias */
+  height: 80px; /* Ajusta la altura según tus preferencias */
+  font-size: 12px; /* Ajusta el tamaño de fuente según tus preferencias */
+}

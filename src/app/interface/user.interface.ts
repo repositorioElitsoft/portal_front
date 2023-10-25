@@ -1,4 +1,5 @@
 import { HerramientaData } from "./herramienta-data.interface"
+import { Laboral } from "./laboral.interface"
 import { Pais } from "./pais.interface"
 
 export interface Usuario {
@@ -17,4 +18,5 @@ export interface Usuario {
     usr_herr: string;
     herr_ver: string;
     herr_exp: string;
+    laborales: Laboral[];
 }

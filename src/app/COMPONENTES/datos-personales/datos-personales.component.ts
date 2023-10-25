@@ -39,7 +39,8 @@ export class DatosPersonalesComponent implements OnInit {
     pais_nom: '',
     usr_herr: '',
     herr_ver: '',
-    herr_exp: ''
+    herr_exp: '',
+    laborales: []
   };
 
   constructor(

@@ -31,7 +31,7 @@ export class LaboralService {
   }
 
   obtenerListaLaboral(): Observable<Laboral[]> {
-    return this.http.get<Laboral[]>(`${this.url}listar`);
+    return this.http.get<Laboral[]>(`${this.url}`);
   }
 
   obtenerNombreProducto(prdId: number): Observable<string> {
