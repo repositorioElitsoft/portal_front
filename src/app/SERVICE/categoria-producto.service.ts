@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CategoriaProducto } from '../interface/categoria-prod.interface';
 import { Producto } from '../interface/producto.interface';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -10,8 +11,8 @@ import { Producto } from '../interface/producto.interface';
 })
 export class CategoriaProductoService {
 
-  //Implementamos nuestro servicio
-  url = "http://localhost:8080/categoria-productos/";
+
+  readonly url = `${environment.URL_HOST}/categoria-productos/`
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +22,7 @@ export class CategoriaProductoService {
   }
 
   getProductosPorCategoria(categoriaId: number): Observable<Producto[]> {
-    const url = `${this.url}${categoriaId}/productos`;
+    const url = `${this.url}${categoriaId}productos`;
     return this.http.get<Producto[]>(url);
   }
 }

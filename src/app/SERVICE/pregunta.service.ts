@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -7,38 +8,38 @@ import { Injectable } from '@angular/core';
 })
 export class PreguntaService {
 
-  baserUrl = "http://localhost:8080"
+  readonly url = `${environment.URL_HOST}`
 
   constructor(private http:HttpClient) { }
 
   public listarPreguntasDelExamen(examenId:any){
-    return this.http.get(`${this.baserUrl}/pregunta/examen/todos/${examenId}`);
+    return this.http.get(`${this.url}/pregunta/examen/todos/${examenId}`);
   }
 
   public guardarPregunta(pregunta:any){
-    return this.http.post(`${this.baserUrl}/pregunta/`,pregunta);
+    return this.http.post(`${this.url}/pregunta/`,pregunta);
   }
 
   public eliminarPregunta(preguntaId:any){
-    return this.http.delete(`${this.baserUrl}/pregunta/${preguntaId}`);
+    return this.http.delete(`${this.url}/pregunta/eliminar/${preguntaId}`);
   }
 
   public actualizarPregunta(pregunta:any){
-    return this.http.put(`${this.baserUrl}/pregunta/`,pregunta);
+    return this.http.put(`${this.url}/pregunta/`,pregunta);
   }
 
   public obtenerPregunta(preguntaId:any){
-    return this.http.get(`${this.baserUrl}/pregunta/${preguntaId}`);
+    return this.http.get(`${this.url}/pregunta/${preguntaId}`);
   }
 
   public listarPreguntasDelExamenParaLaPrueba(examenId:any){
-    return this.http.get(`${this.baserUrl}/pregunta/examen/todos/${examenId}`);
+    return this.http.get(`${this.url}/pregunta/examen/todos/${examenId}`);
   }
 
   public evaluarExamen(preguntas:any){
-    return this.http.post(`${this.baserUrl}/pregunta/evaluar-examen`,preguntas);
+    return this.http.post(`${this.url}/pregunta/evaluar-examen`,preguntas);
   }
   public guardarResultados(resultados:any){
-    return this.http.post(`${this.baserUrl}/resultados/`, resultados);
+    return this.http.post(`${this.url}/resultados/`, resultados);
     }
 }

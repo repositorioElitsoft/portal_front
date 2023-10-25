@@ -45,11 +45,10 @@ export class LoadExamenComponent implements OnInit {
       }
       else{
         console.log("Cargando un examen en específico");
-        this.examenService.obtenerExamenesActivosDeUnaCategoria(this.catId).subscribe(
+        this.examenService.obtenerExamenesActivos().subscribe(
           (data:any) => {
-            
-
-            this.examenes = data;
+          
+            this.examenes = data.filter((obj: any) => obj.categoria.categoriaId === this.catId);
             console.log("this esamenes",data);
           },
           (error) => {
@@ -57,6 +56,7 @@ export class LoadExamenComponent implements OnInit {
           }
         )
       }
+      
     })
 }
 

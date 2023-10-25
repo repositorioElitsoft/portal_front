@@ -14,11 +14,8 @@ import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/vie
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
 import { AddExamenComponent } from './COMPONENTES/admin/add-examen/add-examen.component';
-import { ActualizarCategoriaComponent } from './COMPONENTES/admin/actualizar-categoria/actualizar-categoria.component';
-import { ActualizarExamenComponent } from './COMPONENTES/admin/actualizar-examen/actualizar-examen.component';
 import { AddPreguntaComponent } from './COMPONENTES/admin/add-pregunta/add-pregunta.component';
 import { ViewExamenPreguntasComponent } from './COMPONENTES/admin/view-examen-preguntas/view-examen-preguntas.component';
-import { ActualizarPreguntaComponent } from './COMPONENTES/admin/actualizar-pregunta/actualizar-pregunta.component';
 import { ViewUsuariosComponent } from './COMPONENTES/admin/view-usuarios/view-usuarios.component';
 import { ViewPerfilUsuarioComponent } from './COMPONENTES/admin/view-perfil-usuario/view-perfil-usuario.component';
 import { SidebarRComponent } from './COMPONENTES/reclutador/sidebar-r/sidebar-r.component';
@@ -49,9 +46,7 @@ import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-p
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
-import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
-import { SidebarComponent } from './COMPONENTES/pages/admin/sidebar/sidebar.component';
-import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
+
 import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sidebar/sidebar.component';
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
@@ -70,9 +65,11 @@ import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-respo
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
-import {MatDialogModule} from '@angular/material/dialog';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
+
+
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs'; 
@@ -82,13 +79,12 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
-import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
-
-
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
+import { CaracterOnlyDirective } from './directives/caracter-only-directive';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    NumericOnlyDirective,
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -97,7 +93,7 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     ProfileAdminComponent,
     ViewCategoriasComponent,
     AddExamenComponent,
-    ActualizarCategoriaComponent,
+
 
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
@@ -106,7 +102,7 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     WelcomeReclutadorComponent,
     ProfileRComponent,
     ViewUsuariosRComponent,
-    ViewPerfilUsuarioRComponent,    
+    ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
@@ -122,15 +118,11 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,
     UserDashboardComponent,
-    ProfileComponent,
-    SidebarComponent,
-    WelcomeComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
-    ActualizarExamenComponent,
+
     ViewExamenPreguntasComponent,
     AddPreguntaComponent,
-    ActualizarPreguntaComponent,
     UserSidebar,
     LoadExamenComponent,
     InstruccionesComponent,
@@ -138,9 +130,11 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     SidebarUserComponent,
     SidebarRResponsiveComponent, 
     ExamenModalComponent,
+    AddUsuariosComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
-  
+    CaracterOnlyDirective,
+
   ],
   imports: [
     MatCheckboxModule,
@@ -150,14 +144,17 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NavbarResponsiveComponent,
     HttpClientModule,
+    ReactiveFormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatTableModule,
     MatIconModule,
+    MatButtonModule,
+    MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
     MatMenuModule,
     MatCardModule,
     MatToolbarModule,
@@ -165,12 +162,15 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     MatSlideToggleModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatSortModule,
+    HttpClientModule,
+    MatDialogModule,
     MatTabsModule,
     MatSliderModule,
     RouterOutlet,
-    MatDialogModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,

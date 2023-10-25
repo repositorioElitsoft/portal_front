@@ -30,13 +30,18 @@ export class AddCategoriaComponent implements OnInit {
     private categoriaService:CategoriaService,
     private route:ActivatedRoute,
     private _snackBar: MatSnackBar,
+    private activatedRoute:ActivatedRoute,
     private router:Router) { 
 
       this.buildForm()
     }
 
   ngOnInit(): void {
+
+
     this.categoriaId = this.route.snapshot.params['catId'];
+
+
     if(this.categoriaId){
       this.categoriaService.getCategoria(this.categoriaId).subscribe({
         next:(data)=>{

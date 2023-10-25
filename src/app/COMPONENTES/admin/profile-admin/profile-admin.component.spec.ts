@@ -1,16 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ProfileAdminComponent } from './profile-admin.component';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+
+class ActivatedRouteStub {
+  private subject = new BehaviorSubject(convertToParamMap({ id: 123 }));
+  paramMap = this.subject.asObservable();
+}
 
 describe('ProfileAdminComponent', () => {
   let component: ProfileAdminComponent;
   let fixture: ComponentFixture<ProfileAdminComponent>;
+  let activatedRoute: ActivatedRouteStub;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ProfileAdminComponent ]
-    })
-    .compileComponents();
+  beforeEach(() => {
+    activatedRoute = new ActivatedRouteStub();
+
+    TestBed.configureTestingModule({
+      declarations: [ProfileAdminComponent],
+      imports: [HttpClientModule],
+      providers: [UsuarioService, { provide: ActivatedRoute, useValue: activatedRoute }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileAdminComponent);
     component = fixture.componentInstance;

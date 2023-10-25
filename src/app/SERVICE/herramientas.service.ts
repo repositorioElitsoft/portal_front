@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Herramientas } from '../interface/herramientas.interface';
 import { HerramientaData } from '../interface/herramienta-data.interface';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -10,13 +11,11 @@ import { HerramientaData } from '../interface/herramienta-data.interface';
 })
 export class HerramientasService {
 
-  url = "http://localhost:8080/herramientas/"
+
+  readonly url = `${environment.URL_HOST}/herramientas/`
 
   constructor(private http: HttpClient) { }
 
-  // guardarHerramienta(herramienta: Herramientas, usuarioId: number): Observable<Herramientas> {
-  //   return this.http.post<Herramientas>(`${this.url}?usr_id=${usuarioId}`, herramienta);
-  // }
 
   guardarHerramienta(herramienta: HerramientaData[]): Observable<HerramientaData> {
     return this.http.post<HerramientaData>(this.url, herramienta);
@@ -38,5 +37,5 @@ export class HerramientasService {
     return this.http.get<HerramientaData[]>(this.url);
   }
 
-  
+
 }

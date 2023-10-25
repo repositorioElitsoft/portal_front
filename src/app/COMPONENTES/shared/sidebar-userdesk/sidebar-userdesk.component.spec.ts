@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute } from '@angular/router';
 
 describe('SidebarUserDeskComponent', () => {
   let component: SidebarUserDeskComponent;
@@ -19,8 +20,10 @@ describe('SidebarUserDeskComponent', () => {
         HttpClientTestingModule,
         MatDialogModule,MatSnackBarModule, MatIconModule // Add MatDialogModule to the imports
       ],
-      providers: [ChangeDetectorRef, CategoriaService],
+      providers: [ChangeDetectorRef, CategoriaService,{ provide: ActivatedRoute }],
     });
+
+
 
     fixture = TestBed.createComponent(SidebarUserDeskComponent);
     component = fixture.componentInstance;

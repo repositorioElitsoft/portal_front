@@ -1,33 +1,52 @@
-<p class="admin-panel-text">Panel de Administrador</p>
-<div class="container mt-4">
-    <h1>Lista de Usuarios</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellidos</th>
-          <th>RUT</th>
-          <th>Email</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let usuario of usuarios">
-          <td>{{ usuario.usr_nom }}</td>
-          <td>{{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</td>
-          <td>{{ usuario.usr_rut }}</td>
-          <td>{{ usuario.email }}</td>
-          <td>
-            <button class="btn btn-primary" (click)="actualizarUsuario(usuario)">Actualizar</button>
-            <button class="btn btn-primary" [routerLink]="['/admin/view-perfil-usuario', usuario.email]">Ver perfil</button>
-            <button class="btn btn-danger" (click)="eliminarUsuario(usuario.usr_id)">Eliminar</button>
-            
-            
-
-           
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<br><br><br><br><br><br><br><br>
+<section>
+  <div class="example-button-row">
+    <button mat-raised-button style="position: absolute;" routerLink="/admin/add-usuarios" routerLinkActive="active">Agregar Usuario</button>
   </div>
+</section>
+<br><br>
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
+       class="mat-elevation-z8">
+   <!-- Resto del código -->
 
+  <!-- Position Column -->
+  <ng-container matColumnDef="usr_nom">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.usr_nom}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="usr_tel">
+    <th mat-header-cell *matHeaderCellDef > Telefono </th>
+    <td mat-cell *matCellDef="let element"> {{element.usr_tel}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="usr_email">
+    <th mat-header-cell *matHeaderCellDef> Correo </th>
+    <td mat-cell *matCellDef="let element"> {{element.usr_email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-mini-fab class="custom-btn" id="{{element.usr_id}}" (click)="editUser($event)"
+      aria-label="Example icon button with a menu icon">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn" id="{{element.usr_id}}" (click)="openDialogEliminar($event)"
+      aria-label="Example icon button with a menu icon">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>

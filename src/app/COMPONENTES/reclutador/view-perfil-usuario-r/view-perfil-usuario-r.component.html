@@ -61,6 +61,20 @@
             </mat-tab>
             <mat-tab label="Información Laboral">
               <mat-list>
+                <mat-list-item *ngFor="let cargo of usuario.cargoUsuario">
+                  <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
+                  <span matListItemLine>Cargo a postular</span>
+                  <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
+    
+                  <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
+    
+                  <div matListItemIcon>
+                    <mat-icon>forward</mat-icon>
+                  </div>
+                </mat-list-item>
+
+                <div class="mb-3 mt-1"> Experiencia laboral:</div>
+
                 <mat-list-item *ngFor="let laboral of usuario.laborales">
                   <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
       
@@ -72,7 +86,7 @@
         
                     <div *ngFor="let h of laboral.herramientas; let i = index" matListItemLine>
                       <mat-chip  class="chips" > 
-                        {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})
+                        {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})  - (Exp:{{ h.herr_usr_anos_exp }} año/s)
                       </mat-chip>
                     </div>
 
@@ -104,7 +118,11 @@
               </mat-list-item>
             </mat-list>
             </mat-tab>
+
+  
           </mat-tab-group>
+
+ 
         
            </div>
           </div>
