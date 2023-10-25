@@ -15,7 +15,7 @@ export class ExamenService {
 
   constructor(private http:HttpClient) { }
 
-  public listarCuestionarios(){
+  public listarCuestionarios():Observable<any>{
     return this.http.get(`${this.url}/examen/`);
   }
 
@@ -40,7 +40,7 @@ export class ExamenService {
   }
 
   public obtenerExamenesActivos():Observable<any>{
-    return this.http.get(`${this.url}/examen/`);
+    return this.http.get(`${this.url}/examen/usuario/`);
   }
 
   public obtenerExamenesActivosDeUnaCategoria(categoriaId:any){

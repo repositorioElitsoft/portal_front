@@ -145,7 +145,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       (data: any[]) => {
         console.log('data:', data);
         const usuarios = data.map((usuario) => ({
-          usr_nom: usuario.usr_nom,
+          usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
           usr_tel: usuario.usr_tel || '',
           usr_email: usuario.usr_email || '',
           usr_herr: usuario.herramientas

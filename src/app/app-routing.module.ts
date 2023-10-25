@@ -43,7 +43,7 @@ const routes: Routes = [
 
   {path:'restaurar-contrasena', component:PeticionRestaurarPassComponent},
 
-  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
+  {path:'', redirectTo:'user/datos_personales', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
   {path:'verificar-email', component:ValidarMailComponent},

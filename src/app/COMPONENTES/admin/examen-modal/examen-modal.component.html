@@ -29,6 +29,18 @@
           </mat-form-field>
         </div>
 
+        <div class="" formArrayName="productos">
+          <div [formGroupName]="0" class="form-group">
+            <mat-form-field appearance="fill" class="field-custom">
+              <mat-label>Producto</mat-label>
+              <mat-select formControlName="prd_id">
+                <mat-option value="">Seleccione un producto asociado</mat-option>
+                <mat-option [value]="producto.prd_id" *ngFor="let producto of productosDisponibles">{{ producto.prd_nom }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
         <div class="" formArrayName="preguntas">
           <div class="mt-5" *ngFor="let pregunta of preguntas.controls; let i = index">
             <div [formGroupName]="i">
