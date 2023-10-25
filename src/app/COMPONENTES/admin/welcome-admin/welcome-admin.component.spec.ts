@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WelcomeAdminComponent } from './welcome-admin.component';
+import { MatCardModule } from '@angular/material/card';
 
 describe('WelcomeAdminComponent', () => {
   let component: WelcomeAdminComponent;
@@ -8,7 +9,8 @@ describe('WelcomeAdminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WelcomeAdminComponent ]
+      declarations: [ WelcomeAdminComponent ],
+      imports: [MatCardModule],
     })
     .compileComponents();
 

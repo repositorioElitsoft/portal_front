@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-
 import { CategoriaService } from './categoria.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 describe('CategoriaService', () => {
@@ -12,7 +10,8 @@ describe('CategoriaService', () => {
     TestBed.configureTestingModule({
       providers: [
         CategoriaService,
-        { provide: ActivatedRoute,HttpClient , useValue: {} }, // Mock ActivatedRoute
+        // No proporciones HttpClient aquí, dejar que HttpClientTestingModule lo maneje
+        { provide: ActivatedRoute, useValue: {} }, // Mock ActivatedRoute
       ],
       imports: [HttpClientTestingModule],
     });
