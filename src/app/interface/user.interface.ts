@@ -17,6 +17,7 @@ export interface Usuario {
     usr_herr: string;
     herr_ver: string;
     herr_exp: string;
+    cvPath?: string;
 }
 
 

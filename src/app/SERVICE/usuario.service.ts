@@ -19,6 +19,10 @@ export class UsuarioService {
 
   constructor(private HttpClient: HttpClient,private route: ActivatedRoute, ) { }
 
+  public actualizarCV(formData: FormData): Observable<any>{
+    return this.HttpClient.put<FormData>(`${this.url}/usuarios/file`, formData);
+  }
+
   public registrarUsuario(registerData: Register){
     return this.HttpClient.post<any>(`${this.url}/usuarios/`, registerData)
   }
