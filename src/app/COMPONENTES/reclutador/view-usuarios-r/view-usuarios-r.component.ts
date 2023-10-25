@@ -210,19 +210,19 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
   }
     
-  getVersion(productoId: number) {
-    if (productoId) {
-      this.productoService.getVersionByProduct(productoId).subscribe(
-        (data: VersionProducto[]) => {
-          this.versiones = data;
-          // this.filter(new Event('input'));
-        },
-        (error) => {
-          console.log('Error al cargar version ', error);
-        }
-      );
+    getVersion(productoId: number) {
+      if (productoId) {
+        this.productoService.getVersionByProduct(productoId).subscribe(
+          (data: VersionProducto[]) => {
+            this.versiones = data;
+            // this.filter(new Event('input'));
+          },
+          (error) => {
+            console.log('Error al cargar version ', error);
+          }
+        );
+      }
     }
-  }
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {

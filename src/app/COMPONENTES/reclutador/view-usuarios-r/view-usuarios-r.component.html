@@ -36,8 +36,6 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="filter-slider">
-    <mat-label>Años de Experiencia: {{ selectedAniosExpRange[0] }} - {{ selectedAniosExpRange[1] }}</mat-label>
   <div class="filter-slider d-flex flex-column align-items-center">
     <mat-label>Años de Experiencia: </mat-label>
     <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">

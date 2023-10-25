@@ -11,7 +11,7 @@ import { ExamenService } from 'src/app/service/examen.service';
 export class LoadExamenComponent implements OnInit {
 
   catId:any;
-  examenes:any;
+  examenes?:any;
 
   constructor(
     private route:ActivatedRoute,
@@ -28,8 +28,15 @@ export class LoadExamenComponent implements OnInit {
         console.log("Cargando todos los exámenes");
         this.examenService.obtenerExamenesActivos().subscribe(
           (data) => {
-            this.examenes = data;
-            console.log(this.examenes);
+        
+          
+            this.examenes = data.filter((examen: any) =>{
+              console.log("la cat:", examen.categoria)
+              return examen.categoria !== null
+            })
+
+           
+            console.log("examenes: ",this.examenes);
           },
           (error) => {
             console.log(error);
@@ -40,8 +47,10 @@ export class LoadExamenComponent implements OnInit {
         console.log("Cargando un examen en específico");
         this.examenService.obtenerExamenesActivosDeUnaCategoria(this.catId).subscribe(
           (data:any) => {
+            
+
             this.examenes = data;
-            console.log(this.examenes);
+            console.log("this esamenes",data);
           },
           (error) => {
             console.log(error);

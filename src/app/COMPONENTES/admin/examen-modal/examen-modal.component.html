@@ -32,7 +32,12 @@
         <div class="" formArrayName="preguntas">
           <div class="mt-5" *ngFor="let pregunta of preguntas.controls; let i = index">
             <div [formGroupName]="i">
-              <h2>Pregunta {{ i + 1 }}:</h2>
+              <div class="d-flex justify-content-between align-items-center">
+                <h2 class="mr-3">Pregunta {{ i + 1 }}:</h2>
+                <button class="mb-3" mat-icon-button type="button" (click)="deletePregunta(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
               <div class="form-group">
                 <mat-form-field appearance="fill">
                   <mat-label>Contenido de la pregunta</mat-label>

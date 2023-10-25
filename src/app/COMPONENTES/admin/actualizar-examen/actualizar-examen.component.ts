@@ -47,21 +47,21 @@ export class ActualizarExamenComponent implements OnInit {
 
   }
  // Lógica para actualizar el examen
-  public actualizarDatos(){
-    this.examenService.actualizarExamen(this.examen).subscribe(
-      (data) => {
-        Swal.fire('Examen actualizado','El examen ha sido actualizado con éxito','success').then(
-          (e) => {
-            this.router.navigate(['/admin/view-examenes']);
-          }
-        );
-      },
-      (error) => {
-        Swal.fire('Error en el sistema','No se ha podido actualizar el examen','error');
-        console.log(error);
-      }
-    )
-  }
+  // public actualizarDatos(){
+  //   this.examenService.actualizarExamen(this.examen).subscribe(
+  //     (data) => {
+  //       Swal.fire('Examen actualizado','El examen ha sido actualizado con éxito','success').then(
+  //         (e) => {
+  //           this.router.navigate(['/admin/view-examenes']);
+  //         }
+  //       );
+  //     },
+  //     (error) => {
+  //       Swal.fire('Error en el sistema','No se ha podido actualizar el examen','error');
+  //       console.log(error);
+  //     }
+  //   )
+  // }
 
   cancelar() {
     // Redirige al usuario a la lista de exámenes

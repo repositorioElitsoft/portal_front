@@ -1,8 +1,8 @@
-/* .examen-form{
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
+mat-form-field {
+    width: 100%;
+}
+  
+input.mat-input, textarea.mat-input-element {
+font-size: 16px;
+color: #333; /* Color del texto */
+}
