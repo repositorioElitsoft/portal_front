@@ -16,6 +16,7 @@ import { NgModel } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
+import { LaboralService } from 'src/app/service/laboral.service';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -26,7 +27,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', ]; //'usr_herr', 'herr_ver', 'herr_exp'
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
@@ -35,6 +36,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
+  isIrrelevant: boolean = true;
 
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
@@ -42,6 +44,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
+  lastYears: number = 0;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -51,6 +55,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
+    private laboralService: LaboralService,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
   ) {}
@@ -85,6 +90,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     }
 
+    if (this.lastYears) {
+      filteredArray = filteredArray.filter((usuario) => {
+        return usuario.laborales?.some((experiencia) => {
+          return experiencia.herramientas?.some((herramienta: any) => {
+            const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
+            if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
+              const fechaFin = new Date(experiencia.inf_lab_fec_fin);
+              const currentYear = new Date().getFullYear();
+              return fechaFin.getFullYear() >= currentYear - this.lastYears;
+            }
+    
+            return false;
+          });
+        });
+      });
+    }
+  
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
       const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
@@ -98,6 +120,19 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     console.log('Usuarios filtrados:', filteredArray);
 
     this.dataSource.data = filteredArray;
+  }
+
+  onIrrelevanceChange() {
+    if (this.isIrrelevant) {
+      this.lastYears = 0;
+    }
+  
+    this.filterData();
+  }
+
+  onLast5YearsChange() {
+    // Llamar a filterData cuando cambie el valor de this.last5Years
+    this.filterData();
   }
 
   filterInput() {
@@ -130,7 +165,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   filterVersion() {
     if (this.selectedVersion === 0) {
-      this.selectedAniosExpRange = [1, 10]; // Restablece el rango predeterminado
+      this.selectedAniosExpRange = [1, 10];
     }
 
     this.filterData();
@@ -159,8 +194,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           herr_exp: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
             .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
-            .join(', ')
-
+            .join(', '),
+          laborales: usuario.laborales,
+          usr_id: usuario.usr_id,
+          cvPath: usuario.cvPath,
         }));
 
         this.originalDataCopy = usuarios;
@@ -268,6 +305,21 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
       }
     });
+  }
+
+  downloadCv(event: any) {
+    console.log('usuarioId', event.target?.parentElement)
+    const userId = event.target?.parentElement.id
+    this.usuarioService.downloadCv(userId).subscribe(
+      (data: Blob) => {
+        const url = window.URL.createObjectURL(data);
+        window.open(url, '_blank');
+        // console.log('data:', data);
+      },
+      (error) => {
+        
+      }
+    )
   }
 
   openUserDialog(event: any) {

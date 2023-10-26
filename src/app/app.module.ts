@@ -46,7 +46,6 @@ import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-p
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
-
 import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sidebar/sidebar.component';
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
@@ -68,8 +67,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
-
-
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs'; 
@@ -93,8 +90,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProfileAdminComponent,
     ViewCategoriasComponent,
     AddExamenComponent,
-
-
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
     SidebarRComponent,
@@ -120,7 +115,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     UserDashboardComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
-
     ViewExamenPreguntasComponent,
     AddPreguntaComponent,
     UserSidebar,

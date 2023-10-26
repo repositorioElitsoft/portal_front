@@ -31,7 +31,6 @@ export class ViewPerfilUsuarioComponent implements OnInit {
   ngOnInit(): void {
     this.email = this.route.snapshot.params['email'];
 
-    const email = this.usuario.email; // Ajusta esto para obtener el correo electrónico del usuario
     this.usuarioService.obtenerRolUsuario(this.usuario.email).subscribe(
       (rol: string) => {
         this.rol = rol;

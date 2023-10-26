@@ -1,4 +1,5 @@
 import { HerramientaData } from "./herramienta-data.interface"
+import { Laboral } from "./laboral.interface"
 import { Pais } from "./pais.interface"
 
 export interface Usuario {
@@ -18,8 +19,10 @@ export interface Usuario {
     herr_ver: string;
     herr_exp: string;
     cvPath?: string;
+    laborales?: Laboral[];
 }
 
 
 export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
 
+  
