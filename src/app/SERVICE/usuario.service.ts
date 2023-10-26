@@ -118,8 +118,16 @@ export class UsuarioService {
     }
   }
 
+  public getCv(userId: any){
+    return this.HttpClient.get(`${this.url}/usuarios/file/${userId}`);
+  }
+
   public getUserRole(){
     let user = this.getUser();
     return user.authorities[0].authority;
+  }
+
+  public downloadCv(userId: any): Observable<Blob> {
+    return this.HttpClient.get(`${this.url}/usuarios/file/${userId}`, {responseType: 'blob'});
   }
 }

@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing'; // Importa RouterModuleTestingModule
 import { RegistrarComponent } from './registrar.component';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -17,7 +16,7 @@ describe('RegistrarComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ RegistrarComponent ],
       imports:[ReactiveFormsModule, HttpClientTestingModule],
-      providers:[UsuarioService, Router, NotificationService,HttpClient],
+      providers:[UsuarioService, Router, NotificationService,HttpClient, {provide: ActivatedRoute, useClass: ActivatedRoute},],
     })
     .compileComponents();
 
