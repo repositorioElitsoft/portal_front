@@ -19,7 +19,7 @@ export interface Usuario {
     herr_ver: string;
     herr_exp: string;
     cvPath?: string;
-    laborales: Laboral[];
+    laborales?: Laboral[];
 }
 
 

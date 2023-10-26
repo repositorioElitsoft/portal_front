@@ -92,7 +92,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.laborales.some((experiencia) => {
+        return usuario.laborales?.some((experiencia) => {
           return experiencia.herramientas?.some((herramienta: any) => {
             const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
