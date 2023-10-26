@@ -3,6 +3,8 @@ import { ViewExamenPreguntasComponent } from './view-examen-preguntas.component'
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 
 
 
@@ -11,21 +13,32 @@ describe('ViewExamenPreguntasComponent', () => {
   let component: ViewExamenPreguntasComponent;
   let fixture: ComponentFixture<ViewExamenPreguntasComponent>;
 
+
   beforeEach(async () => {
-    // Crea un objeto simulado de ActivatedRoute
-    const activatedRouteStub = {
-      paramMap: of({ get: (key: string) => 'some-value' }), // Simula los parámetros de la ruta
+
+    let mockActivatedRoute = {
+      snapshot: {
+        paramMap: {
+          get:() => {
+            return 'exam_id';
+          },
+        },
+      },
     };
+
+    let mockPreguntaService = jasmine.createSpyObj(['listarPreguntasDelExamen']);
+
+
 
     await TestBed.configureTestingModule({
       declarations: [ViewExamenPreguntasComponent],
-      imports:[HttpClientModule],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteStub  },
-        // Puedes proporcionar otros servicios necesarios, como Router
+      imports:[HttpClientModule, HttpClientTestingModule, ],
+      providers: [ { provide: ActivatedRoute, useValue: mockActivatedRoute},
+        { provide: PreguntaService, useValue: mockPreguntaService}
       ],
 
-      
+
+
     }).compileComponents();
 
     fixture = TestBed.createComponent(ViewExamenPreguntasComponent);
