@@ -15,7 +15,7 @@ describe('AddPreguntaComponent', () => {
   let component: AddPreguntaComponent;
   let fixture: ComponentFixture<AddPreguntaComponent>;
 
-  let mockActivatedRoute={
+  /*let mockActivatedRoute={
     
     snapshot: {
       params:{
@@ -23,22 +23,16 @@ describe('AddPreguntaComponent', () => {
       }
     }
   };
+  */
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AddPreguntaComponent],
       imports: [
-        HttpClientTestingModule,
-        RouterModule, // Asegúrate de importar RouterModule
-        FormsModule,
-        MatProgressSpinnerModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-      ],
+        HttpClientTestingModule,RouterModule,FormsModule,MatProgressSpinnerModule,ReactiveFormsModule,RouterTestingModule, ],
       providers: [
-        PreguntaService,
-        HttpClient,
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }
+        PreguntaService, HttpClient,
+        { provide: ActivatedRoute, useValue: { snapshot: { params: { exam_id: 'exam_id',exam_titl:'exam_titl'} } } }
       ],
     })
     .compileComponents();
@@ -51,4 +45,6 @@ describe('AddPreguntaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });
