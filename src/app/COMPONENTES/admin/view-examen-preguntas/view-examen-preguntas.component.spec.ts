@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewExamenPreguntasComponent } from './view-examen-preguntas.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { PreguntaService } from 'src/app/service/pregunta.service';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -16,25 +18,11 @@ describe('ViewExamenPreguntasComponent', () => {
 
   beforeEach(async () => {
 
-    let mockActivatedRoute = {
-      snapshot: {
-        paramMap: {
-          get:() => {
-            return 'exam_id';
-          },
-        },
-      },
-    };
-
-    let mockPreguntaService = jasmine.createSpyObj(['listarPreguntasDelExamen']);
-
-
 
     await TestBed.configureTestingModule({
       declarations: [ViewExamenPreguntasComponent],
-      imports:[HttpClientModule, HttpClientTestingModule, ],
-      providers: [ { provide: ActivatedRoute, useValue: mockActivatedRoute},
-        { provide: PreguntaService, useValue: mockPreguntaService}
+      imports:[HttpClientModule, HttpClientTestingModule, RouterModule, MatCardModule, FormsModule],
+      providers: [ PreguntaService ,HttpClient, {provide: ActivatedRoute, useValue:{snapshot:{params:{exam_id:'exam_id',exam_titl:'exam_titl'}}}}
       ],
 
 
