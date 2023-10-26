@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddExamenComponent } from './add-examen.component';
+import { HttpClientModule } from '@angular/common/http';
 import { CategoriaService } from 'src/app/service/categoria.service';
-import { ExamenService } from 'src/app/service/examen.service';
-import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing'; // Importa HttpClientTestingModule
 
 describe('AddExamenComponent', () => {
   let component: AddExamenComponent;
@@ -13,11 +12,10 @@ describe('AddExamenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddExamenComponent ],
-      imports:[HttpClientTestingModule, FormsModule],
-      providers:[CategoriaService,ExamenService, Router, HttpClient],
-    })
-    .compileComponents();
+      declarations: [AddExamenComponent],
+      imports: [HttpClientModule, FormsModule, MatDialogModule, HttpClientTestingModule], // Agrega HttpClientTestingModule
+      providers: [CategoriaService],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddExamenComponent);
     component = fixture.componentInstance;
