@@ -21,7 +21,8 @@ export class ProfileRComponent implements OnInit {
     usr_email: '',
     usr_herr: '',
     herr_ver: '',
-    herr_exp: ''
+    herr_exp: '',
+    laborales: [],
   };
   router: any;
 
