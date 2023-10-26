@@ -195,7 +195,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
             .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
             .join(', '),
-          laborales: usuario.laborales
+          laborales: usuario.laborales,
+          usr_id: usuario.usr_id,
+          cvPath: usuario.cvPath,
         }));
 
         this.originalDataCopy = usuarios;
@@ -302,6 +304,21 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
       }
     });
+  }
+
+  downloadCv(event: any) {
+    console.log('usuarioId', event.target?.parentElement)
+    const userId = event.target?.parentElement.id
+    this.usuarioService.downloadCv(userId).subscribe(
+      (data: Blob) => {
+        const url = window.URL.createObjectURL(data);
+        window.open(url, '_blank');
+        // console.log('data:', data);
+      },
+      (error) => {
+        
+      }
+    )
   }
 
   openUserDialog(event: any) {
