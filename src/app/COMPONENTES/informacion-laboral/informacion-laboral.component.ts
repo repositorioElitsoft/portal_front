@@ -34,10 +34,10 @@ export class InformacionLaboralComponent implements OnInit {
   herrIdList: number[] = [];
 
 
-  constructor(private usuarioService: UsuarioService, 
+  constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
-    private herramientaService:HerramientasService, 
-    private laboralService: LaboralService, 
+    private herramientaService:HerramientasService,
+    private laboralService: LaboralService,
     private route: ActivatedRoute, private router: Router) {
       this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
@@ -45,7 +45,7 @@ export class InformacionLaboralComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerLaboralesGuardados();
-   
+
   }
 
   private buildForm(){
@@ -112,37 +112,37 @@ export class InformacionLaboralComponent implements OnInit {
         this.form.get(herr.herr_usr_id.toString())?.patchValue(true);
       }
     })
-    
-    
-  
-    
+
+
+
+
 
     this.creationMode = !this.creationMode;
   }
 
   generateHerrForm(){
 
-    
+
     this.herramientaService.getHerramientasByUserId().subscribe({
       next:(data)=>{
-        
+
         console.log("recieved data herramientas: ",data)
         this.herramientasDisponibles = data;
-   
+
         this.herramientasDisponibles.forEach((herramienta)=>{
 
           let wasCheckedAlready = false
 
-      
-          
+
+
           const newControl = new FormControl(wasCheckedAlready);
           this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-  
+
           this.herrIdList.push(herramienta.herr_usr_id)
-       
+
 
         })
-     
+
         this.checkboxFormCreated = true;
       },
       error:(err)=>{
@@ -163,7 +163,7 @@ export class InformacionLaboralComponent implements OnInit {
       inf_lab_fec_fin: "",
     });
 
-    
+
     this.herrIdList.forEach(herrId =>{
       this.form.get(herrId.toString())?.patchValue(false);
     })
@@ -184,7 +184,7 @@ export class InformacionLaboralComponent implements OnInit {
 
     let herramientasFinal: HerramientaData[] = [];
     this.herrIdList.forEach(id =>{
-      
+
 
       let herra: HerramientaData = {
           herr_usr_id: id,
@@ -208,7 +208,7 @@ export class InformacionLaboralComponent implements OnInit {
       if (this.form.get(id.toString())?.value == true) {
         herramientasFinal.push(herra);
       }
-      
+
     })
 
     laboralNueva.herramientas = herramientasFinal;
