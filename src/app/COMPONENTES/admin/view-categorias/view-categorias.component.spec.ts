@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ViewCategoriasComponent } from './view-categorias.component';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { HttpClient } from '@angular/common/http';
@@ -21,6 +20,7 @@ describe('ViewCategoriasComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

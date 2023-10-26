@@ -1,65 +1,26 @@
-/* body {
-  background-color: white;
-  font-family: Arial, sans-serif;
+
+/* Estilos para el contenedor de filtros */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 20px 0;
 }
 
-.admin-panel-text {
-  font-size: 24px;
-  font-weight: bold;
-  color: #F76805;
+/* Estilos para los campos de filtro */
+.filter-input, .filter-select {
+  margin-right: 20px;
+  flex: 1;
 }
 
-.container {
-  background-color: white;
-  padding: 20px;
-  border: 2px solid orange;
-  margin: 20px;
-}
-
-h1 {
-  font-size: 28px;
-  color: black;
-}
-
-table {
+/* Estilos para el deslizador de años de experiencia */
+.filter-slider {
+  margin-top: 20px;
   width: 100%;
-  border-collapse: collapse;
-} */
-
-/* th, td {
-  border: 1px solid orange;
-  /* padding: 10px; */
-  /* text-align: left; 
-} */
-
-/* th {
-  background-color: orange;
-  color: white;
 }
 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.btn {
-  background-color: orange;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.btn-primary {
-  background-color: orange;
-}
-
-.btn-danger {
-  background-color: red;
-} */
-
-.stats-btn{
-  background-color: orange!important;
-  color: white!important;
-  margin-bottom: 2vh;
+.small-spinner {
+  width: 100px; /* Ajusta el ancho según tus preferencias */
+  height: 80px; /* Ajusta la altura según tus preferencias */
+  font-size: 12px; /* Ajusta el tamaño de fuente según tus preferencias */
 }

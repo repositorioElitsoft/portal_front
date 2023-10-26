@@ -15,6 +15,13 @@ describe('StartComponent', () => {
   let fixture: ComponentFixture<StartComponent>;
 
   beforeEach(async () => {
+    // Crea un objeto ActivatedRoute mock
+    const activatedRoute = {
+      snapshot: {
+        paramMap: new Map<string, string>(), // Puedes configurar los parámetros de la ruta si es necesario
+      },
+    };
+
     await TestBed.configureTestingModule({
       declarations: [ StartComponent ],
       imports:[HttpClientTestingModule,MatCardModule,MatProgressSpinnerModule, RouterModule,ReactiveFormsModule,RouterTestingModule.withRoutes([])],

@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { Producto } from '../interface/producto.interface';
 import { VersionProducto } from '../interface/version.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductoService {
 
-  //Implementamos nuestro servicio
-  url = "http://localhost:8080";
+
+  readonly url = `${environment.URL_HOST}`
 
   constructor(private http: HttpClient) { }
 

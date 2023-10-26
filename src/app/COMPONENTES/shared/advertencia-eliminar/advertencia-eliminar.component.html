@@ -1,0 +1,18 @@
+<mat-card class="example-card">
+    <mat-card-header>
+
+      <mat-card-title>¿Seguro que quiere eliminar este elemento?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>No se podrá deshacer</p>
+
+      <mat-divider></mat-divider>
+      <mat-checkbox [(ngModel)]="accepted" > Sí, quiero eliminar</mat-checkbox>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="warn" [disabled]="!accepted" [mat-dialog-close]="true">Eliminar</button>
+      <button mat-button  [mat-dialog-close]="false">Cancelar</button>
+    </mat-card-actions>
+
+</mat-card>
+  

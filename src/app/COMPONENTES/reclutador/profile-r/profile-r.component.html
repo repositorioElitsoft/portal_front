@@ -1,13 +1,74 @@
-<p class="admin-panel-text">Panel de Reclutador</p>
-<div class="profile-container">
-<div class="profile-details">
-    <h2>Detalles del perfil</h2>
-    <p><strong>Nombre:</strong> {{ perfilr.usr_nom }}</p>
-    <p><strong>Apellido Paterno:</strong> {{ perfilr.usr_ap_pat }}</p>  
-    <p><strong>Apellido Materno:</strong> {{ perfilr.usr_ap_mat }}</p>
-    <p><strong>Email:</strong> {{ perfilr.email }}</p>
-   
-    <!-- ... Otros datos del perfil ... -->
-</div>
-</div>
-  
+<br><br><br>
+<mat-card class="container-datos-personales">
+<h4 class="perfilr">Detalles del perfil</h4>
+    <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
+
+    <div class="div-inputs"  *ngIf="isLoaded">
+
+
+
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
+
+        <div class="row mb-3">
+          <label for="inputNombres" class="col-sm-2 col-form-label">Nombres:</label>
+          <div class="col-sm-10">
+            <input type="nombres" class="form-control" id="inputNombres" formControlName="usr_nom" name="inputNombres"
+            [ngClass]="{'is-invalid': form.get('usr_nom')?.invalid && form.get('usr_nom')?.touched}" >
+            <div *ngIf="form.get('usr_nom')?.hasError('required') && form.get('usr_nom')?.touched" class="invalid-feedback">
+              Debe ingresar nombre
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputApellidop" class="col-sm-2 col-form-label">Apellido Paterno:</label>
+          <div class="col-sm-10">
+            <input type="apellidop" class="form-control" id="inputApellidop" formControlName="usr_ap_pat" name="inputApellidop"
+            [ngClass]="{'is-invalid': form.get('usr_ap_pat')?.invalid && form.get('usr_ap_pat')?.touched}">
+            <div *ngIf="form.get('usr_ap_pat')?.hasError('required') && form.get('usr_ap_pat')?.touched" class="invalid-feedback">
+              Debe ingresar apellido
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputApellidom" class="col-sm-2 col-form-label">Apellido Materno:</label>
+          <div class="col-sm-10">
+            <input type="apellidom" class="form-control" id="inputApellidom" formControlName="usr_ap_mat" name="inputApellidom"
+            [ngClass]="{'is-invalid': form.get('usr_ap_mat')?.invalid && form.get('usr_ap_mat')?.touched}">
+            
+            <div *ngIf="form.get('usr_ap_mat')?.hasError('required') && form.get('usr_ap_mat')?.touched" class="invalid-feedback">
+              Debe ingresar apellido
+            </div>
+          </div>
+        </div>
+      
+        <div class="row mb-3">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control no-mouse-action" id="email" formControlName="usr_email" name="email" readonly>
+
+     
+          </div>
+        </div>
+
+        <button mat-raised-button type="button" class="btn btn-primary"
+        (click)="toggleEditable()" *ngIf="!editable"
+        style="background-color: #F76805; border: 0; color: #ffff;"
+        onmouseover="this.style.backgroundColor='#ffff'; this.style.color='#F76805';"
+        onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">
+        <mat-icon>edit</mat-icon>Editar
+      </button>
+      
+        
+        <button  mat-raised-button type="submit" class="btn btn-primary" *ngIf="editable"style="background-color: #F76805; border: 0; color: #ffff;"
+        onmouseover="this.style.backgroundColor='#ffff'; this.style.color='#F76805';"
+        onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">Guardar</button>
+        
+
+        
+      </form>
+      
+    </div>
+
+  </mat-card>
+
+

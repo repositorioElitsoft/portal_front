@@ -19,44 +19,10 @@ body {
   padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
 }
 
-/* Estilos para los elementos de categoría */
-.categoria-item {
-  background-color: #fff; /* Color de fondo blanco */
-  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
-  width: 80%; /* Ajustar el ancho según sea necesario */
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  margin-bottom: 20px; /* Agrega margen inferior para separar las categorías */
-  color: #333; /* Color de texto principal */
-}
-
-/* Estilos para el título de categoría */
-.categoria-item h2 {
-  font-size: 24px;
-  font-weight: bold;
-  color: #F76805; /* Color naranja */
-}
-
-/* Estilos para los botones */
-.btn-primary {
-  background-color: #F76805; /* Color naranja */
-  border-color: #F76805; /* Color naranja */
-  color: #fff; /* Color de texto blanco */
-  font-weight: bold;
-}
-
-.btn-primary:hover {
-  background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
-  border-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
-}
-
-.btn-outline-primary {
-  color: #F76805; /* Color naranja */
-  border-color: #F76805; /* Color naranja */
-  font-weight: bold;
-}
-
-.btn-outline-primary:hover {
-  background-color: #F76805; /* Color naranja */
-  color: #fff; /* Color de texto blanco */
+.custom-btn{
+  background-color: orange!important;
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+  color: white!important;
+  margin-left: 2vw;
 }

@@ -17,8 +17,8 @@ let vecesEnviado = 0;
 })
 export class StartComponent implements OnInit {
 
-  examenId:any;
-  preguntas:any;
+  examenId :number=0;
+  preguntas?:any;
  
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
@@ -30,7 +30,7 @@ export class StartComponent implements OnInit {
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-  
+
 
 
 
@@ -44,7 +44,7 @@ export class StartComponent implements OnInit {
 
   ngOnInit(): void {
     this.prevenirElBotonDeRetroceso();
-    this.examenId = this.route.snapshot.params['examenId'];
+    this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
 
@@ -62,7 +62,7 @@ export class StartComponent implements OnInit {
         console.log(err)
       }
     })
-  
+
 
     this.preguntaService.listarPreguntasDelExamenParaLaPrueba(this.examenId).subscribe(
       (data:any) => {
@@ -134,6 +134,7 @@ export class StartComponent implements OnInit {
       icon:'info'
     }).then((e) => {
       if(e.isConfirmed){
+
         this.evaluarExamen();
 
         const resultados = {
@@ -191,12 +192,18 @@ export class StartComponent implements OnInit {
     ) */
 
     this.esEnviado = true;
-
+      
+    console.log("tis preguntas", this.preguntas)
     this.preguntas.forEach((p:any) => {
+      console.log("The p es", p)
+
       if(p.respuestaDada == p.respuesta){
         this.respuestasCorrectas ++;
+        console.log("resp corretas:",this.respuestasCorrectas)
         let puntos = this.examen.puntosMaximos/this.preguntas.length;
+        console.log("this.examen.puntosMaximos: ",this.examen.puntosMaximos)
         this.puntosConseguidos += puntos;
+        console.log("conseguidos: ",this.puntosConseguidos)
       }
 
       if(p.respuestaDada.trim() != ''){

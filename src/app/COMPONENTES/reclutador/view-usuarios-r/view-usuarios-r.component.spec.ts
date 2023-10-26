@@ -11,10 +11,10 @@ import {  MatIconModule } from '@angular/material/icon';
 import {  MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-class ActivatedRouteStub{
-params=of({/* */});
-}0
+
 describe('ViewUsuariosRComponent', () => {
   let component: ViewUsuariosRComponent;
   let fixture: ComponentFixture<ViewUsuariosRComponent>;
@@ -22,8 +22,8 @@ describe('ViewUsuariosRComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ViewUsuariosRComponent ],
-      imports:[HttpClientTestingModule,MatIconModule,MatPaginatorModule,MatTableModule, BrowserAnimationsModule],
-      providers:[UsuarioService, LiveAnnouncer, Router, HttpClient,Animation,{provide: ActivatedRoute, useClass: ActivatedRouteStub}]
+      imports:[HttpClientTestingModule,MatIconModule,MatPaginatorModule,MatTableModule, BrowserAnimationsModule,MatDialogModule,MatSnackBar],
+      providers:[UsuarioService, LiveAnnouncer, Router, HttpClient,Animation,{provide: ActivatedRoute, useValue:"/**/"}]
     })
     .compileComponents();
 

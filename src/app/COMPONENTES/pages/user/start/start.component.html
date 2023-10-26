@@ -1,5 +1,5 @@
 <div id="exam-page" #examPage>
-<div class="bootstrap-wrapper" *ngIf = "!esEnviado">
+<div *ngIf = "!esEnviado">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-2">
@@ -14,18 +14,19 @@
               </ul>
             </mat-card-content>
           </mat-card>
+          <br>
         </div>
         <div class="col-md-7">
           <!--Preguntas-->
           <ng-container *ngIf = "preguntas">
             <h1 class="mt20">
-              En curso <b>{{ examen.titulo }}</b>
+              En curso <b>{{ examen?.titulo }}</b>
             </h1>
           </ng-container>
-  
+
           <mat-card *ngFor = "let p of preguntas;let i = index">
             <mat-card-content>
-              <p><b>{{ i+1 }}) </b> <span [innerHTML] = "p.contenido"></span></p>
+              <p><b>{{ i+1 }} </b> <span [innerHTML] = "p.contenido"></span></p>
               <mat-divider></mat-divider>
               <div class="row mt20">
                 <div class="col-md-8 mt10">
@@ -44,13 +45,13 @@
             </mat-card-content>
           </mat-card>
   
-          <div class="container text-center mt20 mb20">
-            <button (click) = "enviarCuestionario()" mat-raised-button color="primary">Enviar cuestionario</button>
+          <div class="container text-center mt-4 mb-4">
+            <button (click) = "enviarCuestionario()" mat-raised-button class="botonprimario">Enviar cuestionario</button>
           </div>
         </div>
         <div class="col-md-3">
           <!--Progreso-->
-          <mat-card style ="margin-top:70px;">
+          <mat-card class ="mt-5 mb-5">
             <mat-card-header>
               <mat-card-title>
                 Temporizador
@@ -71,28 +72,28 @@
 </div>
 
 
-  <div class="bootstrap-wrapper" *ngIf = "esEnviado">
+  <div class="bootstrap-wrapper puntaje" *ngIf = "esEnviado">
     <div class="container mt20">
       <div class="col-md-6 offset-md-3">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>
-              Resultado de la prueba <b>{{ examen.titulo }}</b>
+            <mat-card-title class="text-center">
+              <p>Resultado de la prueba <b>{{ examen.titulo }}</b></p> 
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="text-center">
             <h1>Has conseguido un total de {{ puntosConseguidos }} puntos de {{examen.puntosMaximos}}</h1>
             <h1>Respuestas correctas : {{ respuestasCorrectas }} <!--de {{ preguntasTotales }}--></h1>
             <h1>Has realizado el exámen {{ vecesEnviado }} veces </h1>
-          
-            
+
+
           </mat-card-content>
           <mat-card-actions class="text-center">
-            <button (click) = "imprimirPagina()" mat-raised-button color="primary">Imprimir</button>
-            <button mat-raised-button color="accent" [routerLink] = "'/user-dashboard/0'">Inicio</button>
+            <button (click) = "imprimirPagina()"   mat-raised-button class="botonprimario m-2">Imprimir</button>
+            <button button  mat-raised-button class="botonprimario m-2" [routerLink] = "'/user-dashboard/0'">Inicio</button>
           </mat-card-actions>
         </mat-card>
       </div>
     </div>
   </div>
-  
+

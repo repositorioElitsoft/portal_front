@@ -1,14 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CargosElitsoft } from '../interface/cargos-elitsoft.interface'
+import { CargosElitsoft } from '../interface/cargos-elitsoft.interface';
+import { environment } from 'src/environments/environment';
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CargosElitsoftService {
 
-  url = "http://localhost:8080/cargoselitsoft/"
+  readonly url = `${environment.URL_HOST}/cargoselitsoft/`
 
   constructor(private http: HttpClient) { }
 

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ExamenService } from 'src/app/service/examen.service';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import Swal from 'sweetalert2';
+import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
 
 @Component({
   selector: 'app-add-examen',
@@ -28,8 +30,8 @@ export class AddExamenComponent implements OnInit {
 
   constructor(
     private categoriaService:CategoriaService,
-
     private examenService:ExamenService,
+    private dialog: MatDialog,
     private router:Router) { }
 
   ngOnInit(): void {
@@ -50,8 +52,6 @@ export class AddExamenComponent implements OnInit {
       alert('El título es requerido');
       return;
     }
-
-
 
     this.examenService.agregarExamen(this.examenData).subscribe(
       (data) => {
@@ -75,6 +75,17 @@ export class AddExamenComponent implements OnInit {
         Swal.fire('Error','Error al guardar el examen','error');
       }
     )
+  }
+
+  openExamenModal() {
+    const dialogRef = this.dialog.open(ExamenModalComponent, {
+      width: '800px', 
+      height: '700px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // Esta función se ejecutará cuando se cierre el modal, puedes manejar los resultados aquí si es necesario.
+    });
   }
 
   cancelar() {

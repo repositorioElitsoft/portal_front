@@ -1,0 +1,63 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+  <mat-toolbar class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <div class="elitsoft">
+      <img src="https://static.wixstatic.com/media/5a9998_6a14b7ced59447ae8f4bceee9e8d1478~mv2.png/v1/fill/w_182,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/elitesoft%201.png" alt="Elitesoft Logo">
+
+    </div>  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list>
+        <ul class="list-unstyled components">
+          <li>
+              <a routerLink="/datos_personales" routerLinkActive="active">
+                <mat-icon mat-list-icon class="custom-icon">account_circle</mat-icon>  Perfil
+              </a>
+          </li>
+        <li>
+          <a routerLink="/user-dashboard/0"routerLinkActive="active">
+            <mat-icon mat-list-icon class="custom-icon">assignment</mat-icon>  Exámenes
+          </a>
+        </li>
+        <mat-divider></mat-divider>
+        <li>
+          <a [routerLink]="'/user-dashboard/'+c.categoriaId" mat-list-item *ngFor = "let c of categorias">
+              <mat-icon mat-list-icon class="custom-icon2">quiz</mat-icon> {{ c.titulo }}
+          </a>
+        </li>
+              <mat-divider></mat-divider>
+        <li style="cursor: pointer;">
+          
+          <a [matMenuTriggerFor]="afterMenu"><mat-icon mat-list-icon class="custom-icon">list</mat-icon> Submenú</a>
+          <mat-menu #afterMenu="matMenu" xPosition="after">
+            <a href="https://www.elitsoft.cl/" mat-menu-item>Inicio</a>
+          <a href="https://www.elitsoft.cl/nosotros" mat-menu-item>Nosotros</a>
+          <a href="https://www.elitsoft.cl/servicios" mat-menu-item>Servicios</a>
+          <a href="https://www.elitsoft.cl/tecnologías" mat-menu-item>Tecnologías</a>
+          <a href="https://www.elitsoft.cl/contacto" mat-menu-item>Contacto</a>
+          <a href="#" mat-menu-item>Trabaja con Nosotros</a>
+          <a href="https://www.elitsoft.cl/blog" mat-menu-item>Blog</a>
+
+          </mat-menu>
+
+          </li>
+        
+     
+        <br><br><br><br><br><br><br>
+        
+        
+        <li class="nav-item">
+          <a (click)="cerrarSesion()" class="nav-link" style="cursor: pointer;">
+            <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon>  Cerrar Sesión
+          </a>
+        </li>
+   
+      </ul>
+      </mat-nav-list> 
+    </mat-sidenav>
+
+  </mat-sidenav-container>
+</div>

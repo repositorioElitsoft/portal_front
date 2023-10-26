@@ -10,16 +10,12 @@ import { IniciarSesionComponent } from './COMPONENTES/iniciar-sesion/iniciar-ses
 import { WelcomeAdminComponent } from './COMPONENTES/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './COMPONENTES/admin/dashboard/dashboard.component';
 import { ProfileAdminComponent } from './COMPONENTES/admin/profile-admin/profile-admin.component';
-import { SidebarAdminComponent } from './COMPONENTES/admin/sidebar-admin/sidebar-admin.component';
 import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
 import { AddExamenComponent } from './COMPONENTES/admin/add-examen/add-examen.component';
-import { ActualizarCategoriaComponent } from './COMPONENTES/admin/actualizar-categoria/actualizar-categoria.component';
-import { ActualizarExamenComponent } from './COMPONENTES/admin/actualizar-examen/actualizar-examen.component';
 import { AddPreguntaComponent } from './COMPONENTES/admin/add-pregunta/add-pregunta.component';
 import { ViewExamenPreguntasComponent } from './COMPONENTES/admin/view-examen-preguntas/view-examen-preguntas.component';
-import { ActualizarPreguntaComponent } from './COMPONENTES/admin/actualizar-pregunta/actualizar-pregunta.component';
 import { ViewUsuariosComponent } from './COMPONENTES/admin/view-usuarios/view-usuarios.component';
 import { ViewPerfilUsuarioComponent } from './COMPONENTES/admin/view-perfil-usuario/view-perfil-usuario.component';
 import { SidebarRComponent } from './COMPONENTES/reclutador/sidebar-r/sidebar-r.component';
@@ -50,14 +46,10 @@ import { RestaurarPassComponent } from './COMPONENTES/restaurar-pass/restaurar-p
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/user-dashboard.component';
-import { ProfileComponent } from './COMPONENTES/pages/profile/profile.component';
-import { SidebarComponent } from './COMPONENTES/pages/admin/sidebar/sidebar.component';
-import { WelcomeComponent } from './COMPONENTES/pages/admin/welcome/welcome.component';
 import { SidebarComponent as UserSidebar } from './COMPONENTES/pages/user/sidebar/sidebar.component';
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { UserProfileComponent } from './COMPONENTES/pages/user-profile/user-profile.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
@@ -68,9 +60,25 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { RouterOutlet } from '@angular/router';
+import {MatMenuModule} from '@angular/material/menu';
+import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs'; 
+import {MatChipsModule} from '@angular/material/chips'; 
+import {MatExpansionModule} from '@angular/material/expansion'; 
+import {MatTooltipModule} from '@angular/material/tooltip'; 
+import { MatSliderModule } from '@angular/material/slider';
+import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
+import {TextFieldModule} from '@angular/cdk/text-field';
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
+import { CaracterOnlyDirective } from './directives/caracter-only-directive';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -80,16 +88,8 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     WelcomeAdminComponent,
     DashboardComponent,
     ProfileAdminComponent,
-    SidebarAdminComponent,
     ViewCategoriasComponent,
-    AddCategoriaComponent,
-    ViewExamenesComponent,
     AddExamenComponent,
-    ActualizarCategoriaComponent,
-    ActualizarExamenComponent,
-    AddPreguntaComponent,
-    ViewExamenPreguntasComponent,
-    ActualizarPreguntaComponent,
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
     SidebarRComponent,
@@ -97,7 +97,7 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     WelcomeReclutadorComponent,
     ProfileRComponent,
     ViewUsuariosRComponent,
-    ViewPerfilUsuarioRComponent,    
+    ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
@@ -108,32 +108,30 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     AppSidebar2Component,
     AppFooterComponent,
     SidebarUserDeskComponent,
-    SidebarUserComponent,
     TableHerramientasComponent,
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,
-    DashboardComponent,
     UserDashboardComponent,
-    ProfileComponent,
-    SidebarComponent,
-    WelcomeComponent,
-    ViewCategoriasComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
-    AddExamenComponent,
-    ActualizarExamenComponent,
     ViewExamenPreguntasComponent,
     AddPreguntaComponent,
-    ActualizarPreguntaComponent,
     UserSidebar,
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
-    UserProfileComponent,
+    SidebarUserComponent,
+    SidebarRResponsiveComponent, 
+    ExamenModalComponent,
+    AddUsuariosComponent,
     EstadisticasComponent,
+    AdvertenciaEliminarComponent,
+    CaracterOnlyDirective,
+
   ],
   imports: [
+    MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -142,22 +140,35 @@ import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/est
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
-    FormsModule,
     MatTableModule,
+    MatIconModule,
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatMenuModule,
+    MatMenuModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule,
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatSidenavModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatSortModule,
     HttpClientModule,
+    MatDialogModule,
+    MatTabsModule,
+    MatSliderModule,
+    RouterOutlet,
+    MatChipsModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'
     }),

@@ -10,6 +10,7 @@ import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
 import { PaisService } from 'src/app/service/pais.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-datos-personales',
@@ -19,8 +20,12 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
 
+  currentResumeName?: string = "";
+
+
   countries: Pais[] = [];
   isLoaded: boolean = true
+  isUploadingFile: boolean = false
 
   usuarioGuardado:Usuario={
     usr_rut: '' ,
@@ -36,7 +41,10 @@ export class DatosPersonalesComponent implements OnInit {
       pais_nom: ''
     },
     pais_nom: '',
-    usr_herr: ''
+    usr_herr: '',
+    herr_ver: '',
+    herr_exp: '',
+    laborales: []
   };
 
   constructor(
@@ -45,6 +53,7 @@ export class DatosPersonalesComponent implements OnInit {
     private router: Router,
     private usuarioService: UsuarioService,
     private paisService: PaisService,
+    private snackBar: MatSnackBar,
     private toastr:ToastrService,
     private notification: NotificationService,
     private route: ActivatedRoute)
@@ -65,7 +74,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+
 
     this.paisService.obtenerPaises().subscribe(
       (data: any[]) => {
@@ -84,11 +93,55 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
 
+
+  onFileSelected() {
+    const inputNode: any = document.querySelector('#file');
+  
+    if (typeof (FileReader) !== 'undefined') {
+      const reader = new FileReader();
+  
+      reader.onload = (e: any) => {
+        const srcResult = e.target.result;
+        console.log("result: ",srcResult)
+      };
+  
+      reader.readAsArrayBuffer(inputNode.files[0]);
+
+      const formData: FormData = new FormData();
+      formData.append('file', inputNode.files[0]);
+
+
+      
+      this.isUploadingFile = true
+      this.usuarioService.actualizarCV(formData).subscribe({
+        next: (response) =>{
+          console.log("Subido con éxito:",  inputNode.files[0].fileName,response)
+          this.isUploadingFile = false
+          this.currentResumeName = inputNode.files[0].name;
+          
+        },
+        error: (err)=>{
+          console.log("Error al actualizar CV:", err)
+          this.snackBar.open("Error al actualizar CV", "Ok",{
+            duration: 3000,
+          })
+          this.isUploadingFile = false
+        }
+      });
+      
+      
+    }
+  }
+
   ObtenerUsuarioGuardado(){
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) =>{
         this.usuarioGuardado = data;
         console.log(this.usuarioGuardado)
+        this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
+
+    
+
         this.form.patchValue({
 
           usr_rut: this.usuarioGuardado.usr_rut,
@@ -181,18 +234,15 @@ export class DatosPersonalesComponent implements OnInit {
 }
 
 function rutValido(control: AbstractControl): ValidationErrors | null {
+
+  if(!control.value.includes("-")){
+    return {badRut : true}
+  }
+
   if (control.value && !validarRut(control.value)) {
     // Validation failed, return an error object
     return { badRut: true };
   }
-
-  /*
-  if (control.value && /\s/.test(control.value)) {
-    // Validation failed, return an error object
-    return { noSpace: true };
-  }*/
-
-  // Validation passed, return null
   return null;
 }
 

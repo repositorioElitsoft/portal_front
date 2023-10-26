@@ -1,27 +1,38 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ViewPerfilUsuarioRComponent } from './view-perfil-usuario-r.component';
-import { HttpClient } from '@angular/common/http';
-import { UsuarioService } from 'src/app/service/usuario.service';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
-class ActivatedRouteStub{
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importa BrowserAnimationsModule
 
-  params= of({/* */});
+class ActivatedRouteStub {
+  snapshot = {
+    paramMap: {
+      get: (_param: string) => ['email'],
+    },
+  };
 }
+
 describe('ViewPerfilUsuarioRComponent', () => {
   let component: ViewPerfilUsuarioRComponent;
   let fixture: ComponentFixture<ViewPerfilUsuarioRComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViewPerfilUsuarioRComponent ],
-      imports:[HttpClientTestingModule, RouterModule],
-      providers:[HttpClient,UsuarioService, Router, {provide: ActivatedRoute, useClass:ActivatedRouteStub}],
-
-    })
-    .compileComponents();
+      declarations: [ViewPerfilUsuarioRComponent],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useClass: ActivatedRouteStub,
+        },
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
+      imports: [HttpClientTestingModule, MatDialogModule, MatIconModule, MatTabsModule, MatListModule, BrowserAnimationsModule], // Agrega BrowserAnimationsModule aquí
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ViewPerfilUsuarioRComponent);
     component = fixture.componentInstance;

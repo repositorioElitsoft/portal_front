@@ -1,62 +1,31 @@
-body {
-    background-color: white;
-    font-family: Arial, sans-serif;
-  }
+/* Estilos para los botones */
+.btn-primary {
+  background-color: #F76805; /* Color naranja */
+  border-color: #F76805; /* Color naranja */
+  color: #fff; /* Color de texto blanco */
+  font-weight: bold;
+}
 
-  .admin-panel-text {
-    font-size: 24px;
-    font-weight: bold;
-    color: black;
-    border: 2px solid orange;
-    padding: 10px;
-    margin: 20px;
-  }
+.btn-primary:hover {
+  background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+  border-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+}
 
-  .container {
-    background-color: white;
-    padding: 20px;
-    border: 2px solid orange;
-    margin: 20px;
-  }
+.btn-outline-primary {
+  color: #F76805; /* Color naranja */
+  border-color: #F76805; /* Color naranja */
+  font-weight: bold;
+}
 
-  h1 {
-    font-size: 28px;
-    color: black;
-  }
+.btn-outline-primary:hover {
+  background-color: #F76805; /* Color naranja */
+  color: #fff; /* Color de texto blanco */
+}
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th, td {
-    border: 1px solid orange;
-    padding: 10px;
-    text-align: left;
-  }
-
-  th {
-    background-color: orange;
-    color: white;
-  }
-
-  tr:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .btn {
-    background-color: orange;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-right: 5px;
-  }
-
-  .btn-primary {
-    background-color: orange;
-  }
-
-  .btn-danger {
-    background-color: red;
-  }
+.custom-btn{
+  background-color: orange!important;
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+  color: white!important;
+  margin-left: 2vw;
+}

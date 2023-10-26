@@ -11,19 +11,26 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
-  <br><br><br>
-  <div class="container-datos-personales">
+ 
 
+  <mat-card class="container-datos-personales">
+    <h4 class="perfilr">Datos Personales</h4>
     <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
 
     <div class="div-inputs"  *ngIf="isLoaded">
+
+
 
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
         <div class="row mb-3">
           <label for="inputRut" class="col-sm-2 col-form-label">RUT:</label>
           <div class="col-sm-10">
-            <input type="rut" class="form-control" id="inputRut" formControlName="usr_rut" name="inputRut"
+            
+            <input type="rut" 
+            matTooltip="Rut sin puntos y con guion ej. 111111-1"
+            matTooltipPosition="after"
+            class="form-control" id="inputRut" formControlName="usr_rut" name="inputRut"
               [ngClass]="{'is-invalid': form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched}" >
               <div *ngIf="form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched" class="invalid-feedback">
                 Rut no es válido
@@ -64,12 +71,29 @@
         <div class="row mb-3">
           <label for="inputTelefono" class="col-sm-2 col-form-label">Teléfono:</label>
           <div class="col-sm-10">
-            <input appNumericOnly type="text" class="form-control" id="inputTelefono" formControlName="usr_tel" name="inputTelefono"
-            [ngClass]="{'is-invalid': form.get('usr_tel')?.invalid && form.get('usr_tel')?.touched}">
+
+            <div class="d-flex" >
+              <select class="form-control select-tel" >
+                <option value="55">🇧🇷 +55</option>
+                <option value="56" selected>🇨🇱 +56</option>
+                <option value="57">🇨🇴 +57</option>
+                <option value="58">🇻🇪 +58</option>
+                <option value="506">🇨🇷 +506</option>
+                <option value="591">🇧🇴 +591</option>
+                
+              </select>
+
+
+              <input appNumericOnly type="text" class="form-control select-tel-input" id="inputTelefon" formControlName="usr_tel" name="inputTelefono"
+              [ngClass]="{'is-invalid': form.get('usr_tel')?.invalid && form.get('usr_tel')?.touched}">
+            </div>
+    
             <br />
             <div *ngIf="form.get('usr_tel')?.hasError('required') && form.get('usr_tel')?.touched" class="invalid-feedback">
               Debe ingresar número de teléfono
             </div>
+            
+         
           </div>
         </div>
         <div class="row mb-3">
@@ -81,23 +105,56 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputLinkedin" class="col-sm-2 col-form-label">URL Linkedin:</label>
+          <label 
+
+          for="inputLinkedin" class="col-sm-2 col-form-label">URL Linkedin:</label>
           <div class="col-sm-10">
-            <input type="linkedin" class="form-control" id="inputLinkedin" formControlName="usr_url_link" name="inputLinkedin">
+            <input type="linkedin" 
+            matTooltip="Opcional"
+            matTooltipPosition="after"
+            class="form-control" id="inputLinkedin" formControlName="usr_url_link" name="inputLinkedin">
           </div>
         </div>
 
-      
+
+        <label 
+
+        for="file" class="col-sm-2 col-form-label">Subir CV:</label>
+
+        <button type="button" class="cv-btn" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
+          <div *ngIf="!isUploadingFile">
+            <div *ngIf="currentResumeName">Cargar nuevo CV </div>
+            <div *ngIf="!currentResumeName"> Sube tu CV </div>
+          </div>
+          <div *ngIf="isUploadingFile"> Cargando CV...</div>
+        </button>
+   
+
+
+        <mat-icon *ngIf="currentResumeName" class="bg-green">check_circle</mat-icon>
+
+        <input name="file" hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+
+          
+        <br/>
+        <label class="my-2" for="file" *ngIf="currentResumeName">
+          CV Actual: {{currentResumeName }}
+        </label>
         
-        <div class="div-form d-grid ">
-          <button  [disabled]="!form.valid" type="submit" class="btn btn-primary btn-guardar"> Siguiente</button>
+        
+        <div class="div-form d-grid my-2">
+
+          <button  mat-raised-button class="botonprimario m-2"  [disabled]="!form.valid" type="submit" >Siguiente</button>
+
+          
         </div>
 
         
       </form>
+      
     </div>
 
-  </div>
+  </mat-card>
 
 
 

@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { Examen } from '../interface/examen.interface';
 
 
 @Injectable({
@@ -7,39 +10,40 @@ import { Injectable } from '@angular/core';
 })
 export class ExamenService {
 
-  baserUrl = "http://localhost:8080"
+
+  readonly url = `${environment.URL_HOST}`
 
   constructor(private http:HttpClient) { }
 
-  public listarCuestionarios(){
-    return this.http.get(`${this.baserUrl}/examen/`);
+  public listarCuestionarios():Observable<any>{
+    return this.http.get(`${this.url}/examen/`);
   }
 
   public agregarExamen(examen:any){
-    return this.http.post(`${this.baserUrl}/examen/`,examen);
+    return this.http.post(`${this.url}/examen/`,examen);
   }
 
   public eliminarExamen(examenId:any){
-    return this.http.delete(`${this.baserUrl}/examen/${examenId}`);
+    return this.http.delete(`${this.url}/examen/eliminar/${examenId}`);
   }
 
   public obtenerExamen(examenId:any){
-    return this.http.get(`${this.baserUrl}/examen/${examenId}`);
+    return this.http.get(`${this.url}/examen/${examenId}`);
   }
 
-  public actualizarExamen(examen:any){
-    return this.http.put(`${this.baserUrl}/examen/`,examen);
+  public actualizarExamen(examen:any, examenId: number){
+    return this.http.put(`${this.url}/examen/actualizar/${examenId}`,examen);
   }
 
   public listarExamenesDeUnaCategoria(categoriaId:any){
-    return this.http.get(`${this.baserUrl}/examen/categoria/${categoriaId}`);
+    return this.http.get(`${this.url}/examen/categoria/${categoriaId}`);
   }
 
-  public obtenerExamenesActivos(){
-    return this.http.get(`${this.baserUrl}/examen/`);
+  public obtenerExamenesActivos():Observable<any>{
+    return this.http.get(`${this.url}/examen/usuario/`);
   }
 
   public obtenerExamenesActivosDeUnaCategoria(categoriaId:any){
-    return this.http.get(`${this.baserUrl}/examen/categoria/${categoriaId}`);
+    return this.http.get(`${this.url}/examen/categoria/${categoriaId}`);
   }
 }
