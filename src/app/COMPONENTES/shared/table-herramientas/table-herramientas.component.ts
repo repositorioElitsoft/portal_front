@@ -179,7 +179,7 @@ export class TableHerramientasComponent implements OnInit {
         'Herramientas guardadas correctamente'
       )
       if (isConfirmed) {
-        this.router.navigate(['/informacion-academica']);
+        this.router.navigate(['/user/informacion-academica']);
       }
     } catch (error) {
       this.notification.showNotification(
