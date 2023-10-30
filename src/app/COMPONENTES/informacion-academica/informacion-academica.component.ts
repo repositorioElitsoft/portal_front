@@ -44,7 +44,7 @@ export class InformacionAcademicaComponent implements OnInit {
   }
 
   redirectTo(){
-    this.navigateToRoute('/informacion-laboral')
+    this.navigateToRoute('/user/informacion-laboral')
   }
 
   obtenerAcademicasGuardados(){

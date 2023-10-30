@@ -195,7 +195,7 @@ export class DatosPersonalesComponent implements OnInit {
       );
 
       if (isConfirmed) {
-        this.router.navigate(['/reclutador']);
+        this.router.navigate(['/user/herramientas-tecnologias']);
       }
     } catch (error) {
 
