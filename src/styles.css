@@ -51,7 +51,28 @@ body { margin: 0;
 }
 
 
+.custom-btn2{
+  background-color: #F57C27!important;
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+  color: white!important;
+  margin-left: 2vw;
+}
+.custom-btn2:hover{
+  background-color: #fff !important;
+    color: #F57C27 !important;
+  
+}
+.custom-btn3{
+  background-color: #F57C27!important;
+  color: white!important;
+}
 
+.custom-btn3:hover{
+  background-color: #fff !important;
+    color: #F57C27 !important;
+  
+}
 
 .botonprimario{
   background-color: #F57C27 !important;
