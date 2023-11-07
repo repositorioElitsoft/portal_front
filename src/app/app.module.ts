@@ -76,7 +76,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
-import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component'; 
+import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
+import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-user-dialog/edit-user-dialog.component'; 
 
 
 
@@ -133,6 +134,7 @@ import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-e
     ExamenModalComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
+    EditUserDialogComponent,
   
   ],
   imports: [

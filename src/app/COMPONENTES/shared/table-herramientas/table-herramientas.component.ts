@@ -107,12 +107,17 @@ export class TableHerramientasComponent implements OnInit {
     const row = this.rowsFormArray.at(index);
     const selectedProductoIdControl = row.get('herr_prd_name');
     const selectedProductoIdValue = selectedProductoIdControl?.value;
+    
+    if (selectedProductoIdValue === 'otro') {
+      this.versionByRow[index] = [];
+      return;
+    }
 
     if (!selectedProductoIdValue) {
       console.log('No se ha seleccionado un producto');
       return;
     }
-    
+
     this.productoService.getVersionByProduct(selectedProductoIdValue).subscribe(
       (data: VersionProducto[]) => {
         this.versionByRow[index] = data;
@@ -148,7 +153,8 @@ export class TableHerramientasComponent implements OnInit {
           herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
           herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
           versionProducto: this.formBuilder.group({
-            vrs_id: [herramienta.versionProducto.vrs_id, Validators.required]
+            vrs_id: [herramienta.versionProducto.vrs_id, Validators.required],
+            vrs_name: [herramienta.versionProducto.vrs_name],
           }),
           herr_is_cert: [herramienta.herr_is_cert],
           herr_nvl: [herramienta.herr_nvl]
@@ -169,7 +175,23 @@ export class TableHerramientasComponent implements OnInit {
       return;
     }
 
-    const herramientas = this.herramientasForm.value.rows;
+    const herramientas = this.herramientasForm.value.rows.map((row: any) => {
+      if ( row.herr_prd_name === 'otro' ) {
+        row.herr_prd_name = row.herr_otro_prd_name;
+        delete row.herr_otro_prd_name;
+      }
+
+      if ( row.versionProducto.vrs_id === 'otro' ) {
+        row.versionProducto.vrs_id = 0;
+        row.versionProducto.vrs_name = row.versionProducto.herr_otro_vrs_name;
+        delete row.versionProducto.herr_otro_vrs_name;
+      }
+
+      return row;
+    });
+
+    console.log('Herramiengas enviadas:', herramientas);
+
     try {
       this.herramientasService.guardarHerramienta(herramientas).toPromise();  
       console.log('Herramienta:', herramientas);
@@ -196,10 +218,12 @@ export class TableHerramientasComponent implements OnInit {
       herr_prd_name: [{ value: '', disabled: true }, Validators.required],
       herr_usr_anos_exp: [''],
       versionProducto: this.formBuilder.group({
-        vrs_id: [{ value: 0, disabled: true }, Validators.required]
+        vrs_id: [{ value: 0, disabled: true }, Validators.required],
+        herr_otro_vrs_name: ['']
       }),
       herr_is_cert: [false],
       herr_nvl: [''],
+      herr_otro_prd_name: [''],
     });
   
     newRow.get('herr_cat_name')?.valueChanges.subscribe((value) => {

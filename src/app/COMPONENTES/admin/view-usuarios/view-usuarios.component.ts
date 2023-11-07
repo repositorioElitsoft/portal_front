@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UsuarioService } from "src/app/service/usuario.service";
+import { MatDialog } from "@angular/material/dialog";
+import { EditUserDialogComponent } from "./edit-user-dialog/edit-user-dialog.component";
 
 import Swal from "sweetalert2";
 
@@ -14,7 +16,9 @@ export class ViewUsuariosComponent implements OnInit {
   usuarios: any[] = [];
 
   constructor(private usuarioService: UsuarioService,
-    private router: Router) { }
+    private router: Router,
+    public dialog: MatDialog
+    ) { }
 
   ngOnInit(): void {
     this.obtenerUsuarios();
@@ -32,7 +36,26 @@ export class ViewUsuariosComponent implements OnInit {
   }
 
   actualizarUsuario(usuario: any): void {
-    // Implementa la lógica para actualizar el usuario
+     const dialogRef = this.dialog.open(EditUserDialogComponent, {
+      width: '600px',
+      data: usuario
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.usuarioService.updateUsuarioById(usuario.usr_id, result).subscribe(
+          (data) => {
+            console.log(data);
+            Swal.fire('Actualizado', 'Usuario actualizado con éxito', 'success');
+            this.obtenerUsuarios();
+          },
+          (error) => {
+            Swal.fire('Error', 'No se pudo actualizar el usuario', 'error');
+            console.log(error);
+          }
+        );
+      }
+    });
   }
 
   eliminarUsuario(usr_id: number): void {
