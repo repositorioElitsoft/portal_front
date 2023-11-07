@@ -97,7 +97,11 @@ export class CargoUsuarioComponent implements OnInit {
   submitForm(event: Event){
     event.preventDefault();
    
-  
+  const pretensionRentaFormatted = this.form.get('crg_usr_pret')?.value;
+  const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
+  this.form.get('crg_usr_pret')?.setValue(pretensionRentaWithoutFormat);
+
+
   const newCargo: CargoUsuario = this.form.value;
   if (newCargo.tiempo_incorporacion !== 'otro') {
 
