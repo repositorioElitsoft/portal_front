@@ -11,6 +11,8 @@ export interface Usuario {
     usr_email:string
     usr_pass?:string
     usr_tel?:string
+    usr_gen?:string
+    usr_gen_otro?: string;
     usr_url_link?:string
     pais_nom?: string;
     pais?: Pais; // Agregar esta línea para definir la propiedad pais
@@ -25,4 +27,3 @@ export interface Usuario {
 
 export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
 
-  

@@ -35,6 +35,8 @@ export class DatosPersonalesComponent implements OnInit {
     usr_email: '',
     usr_pass: '',
     usr_tel: '',
+    usr_gen:'',
+    usr_gen_otro:'',
     usr_url_link: '',
     pais: {
       pais_id: undefined,
@@ -70,7 +72,20 @@ export class DatosPersonalesComponent implements OnInit {
       pais: ["1",[Validators.required]],
       usr_url_link: ["",[]],
       usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+      usr_gen:["Masculino", [Validators.required]],
+      usr_gen_otro: ["", [Validators.required]]
     });
+
+  this.form.get('usr_gen')?.valueChanges.subscribe((value) => {
+    if (value === 'Otro') {
+      this.form.get('usr_gen_otro')?.setValidators([Validators.required]);
+    } else {
+      this.form.get('usr_gen_otro')?.setValidators(null);
+      this.form.get('usr_gen_otro')?.setValue('');
+    }
+    this.form.get('usr_gen_otro')?.updateValueAndValidity();
+  });
+
   }
 
   ngOnInit(): void {
@@ -85,6 +100,7 @@ export class DatosPersonalesComponent implements OnInit {
       }
     );
     this.ObtenerUsuarioGuardado();
+
   }
 
   navigateToRoute(route: string) {
@@ -96,29 +112,29 @@ export class DatosPersonalesComponent implements OnInit {
 
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
-  
+
     if (typeof (FileReader) !== 'undefined') {
       const reader = new FileReader();
-  
+
       reader.onload = (e: any) => {
         const srcResult = e.target.result;
         console.log("result: ",srcResult)
       };
-  
+
       reader.readAsArrayBuffer(inputNode.files[0]);
 
       const formData: FormData = new FormData();
       formData.append('file', inputNode.files[0]);
 
 
-      
+
       this.isUploadingFile = true
       this.usuarioService.actualizarCV(formData).subscribe({
         next: (response) =>{
           console.log("Subido con éxito:",  inputNode.files[0].fileName,response)
           this.isUploadingFile = false
           this.currentResumeName = inputNode.files[0].name;
-          
+
         },
         error: (err)=>{
           console.log("Error al actualizar CV:", err)
@@ -128,8 +144,8 @@ export class DatosPersonalesComponent implements OnInit {
           this.isUploadingFile = false
         }
       });
-      
-      
+
+
     }
   }
 
@@ -140,7 +156,7 @@ export class DatosPersonalesComponent implements OnInit {
         console.log(this.usuarioGuardado)
         this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
 
-    
+
 
         this.form.patchValue({
 
@@ -151,8 +167,16 @@ export class DatosPersonalesComponent implements OnInit {
           pais: this.usuarioGuardado.pais?.pais_id,
           usr_url_link: this.usuarioGuardado.usr_url_link,
           usr_tel: this.usuarioGuardado.usr_tel,
+          usr_gen:this.usuarioGuardado.usr_gen,
+          usr_gen_otro:this.usuarioGuardado.usr_gen_otro,
 
-        })
+        });
+
+        // Activa manualmente el evento valueChanges en usr_gen
+      if (this.usuarioGuardado.usr_gen === 'Otro') {
+        this.form.get('usr_gen')?.setValue('Otro');
+      }
+
         this.isLoaded= true;
         const inputElement = document.getElementById("inputTelefono");
         console.log(inputElement)
@@ -178,6 +202,11 @@ export class DatosPersonalesComponent implements OnInit {
 
     const user: Usuario = this.form.value;
 
+    // Si se selecciona "Otro", establece el valor de usr_gen a usr_gen_otro
+  if (user.usr_gen === 'Otro') {
+    user.usr_gen = user.usr_gen_otro;
+    }
+
     console.log(user);
 
     user.pais = {
@@ -201,28 +230,6 @@ export class DatosPersonalesComponent implements OnInit {
 
     }
 
-    /*
-    this.paisService.obtenerPaisPorNombre(this.usuarioNuevo.pais_nom).subscribe(
-      (pais: Pais) => {
-        // Asignar el objeto Pais al usuarioNuevo
-        this.usuarioNuevo.pais = pais;
-
-        // Llamar al servicio UsuarioService para guardar el usuario
-        this.usuarioService.saveUsuario(this.usuarioNuevo).subscribe(
-          (res: any) => {
-            console.log(res);
-            this.toastr.success('Datos personales guardados');
-            // Navegar a la página de Herramientas y Tecnologías y pasar el id de usuario como query parameter
-            this.router.navigate(['/herramientas-tecnologias'], {
-              relativeTo: this.route,
-              queryParams: { usr_id: res.usr_id }
-            });
-          },
-          (err: any) => console.log(err)
-        );
-      },
-      (err: any) => console.log(err)
-    );*/
 
   }
 
