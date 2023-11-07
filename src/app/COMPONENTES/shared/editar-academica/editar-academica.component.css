@@ -1,0 +1,34 @@
+.formacademica {
+    display: flex;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente */
+    justify-content: center; /* Centra verticalmente */
+    box-shadow: none;
+  }
+  
+  
+  .mat-form-field{
+    width: 100%;
+  }
+  
+  /* En tu archivo de estilos CSS (por ejemplo, styles.css) o en el archivo de estilo del componente */
+  .ng-star-inserted {
+  width: 100% !important;
+  padding-left: 2%;
+  padding-right: 2%;
+  }
+  
+  
+  button.example-custom-date-class {
+    background: orange!important;
+    border-radius: 100%;
+  }
+  
+  .guardarycancelar
+  {
+  background-color: none;
+  box-shadow: none;
+  width: 100%;
+  }

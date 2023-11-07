@@ -60,7 +60,6 @@ import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
-import { NavbarResponsiveComponent } from './COMPONENTES/pages/user/navbar-responsive/navbar-responsive.component';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
@@ -79,6 +78,13 @@ import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
 import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NavbarResponsiveExamenComponent } from './COMPONENTES/pages/user/navbarexamen-responsive/navbarexamen-responsive.component';
+import { AñadirEstudioComponent } from './COMPONENTES/shared/añadir-estudio/añadir-estudio.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { CommonModule } from '@angular/common';
+import { EditarAcademicaComponent } from './COMPONENTES/shared/editar-academica/editar-academica.component';
+import { CerrarSesionComponent } from './COMPONENTES/shared/cerrar-sesion/cerrar-sesion.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +111,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     CargoUsuarioComponent,
     AppNavbarComponent,
     AppSidebarComponent,
+    CerrarSesionComponent,
     AppSidebar2Component,
     AppFooterComponent,
     SidebarUserDeskComponent,
@@ -128,15 +135,20 @@ import { MatDialogModule } from '@angular/material/dialog';
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
     CaracterOnlyDirective,
+    AñadirEstudioComponent,
+    EditarAcademicaComponent
+    
 
   ],
   imports: [
     MatCheckboxModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatDatepickerModule,
     MatInputModule,
     BrowserModule,
     AppRoutingModule,
+    CommonModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -160,9 +172,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatProgressSpinnerModule,
     MatSortModule,
     MatSortModule,
+    MatNativeDateModule,
     HttpClientModule,
     MatDialogModule,
     MatTabsModule,
+    NavbarResponsiveExamenComponent,
     MatSliderModule,
     RouterOutlet,
     MatChipsModule,

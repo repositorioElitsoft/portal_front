@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component';
 
 @Component({
   selector: 'app-sidebar-userdesk',
@@ -9,13 +11,25 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class SidebarUserDeskComponent implements OnInit  {
 
-  constructor(private router: Router, 
-  private cookieService: CookieService){}
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private cookieService: CookieService
+  ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
+  // Método para abrir un diálogo
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CerrarSesionComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 
+
+ 
 
   cerrarSesion(): void {
     const confirmacion = window.confirm('¿Deseas cerrar la sesión?');
@@ -33,5 +47,4 @@ export class SidebarUserDeskComponent implements OnInit  {
       console.log('Sesión no cerrada.');
     }
   }
-
 }

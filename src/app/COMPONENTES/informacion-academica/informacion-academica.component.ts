@@ -1,15 +1,18 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { Usuario } from '../../interface/user.interface'
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AñadirEstudioComponent } from '../shared/añadir-estudio/añadir-estudio.component';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarAcademicaComponent } from '../shared/editar-academica/editar-academica.component';
 
 @Component({
   selector: 'app-informacion-academica',
   templateUrl: './informacion-academica.component.html',
   styleUrls: ['./informacion-academica.component.css']
+
 })
 export class InformacionAcademicaComponent implements OnInit {
 
@@ -23,6 +26,7 @@ export class InformacionAcademicaComponent implements OnInit {
   today: string;
 
   constructor(private usuarioService: UsuarioService, 
+    public dialog: MatDialog,
     private formBuilder: FormBuilder,
     private academicaService: AcademicaService, private route: ActivatedRoute, private router: Router) {
       this.today = new Date().toISOString().split('T')[0];
@@ -70,31 +74,8 @@ export class InformacionAcademicaComponent implements OnInit {
     });
   }
 
-  goBack(){
-    this.creationMode = false;
-  }
 
-  editarAcademica(id: number | undefined | null){
-    this.id = id;
-
-    const laboralToEdit = this.academicas.find(laboral => laboral.inf_acad_id === this.id);
-    this.form.patchValue({
-      inf_acad_est: laboralToEdit?.inf_acad_est,
-      inf_acad_nom_esc: laboralToEdit?.inf_acad_nom_esc,
-      titl: laboralToEdit?.titl,
-      inf_acad_fec_ini: laboralToEdit?.inf_acad_fec_ini,
-      inf_acad_fec_fin: laboralToEdit?.inf_acad_fec_fin,
-    });
-
-    this.creationMode = !this.creationMode;
-  }
-
-
-  addExperienceRow(){
-    this.id = null;
-    this.form.reset();
-    this.creationMode = !this.creationMode;
-  }
+  
 
 
   submitForm(event: Event) {
@@ -126,4 +107,30 @@ export class InformacionAcademicaComponent implements OnInit {
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
+
+  openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(AñadirEstudioComponent, {
+      width: '600px',
+      height: '700px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogRef.componentInstance?.AñadirEstudioComponent.subscribe(() => {
+      this.obtenerAcademicasGuardados();
+    }); 
+  }
+
+  
+  
+  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(EditarAcademicaComponent , {
+      width: '600px',
+      height: '700px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+  
+  
 }
+

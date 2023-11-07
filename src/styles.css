@@ -51,6 +51,14 @@ body { margin: 0;
 }
 
 
+.mat-mdc-dialog-container .mdc-dialog__surface{
+
+  border-radius: 10px!important;
+  border-color:#F57C27!important;
+  border: 1px solid #F57C27!important;
+  display: flex;
+}
+
 .custom-btn2{
   background-color: #F57C27!important;
   margin-right: 1vw;
@@ -176,8 +184,3 @@ background-size: cover;
 }
 
 }
-
-
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
