@@ -95,7 +95,7 @@
       <button mat-mini-fab color="primary" id="{{element.usr_email}}" matTooltip="Ver perfil" (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
         <mat-icon>menu</mat-icon>
       </button>
-      <button class="ms-3" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Descarga CV" [disabled]="!element.cvPath" id="{{element.usr_id}}" (click)="downloadCv($event)">
+      <button class="ms-3" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Descarga CV" [disabled]="!element.cvPath" id="{{element.usr_id}}" (click)="openBottomSheet()">
         <mat-icon>picture_as_pdf</mat-icon>
       </button>
     </td>

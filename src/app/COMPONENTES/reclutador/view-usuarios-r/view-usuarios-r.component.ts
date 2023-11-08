@@ -17,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { LaboralService } from 'src/app/service/laboral.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -57,7 +59,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private productoService: ProductoService,
     private laboralService: LaboralService,
     public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
+    
   ) {}
 
 
@@ -307,21 +311,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     });
   }
 
-  downloadCv(event: any) {
-    console.log('usuarioId', event.target?.parentElement)
-    const userId = event.target?.parentElement.id
-    this.usuarioService.downloadCv(userId).subscribe(
-      (data: Blob) => {
-        const url = window.URL.createObjectURL(data);
-        window.open(url, '_blank');
-        // console.log('data:', data);
-      },
-      (error) => {
-        
-      }
-    )
+
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(viewCrudArchivoComponent);
   }
 
+
+  
   openUserDialog(event: any) {
 
 

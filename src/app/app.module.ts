@@ -85,6 +85,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
 import { EditarAcademicaComponent } from './COMPONENTES/shared/editar-academica/editar-academica.component';
 import { CerrarSesionComponent } from './COMPONENTES/shared/cerrar-sesion/cerrar-sesion.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @NgModule({
   declarations: [
@@ -149,6 +150,7 @@ import { CerrarSesionComponent } from './COMPONENTES/shared/cerrar-sesion/cerrar
     BrowserModule,
     AppRoutingModule,
     CommonModule,
+    MatBottomSheetModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
