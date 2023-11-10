@@ -59,7 +59,7 @@ export class UsuarioService {
   }
 
   updateUsuarioById(usr_id: number, user: Usuario): Observable<Usuario>{
-    return this.HttpClient.put<Usuario>(`${this.baseUrl}/usuarios/actualizar/${usr_id}`, user);
+    return this.HttpClient.put<Usuario>(`${this.url}/usuarios/actualizar/${usr_id}`, user);
   }
 
   obtenerUsuarioDesdeLocalStorage() {

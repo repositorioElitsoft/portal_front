@@ -13,6 +13,7 @@ import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/advertencia-eliminar.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import Swal from "sweetalert2";
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -113,18 +114,22 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
       cancelButtonText: 'Cancelar'
     }).then((resultado) => {
       if (resultado.isConfirmed) {
-        this.usuarioService.eliminarUsuario(usr_id).subscribe(
+        this.usuarioService.eliminarUsuarioId(usr_id).subscribe(
           (data) => {
             Swal.fire('Usuario eliminado', 'El usuario ha sido eliminado con éxito', 'success');
             this.obtenerUsuarios(); // Actualizar la lista de usuarios después de eliminar
-
-    announceSortChange(sortState: Sort) {
-      if (sortState.direction) {
-        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-      } else {
-        this._liveAnnouncer.announce('Sorting cleared');
-      }
+          });
+      }  
+    });
+  }
+  
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
 
     //eliminarUsuario(usuarioId: number) {
      // this.usuarioService.eliminarUsuarioId(usuarioId).subscribe(
@@ -143,8 +148,6 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
    // }
 
    openDialogEliminar(event: any) {
-
-
 
     const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
     dialogRef.afterClosed().subscribe(result => {

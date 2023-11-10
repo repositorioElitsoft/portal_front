@@ -41,7 +41,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
   selectedSueldoRange: number[] = [1, 10000000];
-
   selectedCategoria: number = 0;
   selectedCargo: number = 0;
   selectedProducto: number = 0;
@@ -50,6 +49,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
   lastYears: number = 0;
+  selectedEstado: string = '';
+  filterCargo: string = '';
+  selectedProductos: number[] = [];
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -81,12 +83,18 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterData() {
     let filteredArray = this.originalDataCopy;
 
-    // Filtro por producto
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
-      }
+    // Filtro por productos seleccionados
+    if (this.selectedProductos.length > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        const herramientasArray = usuario.usr_herr.split(', ');
+  
+        // Comprobamos que todas las herramientas seleccionadas estén en la lista de herramientas del usuario
+        // El usuario pasara el filtro siempre y cuando tenga todas los productos que se han seleccionados
+        return this.selectedProductos.every(selectedProductoId => {
+          const producto = this.productos.find(p => p.prd_id === selectedProductoId);
+          return producto && herramientasArray.includes(producto.prd_nom);
+        });
+      });
     }
 
     // Filtro por versión
@@ -96,7 +104,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
-
 
     // Filtro por rango de sueldos
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
@@ -114,6 +121,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     }
 
+    // Filtro por estado
+    if (this.selectedEstado && this.selectedEstado !== '') {
+      filteredArray = filteredArray.filter((usuario) => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some((estado) => estado.disponibilidad === this.selectedEstado);
+      });
+    }
+
     // Filtro por ultimos años de experiencia
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
@@ -125,7 +139,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
               const currentYear = new Date().getFullYear();
               return fechaFin.getFullYear() >= currentYear - this.lastYears;
             }
-    
             return false;
           });
         });
@@ -182,6 +195,22 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
 
     this.dataSource.data = filteredArray;
+  }
+
+  filterByCargo() {
+    let filteredArray = this.originalDataCopy;
+
+    if (this.filterCargo) {
+      const filtroCargoLowerCase = this.filterCargo.toLowerCase();
+      filteredArray = filteredArray.filter(usuario => 
+        usuario.cargoUsuario?.some(cargo => 
+          cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
+        )
+      );
+    }
+
+    this.dataSource.data = filteredArray;
+    console.log('Usuarios filtrados', filteredArray);
   }
 
   formatLabel(value: number): string {
@@ -322,7 +351,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
   openUserProfile(event: any){
     const email = event.target.parentElement.id;
-
 
     this.usuarioService.obtenerPerfil(email).subscribe({
       next:(user) => {
