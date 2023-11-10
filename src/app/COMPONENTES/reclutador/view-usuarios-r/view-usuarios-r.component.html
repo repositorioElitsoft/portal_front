@@ -13,6 +13,14 @@
   </mat-form-field>
 
   <mat-form-field class="filter-select">
+    <mat-label>Cargo</mat-label>
+    <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
       <mat-option value="">Seleccione un opción</mat-option>
@@ -46,13 +54,32 @@
       <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears" min="1" max="10">
     </section>
   </mat-form-field>
+</div>
 
-  <div class="filter-slider d-flex flex-column align-items-center">
-    <mat-label>Rango de años de Experiencia: </mat-label>
-    <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
-      <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
-      <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
-    </mat-slider>
+<div class="filter-container">
+  <!-- ...otros controles de entrada... -->
+
+  <!-- Contenedor Flexbox para los sliders y sus etiquetas -->
+  <div class="sliders-container d-flex flex-row justify-content-between align-items-center w-100">
+    
+    <!-- Slider de Sueldos -->
+    <div class="filter-slider d-flex flex-column align-items-center me-2">
+      <mat-label>Rango de Sueldos:</mat-label>
+      <mat-slider min="1" max="10000001" step="100000" (input)="filterData()" discrete [thumbLabel]="true" [displayWith]="formatLabel">
+        <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
+    
+    <!-- Slider de Años de Experiencia -->
+    <div class="filter-slider d-flex flex-column align-items-center ms-2">
+      <mat-label>Rango de años de Experiencia:</mat-label>
+      <mat-slider min="1" max="10" (input)="filterAniosExp()" discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
+        <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
+
   </div>
 </div>
 

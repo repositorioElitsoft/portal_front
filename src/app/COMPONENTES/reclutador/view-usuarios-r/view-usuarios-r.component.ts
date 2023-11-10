@@ -17,6 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { LaboralService } from 'src/app/service/laboral.service';
+import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -27,18 +29,21 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones',];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
   usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
+  cargos: CargosElitsoft[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
+  selectedSueldoRange: number[] = [1, 10000000];
 
   selectedCategoria: number = 0;
+  selectedCargo: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
   selectedAniosExp: number = 0;
@@ -54,6 +59,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
+    private cargosElitsoftService: CargosElitsoftService,
     private productoService: ProductoService,
     private laboralService: LaboralService,
     public dialog: MatDialog,
@@ -64,6 +70,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.getCategories();
+    this.getCargosElitsoft();
   }
 
   ngAfterViewInit() {
@@ -90,6 +97,24 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     }
 
+
+    // Filtro por rango de sueldos
+    const [minSueldo, maxSueldo] = this.selectedSueldoRange;
+    filteredArray = filteredArray.filter(usuario => {
+      return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
+        const sueldo = cargo.crg_usr_pret; // Asume que 'crg_usr_pret' es el sueldo pretendido por el usuario
+        return sueldo >= minSueldo && sueldo <= maxSueldo;
+      });
+    });
+
+    // Filtro por cargo
+    if (this.selectedCargo > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+      });
+    }
+
+    // Filtro por ultimos años de experiencia
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
         return usuario.laborales.some((experiencia) => {
@@ -122,6 +147,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.data = filteredArray;
   }
 
+  getCargosElitsoft() {
+    this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
+      (data: CargosElitsoft[]) => {
+        this.cargos = data;
+      }
+    )
+  }
+
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
       this.lastYears = 0;
@@ -131,7 +164,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   onLast5YearsChange() {
-    // Llamar a filterData cuando cambie el valor de this.last5Years
+    // Llamar a filterData cuando cambie el valor de this.lastYears
     this.filterData();
   }
 
@@ -198,6 +231,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           laborales: usuario.laborales,
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
+          cargoUsuario: usuario.cargoUsuario,
         }));
 
         this.originalDataCopy = usuarios;

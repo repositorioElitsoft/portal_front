@@ -89,7 +89,7 @@ export class CargoUsuarioComponent implements OnInit {
 
   // Completamos los datos del cargo con las selecciones
   newCargo.cargoElitsoft = {
-    crg_elit_id: this.form.value.crg_elit_id
+    crg_elit_id: this.form.value.crg_elit_id,
   }
 
   console.log(newCargo)

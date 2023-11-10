@@ -1,3 +1,4 @@
+import { CargoUsuario } from "./cargos-usuario.interface"
 import { HerramientaData } from "./herramienta-data.interface"
 import { Laboral } from "./laboral.interface"
 import { Pais } from "./pais.interface"
@@ -19,4 +20,5 @@ export interface Usuario {
     herr_ver: string;
     herr_exp: string;
     laborales: Laboral[];
+    cargoUsuario: CargoUsuario[];
 }
