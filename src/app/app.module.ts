@@ -81,6 +81,8 @@ import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-
 import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -171,6 +173,8 @@ import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.
     RouterOutlet,
     MatChipsModule,
     MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatTooltipModule,
     TextFieldModule,
     ToastrModule.forRoot({

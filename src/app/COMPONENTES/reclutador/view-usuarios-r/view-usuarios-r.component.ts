@@ -52,6 +52,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedEstado: string = '';
   filterCargo: string = '';
   selectedProductos: number[] = [];
+  fechaPostulacionDesde: Date | null = null;
+  fechaPostulacionHasta: Date | null = null;
 
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

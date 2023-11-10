@@ -8,4 +8,5 @@ export interface CargoUsuario{
     disponibilidad: String,
     tiempo_incorporacion:String,
     otro_tiempo_incorporacion: String;
+    crg_fecha_postulacion?: Date;
 }
