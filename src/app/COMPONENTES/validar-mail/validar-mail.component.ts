@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ValidarMailService } from 'src/app/service/validar-mail.service';
 
 @Component({
@@ -13,9 +14,11 @@ export class ValidarMailComponent {
 
   constructor(
     private validarEmailService: ValidarMailService,
+    private route: ActivatedRoute
   ){}
 
   ngOnInit(){
+
 
     this.validarEmailService.verificarEmail().subscribe({
       next:(res)=>{

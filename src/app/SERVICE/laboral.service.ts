@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Pais } from '../interface/pais.interface';
 import { Laboral } from '../interface/laboral.interface';
 import { Herramientas } from '../interface/herramientas.interface';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
@@ -11,7 +11,8 @@ import { Herramientas } from '../interface/herramientas.interface';
 })
 export class LaboralService {
 
-  url = "http://localhost:8080/laboral/"
+
+  readonly url = `${environment.URL_HOST}/laboral/`
 
   constructor(private http: HttpClient) { }
 

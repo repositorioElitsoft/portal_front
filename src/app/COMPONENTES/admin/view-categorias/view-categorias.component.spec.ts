@@ -12,7 +12,7 @@ describe('ViewCategoriasComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ViewCategoriasComponent ],
       imports:[HttpClientTestingModule],
-      providers:[CategoriaService,HttpClient],
+      providers:[CategoriaService],
     })
     .compileComponents();
 
@@ -20,6 +20,7 @@ describe('ViewCategoriasComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
 
   it('should create', () => {
     expect(component).toBeTruthy();

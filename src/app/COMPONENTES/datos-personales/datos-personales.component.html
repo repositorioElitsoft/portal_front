@@ -109,20 +109,49 @@
 
           for="inputLinkedin" class="col-sm-2 col-form-label">URL Linkedin:</label>
           <div class="col-sm-10">
-            <input type="linkedin"
+            <input type="linkedin" 
             matTooltip="Opcional"
             matTooltipPosition="after"
             class="form-control" id="inputLinkedin" formControlName="usr_url_link" name="inputLinkedin">
           </div>
         </div>
 
-      
-        
-        <div class="div-form d-grid ">
 
-          <button  mat-raised-button class="botonprimario m-2"  [disabled]="!form.valid" type="submit" >Siguiente</button>
+        <label 
+
+        for="file" class="col-sm-2 col-form-label">Subir CV:</label>
+
+        <button type="button" class="cv-btn" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
+          <div *ngIf="!isUploadingFile">
+            <div *ngIf="currentResumeName">Cargar nuevo CV </div>
+            <div *ngIf="!currentResumeName"> Sube tu CV </div>
+          </div>
+          <div *ngIf="isUploadingFile"> Cargando CV...</div>
+        </button>
+        
+        <button mat-raised-button class ="cv-btn" [disabled]="isUploadingFile" (click)="borrarCV()" type="button">
+          Eliminar CV
+        </button>
+
+
+        <mat-icon *ngIf="currentResumeName" class="bg-green">check_circle</mat-icon>
+
+        <input name="file" hidden (change)="onFileSelected()" #fileInput type="file" id="file">
 
           
+        <br/>
+        <label class="my-2" for="file" *ngIf="currentResumeName">
+          CV Actual: {{currentResumeName }}
+        </label>
+        
+        
+        <div class="div-form d-grid my-2">
+
+          <button  mat-raised-button class="botonprimario m-2"  [disabled]="!form.valid" type="submit" >Siguiente</button>
+          
+         
+
+
         </div>
 
         

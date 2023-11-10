@@ -66,6 +66,7 @@ import { RouterOutlet } from '@angular/router';
 import {MatMenuModule} from '@angular/material/menu';
 import { SidebarRResponsiveComponent } from './COMPONENTES/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs'; 
@@ -73,13 +74,13 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatExpansionModule} from '@angular/material/expansion'; 
 import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { MatSliderModule } from '@angular/material/slider';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
 import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-user-dialog/edit-user-dialog.component'; 
-
-
+import { CaracterOnlyDirective } from './directives/caracter-only-directive';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
 
 @NgModule({
   declarations: [
@@ -90,11 +91,7 @@ import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-
     DashboardComponent,
     ProfileAdminComponent,
     ViewCategoriasComponent,
-    AddCategoriaComponent,
-    ViewExamenesComponent,
     AddExamenComponent,
-    AddPreguntaComponent,
-    ViewExamenPreguntasComponent,
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
     SidebarRComponent,
@@ -102,7 +99,7 @@ import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-
     WelcomeReclutadorComponent,
     ProfileRComponent,
     ViewUsuariosRComponent,
-    ViewPerfilUsuarioRComponent,    
+    ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
@@ -117,12 +114,9 @@ import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,
-    DashboardComponent,
     UserDashboardComponent,
-    ViewCategoriasComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
-    AddExamenComponent,
     ViewExamenPreguntasComponent,
     AddPreguntaComponent,
     UserSidebar,
@@ -130,11 +124,11 @@ import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-
     InstruccionesComponent,
     StartComponent,
     SidebarUserComponent,
-    SidebarRResponsiveComponent,
+    SidebarRResponsiveComponent, 
     ExamenModalComponent,
+    AddUsuariosComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
-    EditUserDialogComponent,
   
   ],
   imports: [
@@ -145,37 +139,36 @@ import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NavbarResponsiveComponent,
     HttpClientModule,
     ReactiveFormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
-    FormsModule,
     MatTableModule,
+    MatIconModule,
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,
     MatSnackBarModule,
     MatMenuModule,
+    MatMenuModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule,
     MatListModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSidenavModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    MatSortModule,
+    HttpClientModule,
+    MatDialogModule,
     MatTabsModule,
     MatSliderModule,
-    HttpClientModule,
     RouterOutlet,
-    MatDialogModule,
-    MatDialogModule,
-    MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
     MatTooltipModule,
-    MatDialogModule,
     TextFieldModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-center'

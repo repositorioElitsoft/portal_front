@@ -9,8 +9,10 @@ import { ViewCategoriasComponent } from './COMPONENTES/admin/view-categorias/vie
 import { AddCategoriaComponent } from './COMPONENTES/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './COMPONENTES/admin/view-examenes/view-examenes.component';
 import { AddExamenComponent } from './COMPONENTES/admin/add-examen/add-examen.component';
+
 import { ViewExamenPreguntasComponent } from './COMPONENTES/admin/view-examen-preguntas/view-examen-preguntas.component';
 import { AddPreguntaComponent } from './COMPONENTES/admin/add-pregunta/add-pregunta.component';
+
 import { ViewUsuariosComponent } from './COMPONENTES/admin/view-usuarios/view-usuarios.component';
 import { ViewPerfilUsuarioComponent } from './COMPONENTES/admin/view-perfil-usuario/view-perfil-usuario.component';
 import { DashboardRComponent } from './COMPONENTES/reclutador/dashboard-r/dashboard-r.component';
@@ -31,8 +33,9 @@ import { UserDashboardComponent } from './COMPONENTES/pages/user/user-dashboard/
 import { LoadExamenComponent } from './COMPONENTES/pages/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './COMPONENTES/pages/user/instrucciones/instrucciones.component';
 import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
-import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
+import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 
+import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 
 
 const routes: Routes = [
@@ -40,16 +43,10 @@ const routes: Routes = [
 
   {path:'restaurar-contrasena', component:PeticionRestaurarPassComponent},
 
-  {path:'', redirectTo:'datos_personales', pathMatch:'full'},
+  {path:'', redirectTo:'user/datos_personales', pathMatch:'full'},
   {path:'registrar', component:RegistrarComponent},
   {path:'iniciar-sesion', component:IniciarSesionComponent},
   {path:'verificar-email', component:ValidarMailComponent},
-  {path:'datos_personales', component:DatosPersonalesComponent, canActivate: [AuthGuard]},
-  {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent, canActivate: [AuthGuard]},
-  {path:'informacion-academica', component:InformacionAcademicaComponent, canActivate: [AuthGuard]},
-  {path:'informacion-laboral', component:InformacionLaboralComponent, canActivate: [AuthGuard]},
-  {path:'cargo-usuario', component:CargoUsuarioComponent, canActivate: [AuthGuard]},
-
   {
     path: 'user',
     canActivate: [AuthGuard],
@@ -59,7 +56,12 @@ const routes: Routes = [
         path: 'datos_personales',
         pathMatch: 'full',
         component: DatosPersonalesComponent
-      }
+      },
+      {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
+      {path:'informacion-academica', component:InformacionAcademicaComponent,},
+      {path:'informacion-laboral', component:InformacionLaboralComponent, },
+      {path:'cargo-usuario', component:CargoUsuarioComponent,},
+      
     ]
   },
 
@@ -97,6 +99,7 @@ const routes: Routes = [
         path:'add-examen',
         component:AddExamenComponent
       },
+
       {
         path:'view-examen-preguntas/:exam_id/:exam_titl',
         component:ViewExamenPreguntasComponent
@@ -105,9 +108,18 @@ const routes: Routes = [
         path:'add-pregunta/:exam_id/:exam_titl',
         component:AddPreguntaComponent
       },
+     
       {
         path:'view-usuarios',
         component:ViewUsuariosComponent
+      },
+      {
+        path:'add-usuarios',
+        component:AddUsuariosComponent
+      },
+      {
+        path:'actualizar-usuario/:usuarioId',
+        component:AddUsuariosComponent
       },
       {
         path:'view-perfil-usuario/:email',
@@ -160,12 +172,12 @@ const routes: Routes = [
         path:'instrucciones/:exam_id',
         component:InstruccionesComponent
       },
-      
+
 
     ]
   },
   {
-    path:"start/:examenId",
+    path:"start/:exam_id",
     component:StartComponent,
     canActivate:[AuthGuard]
   },

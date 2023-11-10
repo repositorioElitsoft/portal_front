@@ -128,7 +128,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
   }
   
   getExams(): void {
-    this.examenService.obtenerExamenesActivos().subscribe({
+    this.examenService.listarCuestionarios().subscribe({
       next:(data: Examen[]) => {
         console.log('Data llegada:', data);
         const examenes = data

@@ -1,9 +1,10 @@
 <br><br><br><br>
 
 <div class="filter-container">
-  <mat-form-field class="filter-input" >
+  <mat-form-field class="filter-input">
     <input matInput (input)="filterInput()" placeholder="Filtrar..." [(ngModel)]="filtro">
   </mat-form-field>
+  
 
   <button mat-raised-button (click)="saveExamen()" class="custom-btn" aria-label="Example icon button with a menu icon">
     <mat-icon>add</mat-icon> Añadir un nuevo examen

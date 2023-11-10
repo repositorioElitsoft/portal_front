@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { IniciarSesionComponent } from './iniciar-sesion.component';
-import { LoginService } from 'src/app/service/login.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
-import { AuthService } from 'src/app/service/auth.service';
+import { HttpClientModule } from '@angular/common/http'; 
+import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 
 describe('IniciarSesionComponent', () => {
   let component: IniciarSesionComponent;
@@ -14,8 +12,7 @@ describe('IniciarSesionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [IniciarSesionComponent],
-      imports: [HttpClientTestingModule],  // Agrega aquí los módulos que necesitas
-      providers: [LoginService, CookieService, Router, AuthService, UsuarioService],  // Agrega aquí los servicios que necesitas
+      imports: [HttpClientModule,RouterTestingModule,MatCardModule,ReactiveFormsModule], // Agrega HttpClientModule
     }).compileComponents();
 
     fixture = TestBed.createComponent(IniciarSesionComponent);

@@ -6,3 +6,7 @@ input.mat-input, textarea.mat-input-element {
 font-size: 16px;
 color: #333; /* Color del texto */
 }
+
+.field-custom{
+    width: 27vw;
+}
