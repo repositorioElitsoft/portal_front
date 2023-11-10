@@ -311,6 +311,20 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     });
   }
 
+  downloadCv(event: any) {
+    console.log('usuarioId', event.target?.parentElement)
+    const userId = event.target?.parentElement.id
+    this.usuarioService.downloadCv(userId).subscribe(
+      (data: Blob) => {
+        const url = window.URL.createObjectURL(data);
+        window.open(url, '_blank');
+        // console.log('data:', data);
+      },
+      (error) => {
+        
+      }
+    )
+  }
 
 
   openBottomSheet(): void {

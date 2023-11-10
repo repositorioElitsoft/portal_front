@@ -1,27 +1,30 @@
 <app-navbarexamen-responsive></app-navbarexamen-responsive>
 <app-sidebar-user-exam></app-sidebar-user-exam>>
 
-<div class="bootstrap-wrapper">
-
-    <div class="container-fluid">
-      <div class="row ">
-        
-        <div class="col-md-3 main">
-          
-        </div>
-        
-        <div class="col-md-9 main ">
-
-     
-            <router-outlet></router-outlet>
-         
-          
-        </div>
-      </div>
+  <div class="container">
+    <div class="sidebar">
+        <!-- Contenido de la barra lateral aquí -->
     </div>
-  </div>
+    <div class="content">
+        <div class="dialog-box">
+            <h1 class="perfilr">Portal de Exámenes</h1>
+            <div class="exam-list">
+                <div class="exams">
+                    <div class="exam-card" *ngFor="let exam of exams">
+                        <h2 class="exam-title">{{ exam.name }}</h2>
+                        <p class="exam-description">{{ exam.description }}</p>
+                        <div class="chip-list">
+                            <ul class="topic-list">
+                                <li class="topic-item" *ngFor="let topic of exam.topics">{{ topic }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="router-outlet">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-
-
-  

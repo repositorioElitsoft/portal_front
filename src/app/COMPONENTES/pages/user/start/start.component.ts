@@ -2,7 +2,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnInit } from '@angular/core';
-
+import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
@@ -48,7 +48,73 @@ export class StartComponent implements OnInit {
     console.log(this.examenId);
     this.cargarPreguntas();
 
+
   }
+
+
+  ngAfterViewInit(): void {
+    this.mostrarGrafico();
+  }
+  
+  mostrarGrafico(): void {
+    setTimeout(() => {
+      const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Puntos Conseguidos', 'Respuestas Correctas'],
+              datasets: [{
+                label: 'Resultados del Examen',
+                data: [this.puntosConseguidos, this.respuestasCorrectas],
+                backgroundColor: [
+                  'grey', // Color gris para la primera barra
+                  '#F57C27' // Color personalizado para la segunda barra
+                ],
+                borderColor: [
+                  'grey',
+                  '#F57C27'
+                ],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    color: 'black', // Actualizado de 'fontColor' a 'color'
+                    font: {
+                      size: 14
+                    }
+                  }
+                },
+                tooltip: { // Actualizado de 'tooltips' a 'tooltip'
+                  mode: 'index',
+                  intersect: false,
+                
+                }
+              },
+              responsive: true,
+              maintainAspectRatio: false
+            }
+          });
+        } else {
+          console.error('No se pudo obtener el contexto del canvas');
+        }
+      } else {
+        console.error('Elemento canvas no encontrado');
+      }
+    }, 0);
+  }
+  
+
 
 
   cargarPreguntas(){
@@ -169,27 +235,7 @@ export class StartComponent implements OnInit {
 
   evaluarExamen(){
 
-   /*  this.preguntaService.evaluarExamen(this.preguntas).subscribe(
-      (data:any) => {
-        console.log(data);
-        this.puntosConseguidos = data.puntosMaximos;
-        this.respuestasCorrectas = data.respuestasCorrectas;
-        this.intentos = data.intentos;
-        this.intentosTotales = data.intentosTotales;
-        //this.intentos ++;
-        this.esEnviado = true;
-
-        // Incrementar la variable vecesEnviado
-        this.vecesEnviado++;
-        this.enviosTotales = this.vecesEnviado;
-      },
-      (error) => {
-        console.log(error);
-
-      }
-
-
-    ) */
+ 
 
     this.esEnviado = true;
       
@@ -210,12 +256,16 @@ export class StartComponent implements OnInit {
         this.preguntasTotales ++;
 
       }
+      
     });
     //const newLocal = this.enviosTotales = this.vecesEnviado;
     console.log("Respuestas correctas : " + this.respuestasCorrectas);
     console.log("Puntos conseguidos : " + this.puntosConseguidos);
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
+ 
+    this.mostrarGrafico();
+    
   }
 
   obtenerHoraFormateada(){
@@ -232,3 +282,6 @@ export class StartComponent implements OnInit {
 function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {
   throw new Error('Function not implemented.');
 }
+
+
+

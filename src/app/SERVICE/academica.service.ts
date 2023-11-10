@@ -32,4 +32,6 @@ export class AcademicaService {
     return this.http.delete<Academica>(`${this.url}${id}`);
   }
 
+  
+
 }

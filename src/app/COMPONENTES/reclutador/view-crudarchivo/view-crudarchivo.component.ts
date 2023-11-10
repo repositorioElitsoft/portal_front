@@ -7,6 +7,8 @@ import {
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { UploadFilesComponent } from '../../upload-files/upload-files.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'bottom-sheet-overview-example-sheet',
@@ -16,7 +18,8 @@ import { UsuarioService } from 'src/app/service/usuario.service';
   })
   export class viewCrudArchivoComponent {
     constructor(private _bottomSheetRef: MatBottomSheetRef<viewCrudArchivoComponent>
-      ,private usuarioService: UsuarioService) {}
+      ,private usuarioService: UsuarioService,
+      public dialog: MatDialog,) {}
   
     openLink(event: MouseEvent): void {
       this._bottomSheetRef.dismiss();
@@ -39,7 +42,14 @@ import { UsuarioService } from 'src/app/service/usuario.service';
       )
     }
   
-
+    openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+      this.dialog.open(UploadFilesComponent, {
+        width: '500px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+      });
+    }
+  
 
 
     

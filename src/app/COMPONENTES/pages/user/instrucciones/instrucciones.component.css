@@ -1,46 +1,135 @@
-/* Estilo para el panel de instrucciones */
 
+.mat-card {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.mat-card-header {
+  background-color: #f5f5f5;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mat-card-title {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.mat-card-title i {
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+.mat-card-content {
+  padding: 20px;
+}
+
+.mat-card-content h1 {
+  font-size: 20px;
+  color: #333;
+}
+
+.mat-card-content p {
+  font-size: 16px;
+  color: #666;
+}
+
+.mat-card-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mat-card-content li {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.mat-card-content li i {
+  margin-right: 8px;
+}
+
+.mat-divider {
+  border-top: 1px solid #e0e0e0;
+  margin: 20px 0;
+}
+
+.mat-card-actions {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-top: 1px solid #e0e0e0;
+}
+
+
+@media (max-width: 768px) {
   .mat-card {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* Centra la tarjeta en la pantalla */
+    max-width: 500px; /* Establece un ancho máximo para la tarjeta */
   }
-  
+
+  .mat-card-header {
+    background-color: #f5f5f5;
+    padding: 16px;
+    text-align: center; /* Centra el texto del encabezado */
+  }
+
   .mat-card-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 20px; /* Tamaño de fuente más pequeño para el título */
+    margin: 0;
+    display: block; /* Asegúrate de que el título sea un bloque para centrarlo correctamente */
   }
-  
-  .mat-card-subtitle {
-    color: #888888;
+
+  .mat-card-title i {
+    display: none; /* Oculta el icono si no es necesario */
   }
-  
+
   .mat-card-content {
-    padding: 20px;
+    padding: 15px; /* Menos padding en general */
+    text-align: left; /* Alinea el texto a la izquierda */
   }
-  
-  h1 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
+
+  .mat-card-content h1 {
+    font-size: 18px; /* Tamaño de fuente más pequeño para los encabezados */
+    text-align: center; /* Centra los encabezados */
   }
-  
-  ul {
-    list-style: none;
-    padding: 0;
+
+  .mat-card-content p, 
+  .mat-card-content li {
+    font-size: 14px; /* Tamaño de fuente más pequeño para el texto y los ítems de lista */
   }
-  
-  li {
-    margin-bottom: 10px;
+
+  .mat-card-content ul {
+    padding: 0 15px; /* Agrega padding para mantener la lista alineada con el resto del contenido */
   }
-  
-  b {
-    font-weight: bold;
+
+  .mat-card-content li {
+    margin-bottom: 8px; /* Menos espacio entre ítems de lista */
+    display: block; /* Asegúrate de que los ítems de lista sean bloques para alinear los íconos */
   }
-  
-  /* Estilo para el botón "Comenzar prueba" */
-  mat-card-actions {
+
+  .mat-card-content li i {
+    vertical-align: middle; /* Alinea los íconos verticalmente con el texto */
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+  }
+
+  .mat-card-actions {
+    padding: 15px; /* Menos padding en la sección de acciones */
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Alinea los botones en columna */
+    align-items: stretch; /* Estira los botones para que ocupen todo el ancho */
   }
-  
+
+  .mat-card-actions button {
+    margin-bottom: 10px; /* Agrega espacio entre botones */
+  }
+
+  .mat-card-actions button:last-child {
+    margin-bottom: 0; /* Elimina el margen inferior del último botón */
+  }
+}

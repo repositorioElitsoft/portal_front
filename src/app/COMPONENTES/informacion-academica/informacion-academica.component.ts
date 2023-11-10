@@ -6,7 +6,6 @@ import { Academica } from 'src/app/interface/academica.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AñadirEstudioComponent } from '../shared/añadir-estudio/añadir-estudio.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditarAcademicaComponent } from '../shared/editar-academica/editar-academica.component';
 
 @Component({
   selector: 'app-informacion-academica',
@@ -123,7 +122,7 @@ export class InformacionAcademicaComponent implements OnInit {
   
   
   openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(EditarAcademicaComponent , {
+    this.dialog.open(AñadirEstudioComponent , {
       width: '600px',
       height: '700px',
       enterAnimationDuration,
