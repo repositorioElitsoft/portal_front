@@ -33,8 +33,6 @@ export class InformacionLaboralComponent implements OnInit {
 
 
   constructor(private usuarioService: UsuarioService,
-
-  constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
@@ -45,7 +43,6 @@ export class InformacionLaboralComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerLaboralesGuardados();
-
 
   }
 
@@ -149,8 +146,6 @@ export class InformacionLaboralComponent implements OnInit {
   }
 
   generateHerrForm(){
-
-
     this.herramientaService.getHerramientasByUserId().subscribe({
       next:(data)=>{
 
