@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AddPreguntaComponent } from './add-pregunta.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,6 +11,18 @@ import { FormsModule } from '@angular/forms';
 describe('AddPreguntaComponent', () => {
   let component: AddPreguntaComponent;
   let fixture: ComponentFixture<AddPreguntaComponent>;
+
+  let mockActivatedRoute={
+    
+    snapshot: {
+      params:{
+        exam_id: 'mi-examen-id', exam_titl: 'mi-examen-titl'
+      }
+    }
+  };
+  let mockPreguntaService= jasmine.createSpyObj(['guardarPregunta']);
+
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -29,4 +40,6 @@ describe('AddPreguntaComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });

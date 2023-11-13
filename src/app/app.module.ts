@@ -77,6 +77,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
+import { EditUserDialogComponent } from './COMPONENTES/admin/view-usuarios/edit-user-dialog/edit-user-dialog.component';
 import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 import { MatDialogModule } from '@angular/material/dialog';
 import { WelcomeEntrevistadorComponent } from './COMPONENTES/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
@@ -87,6 +88,9 @@ import { ProfileEComponent } from './COMPONENTES/entrevistador/profile-e/profile
 import { SidebarEResponsiveComponent } from './COMPONENTES/entrevistador/sidebar-e-responsive/sidebar-e-responsive.component';
 import { AddObservacionComponent } from './COMPONENTES/entrevistador/add-observacion/add-observacion.component';
 import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-observaciones/view-observaciones.component';
+import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -123,7 +127,10 @@ import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-obs
     UserDashboardComponent,
     AddCategoriaComponent,
     ViewExamenesComponent,
+    EditUserDialogComponent,
+    CurrencyFormatPipe,
     ViewExamenPreguntasComponent,
+    CaracterOnlyDirective,
     AddPreguntaComponent,
     UserSidebar,
     LoadExamenComponent,
@@ -183,6 +190,8 @@ import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-obs
     RouterOutlet,
     MatChipsModule,
     MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatTooltipModule,
     TextFieldModule,
     ToastrModule.forRoot({

@@ -13,17 +13,38 @@
   </mat-form-field>
 
   <mat-form-field class="filter-select">
+    <mat-label>Cargo</mat-label>
+    <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filter-input">
+    <input matInput (input)="filterByCargo()" placeholder="Cargo..." [(ngModel)]="filterCargo">
+  </mat-form-field>
+
+  <mat-form-field class="filter-select">
+    <mat-label>Estado laboral</mat-label>
+    <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option value="disponible">Disponible</mat-option>
+      <mat-option value="no-disponible">No Disponible</mat-option>
+      <mat-option value="contratado">Contratado</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
       <mat-option value="">Seleccione un opción</mat-option>
       <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
     </mat-select>
   </mat-form-field>
-
+  
   <mat-form-field class="filter-select">
-    <mat-label>Producto</mat-label>
-    <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getVersion(selectedProducto); filterProducto()">
-      <mat-option value="">Seleccione un opción</mat-option>
+    <mat-label>Productos</mat-label>
+    <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProductos" (selectionChange)="filterData(); getVersion(selectedProducto)" multiple>
       <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -46,15 +67,45 @@
       <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears" min="1" max="10">
     </section>
   </mat-form-field>
+</div>
 
-  <div class="filter-slider d-flex flex-column align-items-center">
-    <mat-label>Rango de años de Experiencia: </mat-label>
-    <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
-      <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
-      <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
-    </mat-slider>
+<div>
+  <mat-form-field class="filter-select">
+    <mat-label>Fecha de Postulación Desde</mat-label>
+    <input matInput [matDatepicker]="picker1" [(ngModel)]="fechaPostulacionDesde">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field class="filter-select">
+    <mat-label>Fecha de Postulación Hasta</mat-label>
+    <input matInput [matDatepicker]="picker2" [(ngModel)]="fechaPostulacionHasta">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+  <button mat-raised-button (click)="filterData()">Filtrar Fechas</button>
+</div>  
+
+<div class="filter-container">
+  <div class="sliders-container d-flex flex-row justify-content-between align-items-center w-100">
+    <div class="filter-slider d-flex flex-column align-items-center me-2">
+      <mat-label>Rango de Sueldos:</mat-label>
+      <mat-slider min="1" max="10000001" step="100000" (input)="filterData()" discrete [thumbLabel]="true" [displayWith]="formatLabel">
+        <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
+    
+    <div class="filter-slider d-flex flex-column align-items-center ms-2">
+      <mat-label>Rango de años de Experiencia:</mat-label>
+      <mat-slider min="1" max="10" (input)="filterAniosExp()" discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
+        <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
   </div>
 </div>
+
 
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"

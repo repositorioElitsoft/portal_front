@@ -18,6 +18,7 @@ export class LaboralService {
 
   guardarLaboral(laboral: Laboral | undefined, id: number | null | undefined): Observable<Laboral> {
     if(id){
+      console.log('Se actualiza')
       return this.http.put<Laboral>(`${this.url}${id}`, laboral);
     }
     return this.http.post<Laboral>(this.url, laboral);

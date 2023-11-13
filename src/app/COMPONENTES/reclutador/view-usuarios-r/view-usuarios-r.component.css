@@ -4,12 +4,12 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 /* Estilos para los campos de filtro */
 .filter-input, .filter-select {
-  margin-right: 20px;
+  margin-right: 10px;
   flex: 1;
 }
 

@@ -58,6 +58,10 @@ export class UsuarioService {
     return this.HttpClient.put<Usuario>(`${this.url}/usuarios/`,user);
   }
 
+  updateUsuarioById(usr_id: number, user: Usuario): Observable<Usuario>{
+    return this.HttpClient.put<Usuario>(`${this.url}/usuarios/actualizar/${usr_id}`, user);
+  }
+
   obtenerUsuarioDesdeLocalStorage() {
     const usuarioString = localStorage.getItem('usuario');
     return usuarioString ? JSON.parse(usuarioString) : null;
@@ -130,4 +134,11 @@ export class UsuarioService {
   public downloadCv(userId: any): Observable<Blob> {
     return this.HttpClient.get(`${this.url}/usuarios/file/${userId}`, {responseType: 'blob'});
   }
+  public borrarCV(usuarioId: number): Observable<any> {
+    const url = `${this.url}/usuarios/eliminar-cv/${usuarioId}`; 
+    return this.HttpClient.delete(url);
+  }
+
+
+
 }

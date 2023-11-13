@@ -24,7 +24,8 @@ export class AddUsuariosComponent implements OnInit {
     usr_email:'',
     usr_direcc:'',
     usr_pass:'',
-    usr_rol:''
+    usr_rol:'',
+
 
   }
 

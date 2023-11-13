@@ -173,6 +173,12 @@
           </div>
           <div *ngIf="isUploadingFile"> Cargando CV...</div>
         </button>
+
+        <button mat-raised-button class ="cv-btn" [disabled]="isUploadingFile" (click)="borrarCV()" type="button">
+          Eliminar CV
+        </button>
+
+
         <mat-icon *ngIf="currentResumeName" class="bg-green">check_circle</mat-icon>
         <input name="file" hidden (change)="onFileSelected()" #fileInput type="file" id="file">
         <br/>

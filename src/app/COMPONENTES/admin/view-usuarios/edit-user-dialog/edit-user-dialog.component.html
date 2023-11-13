@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Actualizar Usuario</h2>
+<div mat-dialog-content class="mat-typography">
+  <form [formGroup]="form" novalidate>
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="usr_nom">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Apellido paterno</mat-label>
+        <input matInput formControlName="usr_ap_pat">
+      </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="usr_email">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Rut</mat-label>
+      <input matInput formControlName="usr_rut">
+    </mat-form-field>
+  </form>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-button (click)="onClose()">Cancelar</button>
+  <button mat-button (click)="onSave()" [disabled]="!form.valid">Guardar</button>
+</mat-dialog-actions>

@@ -25,7 +25,8 @@ export class ProfileAdminComponent implements OnInit {
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
-    laborales: []
+    laborales: [],
+    cargoUsuario: []
   };
   router: any;
 

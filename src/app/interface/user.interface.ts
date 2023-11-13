@@ -1,3 +1,4 @@
+import { CargoUsuario } from "./cargos-usuario.interface"
 import { HerramientaData } from "./herramienta-data.interface"
 import { Laboral } from "./laboral.interface"
 import { Observacion } from "./observacion.interface"
@@ -34,6 +35,7 @@ export interface Usuario {
     cvPath?: string;
     laborales?: Laboral[];
     observaciones?: Observacion[];
+    cargoUsuario?: CargoUsuario[];
 }
 
 
