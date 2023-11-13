@@ -28,8 +28,8 @@ export class IniciarSesionComponent implements OnInit {
     private usuarioService: UsuarioService,
     private cookieService: CookieService,
     private authService: AuthService
-    ) 
-    { 
+    )
+    {
       this.loginForm = this.formBuilder.group({
         email: ['', Validators.required],
         password: ['', Validators.required]
@@ -50,20 +50,23 @@ export class IniciarSesionComponent implements OnInit {
         console.log(`userRole: ${userRole}`);
 
         if ( userRole === 'ROLE_ADMIN' ) {
-          this.router.navigate(['/admin/welcome-admin']); 
+          this.router.navigate(['/admin/welcome-admin']);
         }
         else if ( userRole === 'ROLE_REC' ) {
-          this.router.navigate(['/reclutador/welcome-reclutador']); 
+          this.router.navigate(['/reclutador/welcome-reclutador']);
+        }
+        else if ( userRole === 'ROLE_ENTR' ) {
+          this.router.navigate(['/entrevistador/welcome-entrevistador']);
         }
         else {
           this.router.navigate(['/user/datos_personales']);
-        }        
+        }
       },
       (e) => {
         console.log(`Error: ${e}`);
-        this.inicioSesionFallido = true 
+        this.inicioSesionFallido = true
       }
-      
+
     );
   }
 }

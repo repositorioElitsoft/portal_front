@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/interface/user.interface';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
+import { Usuario } from 'src/app/interface/user.interface';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
-
 @Component({
-  selector: 'app-profile-admin',
-  templateUrl: './profile-admin.component.html',
-  styleUrls: ['./profile-admin.component.css']
+  selector: 'app-profile-e',
+  templateUrl: './profile-e.component.html',
+  styleUrls: ['./profile-e.component.css']
 })
-export class ProfileAdminComponent implements OnInit {
+export class ProfileEComponent {
 
   editable: boolean = false;
   form!: FormGroup;
@@ -112,5 +111,4 @@ export class ProfileAdminComponent implements OnInit {
     }
   }
 
-
-  }
+}

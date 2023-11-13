@@ -1,0 +1,73 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5; /* Color de fondo gris claro */
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos para el contenedor del perfil */
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
+  background-color: #f5f5f5; /* Color de fondo gris claro */
+  border: 2px solid orange;
+  background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+}
+
+.profile-box {
+  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
+  border-radius: 20px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+  width: 80%; /* Ajustar el ancho según sea necesario */
+  background-color: #fff; /* Color de fondo blanco */
+  color: #333; /* Color de texto principal */
+  border: 2px solid orange;
+  background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+}
+
+/* Estilos para el título de bienvenida */
+.profile-box h2 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #F76805; /* Color naranja */
+}
+
+/* Estilos para el contenido del perfil */
+.profile-content {
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Estilos para la lista de funciones */
+.profile-box ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+/* Estilos para los elementos de la lista */
+.profile-box li {
+  margin-bottom: 5px;
+}
+
+/* Estilos para el enlace de acción */
+.action-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #F76805; /* Color naranja */
+  color: #fff; /* Color de texto blanco */
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.action-link:hover {
+  background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+}

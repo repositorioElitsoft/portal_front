@@ -100,13 +100,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
               const currentYear = new Date().getFullYear();
               return fechaFin.getFullYear() >= currentYear - this.lastYears;
             }
-    
+
             return false;
           });
         });
       });
     }
-  
+
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
       const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
@@ -126,7 +126,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     if (this.isIrrelevant) {
       this.lastYears = 0;
     }
-  
+
     this.filterData();
   }
 
@@ -138,10 +138,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterInput() {
     let filteredArray = this.originalDataCopy;
 
-    if (this.filtro) { 
+    if (this.filtro) {
       const filtroLowerCase = this.filtro.toLowerCase();
       filteredArray = filteredArray.filter(element => {
-        if (element.usr_nom) { 
+        if (element.usr_nom) {
           return element.usr_nom.toLowerCase().includes(filtroLowerCase);
         }
         return false;
@@ -183,6 +183,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
           usr_tel: usuario.usr_tel || '',
           usr_email: usuario.usr_email || '',
+          usr_direcc:usuario.usr_direcc || '',
           usr_herr: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
             .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
@@ -251,7 +252,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this.filterProducto();
     }
   }
-    
+
 
     getVersion(productoId: number) {
       if (productoId) {
@@ -317,7 +318,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         // console.log('data:', data);
       },
       (error) => {
-        
+
       }
     )
   }

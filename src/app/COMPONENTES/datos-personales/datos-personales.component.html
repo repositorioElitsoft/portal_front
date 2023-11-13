@@ -110,13 +110,52 @@
         </div>
 
         <div class="row mb-3">
-          <label for="inputUbicación" class="col-sm-2 col-form-label">Ubicación:</label>
+          <label for="inputUbicacion" class="col-sm-2 col-form-label">País:</label>
           <div class="col-sm-10">
-            <select type="ubicacion" class="form-control" id="inputUbicación" formControlName="pais" name="inputUbicacion">
-              <option *ngFor="let country of countries" [value]="country.pais_id">{{ country.pais_nom }}</option>
+            <select type="ubicacion" class="form-control" id="inputUbicacion" formControlName="country" name="inputUbicacion"
+            [ngClass]="{'is-invalid': form.get('country')?.invalid && form.get('country')?.touched}">
+              <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
             </select>
+            <div *ngIf="form.get('country')?.invalid && form.get('country')?.touched" class="invalid-feedback">
+              Debe seleccionar un país
+            </div>
           </div>
         </div>
+        <div class="row mb-3">
+          <label for="inputEstado" class="col-sm-2 col-form-label">Región o Estado:</label>
+          <div class="col-sm-10">
+            <select type="estado" class="form-control" id="inputEstado" formControlName="state" name="inputEstado"
+            [ngClass]="{'is-invalid': form.get('state')?.invalid && form.get('state')?.touched}">
+              <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+            </select>
+            <div *ngIf="form.get('state')?.invalid && form.get('state')?.touched" class="invalid-feedback">
+              Debe seleccionar una región o estado
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputCiudad" class="col-sm-2 col-form-label">Ciudad:</label>
+          <div class="col-sm-10">
+            <select type="ciudad" class="form-control" id="inputCiudad" formControlName="city" name="inputCiudad"
+            [ngClass]="{'is-invalid': form.get('city')?.invalid && form.get('city')?.touched}">
+              <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+            </select>
+            <div *ngIf="form.get('city')?.invalid && form.get('city')?.touched" class="invalid-feedback">
+              Debe seleccionar una ciudad
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputDireccion" class="col-sm-2 col-form-label">Dirección:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputDireccion" formControlName="usr_direcc" name="inputDireccion"
+              [ngClass]="{'is-invalid': form.get('usr_direcc')?.invalid && form.get('usr_direcc')?.touched}">
+            <div *ngIf="form.get('usr_direcc')?.hasError('required') && form.get('usr_direcc')?.touched" class="invalid-feedback">
+              Debe ingresar dirección
+            </div>
+          </div>
+        </div>
+
         <div class="row mb-3">
           <label for="inputLinkedin" class="col-sm-2 col-form-label">URL Linkedin:</label>
           <div class="col-sm-10">

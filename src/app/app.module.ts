@@ -69,16 +69,24 @@ import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatTabsModule} from '@angular/material/tabs'; 
-import {MatChipsModule} from '@angular/material/chips'; 
-import {MatExpansionModule} from '@angular/material/expansion'; 
-import {MatTooltipModule} from '@angular/material/tooltip'; 
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { ExamenModalComponent } from './COMPONENTES/admin/examen-modal/examen-modal.component';
 import {TextFieldModule} from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './COMPONENTES/shared/advertencia-eliminar/advertencia-eliminar.component';
 import { CaracterOnlyDirective } from './directives/caracter-only-directive';
 import { MatDialogModule } from '@angular/material/dialog';
+import { WelcomeEntrevistadorComponent } from './COMPONENTES/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
+import { DashboardEComponent } from './COMPONENTES/entrevistador/dashboard-e/dashboard-e.component';
+import { SidebarEComponent } from './COMPONENTES/entrevistador/sidebar-e/sidebar-e.component';
+import { ObservacionesComponent } from './COMPONENTES/entrevistador/observaciones/observaciones.component';
+import { ProfileEComponent } from './COMPONENTES/entrevistador/profile-e/profile-e.component';
+import { SidebarEResponsiveComponent } from './COMPONENTES/entrevistador/sidebar-e-responsive/sidebar-e-responsive.component';
+import { AddObservacionComponent } from './COMPONENTES/entrevistador/add-observacion/add-observacion.component';
+import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-observaciones/view-observaciones.component';
 
 @NgModule({
   declarations: [
@@ -122,12 +130,20 @@ import { MatDialogModule } from '@angular/material/dialog';
     InstruccionesComponent,
     StartComponent,
     SidebarUserComponent,
-    SidebarRResponsiveComponent, 
+    SidebarRResponsiveComponent,
     ExamenModalComponent,
     AddUsuariosComponent,
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
     CaracterOnlyDirective,
+    WelcomeEntrevistadorComponent,
+    DashboardEComponent,
+    SidebarEComponent,
+    ObservacionesComponent,
+    ProfileEComponent,
+    SidebarEResponsiveComponent,
+    AddObservacionComponent,
+    ViewObservacionesComponent,
 
   ],
   imports: [

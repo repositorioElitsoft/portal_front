@@ -1,6 +1,6 @@
 import { HerramientaData } from "./herramienta-data.interface"
 import { Laboral } from "./laboral.interface"
-import { Pais } from "./pais.interface"
+import { Observacion } from "./observacion.interface"
 
 export interface Usuario {
     usr_id?:number
@@ -14,16 +14,28 @@ export interface Usuario {
     usr_gen?:string
     usr_gen_otro?: string;
     usr_url_link?:string
-    pais_nom?: string;
-    pais?: Pais; // Agregar esta línea para definir la propiedad pais
+    city?: {
+      id?: number;
+      name?: string;
+      state?: {
+        id?: number;
+        name?: string;
+        country?: {
+          id?: number;
+          name?: string;
+        };
+      };
+    };
+    usr_direcc:string;
     herramientas?: HerramientaData[];
     usr_herr: string;
     herr_ver: string;
     herr_exp: string;
     cvPath?: string;
     laborales?: Laboral[];
+    observaciones?: Observacion[];
 }
 
 
-export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
+export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'| 'city' | 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
 

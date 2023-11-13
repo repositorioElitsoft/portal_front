@@ -1,0 +1,18 @@
+<h2>Agregar Observación</h2>
+<form #observacionForm="ngForm" (ngSubmit)="guardarObservacion()">
+  <mat-form-field>
+    <mat-label>Categoría</mat-label>
+    <mat-select name="obs_categoria" [(ngModel)]="nuevaObservacion.obs_categoria" required>
+      <mat-option value="Evaluaciones Operacionales">Evaluaciones Operacionales</mat-option>
+      <mat-option value="Evaluaciones Tecnicas">Evaluaciones Tecnicas</mat-option>
+      <mat-option value="Evaluaciones Gerenciales">Evaluaciones Gerenciales</mat-option>
+      <mat-option value="Evaluacion Final">Evaluación Final</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción" name="obs_texto" [(ngModel)]="nuevaObservacion.obs_texto" required></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit">Guardar</button>
+</form>

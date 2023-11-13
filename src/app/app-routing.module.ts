@@ -36,6 +36,10 @@ import { StartComponent } from './COMPONENTES/pages/user/start/start.component';
 import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuarios.component';
 
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
+import { DashboardEComponent } from './COMPONENTES/entrevistador/dashboard-e/dashboard-e.component';
+import { WelcomeEntrevistadorComponent } from './COMPONENTES/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
+import { ProfileEComponent } from './COMPONENTES/entrevistador/profile-e/profile-e.component';
+import { ObservacionesComponent } from './COMPONENTES/entrevistador/observaciones/observaciones.component';
 
 
 const routes: Routes = [
@@ -61,7 +65,7 @@ const routes: Routes = [
       {path:'informacion-academica', component:InformacionAcademicaComponent,},
       {path:'informacion-laboral', component:InformacionLaboralComponent, },
       {path:'cargo-usuario', component:CargoUsuarioComponent,},
-      
+
     ]
   },
 
@@ -108,7 +112,7 @@ const routes: Routes = [
         path:'add-pregunta/:exam_id/:exam_titl',
         component:AddPreguntaComponent
       },
-     
+
       {
         path:'view-usuarios',
         component:ViewUsuariosComponent
@@ -181,6 +185,26 @@ const routes: Routes = [
     component:StartComponent,
     canActivate:[AuthGuard]
   },
+  {
+    path:"entrevistador",
+    component:DashboardEComponent,
+    canActivate:[AuthGuard],
+    data: { role: 'ROLE_ENTR' },
+    children:[
+      {
+        path:'welcome-entrevistador',
+        component:WelcomeEntrevistadorComponent
+      },
+      {
+        path:'profile-e',
+        component:ProfileEComponent
+      },
+      {
+        path:'observaciones',
+        component:ObservacionesComponent
+      }
+    ]
+  }
 
 ];
 

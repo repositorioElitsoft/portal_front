@@ -63,6 +63,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
             usr_nom: usuario.usr_nom || '',
             usr_tel: usuario.usr_tel || '',
             usr_email: usuario.usr_email || '',
+            usr_direcc:usuario.usr_direcc || '',
             usr_herr: usuario.herramientas,
             herr_ver: usuario.herramientas,
             herr_exp: usuario.herramientas

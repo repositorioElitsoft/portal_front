@@ -3,14 +3,17 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Usuario } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-import { PaisService } from 'src/app/service/pais.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { State } from 'src/app/interface/state.interface';
+import { City } from 'src/app/interface/city.interface';
+import { CityService } from 'src/app/service/city.service';
+import { CountryService } from 'src/app/service/country.service';
+import { StateService } from 'src/app/service/state.service';
+import { Country } from 'src/app/interface/country.interface';
 
 @Component({
   selector: 'app-datos-personales',
@@ -19,11 +22,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
-
   currentResumeName?: string = "";
+  countries: Country[] = [];
+  states: State[] = []; // Lista de estados
+  cities: City[] = []; // Lista de ciudades
 
-
-  countries: Pais[] = [];
   isLoaded: boolean = true
   isUploadingFile: boolean = false
 
@@ -38,11 +41,19 @@ export class DatosPersonalesComponent implements OnInit {
     usr_gen:'',
     usr_gen_otro:'',
     usr_url_link: '',
-    pais: {
-      pais_id: undefined,
-      pais_nom: ''
+    city: {
+      id: undefined,
+      name: '',
+      state: {
+        id: undefined,
+        name: '',
+        country: {
+          id: undefined,
+          name: '',
+        },
+      },
     },
-    pais_nom: '',
+    usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
@@ -54,7 +65,9 @@ export class DatosPersonalesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private usuarioService: UsuarioService,
-    private paisService: PaisService,
+    private countryService: CountryService,
+    private stateService: StateService,
+    private cityService: CityService,
     private snackBar: MatSnackBar,
     private toastr:ToastrService,
     private notification: NotificationService,
@@ -69,7 +82,10 @@ export class DatosPersonalesComponent implements OnInit {
       usr_nom: ["",[Validators.required]],
       usr_ap_pat: ["",[Validators.required]],
       usr_ap_mat: ["",[Validators.required]],
-      pais: ["1",[Validators.required]],
+      country: ["1", [Validators.required]],
+      state: ["", [Validators.required]],
+      city: ["", [Validators.required]],
+      usr_direcc:["", Validators.required],
       usr_url_link: ["",[]],
       usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
       usr_gen:["Masculino", [Validators.required]],
@@ -91,16 +107,53 @@ export class DatosPersonalesComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.paisService.obtenerPaises().subscribe(
-      (data: any[]) => {
-        this.countries = data;
+    this.countryService.obtenerPaises().subscribe(
+      (data: Country[]) => {
+        this.countries = this.sortByName(data);
       },
       (error) => {
         console.error('Error fetching countries:', error);
       }
     );
+
+    this.form.get('country')?.valueChanges.subscribe((selectedCountryId) => {
+      if (selectedCountryId) {
+        this.cargarEstadosPorPais(selectedCountryId);
+      }
+    });
+
+    this.form.get('state')?.valueChanges.subscribe((selectedStateId) => {
+      if (selectedStateId) {
+        this.cargarCiudadesPorEstado(selectedStateId);
+      }
+    });
+
     this.ObtenerUsuarioGuardado();
 
+  }
+
+  cargarEstadosPorPais(paisId: number) {
+    this.stateService.obtenerEstadosPorPais(paisId).subscribe(
+      (data: State[]) => {
+        this.states = this.sortByName(data);
+      },
+      (error) => {
+        console.error('Error fetching states:', error);
+      }
+    );
+  }
+
+  cargarCiudadesPorEstado(estadoId: number) {
+    this.cityService.obtenerCiudadesPorEstado(estadoId).subscribe(
+      (data: City[]) => {
+        this.cities = this.sortByName(data);
+        console.log(this.cities)
+
+      },
+      (error) => {
+        console.error('Error fetching cities:', error);
+      }
+    );
   }
 
   navigateToRoute(route: string) {
@@ -109,6 +162,10 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
 
+  private sortByName(data: any[]): any[] {
+    // Ordenar por nombre de manera ascendente
+    return data.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
@@ -153,7 +210,8 @@ export class DatosPersonalesComponent implements OnInit {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) =>{
         this.usuarioGuardado = data;
-        console.log(this.usuarioGuardado)
+        console.log(data)
+
         this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
 
 
@@ -164,13 +222,20 @@ export class DatosPersonalesComponent implements OnInit {
           usr_nom: this.usuarioGuardado.usr_nom,
           usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
           usr_ap_mat: this.usuarioGuardado.usr_ap_mat,
-          pais: this.usuarioGuardado.pais?.pais_id,
+          usr_direcc: this.usuarioGuardado.usr_direcc,
           usr_url_link: this.usuarioGuardado.usr_url_link,
           usr_tel: this.usuarioGuardado.usr_tel,
           usr_gen:this.usuarioGuardado.usr_gen,
           usr_gen_otro:this.usuarioGuardado.usr_gen_otro,
 
         });
+
+        if (this.usuarioGuardado.city && this.usuarioGuardado.city.state && this.usuarioGuardado.city.state.country) {
+          this.form.get('country')?.setValue(this.usuarioGuardado.city.state.country.name);
+          this.form.get('state')?.setValue(this.usuarioGuardado.city.state.name);
+          this.form.get('city')?.setValue(this.usuarioGuardado.city.name);
+        }
+
 
         // Activa manualmente el evento valueChanges en usr_gen
       if (this.usuarioGuardado.usr_gen === 'Otro') {
@@ -209,13 +274,10 @@ export class DatosPersonalesComponent implements OnInit {
 
     console.log(user);
 
-    user.pais = {
-      pais_id: this.form.value.pais,
-      pais_nom: ""
-    }
 
     console.log(user);
     try{
+
       this.usuarioService.updateUsuario(user).toPromise()
       const isConfirmed = await this.notification.showNotification(
         "success",
@@ -228,14 +290,11 @@ export class DatosPersonalesComponent implements OnInit {
       }
     } catch (error) {
 
+      console.error('Error al actualizar el usuario:', error);
     }
 
 
   }
-
-
-
-
 
 
 }

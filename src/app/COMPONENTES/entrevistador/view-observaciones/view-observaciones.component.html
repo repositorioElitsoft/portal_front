@@ -1,0 +1,12 @@
+<!-- show-observaciones.component.html -->
+<h2>Observaciones del Usuario</h2>
+<ul>
+  <li *ngFor="let observacion of data.observaciones">
+    <p><strong>N°:</strong> {{ observacion.obs_id }}</p>
+    <p><strong>Categoría:</strong> {{ observacion.obs_categoria }}</p>
+    <p><strong>Descripción:</strong> {{ observacion.obs_texto }}</p>
+    <p><strong>Fecha de Creación:</strong> {{ observacion.obs_fecha_creacion | date }}</p>
+    <!-- Agrega más campos aquí si es necesario -->
+  </li>
+</ul>
+
