@@ -40,9 +40,14 @@
 
             <div class="flex">
               <h4 class="Titulos  mb-4">Acciones</h4>
-           <button mat-mini-fab  class="minifab m-1" (click)="editarAcademica(academica.inf_acad_id)"><mat-icon>edit</mat-icon>
-           </button>
-           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)"> 
+              <button mat-mini-fab class="minifab m-1"  id="{{academica.inf_acad_id}}" (click)=" editarAcademica($event)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              
+              
+              
+           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" > 
           	<mat-icon>delete</mat-icon>
            </button>
 
@@ -55,58 +60,12 @@
         No has definido ninguna experiencia académica
       </div>
       
-      <button mat-raised-button class="botonprimario m-2"  (click)="addExperienceRow()">+ Añadir estudios</button>
+      <button mat-raised-button class="botonprimario m-2"   (click)="openAddDialog('300ms', '150ms')">+ Añadir estudios</button>
      
       <button  mat-raised-button class="botonprimario m-2"  *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
-    <div class="div-inputs" *ngIf="creationMode">
-
-      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
-
-        <div class="row mb-3">
-          <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
-          <div class="col-sm-10">
-            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="titl" name="inputTitulo" >
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputEducacion" class="col-sm-2 col-form-label">Institución Educativa:</label>
-          <div class="col-sm-10">
-            <input type="inputEducacion" class="form-control" id="inputEducacion" formControlName="inf_acad_nom_esc" name="inputEducacion">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechain" formControlName="inf_acad_fec_ini" [min]="minFecha" [max]="today" name="inputFechaini">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" formControlName="inf_acad_fec_fin" [min]="minFecha" [max]="today" name="inputFechafin">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="selectEstadoAcademico" class="col-sm-2 col-form-label">Estado Academico:</label>
-            <select class="form-select" id="selectEstadoAcademico" formControlName="inf_acad_est" name="estadoAcademico">
-              <option selected disabled >Selecciona una opción...</option>
-              <option value="En curso">En curso</option>
-              <option value="En práctica">En práctica</option>
-              <option value="Egresado">Egresado</option>
-              <option value="Titulado">Titulado</option>
-            </select>
-        </div>
-
-
-        <div class="div-form d-grid justify-content-end">
-          <div class="flex">
-            <button button  mat-raised-button class="botonprimario m-2"  (click)="goBack()" >Cancelar</button>
-            <button  [disabled]="!form.valid" type="submit" button  mat-raised-button  class="botonprimario m-2"> Guardar</button>
-          </div>   
-        </div>
-      </form>
-    </div>
   </mat-card>
+
+  
 </body>
 </html>

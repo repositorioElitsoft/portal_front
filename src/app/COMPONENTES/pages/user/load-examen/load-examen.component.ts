@@ -29,7 +29,7 @@ export class LoadExamenComponent implements OnInit {
         this.examenService.obtenerExamenesActivos().subscribe(
           (data) => {
         
-          
+            console.log("data recibida de exámenes", data)
             this.examenes = data.filter((examen: any) =>{
               console.log("la cat:", examen.categoria)
               return examen.categoria !== null

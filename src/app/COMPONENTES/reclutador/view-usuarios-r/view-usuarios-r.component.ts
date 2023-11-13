@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator} from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatSort, Sort} from '@angular/material/sort';
 import { Usuario } from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
@@ -12,11 +12,13 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
-import { NgModel } from '@angular/forms';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { LaboralService } from 'src/app/service/laboral.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 
 
@@ -59,7 +61,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private productoService: ProductoService,
     private laboralService: LaboralService,
     public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
+    
   ) {}
 
 
@@ -343,6 +347,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     )
   }
 
+
+  openBottomSheet(): void {
+    this._bottomSheet.open(viewCrudArchivoComponent);
+  }
+
+
+  
   openUserDialog(event: any) {
 
 

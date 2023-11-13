@@ -10,15 +10,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
-describe('StartComponent', () => {  
+describe('StartComponent', () => {
   let component: StartComponent;
   let fixture: ComponentFixture<StartComponent>;
 
   beforeEach(async () => {
-    // Crea un objeto ActivatedRoute mock
     const activatedRoute = {
       snapshot: {
-        paramMap: new Map<string, string>(), // Puedes configurar los parámetros de la ruta si es necesario
+        paramMap: new Map<string, string>(),
       },
     };
 

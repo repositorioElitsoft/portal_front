@@ -1,0 +1,38 @@
+<mat-card class="formacademica" *ngFor="let academicaItem of academicas">
+  <h4 class="perfilr" >Información académica</h4>
+    <div class="academica-item">
+        <mat-form-field>
+            <mat-label>Título":</mat-label>
+            <input matInput type="text" [(ngModel)]="academicaItem.titl" placeholder="Título">
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-label>Institución Educativa:</mat-label>
+            <input matInput type="text" [(ngModel)]="academicaItem.inf_acad_nom_esc" placeholder="Institucion Educativa">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Fecha Inicio:</mat-label>
+            <input matInput type="text" [(ngModel)]="academicaItem.inf_acad_fec_ini" type="date" placeholder="Fecha Inicio">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Fecha Fin:</mat-label>
+            <input matInput type="text"  [(ngModel)]="academicaItem.inf_acad_fec_fin" type="date" placeholder="Fecha Fin">
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-label>Estado:</mat-label>
+            <input matInput type="text" [(ngModel)]="academicaItem.inf_acad_est" placeholder="Estado">
+          </mat-form-field>
+
+          <mat-card class="guardarycancelar">
+            <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Guardar</button>
+            <button mat-raised-button class="botonprimario m-2" (click)="goBack()">Cancelar</button>
+            </mat-card>
+
+    </div>
+  </mat-card>
+  

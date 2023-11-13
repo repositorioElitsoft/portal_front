@@ -1,5 +1,5 @@
 
-<br><br><br><br><br><br><br>
+<br><br>
 
 
 <button  button  mat-raised-button class="botonprimario m-2" (click)="botonEstadistica($event)"  aria-label="Example icon button with a menu icon">
@@ -38,24 +38,35 @@
     </mat-select>
   </mat-form-field>
   
-  <div class="d-flex flex-column align-items-center mb-4 me-4">
-    <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
-  </div>
-  
-  <mat-form-field class="d-flex flex-column align-items-center">
-    <mat-label>Años de experiencia reciente</mat-label>
-    <section class="example-section">
-      <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears" min="1" max="10">
-    </section>
-  </mat-form-field>
 
-  <div class="filter-slider d-flex flex-column align-items-center">
-    <mat-label>Rango de años de Experiencia: </mat-label>
-    <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
-      <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
-      <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
-    </mat-slider>
-  </div>
+    <div class="filter-slider d-flex flex-column align-items-center">
+      <mat-label>Rango de años de Experiencia: </mat-label>
+      <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
+        <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
+
+    <div class="filter-slider d-flex flex-column align-items-center">
+
+      <div class="d-flex">
+          <div class="d-flex flex-column align-items-center mb-4 me-4">
+            <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
+          </div>
+          <mat-form-field class="d-flex flex-column align-items-center">
+            <mat-label>Años de experiencia reciente</mat-label>
+            <section class="example-section">
+              <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
+            </section>
+          </mat-form-field>
+      </div>
+
+    </div>
+
+
+
+  
+  
 </div>
 
 
@@ -88,7 +99,7 @@
       <button mat-mini-fab color="primary" id="{{element.usr_email}}" matTooltip="Ver perfil" (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
         <mat-icon>menu</mat-icon>
       </button>
-      <button class="ms-3" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Descarga CV" [disabled]="!element.cvPath" id="{{element.usr_id}}" (click)="downloadCv($event)">
+      <button class="ms-3" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Descarga CV" [disabled]="!element.cvPath" id="{{element.usr_id}}" (click)="openBottomSheet()">
         <mat-icon>picture_as_pdf</mat-icon>
       </button>
     </td>

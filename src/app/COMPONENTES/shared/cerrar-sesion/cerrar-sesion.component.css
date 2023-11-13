@@ -1,0 +1,39 @@
+/* Estilos Generales para el Diálogo */
+mat-dialog-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+  }
+  
+  .mat-icon.mat-warn {
+    font-size: 24px;
+    color: #ffff;
+    
+  }
+  
+  .dialog-content p {
+    margin-top: 0;
+    font-size: 16px;
+  }
+  
+  /* Estilos para el área de acciones del diálogo */
+
+  /* Estilos para el botón primario (Aceptar) */
+  .botonprimario {
+
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  
+  .botonprimario:hover {
+    transform: translateY(-2px);
+  }
+  
+.header{
+    background-color:  #F57C27;
+}
+
+.title{
+    color: #ffff; font-size: 24px;
+    align-items: center;
+}

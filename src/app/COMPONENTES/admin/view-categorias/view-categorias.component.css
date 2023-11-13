@@ -13,16 +13,11 @@ body {
   justify-content: center; /* Centrar verticalmente */
   align-items: center; /* Centrar horizontalmente */
   min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
-  border: 2px solid orange;
+  border: 2px solid #F57C27;
   background-color: #f5f5f5; /* Color de fondo gris claro */
   text-align: center; /* Centrar el texto dentro del contenedor */
   padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
 }
 
-.custom-btn{
-  background-color: orange!important;
-  margin-right: 1vw;
-  margin-bottom: 1vh;
-  color: white!important;
-  margin-left: 2vw;
-}
+
+

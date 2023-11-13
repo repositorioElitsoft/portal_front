@@ -4,7 +4,7 @@
 /* @import '@angular/flex-layout'; */
 
 .admin-panel-text {
-    color: orange;
+    color: #F57C27;
     font-weight: bold;
   }
 
@@ -47,11 +47,40 @@ body { margin: 0;
   color:#F57C27;
   font-family: 'Meera Inimai', sans-serif;
   font-weight: bold!important;
-  font-size: 2em!important;
+  font-size: 1.5em!important;
 }
 
 
+.mat-mdc-dialog-container .mdc-dialog__surface{
 
+  border-radius: 10px!important;
+  border-color:#F57C27!important;
+  border: 1px solid #F57C27!important;
+  display: flex;
+}
+
+.custom-btn2{
+  background-color: #F57C27!important;
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+  color: white!important;
+  margin-left: 2vw;
+}
+.custom-btn2:hover{
+  background-color: #fff !important;
+    color: #F57C27 !important;
+  
+}
+.custom-btn3{
+  background-color: #F57C27!important;
+  color: white!important;
+}
+
+.custom-btn3:hover{
+  background-color: #fff !important;
+    color: #F57C27 !important;
+  
+}
 
 .botonprimario{
   background-color: #F57C27 !important;
@@ -86,7 +115,7 @@ body { margin: 0;
   color: #fff !important;
 }
 .bootstrap-wrapper {
-  padding: 20px;
+  padding: 20px important;
   border-radius: 10px;
   margin-top: 2vh;
   padding-right: 10vh;
@@ -110,6 +139,11 @@ background-size: cover;
 
 
 
+.example-container {
+  height: 100vh;
+  border: none; /* Elimina el borde */
+  box-shadow: none; /* Elimina la sombra */
+}
 
 
 
@@ -134,10 +168,7 @@ background-size: cover;
     
   }
 
-  .perfilr{
   
-    font-size: 1.5em!important;
-  }
   
   .botonprimario{
    
@@ -145,6 +176,8 @@ background-size: cover;
   }
   
 
+ 
+  
   
 .bootstrap-wrapper {
   padding: 20px;
@@ -155,8 +188,3 @@ background-size: cover;
 }
 
 }
-
-
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

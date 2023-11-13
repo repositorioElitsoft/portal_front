@@ -2,9 +2,11 @@ import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
+import 'chartjs-plugin-annotation';
 import 'chartjs-plugin-annotation';
 
 //se declara fuera de la clase de forma global
@@ -35,6 +37,9 @@ export class StartComponent implements OnInit {
 
 
 
+
+
+
   constructor(
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
@@ -47,6 +52,7 @@ export class StartComponent implements OnInit {
     this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
+    
 
 
   }
@@ -64,23 +70,32 @@ export class StartComponent implements OnInit {
           const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
+              labels: ['Puntos Conseguidos'],
               datasets: [{
-                  type: 'bar',
-                  label: 'Bar Dataset',
-                  data: [this.puntosConseguidos]
-              }, {
-                  type: 'line',
-                  label: 'Line Dataset',
-                  data: [10],
-              }],
-              labels: ['Puntuación']
-          },
+                label: 'Resultados del Examen',
+                data: [this.puntosConseguidos, this.respuestasCorrectas],
+                backgroundColor: ['grey', '#F57C27'],
+                borderColor: ['grey', '#F57C27'],
+                borderWidth: 1,
+                  barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
+
+              }]
+            },
             options: {
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0,
-                  max: 20
+                  min: 0, // Define el valor mínimo del eje Y
+                  max: parseInt (this.examen.puntosMaximos),
+                  title: {
+        display: true,
+        text: 'Puntuacion Maxima', // Aquí escribes el texto de tu etiqueta
+        color: '#666', // Puedes personalizar el color
+        font: {
+          size: 11, // Tamaño de la fuente
+          weight: 'bold', // Peso de la fuente
+        }
+      },
                 }
               },
               plugins: {
@@ -94,14 +109,14 @@ export class StartComponent implements OnInit {
                 },
                 tooltip: {
                   mode: 'index',
-                  intersect: false
+                  intersect: false,
                 },
                 annotation: {
                   annotations: {
                     line1: {
                       type: 'line',
-                      yMin: 10, // Posición en el eje Y
-                      yMax: 10, // Posición en el eje Y
+                      yMin:  this.preguntasTotales,
+                      yMax: 4,
                       borderColor: 'red',
                       borderWidth: 2,
                       borderDash: [6, 6]
@@ -111,7 +126,7 @@ export class StartComponent implements OnInit {
               },
               responsive: true,
               maintainAspectRatio: false,
-              aspectRatio: 2
+              aspectRatio: 2 // Ajuste el valor según sea necesario para hacer el gráfico más estrecho
             }
           });
         } else {
@@ -120,7 +135,7 @@ export class StartComponent implements OnInit {
       } else {
         console.error('Elemento canvas no encontrado');
       }
-    }, 0);
+    }, 0);
   }
   
 
@@ -245,6 +260,7 @@ export class StartComponent implements OnInit {
   evaluarExamen(){
 
  
+ 
 
     this.esEnviado = true;
       
@@ -266,12 +282,16 @@ export class StartComponent implements OnInit {
 
       }
       
+      
     });
     //const newLocal = this.enviosTotales = this.vecesEnviado;
     console.log("Respuestas correctas : " + this.respuestasCorrectas);
     console.log("Puntos conseguidos : " + this.puntosConseguidos);
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
+ 
+    this.mostrarGrafico();
+    
  
     this.mostrarGrafico();
     
@@ -291,3 +311,6 @@ export class StartComponent implements OnInit {
 function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {
   throw new Error('Function not implemented.');
 }
+
+
+

@@ -172,7 +172,7 @@ export class InformacionLaboralComponent implements OnInit {
   }
 
   redirectTo(){
-    this.navigateToRoute('/cargo-usuario')
+    this.navigateToRoute('/user/cargo-usuario')
   }
 
   submitForm(event: Event) {
