@@ -40,8 +40,13 @@
 
             <div class="flex">
               <h4 class="Titulos  mb-4">Acciones</h4>
-           <button mat-mini-fab  class="minifab m-1" (click)="openEditDialog('300ms', '150ms')" ><mat-icon>edit</mat-icon>
-           </button>
+              <button mat-mini-fab class="minifab m-1"  id="{{academica.inf_acad_id}}" (click)=" editarAcademica($event)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              
+              
+              
+              
            <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" > 
           	<mat-icon>delete</mat-icon>
            </button>

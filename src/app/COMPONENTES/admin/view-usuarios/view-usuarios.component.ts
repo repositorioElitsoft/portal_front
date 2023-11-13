@@ -22,7 +22,7 @@ const ELEMENT_DATA: Usuario[] = [];
   styleUrls: ['./view-usuarios.component.css']
 })
 export class ViewUsuariosComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'usr_email','usr_rol', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
@@ -63,9 +63,10 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
             usr_nom: usuario.usr_nom || '',
             usr_tel: usuario.usr_tel || '',
             usr_email: usuario.usr_email || '',
+            usr_rol: usuario.usr_rol || '',
             usr_herr: usuario.herramientas,
             herr_ver: usuario.herramientas,
-            herr_exp: usuario.herramientas
+            herr_exp: usuario.herramientas,
           }));
 
           this.originalDataCopy = usuarios;

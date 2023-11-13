@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-añadir-estudio',
@@ -13,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class AñadirEstudioComponent implements OnInit {
+[x: string]: any;
   @Output() AñadirEstudioComponent: EventEmitter<void> = new EventEmitter<void>();
 
   creationMode: boolean = false;
@@ -25,48 +27,67 @@ export class AñadirEstudioComponent implements OnInit {
   today: string;
   navigateToRoute: any;
 
+  
+
   constructor(
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private academicaService: AcademicaService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {
-    this.today = new Date().toISOString().split('T')[0];
-    this.buildForm();
-  }
+    private router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any, // Datos pasados al diálogo
+    ) {
+      this.today = new Date().toISOString().split('T')[0];
+      this.buildForm();
+    }
+    ngOnInit(): void {
+      if (this.data && this.data.academica) {
+        this.editarAcademica(this.data.academica);
+      } else {
+        // Código para el modo de creación
+        this.creationMode = true;
+      }
+    }
+    
+  
 
-  ngOnInit(): void {
-    this.obtenerAcademicasGuardados();
-  }
+    ngAfterViewInit(): void {
+      if (this.data && this.data.academica) {
+        Promise.resolve().then(() => this.editarAcademica(this.data.academica));
+      }
+    }
+
 
   startDate = new Date(2020, 0, 1);
 
-  private buildForm() {
+  private buildForm(academica: Academica | null = null) {
     this.form = this.formBuilder.group({
-      inf_acad_est: ["", [Validators.required]],
-      titl: ["", [Validators.required]],
-      inf_acad_nom_esc: ["", [Validators.required]],
-      inf_acad_fec_ini: ["", [Validators.required]],
-      inf_acad_fec_fin: ["", [Validators.required]],
+      inf_acad_est: [academica ? academica.inf_acad_est : "", [Validators.required]],
+      titl: [academica ? academica.titl : "", [Validators.required]],
+      inf_acad_nom_esc: [academica ? academica.inf_acad_nom_esc : "", [Validators.required]],
+      inf_acad_fec_ini: [academica ? academica.inf_acad_fec_ini : "", [Validators.required]],
+      inf_acad_fec_fin: [academica ? academica.inf_acad_fec_fin : "", [Validators.required]],
     });
   }
+  
 
   redirectTo() {
     this.navigateToRoute('/user/informacion-laboral');
   }
 
-  obtenerAcademicasGuardados() {
-    this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
-      next: (data) => {
-        this.academicas = data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
+obtenerAcademicasGuardados() {
+  console.log('Obteniendo academicas...');
+  this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+    next: (data) => {
+      this.academicas = data;
+      console.log('Academicas obtenidas exitosamente:', this.academicas);
+    },
+    error: (err) => {
+      console.log('Error al obtener academicas:', err);
+    },
+  });
+}
 
   openDialog(
     enterAnimationDuration: string,
@@ -96,32 +117,27 @@ export class AñadirEstudioComponent implements OnInit {
     this.dialog.closeAll();
   }
 
-  editarAcademica(id: number | undefined | null) {
-    this.id = id;
-    const academicaToEdit = this.academicas.find(
-      (academica) => academica.inf_acad_id === this.id
-    );
-
-    if (academicaToEdit) {
-      // Formatear las fechas a 'yyyy-MM-dd'
-      const fechaInicio = new Date(
-        academicaToEdit.inf_acad_fec_ini
-      ).toISOString().split('T')[0];
-      const fechaFin = new Date(
-        academicaToEdit.inf_acad_fec_fin
-      ).toISOString().split('T')[0];
-
+  editarAcademica(academica: Academica) {
+    if (academica && academica.inf_acad_id) {
+      this.id = academica.inf_acad_id;
       this.form.patchValue({
-        inf_acad_est: academicaToEdit.inf_acad_est,
-        inf_acad_nom_esc: academicaToEdit.inf_acad_nom_esc,
-        titl: academicaToEdit.titl,
-        inf_acad_fec_ini: fechaInicio,
-        inf_acad_fec_fin: fechaFin,
+        inf_acad_est: academica.inf_acad_est,
+        inf_acad_nom_esc: academica.inf_acad_nom_esc,
+        titl: academica.titl,
+        inf_acad_fec_ini: academica.inf_acad_fec_ini,
+        inf_acad_fec_fin: academica.inf_acad_fec_fin,
       });
-
-      this.creationMode = !this.creationMode;
+  
+      this.creationMode = false;
+    } else {
+      this.creationMode = true;
+      this.form.reset();
     }
   }
+  
+
+
+  
 
   addExperienceRow() {
     this.id = null;

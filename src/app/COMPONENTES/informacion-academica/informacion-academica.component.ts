@@ -24,6 +24,8 @@ export class InformacionAcademicaComponent implements OnInit {
   minFecha: string = '';
   today: string;
 
+
+  
   constructor(private usuarioService: UsuarioService, 
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -50,16 +52,25 @@ export class InformacionAcademicaComponent implements OnInit {
     this.navigateToRoute('/user/informacion-laboral')
   }
 
-  obtenerAcademicasGuardados(){
+  obtenerAcademicasGuardados() {
     this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
-      next: (data) =>{
+      next: (data: Academica[]) => {
+        console.log('Datos recibidos:', data); // Inspeccionar los datos recibidos
         this.academicas = data;
       },
-      error: (err)=>{
-        console.log(err)
+      error: (err) => {
+        console.log(err);
       }
-    })
+    });
   }
+
+  
+
+
+
+
+
+  
 
   eliminarAcademica(id: number | undefined | null){
     this.academicaService.eliminarAcademica(id).subscribe({
@@ -119,17 +130,42 @@ export class InformacionAcademicaComponent implements OnInit {
     }); 
   }
 
+ 
+  editarAcademica(event: any) {
+    console.log('Evento recibido:', event); // Verificar el evento recibido
   
+    // Intentando obtener el ID del elemento padre del elemento que desencadenó el evento
+    const inf_acad_id = event.target.parentElement.id;
+    console.log('inf_acad_id:', inf_acad_id); // Verificar el ID obtenido
   
-  openEditDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(AñadirEstudioComponent , {
-      width: '600px',
-      height: '700px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
+    if (inf_acad_id) {
+      console.log('ID definido, solicitando datos...'); // Confirmar que el ID está definido
+  
+      this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+        next: (data) => {
+          console.log('Data llegada:', data); // Inspeccionar los datos recibidos del servicio
+          const inf_acad_id = data;
+  
+          const dialogRef = this.dialog.open(AñadirEstudioComponent, {
+            width: '800px', 
+            height: '700px',
+            data: data
+          });
+  
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`); // Resultado después de cerrar el diálogo
+          });
+        },
+        error: (error) => {
+          console.error('Error al obtener datos:', error); // Capturar y mostrar errores
+        }
+      });
+    } else {
+      console.error('inf_acad_id es undefined o null'); // Manejar el caso de que inf_acad_id no esté definido
+    }
   }
   
-  
-}
 
+
+
+}
