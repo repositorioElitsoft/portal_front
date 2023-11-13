@@ -8,9 +8,10 @@ import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-import { PaisService } from 'src/app/service/pais.service';
+
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PaisService } from 'src/app/SERVICE/pais.service';
 
 @Component({
   selector: 'app-datos-personales',

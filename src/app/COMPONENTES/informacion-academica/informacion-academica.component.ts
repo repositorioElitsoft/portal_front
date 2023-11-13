@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { Usuario } from '../../interface/user.interface'
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AcademicaService } from 'src/app/SERVICE/academica.service';
 
 @Component({
   selector: 'app-informacion-academica',
@@ -57,6 +57,7 @@ export class InformacionAcademicaComponent implements OnInit {
       }
     })
   }
+  //hola
 
   eliminarAcademica(id: number | undefined | null){
     this.academicaService.eliminarAcademica(id).subscribe({
