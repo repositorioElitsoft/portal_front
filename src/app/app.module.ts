@@ -87,6 +87,7 @@ import { EditarAcademicaComponent } from './COMPONENTES/shared/editar-academica/
 import { CerrarSesionComponent } from './COMPONENTES/shared/cerrar-sesion/cerrar-sesion.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './COMPONENTES/upload-files/upload-files.component';
+import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import { UploadFilesComponent } from './COMPONENTES/upload-files/upload-files.co
     CaracterOnlyDirective,
     AñadirEstudioComponent,
     EditarAcademicaComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    ViewFilesComponent
     
 
   ],
