@@ -2,12 +2,11 @@ import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
-import 'chartjs-plugin-annotation';
+
 
 //se declara fuera de la clase de forma global
 let vecesEnviado = 0;
