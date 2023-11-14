@@ -65,13 +65,7 @@ export class InformacionAcademicaComponent implements OnInit {
     });
   }
 
-  
-
-
-
-
-
-  
+ 
 
   eliminarAcademica(id: number | undefined | null){
     this.academicaService.eliminarAcademica(id).subscribe({

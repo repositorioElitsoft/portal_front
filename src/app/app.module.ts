@@ -87,7 +87,8 @@ import { EditarAcademicaComponent } from './COMPONENTES/shared/editar-academica/
 import { CerrarSesionComponent } from './COMPONENTES/shared/cerrar-sesion/cerrar-sesion.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './COMPONENTES/upload-files/upload-files.component';
-import { AñadirLaboralComponent } from './COMPONENTES/shared/añadir-laboral/añadir-laboral.component';
+import { AddLaboralComponent } from './COMPONENTES/shared/add-laboral/add-laboral.component';
+import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-laboral.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import { AñadirLaboralComponent } from './COMPONENTES/shared/añadir-laboral/a�
     AñadirEstudioComponent,
     EditarAcademicaComponent,
     UploadFilesComponent,
-    AñadirLaboralComponent
+    AddLaboralComponent,
+    EditLaboralComponent
     
 
   ],

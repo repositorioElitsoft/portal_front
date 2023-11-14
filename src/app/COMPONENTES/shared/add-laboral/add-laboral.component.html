@@ -1,0 +1,50 @@
+<!-- Formulario para crear un nuevo archivo -->
+<form [formGroup]="form" (ngSubmit)="submitForm($event)" class="formacademica">
+  <h4 class="perfilr">Información laboral</h4>
+  <mat-form-field>
+    <mat-label>Cargo:</mat-label>
+    <input matInput type="text" id="inputCargo" formControlName="inf_lab_crg_emp" name="inputCargo">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nombre Empresa:</mat-label>
+    <input matInput type="text" id="inputNomEmp" formControlName="inf_lab_emp" name="inputNomEmp">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Actividades Realizadas:</mat-label>
+    <input matInput type="text" id="inputActRe" formControlName="inf_lab_act" name="inputActRe">
+  </mat-form-field>
+
+  <mat-form-field class="example-form-field">
+    <mat-label>Fecha Inicio - Fecha Fin</mat-label>
+    <mat-date-range-input [rangePicker]="rangePicker">
+      <input matStartDate placeholder="Fecha Inicio" id="inputFechain" formControlName="inf_lab_fec_ini" name="inputFechaini">
+      <input matEndDate placeholder="Fecha Fin" id="inputFechafin" formControlName="inf_lab_fec_fin" name="inputFechafin">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+    <mat-date-range-picker #rangePicker>
+      <mat-date-range-picker-actions>
+        <button class="botonprimario" mat-button matDateRangePickerCancel>Cancelar</button>
+        <button mat-raised-button class="botonprimario" matDateRangePickerApply>Aceptar</button>
+      </mat-date-range-picker-actions>
+    </mat-date-range-picker>
+  </mat-form-field>
+
+<mat-card>
+    <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
+    <div *ngIf="herramientasDisponibles && checkboxFormCreated">
+      <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
+        <mat-checkbox [formControlName]="herramienta.herr_usr_id">
+          {{ herramienta.versionProducto.prd.prd_nom }} ({{ herramienta.versionProducto.vrs_name }})
+        </mat-checkbox>
+      </div>
+    </div>
+
+  </mat-card>
+  <br>
+  <mat-card class="guardarycancelar">
+    <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Guardar</button>
+    <button mat-raised-button class="botonprimario m-2" (click)="goBack()">Cancelar</button>
+  </mat-card>
+</form>
