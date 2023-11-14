@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { Usuario } from '../../interface/user.interface'
-import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
+import { AñadirLaboralComponent } from '../shared/añadir-laboral/añadir-laboral.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -36,6 +36,7 @@ export class InformacionLaboralComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService, 
     private formBuilder: FormBuilder,
+    public  dialog : MatDialog,
     private herramientaService:HerramientasService, 
     private laboralService: LaboralService, 
     private route: ActivatedRoute, private router: Router) {
@@ -236,4 +237,19 @@ export class InformacionLaboralComponent implements OnInit {
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
+
+
+
+  openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(AñadirLaboralComponent, {
+      width: '600px',
+      height: '700px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogRef.componentInstance?.AñadirLaboralComponent.subscribe(() => {
+      this.obtenerLaboralesGuardados();
+    }); 
+  }
+
 }

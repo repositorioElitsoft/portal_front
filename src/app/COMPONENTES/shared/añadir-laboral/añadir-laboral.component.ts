@@ -8,14 +8,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-añadir-estudio',
-  templateUrl: './añadir-estudio.component.html',
-  styleUrls: ['./añadir-estudio.component.css'],
+  selector: 'app-añadir-laboral',
+  templateUrl: './añadir-laboral.component.html',
+  styleUrls: ['./añadir-laboral.component.css'],
 })
 
-export class AñadirEstudioComponent implements OnInit {
+export class AñadirLaboralComponent implements OnInit {
 [x: string]: any;
-  @Output() AñadirEstudioComponent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() AñadirLaboralComponent: EventEmitter<void> = new EventEmitter<void>();
 
   creationMode: boolean = false;
 
@@ -93,7 +93,7 @@ obtenerAcademicasGuardados() {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(AñadirEstudioComponent, {
+    this.dialog.open(AñadirLaboralComponent, {
       width: '250px',
       enterAnimationDuration,
       exitAnimationDuration,
@@ -170,7 +170,7 @@ obtenerAcademicasGuardados() {
                 next: (data) => {
                   this.academicas = data;
                   // Cierra el diálogo después de guardar los cambios
-                  this.AñadirEstudioComponent.emit();
+                  this.AñadirLaboralComponent.emit();
                   this.dialog.closeAll();
                 },
                 error: (err) => {

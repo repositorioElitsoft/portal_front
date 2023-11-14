@@ -59,7 +59,7 @@
       
 
 
-      <button  class="botonprimario m-2"mat-raised-button  (click)="addExperienceRow()" > + Añadir experiencia laboral</button>
+      <button  class="botonprimario m-2"mat-raised-button   (click)="openAddDialog('300ms', '150ms')" > + Añadir experiencia laboral</button>
       <button class="botonprimario m-2" mat-raised-button *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
 

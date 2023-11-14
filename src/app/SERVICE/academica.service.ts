@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Academica } from '../interface/academica.interface';
+import { Academica } from '../interface/academica.interface'; // Asegúrate de importar la interfaz Academica
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,8 +20,21 @@ export class AcademicaService {
     return this.http.post<Academica>(`${this.url}`, academica);
   }
 
+  actualizarAcademica(academicaId: number, academica: Academica, jwt: string): Observable<Academica> {
+    const url = `${this.url}${academicaId}`; // Asegúrate de que la URL y la ruta sean correctas
+    const headers = new HttpHeaders({
+      'Authorization': jwt
+    });
+
+    return this.http.put<Academica>(url, academica, { headers });
+  }
+
   obtenerListaAcademicasPorUsuario(): Observable<Academica[]> {
     return this.http.get<Academica[]>(`${this.url}`);
+  }
+
+  obtenerAcademica(id: number | null | undefined): Observable<Academica> {
+    return this.http.get<Academica>(`${this.url}${id}`);
   }
 
   listarAcademicas(): Observable<Academica[]> {
@@ -31,7 +44,4 @@ export class AcademicaService {
   eliminarAcademica(id: number | null | undefined): Observable<Academica> {
     return this.http.delete<Academica>(`${this.url}${id}`);
   }
-
-  
-
 }

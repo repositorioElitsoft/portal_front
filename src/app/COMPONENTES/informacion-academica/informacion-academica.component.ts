@@ -6,6 +6,7 @@ import { Academica } from 'src/app/interface/academica.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AñadirEstudioComponent } from '../shared/añadir-estudio/añadir-estudio.component';
 import { MatDialog } from '@angular/material/dialog';
+import { EditarAcademicaComponent } from '../shared/editar-academica/editar-academica.component';
 
 @Component({
   selector: 'app-informacion-academica',
@@ -88,31 +89,7 @@ export class InformacionAcademicaComponent implements OnInit {
   
 
 
-  submitForm(event: Event) {
 
-    event.preventDefault();
-
-    const academicaNueva: Academica = this.form.value;
-    console.log(academicaNueva)
-    
-    this.academicaService.guardarAcademica(academicaNueva, this.id).subscribe(
-      (academicaGuardada: Academica) => {
-        console.log('Información laboral guardada:', academicaGuardada);
-        this.creationMode = false;
-        this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
-          next:(data)=>{
-            this.academicas = data;
-          },
-          error:(err)=>{
-            console.log(err);
-          }
-        })
-      },
-      (error) => {
-        console.error('Error al guardar información laboral:', error);
-      }
-    );
-  }
 
   navigateToRoute(route: string) {
     this.router.navigate([route]);
@@ -130,7 +107,7 @@ export class InformacionAcademicaComponent implements OnInit {
     }); 
   }
 
- 
+  
   editarAcademica(event: any) {
     console.log('Evento recibido:', event); // Verificar el evento recibido
   
@@ -141,18 +118,21 @@ export class InformacionAcademicaComponent implements OnInit {
     if (inf_acad_id) {
       console.log('ID definido, solicitando datos...'); // Confirmar que el ID está definido
   
-      this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+      // Llamar al servicio para obtener los datos de Academica utilizando inf_acad_id
+      this.academicaService.obtenerAcademica(inf_acad_id).subscribe({
         next: (data) => {
           console.log('Data llegada:', data); // Inspeccionar los datos recibidos del servicio
-          const inf_acad_id = data;
   
-          const dialogRef = this.dialog.open(AñadirEstudioComponent, {
-            width: '800px', 
+          // Aquí puedes continuar con el código para abrir el diálogo y pasar los datos
+          const dialogRef = this.dialog.open(EditarAcademicaComponent, {
+            width: '800px',
             height: '700px',
-            data: data
+            data: { inf_acad_id: inf_acad_id } // Pasar inf_acad_id como parte de los datos
+
           });
   
           dialogRef.afterClosed().subscribe((result) => {
+            
             console.log(`Dialog result: ${result}`); // Resultado después de cerrar el diálogo
           });
         },
@@ -165,7 +145,6 @@ export class InformacionAcademicaComponent implements OnInit {
     }
   }
   
-
 
 
 }
