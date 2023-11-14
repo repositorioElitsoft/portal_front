@@ -5,12 +5,13 @@ import { Usuario } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Pais } from 'src/app/interface/pais.interface';
-import { FormBuilder,FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-import { PaisService } from 'src/app/service/pais.service';
+
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PaisService } from 'src/app/SERVICE/pais.service';
 
 @Component({
   selector: 'app-datos-personales',
@@ -19,16 +20,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
-
   currentResumeName?: string = "";
-
-
+  usuarioId: number= 0;
   countries: Pais[] = [];
-  isLoaded: boolean = true
-  isUploadingFile: boolean = false
+  isLoaded: boolean = true;
+  isUploadingFile: boolean = false;
 
-  usuarioGuardado:Usuario={
-    usr_rut: '' ,
+  usuarioGuardado: Usuario = {
+    usr_id:0,
+    usr_rut: '',
     usr_nom: '',
     usr_ap_pat: '',
     usr_ap_mat: '',
@@ -48,34 +48,30 @@ export class DatosPersonalesComponent implements OnInit {
   };
 
   constructor(
-
     private formBuilder: FormBuilder,
     private router: Router,
     private usuarioService: UsuarioService,
     private paisService: PaisService,
     private snackBar: MatSnackBar,
-    private toastr:ToastrService,
     private notification: NotificationService,
-    private route: ActivatedRoute)
-    {
-      this.buildForm();
-    }
+    private route: ActivatedRoute
+  ) {
+    this.buildForm();
+  }
 
-  private buildForm(){
+  private buildForm() {
     this.form = this.formBuilder.group({
-      usr_rut: ["",[Validators.required, rutValido]],
-      usr_nom: ["",[Validators.required]],
-      usr_ap_pat: ["",[Validators.required]],
-      usr_ap_mat: ["",[Validators.required]],
-      pais: ["1",[Validators.required]],
-      usr_url_link: ["",[]],
-      usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+      usr_rut: ["", [Validators.required, rutValido]],
+      usr_nom: ["", [Validators.required]],
+      usr_ap_pat: ["", [Validators.required]],
+      usr_ap_mat: ["", [Validators.required]],
+      pais: ["1", [Validators.required]],
+      usr_url_link: ["", []],
+      usr_tel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
     });
   }
 
   ngOnInit(): void {
-
-
     this.paisService.obtenerPaises().subscribe(
       (data: any[]) => {
         this.countries = data;
@@ -88,62 +84,51 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   navigateToRoute(route: string) {
-    // Navegamos a la ruta proporcionada
     this.router.navigate([route]);
   }
 
-
-
   onFileSelected() {
     const inputNode: any = document.querySelector('#file');
-  
-    if (typeof (FileReader) !== 'undefined') {
+
+    if (typeof FileReader !== 'undefined') {
       const reader = new FileReader();
-  
+
       reader.onload = (e: any) => {
         const srcResult = e.target.result;
-        console.log("result: ",srcResult)
+        console.log("result: ", srcResult);
       };
-  
+
       reader.readAsArrayBuffer(inputNode.files[0]);
 
       const formData: FormData = new FormData();
       formData.append('file', inputNode.files[0]);
 
-
-      
-      this.isUploadingFile = true
+      this.isUploadingFile = true;
       this.usuarioService.actualizarCV(formData).subscribe({
-        next: (response) =>{
-          console.log("Subido con éxito:",  inputNode.files[0].fileName,response)
-          this.isUploadingFile = false
+        next: (response) => {
+          console.log("Subido con éxito:", inputNode.files[0].fileName, response);
+          this.isUploadingFile = false;
           this.currentResumeName = inputNode.files[0].name;
-          
         },
-        error: (err)=>{
-          console.log("Error al actualizar CV:", err)
-          this.snackBar.open("Error al actualizar CV", "Ok",{
+        error: (err) => {
+          console.log("Error al actualizar CV:", err);
+          this.snackBar.open("Error al actualizar CV", "Ok", {
             duration: 3000,
-          })
-          this.isUploadingFile = false
+          });
+          this.isUploadingFile = false;
         }
       });
-      
-      
     }
   }
 
-  ObtenerUsuarioGuardado(){
+  ObtenerUsuarioGuardado() {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
-      next: (data) =>{
+      next: (data) => {
         this.usuarioGuardado = data;
-        console.log(this.usuarioGuardado)
-        this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
-
-    
+        console.log(this.usuarioGuardado);
+        this.currentResumeName = data.cvPath?.substring(37, data.cvPath.length);
 
         this.form.patchValue({
-
           usr_rut: this.usuarioGuardado.usr_rut,
           usr_nom: this.usuarioGuardado.usr_nom,
           usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
@@ -151,26 +136,24 @@ export class DatosPersonalesComponent implements OnInit {
           pais: this.usuarioGuardado.pais?.pais_id,
           usr_url_link: this.usuarioGuardado.usr_url_link,
           usr_tel: this.usuarioGuardado.usr_tel,
+        });
 
-        })
-        this.isLoaded= true;
+        this.isLoaded = true;
         const inputElement = document.getElementById("inputTelefono");
-        console.log(inputElement)
-        if(inputElement){
-          intlTelInput(inputElement,{
+        console.log(inputElement);
+        if (inputElement) {
+          intlTelInput(inputElement, {
             initialCountry: "cl",
             separateDialCode: true,
             utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
             placeholderNumberType: "UNKNOWN"
-          })
+          });
         }
       },
-      error: (err)=>{
-        console.log(err)
-
+      error: (err) => {
+        console.log(err);
       }
-    })
-
+    });
   }
 
   async submitForm(event: Event) {
@@ -183,11 +166,11 @@ export class DatosPersonalesComponent implements OnInit {
     user.pais = {
       pais_id: this.form.value.pais,
       pais_nom: ""
-    }
+    };
 
     console.log(user);
-    try{
-      this.usuarioService.updateUsuario(user).toPromise()
+    try {
+      await this.usuarioService.updateUsuario(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
         "success",
         "Datos guardados",
@@ -198,68 +181,47 @@ export class DatosPersonalesComponent implements OnInit {
         this.router.navigate(['/user/herramientas-tecnologias']);
       }
     } catch (error) {
-
+      console.error(error);
     }
-
-    /*
-    this.paisService.obtenerPaisPorNombre(this.usuarioNuevo.pais_nom).subscribe(
-      (pais: Pais) => {
-        // Asignar el objeto Pais al usuarioNuevo
-        this.usuarioNuevo.pais = pais;
-
-        // Llamar al servicio UsuarioService para guardar el usuario
-        this.usuarioService.saveUsuario(this.usuarioNuevo).subscribe(
-          (res: any) => {
-            console.log(res);
-            this.toastr.success('Datos personales guardados');
-            // Navegar a la página de Herramientas y Tecnologías y pasar el id de usuario como query parameter
-            this.router.navigate(['/herramientas-tecnologias'], {
-              relativeTo: this.route,
-              queryParams: { usr_id: res.usr_id }
-            });
-          },
-          (err: any) => console.log(err)
-        );
-      },
-      (err: any) => console.log(err)
-    );*/
-
   }
 
 
-
-
-
-
+  borrarCV() {
+    if (this.usuarioGuardado?.usr_id){
+    this.usuarioService.borrarCV(this.usuarioGuardado.usr_id).subscribe({
+      next: () => {
+        console.log('CV eliminado con éxito');
+        this.currentResumeName = undefined;
+      },
+      error: (err) => {
+        console.error('Error al eliminar CV:', err);
+      },
+    });
+  }
+  }
 }
 
 function rutValido(control: AbstractControl): ValidationErrors | null {
-
-  if(!control.value.includes("-")){
-    return {badRut : true}
+  if (!control.value.includes("-")) {
+    return { badRut: true };
   }
 
   if (control.value && !validarRut(control.value)) {
-    // Validation failed, return an error object
     return { badRut: true };
   }
   return null;
 }
 
 function validarRut(rut: string) {
-  // Eliminar espacios y guiones del RUT
   rut = rut.replace(/\s+/g, '').replace(/-/g, '');
 
-  // Verificar que el RUT tenga el formato correcto
   if (!/^[0-9]+[0-9kK]{1}$/.test(rut)) {
     return false;
   }
 
-  // Separar el número de identificación y el dígito verificador
   const numero = rut.slice(0, -1);
   const dv = rut.slice(-1).toUpperCase();
 
-  // Calcular el dígito verificador esperado
   let suma = 0;
   let multiplicador = 2;
 
@@ -270,7 +232,6 @@ function validarRut(rut: string) {
 
   const dvEsperado = 11 - (suma % 11);
 
-  // Comparar el dígito verificador calculado con el dígito verificador del RUT
   if ((dvEsperado === 11 && dv === '0') || (dvEsperado === 10 && dv.toUpperCase() === 'K') || dvEsperado === parseInt(dv, 10)) {
     return true;
   }

@@ -1,0 +1,31 @@
+
+<mat-card class="card">
+    
+<mat-card-content>
+      <div class="box3">
+        <div class="message">{{message}}</div>
+      </div>
+      <br>
+      <div class="box4">
+        <mat-card-title class="titulo">Lista de archivos</mat-card-title>
+        <mat-selection-list #shoes>
+            <ul>
+                <li *ngFor="let file of (fileInfos | async)">
+                    <a href="{{file.url}}">{{file.name}}</a>
+                    <mat-icon (click)="deleteFile(file.name)" class="delete-icon">delete</mat-icon>
+                </li>
+            </ul>
+          </mat-selection-list>
+    </div>
+
+    </mat-card-content>
+  </mat-card>
+
+
+
+
+<div class="screen-loading" *ngIf="isLoading">
+  <span class="loading-text">Cargando...</span>
+  <div class="loading-icon"></div>
+</div>
+

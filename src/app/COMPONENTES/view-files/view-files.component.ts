@@ -7,11 +7,11 @@ import { Usuario } from 'src/app/interface/user.interface';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({
-  selector: 'app-upload-files',
-  templateUrl: './upload-files.component.html',
-  styleUrls: ['./upload-files.component.css']
+  selector: 'app-view-files',
+  templateUrl: './view-files.component.html',
+  styleUrls: ['./view-files.component.css']
 })
-export class UploadFilesComponent implements OnInit {
+export class ViewFilesComponent implements OnInit {
   selectedFiles!: FileList;
   progressInfo: { value: number; fileName: string }[] = [];
   message = '';
@@ -77,7 +77,7 @@ export class UploadFilesComponent implements OnInit {
     this.fileInfos = this.uploadService.getFiles(this.usuarioGuardado.usr_id ?? 0).pipe(
       map(files => files.sort((a: { uploadDate: string | number | Date; }, b: { uploadDate: string | number | Date; }) => {
         return new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime();
-      }).slice(0, 5))
+      }).slice(0, 20))
     );
   }
 

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AñadirEstudioComponent } from '../shared/añadir-estudio/añadir-estudio.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EditarAcademicaComponent } from '../shared/editar-academica/editar-academica.component';
+import { AcademicaService } from 'src/app/service/academica.service';
 
 @Component({
   selector: 'app-informacion-academica',

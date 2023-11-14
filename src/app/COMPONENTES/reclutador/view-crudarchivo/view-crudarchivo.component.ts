@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { UploadFilesComponent } from '../../upload-files/upload-files.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ViewFilesComponent } from '../../view-files/view-files.component';
 
 @Component({
     selector: 'bottom-sheet-overview-example-sheet',
@@ -50,7 +51,13 @@ import { MatDialog } from '@angular/material/dialog';
       });
     }
   
-
+    openDialogVerArchivos(enterAnimationDuration: string, exitAnimationDuration: string): void {
+      this.dialog.open(ViewFilesComponent, {
+        width: '500px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+      });
+    }
 
     
     

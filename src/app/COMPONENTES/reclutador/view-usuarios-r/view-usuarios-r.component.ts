@@ -19,6 +19,8 @@ import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfi
 import { LaboralService } from 'src/app/service/laboral.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
+import * as Papa from 'papaparse';
+
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -213,6 +215,25 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
+
+  exportToCSV() {
+    const dataToExport = this.dataSource.data;
+    const csv = Papa.unparse(dataToExport);
+
+    // Crear un enlace de descarga para el archivo CSV
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'usuarios.csv'; // Nombre del archivo CSV
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
+
+
   getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
       (data: CategoriaProducto[]) => {
@@ -343,3 +364,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
 }
+function saveAs(blob: Blob, arg1: string) {
+  throw new Error('Function not implemented.');
+}
+

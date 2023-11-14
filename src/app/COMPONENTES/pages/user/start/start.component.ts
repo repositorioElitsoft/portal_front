@@ -1,4 +1,3 @@
-
 import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnInit } from '@angular/core';
@@ -7,6 +6,7 @@ import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
+
 
 //se declara fuera de la clase de forma global
 let vecesEnviado = 0;
@@ -259,6 +259,7 @@ export class StartComponent implements OnInit {
   evaluarExamen(){
 
  
+ 
 
     this.esEnviado = true;
       
@@ -280,12 +281,16 @@ export class StartComponent implements OnInit {
 
       }
       
+      
     });
     //const newLocal = this.enviosTotales = this.vecesEnviado;
     console.log("Respuestas correctas : " + this.respuestasCorrectas);
     console.log("Puntos conseguidos : " + this.puntosConseguidos);
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
+ 
+    this.mostrarGrafico();
+    
  
     this.mostrarGrafico();
     

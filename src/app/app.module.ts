@@ -89,6 +89,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './COMPONENTES/upload-files/upload-files.component';
 import { AddLaboralComponent } from './COMPONENTES/shared/add-laboral/add-laboral.component';
 import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-laboral.component';
+import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
 
 @NgModule({
   declarations: [
@@ -141,9 +142,7 @@ import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-lab
     CaracterOnlyDirective,
     AñadirEstudioComponent,
     EditarAcademicaComponent,
-    UploadFilesComponent,
-    AddLaboralComponent,
-    EditLaboralComponent
+    UploadFilesComponent
     
 
   ],
