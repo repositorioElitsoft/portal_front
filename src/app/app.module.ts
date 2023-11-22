@@ -142,7 +142,10 @@ import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.componen
     CaracterOnlyDirective,
     AñadirEstudioComponent,
     EditarAcademicaComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    EditLaboralComponent,
+    ViewFilesComponent,
+    AddLaboralComponent
     
 
   ],

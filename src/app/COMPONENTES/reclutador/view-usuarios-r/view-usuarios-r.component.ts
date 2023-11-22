@@ -20,6 +20,7 @@ import { LaboralService } from 'src/app/service/laboral.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -33,7 +34,10 @@ const ELEMENT_DATA: Usuario[] = [];
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  resultados  = [];
+  idUser: number = 29;
   filtro: string = '';
+  filtroPuntaje: string = '';
   originalDataCopy: Usuario[] = [];
   usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
@@ -55,6 +59,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private usuarioService: UsuarioService,
+    private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
@@ -70,6 +75,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.getCategories();
+    this.obtenerResultadosByUser
   }
 
   ngAfterViewInit() {
@@ -95,6 +101,24 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
+
+
+     
+// Filtro por resultado del usuario
+    if (this.resultados !== undefined) {
+      this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+     (resultadoUsuario) => {
+      filteredArray = filteredArray.filter(usuario => {
+        // Usar una función de flecha para preservar el contexto
+        return resultadoUsuario === this.resultados;
+      });
+    },
+    (error) => {
+      console.error('Error al obtener resultados del usuario: ', error);
+    }
+  );
+  }
+
 
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
@@ -157,6 +181,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.data = filteredArray;
   }
 
+
+
+
+
+
+
   formatLabel(value: number): string {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -166,6 +196,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   filterProducto() {
+    this.filterData();
+  }
+
+  
+  filterPuntaje() {
+    this.filtroPuntaje = `Filtrado por puntaje: ${this.filtroPuntaje}`;
     this.filterData();
   }
 
@@ -244,6 +280,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  
+
+
+  obtenerResultadosByUser() {
+    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+      (data: any) => {
+        this.resultados = data;
+        console.log('Resultados obtenidos:', this.resultados);
+      },
+      (error) => {
+        console.error('Error al obtener resultados:', error);
+      }
+    );
+  }
+  
+
 
   getProductos(categoriaId: number){
     console.log('categoria id:', categoriaId)
