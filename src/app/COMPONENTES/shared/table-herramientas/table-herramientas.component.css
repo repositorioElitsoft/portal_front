@@ -1,14 +1,6 @@
 
-/* Estilos para el formulario */
-.form-container {
-    padding: 20px;
-    border: 1px solid #F57C27;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    /*display: flex; /* Establece el contenedor como un flexbox */
-    flex-wrap: wrap; /* Permite que los elementos se ajusten a la línea siguiente si no caben en una sola línea */
-    gap: 40px; /* Espacio entre los elementos */
-  }
+
+
   
   .combobox {
     display: flex; /* Los elementos dentro de combobox se colocarán en una sola línea */
@@ -58,12 +50,7 @@
   }
   
 
-@media screen and (min-width: 1300px) and (max-width: 1600px) {
-  .form-container {
-    margin-left: 150px;
-    
- 
-  }
+
 
   .container-datos-personales {
     
@@ -85,7 +72,7 @@
  
     
   }
-}
+
 
   
   @media screen and (max-width: 1200px) {

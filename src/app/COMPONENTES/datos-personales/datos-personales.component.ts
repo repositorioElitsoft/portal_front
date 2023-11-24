@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PaisService } from 'src/app/SERVICE/pais.service';
+import { PaisService } from 'src/app/service/pais.service';
 
 @Component({
   selector: 'app-datos-personales',

@@ -14,6 +14,8 @@
     <input matInput (input)="filterInput()" placeholder="Filtrar por nombre..." [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0 ">
   </mat-form-field>
 
+
+
   <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">

@@ -220,7 +220,12 @@ export class StartComponent implements OnInit {
       showCancelButton: true,
       cancelButtonText:'Cancelar',
       confirmButtonText: 'Enviar',
-      icon:'info'
+        cancelButtonColor: '#515151',
+        confirmButtonColor: '#F57C27',
+        icon: 'info',
+        customClass: {
+            popup: 'custom-border' // Aplica la clase al cuadro de diálogo
+        }
     }).then((e) => {
       if(e.isConfirmed){
 

@@ -35,7 +35,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
-  idUser: number = 29;
+  idUser: string = '';
   filtro: string = '';
   filtroPuntaje: string = '';
   originalDataCopy: Usuario[] = [];
@@ -105,19 +105,24 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
      
 // Filtro por resultado del usuario
-    if (this.resultados !== undefined) {
-      this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
-     (resultadoUsuario) => {
+  if (this.resultados !== undefined) {
+  this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+    (resultadoUsuario) => {
+      console.log('Resultado obtenido del servicio:', resultadoUsuario);
+      console.log('Resultados actuales en el componente:', this.resultados);
+
       filteredArray = filteredArray.filter(usuario => {
         // Usar una función de flecha para preservar el contexto
         return resultadoUsuario === this.resultados;
       });
+
+      console.log('Array filtrado:', filteredArray);
     },
     (error) => {
       console.error('Error al obtener resultados del usuario: ', error);
     }
   );
-  }
+}
 
 
     if (this.lastYears) {
@@ -240,6 +245,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           laborales: usuario.laborales,
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
+          
         }));
 
         this.originalDataCopy = usuarios;
@@ -282,7 +288,31 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   
-
+  obtenerYFiltrarResultados() {
+    console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
+  
+    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+      (resultadoUsuario) => {
+        console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
+  
+        // Aquí puedes verificar si los datos recibidos son lo que esperas
+        this.dataSource.data = this.originalDataCopy.filter(usuario => {
+          // Añadir un console.log dentro del filtro para ver qué está pasando
+          const esIgual = this.resultados === resultadoUsuario;
+          console.log('Comparando resultados - Usuario:', usuario, '¿Es igual?:', esIgual);
+  
+          return esIgual;
+        });
+  
+        // Mostrar los datos filtrados
+        console.log('Datos después de aplicar el filtro:', this.dataSource.data);
+      },
+      (error) => {
+        console.error('Error al obtener resultados del usuario: ', error);
+      }
+    );
+  }
+  
 
   obtenerResultadosByUser() {
     this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(

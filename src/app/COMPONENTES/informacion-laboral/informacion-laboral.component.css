@@ -11,78 +11,12 @@
   font-size: 15px;
 }
 
-.div-menu {
-  margin: 50px;
-}
 
 .form {
   width: fit-content;
 }
-.btn-primary {
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  font-family: 'Meera Inimai', sans-serif;
-}
-
-.btn-primary:hover {
-  background-color: #ffffff;
-  border-color: #F57C27;
-  color: #F57C27;
-
-}
 
  
- /* Estilos para los botones */
- .btn-danger {
-  font-size: 12px;
-  margin: 2%;
-
-}
-.btn-danger:hover {
-
-  animation: pulse 1s infinite; /* Aplicar la animación de pulso */
-}
-
-.btn-warning {
-  font-size: 14px;
-  margin: 5%;
-
-}
-
-.btn-warning:hover {
-
-  animation: pulse 1s infinite; /* Aplicar la animación de pulso */
-}
- 
-
- .btn-danger2{
- color:#fff;
-  padding: 8px 16px;
-  background-color: red;
-
- }
-
-   .btn-danger2:hover{
-    color:#fff;
-     padding: 8px 16px;
-     background-color: rgb(61, 15, 15);
-   
-    }
-
- .btn-danger2:action{
-  color:#fff;
-   padding: 8px 16px;
-   background-color: rgb(65, 14, 14);
-
-  }
-
- .btn-warning:hover {
- 
-   animation: pulse 1s infinite; /* Aplicar la animación de pulso */
- }
-
 .celda-laboral{
   border-bottom: 1px rgb(190, 190, 190) solid;
   padding-top: 8px;
@@ -121,14 +55,6 @@
 }
 
 
-.container-datos-personales {
-  
-  border: 1px solid #F57C27;
-  border-radius: 10px;
-
-  
-}
-
 
 .perfilr{
   font-weight: bold;
@@ -139,38 +65,3 @@
 
 
 
-
-/* Media Query para pantallas más pequeñas (resolución móvil) */
-
-/* Media Query para pantallas más pequeñas (resolución móvil) */
-@media (max-width: 768px) {
-  .container-datos-personales {
-    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
-    margin-left: 5%;
-    padding-right: 100px;
-    padding-top: 5%;
-    padding-bottom: 5%;
-    align-items: center;
-    border: 1px solid #F57C27;
-    border-radius: 10px;
- 
-  }
-  .Titulos{
-    font-size: 10px;
-    font-family: 'Meera Inimai', sans-serif;
-    align-items: center; 
-    justify-content: center;
-   }
-  
-   .fechas2 {
-    font-size: 10px;
-    font-family: 'Meera Inimai', sans-serif;
-    align-items: center; 
-    justify-content: center;
-  
-  }
-  
-  
-  
-
-}

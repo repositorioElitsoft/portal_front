@@ -20,16 +20,22 @@ body { margin: 0;
  }
 
 
+ .col-form-label{
+  color: #333;   font-family: 'Meera Inimai', sans-serif !important;
+  font-size: 14px!important;
+}
+
  .container-datos-personales {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-family: 'Meera Inimai', sans-serif;
   font-size: 12px;
  padding: 5%;
- margin-left: 20%;
- margin-right: 20%;
-  margin-top: 10vh;
+ margin-top: 10vh;
+ margin-left: 18%;
+ margin-right: 5%;
+
  background-color: white;
   box-shadow: 6px #0f0f0f;
   border-radius: 10px;
@@ -41,6 +47,8 @@ body { margin: 0;
 .spinner-color{
   color: black;
 }
+
+
 
 .perfilr{
   padding-bottom: 5%;
@@ -122,8 +130,21 @@ body { margin: 0;
   display: flex;
 }
 
+.custom-border {
+  border: 2px solid #F57C27; /* Ajusta el grosor del borde según tus necesidades */
+  border-radius: 10px;
+}
 
-
+.mat-mdc-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 25px 0;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  overflow: hidden; /* Asegura que el border-radius se aplique en los hijos */
+  border: 2px solid #F57C27 !important;
+}
 
 
 .container-bg {
