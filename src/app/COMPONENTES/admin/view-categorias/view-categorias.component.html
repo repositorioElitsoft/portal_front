@@ -1,4 +1,4 @@
-<br><br><br><br>
+
 
 
 <div class="filter-container">
@@ -28,7 +28,7 @@
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-mini-fab class="custom-btn2" id="{{element.categoriaId}}" (click)="editCategoria($event)"
+      <button mat-mini-fab class="minifab m-1" id="{{element.categoriaId}}" (click)="editCategoria($event)"
       aria-label="Example icon button with a menu icon">
         <mat-icon>edit</mat-icon>
       </button>

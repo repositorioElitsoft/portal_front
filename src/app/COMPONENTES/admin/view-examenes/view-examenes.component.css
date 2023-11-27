@@ -27,20 +27,7 @@
   padding: 0.75rem;
 }
 
-.btn-primary{
-  background-color: orange;
-  border-color: orange;
-}
 
-.btn-outline-primary{
-  color:rgb(0, 0, 0);
-  border-color: orange;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
-}
 
 .ml-2 {
   margin-left: 0.5rem;
@@ -55,18 +42,4 @@
 }
 
 
-.custom-btn{
-  background-color: orange!important;
-  margin-right: 1vw;
-  margin-bottom: 1vh;
-  color: white!important;
-  margin-left: 2vw;
-}
-
-mat-form-field {
-  border-radius: 10px;
-}
-
-.mat-input-element {
-  border-radius: 10px;
-}
+.filter-container{margin-top: 10%;}

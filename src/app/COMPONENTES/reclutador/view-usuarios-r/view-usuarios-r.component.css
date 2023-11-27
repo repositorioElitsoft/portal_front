@@ -1,26 +1,62 @@
 
-/* Estilos para el contenedor de filtros */
+.dashboard-panel {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  margin-top: 10vh;
+  border-radius: 10px;
+  border: 1px solid #F57C27!important;
+}
+
+.dashboard-panel:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+mat-toolbar {
+  margin-bottom: 20px;
+  background-color: transparent;
+}
+
+
 .filter-container {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  margin: 20px 0;
+  gap: 20px;
+  justify-content: space-between;
 }
 
-/* Estilos para los campos de filtro */
-.filter-input, .filter-select {
-  margin-right: 20px;
-  flex: 1;
+.filter-input, .filter-select, .filter-slider {
+  flex: 1 1 200px; /* Cada filtro tomará un mínimo de 200px y crecerá igualmente */
+  display: flex;
+  flex-direction: column;
 }
 
-/* Estilos para el deslizador de años de experiencia */
 .filter-slider {
-  margin-top: 20px;
-  width: 100%;
+  align-items: center; /* Centrar slider horizontalmente */
 }
 
-.small-spinner {
-  width: 100px; /* Ajusta el ancho según tus preferencias */
-  height: 80px; /* Ajusta la altura según tus preferencias */
-  font-size: 12px; /* Ajusta el tamaño de fuente según tus preferencias */
+.filter-slider mat-slider {
+  width: 100%; /* Asegurarse de que el slider ocupa todo el espacio disponible */
 }
+
+/* Ajustes para checkboxes y campos de número */
+.filter-checkbox, .filter-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos para los botones */
+button.mat-raised-button {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Estilos para los iconos dentro de los botones */
+button.mat-raised-button mat-icon {
+  margin-right: 8px;
+}
+
+/* Si deseas un ancho máximo para tu panel, puedes descomentar la siguiente línea */
+/* .dashboard-panel { max-width: 1200px; margin: auto; } */

@@ -1,7 +1,7 @@
-<br><br><br><br><br><br><br><br>
-<section>
+
+<section class="filter-container">
   <div class="example-button-row">
-    <button mat-raised-button style="position: absolute;" routerLink="/admin/add-usuarios" routerLinkActive="active" class="custom-btn3">Agregar Usuario</button>
+    <button mat-raised-button style="position: absolute;" (click)="addNewCategory($event)" class="custom-btn3">Agregar Usuario</button>
   </div>
 </section>
 <br><br>
@@ -37,11 +37,11 @@
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-mini-fab class="custom-btn" id="{{element.usr_id}}" (click)="editUser($event)"
+      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" (click)="editUser($event)"
       aria-label="Example icon button with a menu icon">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-mini-fab color="warn" id="{{element.usr_id}}" (click)="openDialogEliminar($event)"
+      <button mat-mini-fab class="minifabdanger m-1" id="{{element.usr_id}}" (click)="openDialogEliminar($event)"
       aria-label="Example icon button with a menu icon">
         <mat-icon>delete</mat-icon>
       </button>
