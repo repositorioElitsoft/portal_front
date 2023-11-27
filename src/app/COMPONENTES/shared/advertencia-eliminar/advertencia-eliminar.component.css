@@ -1,0 +1,61 @@
+/* Mejora la apariencia general del diálogo */
+.example-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', 'Arial', sans-serif;
+  }
+  
+  /* Realza el encabezado con un tono rojo más suave */
+  .mat-card-header {
+    background-color: #fbeaea;
+    color: #b23c2c;
+    padding: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  
+  /* Asegura que los títulos sean claramente visibles */
+  .mat-card-title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  /* Ajusta el contenido para que sea claro y conciso */
+  .mat-card-content {
+    padding: 20px;
+    color: #333;
+    font-size: 16px;
+  }
+  
+  /* Diseño de botones para acciones claras y coherentes */
+  .mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    background-color: #fafafa;
+  }
+  
+  /* Botón de acción principal con retroalimentación visual */
+  button[mat-button][color="warn"] {
+    background-color: #d9534f; /* Un rojo menos saturado */
+    color: white;
+  }
+  
+  button[mat-button][color="warn"]:disabled {
+    background-color: #e6e6e6; /* Un gris claro para el estado deshabilitado */
+    color: #cccccc;
+  }
+  
+  button[mat-button][color="warn"]:hover {
+    background-color: #c9302c; /* Un tono más oscuro al pasar el ratón */
+  }
+  
+  /* Botón de cancelar con estilo sutil */
+  button[mat-button]:not([color="warn"]) {
+    color: #333;
+    background-color: transparent;
+  }
+  
+  button[mat-button]:not([color="warn"]):hover {
+    background-color: #e6e6e6; /* Un ligero resaltado al pasar el ratón */
+  }

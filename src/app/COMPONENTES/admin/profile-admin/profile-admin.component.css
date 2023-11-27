@@ -8,6 +8,7 @@
 .profile-container {
   animation: fadeInUp 1s ease-out;
   margin-top: 10vh;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
