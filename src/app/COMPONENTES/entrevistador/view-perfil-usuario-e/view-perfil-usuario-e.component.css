@@ -1,0 +1,26 @@
+
+/* Estilos para el contenedor de filtros */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 10px 0;
+}
+
+/* Estilos para los campos de filtro */
+.filter-input, .filter-select {
+  margin-right: 10px;
+  flex: 1;
+}
+
+/* Estilos para el deslizador de años de experiencia */
+.filter-slider {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.small-spinner {
+  width: 100px; /* Ajusta el ancho según tus preferencias */
+  height: 80px; /* Ajusta la altura según tus preferencias */
+  font-size: 12px; /* Ajusta el tamaño de fuente según tus preferencias */
+}

@@ -12,6 +12,7 @@ import { ObservacionService } from 'src/app/service/observacion.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { AddObservacionComponent } from '../add-observacion/add-observacion.component';
 import { ViewObservacionesComponent } from '../view-observaciones/view-observaciones.component';
+import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -22,7 +23,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 export class ObservacionesComponent {
 
-  displayedColumns: any[] = ['usr_nom', 'usr_rut' ,'usr_email', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'acciones'];
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
 
@@ -110,6 +111,27 @@ export class ObservacionesComponent {
           console.error('Error al obtener las observaciones del usuario', error);
         }
       );
+    }
+
+
+    openUserProfile(event: any){
+      const email = event.target.parentElement.id;
+
+      this.usuarioService.obtenerPerfil(email).subscribe({
+        next:(user) => {
+          const dialogRef = this.dialog.open(ViewPerfilUsuarioEComponent,{
+            data: user
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+          });
+
+        },
+        error: (error) => {
+          console.error('Error al obtener el perfil del usuario:', error);
+
+        }
+      });
     }
 
 }

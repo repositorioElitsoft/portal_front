@@ -13,7 +13,7 @@ export class CityService {
 
   constructor(private http: HttpClient) { }
 
-  obtenerPaises(){
+  obtenerCiudades(){
     return this.http.get<City[]>(this.url);
   }
 

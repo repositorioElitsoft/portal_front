@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -19,6 +19,8 @@ import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfi
 import { LaboralService } from 'src/app/service/laboral.service';
 import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
 import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
+import { EmailRService } from 'src/app/service/email-r.service';
+
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -29,7 +31,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones',];
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'seleccionar', 'motivo', 'acciones',];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
@@ -55,6 +57,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   fechaPostulacionDesde: Date | null = null;
   fechaPostulacionHasta: Date | null = null;
 
+  motivosSeleccionados: Map<string, string> = new Map();
+  motivos: string[] = ['Solicitud de datos', 'Contactar', 'Invitar a nueva postulación', 'Informar resultados'];
+  seleccionarTodos = false;
+
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -65,9 +72,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private categoriaProductoService: CategoriaProductoService,
     private cargosElitsoftService: CargosElitsoftService,
     private productoService: ProductoService,
-    private laboralService: LaboralService,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar,
+    private emailRService: EmailRService,
   ) {}
 
 
@@ -264,6 +270,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
           cargoUsuario: usuario.cargoUsuario,
+          seleccionado: !!usuario.seleccionado as boolean,
         }));
 
         this.originalDataCopy = usuarios;
@@ -367,7 +374,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       },
       error: (error) => {
         console.error('Error al obtener el perfil del usuario:', error);
-        // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
+
       }
     });
   }
@@ -387,13 +394,90 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     )
   }
 
-  openUserDialog(event: any) {
 
+  toggleSelectAll() {
+    console.log('Toggle select all called');
+    this.seleccionarTodos = !this.seleccionarTodos;
 
+    // Asigna la selección a cada usuario en el dataSource
+    this.dataSource.data.forEach((usuario: any) => {
+      usuario['seleccionado'] = this.seleccionarTodos;
 
+      // Asocia un motivo predeterminado si el usuario está seleccionado
+      if (usuario.seleccionado) {
+        this.motivosSeleccionados.set(usuario.usr_email, this.motivos[0]);  // Selecciona el primer motivo por defecto
+      } else {
+        this.motivosSeleccionados.delete(usuario.usr_email);
+      }
+    });
 
-
+    // Actualiza this.usuarios con los datos actuales del dataSource
+    this.usuarios = [...this.dataSource.data];
   }
 
 
+
+
+
+  toggleSelection(usuario: any) {
+    // Implementa lógica para seleccionar/deseleccionar un usuario
+    usuario.seleccionado = !usuario.seleccionado;
+
+    // Asocia un motivo predeterminado si el usuario está seleccionado
+    if (usuario.seleccionado) {
+      this.motivosSeleccionados.set(usuario.usr_email, this.motivos[0]);  // Selecciona el primer motivo por defecto
+    } else {
+      this.motivosSeleccionados.delete(usuario.usr_email);
+    }
+
+    // Actualiza this.usuarios para mantenerlo sincronizado con dataSource.data
+    this.usuarios = this.dataSource.data.map(u => ({ ...u })); // Crea una copia de cada usuario para forzar la actualización
+
+    // Forza la actualización de dataSource.data
+    this.dataSource.data = [...this.usuarios];
+    this.dataSource._updateChangeSubscription(); // Forzar actualización
+
+    console.log('Usuario seleccionado:', usuario);
+  }
+
+
+
+
+
+  enviarCorreosSeleccionados() {
+    console.log('Botón Enviar Correos clickeado');
+    console.log('Usuarios seleccionados (directamente desde dataSource.data):', this.dataSource.data.filter(usuario => usuario.seleccionado));
+    console.log('Motivos seleccionados:', this.motivosSeleccionados);
+
+    // Filtra los usuarios seleccionados directamente desde dataSource.data
+    const usuariosSeleccionados = this.dataSource.filteredData.filter(usuario => usuario.seleccionado);
+
+    console.log('Usuarios seleccionados (desde la variable usuarios):', usuariosSeleccionados);
+
+    // Envía correos a los usuarios seleccionados con sus motivos respectivos
+    usuariosSeleccionados.forEach(usuario => {
+      console.log(`Usuario ${usuario.usr_email} seleccionado: ${usuario.seleccionado}`);
+      const motivo = this.motivosSeleccionados.get(usuario.usr_email) || this.motivos[0];
+
+      // Envía el correo al backend
+      this.emailRService.enviarCorreo(usuario.usr_email, motivo).subscribe(
+        (response) => {
+          console.log(`Correo enviado correctamente a ${usuario.usr_email} con motivo: ${motivo}`);
+        },
+        (error) => {
+          console.error(`Error al enviar el correo a ${usuario.usr_email} con motivo: ${motivo}`, error);
+        }
+      );
+    });
+  }
+
+
+
+
+
+
+
 }
+
+
+

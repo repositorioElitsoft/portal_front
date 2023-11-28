@@ -44,15 +44,6 @@ export class DatosPersonalesComponent implements OnInit {
     usr_url_link: '',
     city: {
       id: undefined,
-      name: '',
-      state: {
-        id: undefined,
-        name: '',
-        country: {
-          id: undefined,
-          name: '',
-        },
-      },
     },
     usr_direcc:'',
     usr_herr: '',
@@ -116,24 +107,31 @@ export class DatosPersonalesComponent implements OnInit {
       }
     );
 
-    this.form.get('country')?.valueChanges.subscribe((selectedCountryId) => {
-      if (selectedCountryId) {
-        this.cargarEstadosPorPais(selectedCountryId);
-      }
-    });
+    this.stateService.obtenerEstados().subscribe(
+     (data:State[])=> {
+      this.states = this.sortByName(data);
+     },
+     (error) => {
+       console.error('Error fetching states:', error);
+     }
+     );
 
-    this.form.get('state')?.valueChanges.subscribe((selectedStateId) => {
-      if (selectedStateId) {
-        this.cargarCiudadesPorEstado(selectedStateId);
+
+     this.cityService.obtenerCiudades().subscribe(
+       (data:City[])=> {
+         this.states = this.sortByName(data);
+       },
+       (error) => {
+         console.error('Error fetching cities:', error);
       }
-    });
+       );
 
     this.ObtenerUsuarioGuardado();
 
   }
 
-  cargarEstadosPorPais(paisId: number) {
-    this.stateService.obtenerEstadosPorPais(paisId).subscribe(
+  obtenerEstadosporCountry(countryId: number) {
+    this.stateService.obtenerEstadosporCountry(countryId).subscribe(
       (data: State[]) => {
         this.states = this.sortByName(data);
       },
@@ -147,7 +145,6 @@ export class DatosPersonalesComponent implements OnInit {
     this.cityService.obtenerCiudadesPorEstado(estadoId).subscribe(
       (data: City[]) => {
         this.cities = this.sortByName(data);
-        console.log(this.cities)
 
       },
       (error) => {
@@ -161,9 +158,20 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
 
-  private sortByName(data: any[]): any[] {
-    // Ordenar por nombre de manera ascendente
-    return data.sort((a, b) => a.name.localeCompare(b.name));
+  private sortByName(data: any): any[] {
+    console.log('Data received:', data);
+
+    if (Array.isArray(data)) {
+      // data es un array, puedes ordenarlo directamente
+      return data.sort((a: any, b: any) => a.name.localeCompare(b.name));
+    } else if (data && Array.isArray(data.states)) {
+      // data es un objeto con una propiedad states, puedes ordenar data.states
+      return data.states.sort((a: any, b: any) => a.name.localeCompare(b.name));
+    } else {
+      // Manejo de casos donde data no es un array o data.states no es un array
+      console.error('Error: Unable to sort data.');
+      return [];
+    }
   }
 
   onFileSelected() {
@@ -225,14 +233,8 @@ export class DatosPersonalesComponent implements OnInit {
 
         });
 
-        if (this.usuarioGuardado.city && this.usuarioGuardado.city.state && this.usuarioGuardado.city.state.country) {
-          this.form.get('country')?.setValue(this.usuarioGuardado.city.state.country.name);
-          this.form.get('state')?.setValue(this.usuarioGuardado.city.state.name);
-          this.form.get('city')?.setValue(this.usuarioGuardado.city.name);
-        }
 
 
-        // Activa manualmente el evento valueChanges en usr_gen
       if (this.usuarioGuardado.usr_gen === 'Otro') {
         this.form.get('usr_gen')?.setValue('Otro');
       }

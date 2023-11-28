@@ -91,6 +91,7 @@ import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-obs
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 
 @NgModule({
   declarations: [
@@ -151,6 +152,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     SidebarEResponsiveComponent,
     AddObservacionComponent,
     ViewObservacionesComponent,
+    ViewPerfilUsuarioEComponent,
 
   ],
   imports: [

@@ -1,7 +1,6 @@
-
-    <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
+<mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
     <mat-card>
-        
+
     <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
         <h4 class="perfilr">Herramientas y Tecnologías</h4>
         <div formArrayName="rows">
@@ -51,7 +50,7 @@
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
                     <select class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
-                        <option value="" selected>Selecciona una opcion</option>    
+                        <option value="" selected>Selecciona una opcion</option>
                         <option value=1>1</option>
                         <option value=2>2</option>
                         <option value=3>3</option>
@@ -78,7 +77,7 @@
         <div class="row mt-5">
             <div class="col-md-2 offset-md-5">
                 <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>
-                
+
             </div>
         </div>
     </form>

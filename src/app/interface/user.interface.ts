@@ -17,15 +17,6 @@ export interface Usuario {
     usr_url_link?:string
     city?: {
       id?: number;
-      name?: string;
-      state?: {
-        id?: number;
-        name?: string;
-        country?: {
-          id?: number;
-          name?: string;
-        };
-      };
     };
     usr_direcc:string;
     herramientas?: HerramientaData[];
@@ -36,6 +27,7 @@ export interface Usuario {
     laborales?: Laboral[];
     observaciones?: Observacion[];
     cargoUsuario?: CargoUsuario[];
+    seleccionado?: boolean;
 }
 
 

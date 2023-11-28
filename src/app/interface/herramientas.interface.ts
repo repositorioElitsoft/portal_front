@@ -10,5 +10,5 @@ export interface Herramientas {
     nvl_id?: number;
     usr_id?: number;
     prd_nom?: string;
-    producto?: Producto; // Agrega esta línea para definir la propiedad producto
-}  
+    producto?: Producto;
+}
