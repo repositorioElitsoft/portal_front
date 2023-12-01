@@ -4,7 +4,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserEditarDTO, Usuario } from 'src/app/interface/user.interface';
+import { UserEditarDTO} from 'src/app/interface/user.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component';
 

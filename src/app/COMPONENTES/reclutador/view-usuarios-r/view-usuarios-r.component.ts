@@ -21,6 +21,8 @@ import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 import { PreguntaService } from 'src/app/service/pregunta.service';
+import { ObservacionService } from 'src/app/service/observacionreclutador.service';
+import { forkJoin } from 'rxjs';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -59,6 +61,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private usuarioService: UsuarioService,
+    private observacionReclutadorService: ObservacionService,
     private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
@@ -75,8 +78,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.getCategories();
-    this.obtenerResultadosByUser
+    this.obtenerResultadosByUser(); // Agrega los paréntesis para llamar a la función
   }
+  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -394,26 +398,40 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
   }
-  openUserProfile(event: any){
-    const email = event.target.parentElement.id;
+ openUserProfile(event: any) {
+  const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
 
+  // Llamadas simultáneas a los servicios
+  forkJoin({
+    observaciones: this.observacionReclutadorService.obtenerObservacionesPorUsuario(userId),
+    usuario: this.usuarioService.getUsuarioId(userId)
+  }).subscribe({
+    next: (resultados) => {
+      // Extraemos los resultados
+      const { observaciones, usuario } = resultados;
 
-    this.usuarioService.obtenerPerfil(email).subscribe({
-      next:(user) => {
-        const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent,{
-          data: user
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+      // Lógica con los datos obtenidos
+      console.log('Observaciones del usuario:', observaciones);
+      console.log('Perfil del usuario:', usuario);
 
-      },
-      error: (error) => {
-        console.error('Error al obtener el perfil del usuario:', error);
-        // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
-      }
-    });
-  }
+      // Configura el tamaño del diálogo
+      const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+        data: { userId, observaciones, usuario }, // Pasa los datos combinados al componente hijo
+        height: '60vh', // Establece la altura del diálogo
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    },
+    error: (error) => {
+      console.error('Error al obtener datos del usuario:', error);
+      // Manejo de errores aquí
+    }
+  });
+}
+
+  
 
   downloadCv(event: any) {
     console.log('usuarioId', event.target?.parentElement)
@@ -447,7 +465,3 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
 }
-function saveAs(blob: Blob, arg1: string) {
-  throw new Error('Function not implemented.');
-}
-

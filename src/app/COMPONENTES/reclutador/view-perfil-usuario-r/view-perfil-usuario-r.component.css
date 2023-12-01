@@ -42,15 +42,135 @@
   }
   .card-title-custom{
     align-self: baseline; 
-    justify-self: end;
-    color: rgb(65, 65, 65);
-    font-weight: bolder;
+    grid-column: 1 / -1; /* Ocupar todas las columnas */
+    justify-self: center;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+     font-size: 1.5em;
+     font-family: 'Meera Inimai', sans-serif;
+
   }
+
+
   .btn-custom{
     background-color: transparent!important;
     color: black!important;
   }
 
   .card-header{
-    background-color: rgb(255, 197, 90);
+    background-color: #F57C27;
   }
+
+
+  .comentario-box {
+    background-color: #f0f0f0; /* Color de fondo de la caja de comentarios */
+    border: 1px solid #ccc; /* Borde de la caja de comentarios */
+    padding: 10px; /* Espaciado interno de la caja de comentarios */
+    margin-bottom: 10px; /* Margen inferior entre cajas de comentarios */
+
+  }
+  
+  .ancho-completo {
+    width: 100%;
+  }
+  
+
+  .observacion-card {
+    margin: 10px;
+    border-left: 5px solid #F57C27; /* Barra lateral para destacar */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Sombra suave para profundidad */
+  }
+  
+  .fecha-info {
+    display: flex;
+    justify-content: start;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  mat-chip {
+    margin: 2px;
+    background-color: #F57C27; /* Fondo del chip */
+    color: white; /* Texto del chip */
+  }
+  
+  /* Estilo para el chip de fecha de creación */
+  .creado-chip {
+    background-color: #F57C27;
+  }
+  
+  /* Estilo para el chip de fecha de modificación, si quieres una variante */
+  .modificado-chip {
+    background-color: #F57C27;
+  }
+  
+
+
+  /* Estilo general para la caja de comentarios */
+.observacion-comentario {
+  margin: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para la tarjeta de comentario */
+.comentario-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilo para el encabezado de la tarjeta */
+.mat-card-header {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.mat-icon {
+  margin-right: 10px;
+  font-size: 24px;
+}
+
+.mat-card-title {
+  font-weight: bold;
+}
+
+/* Estilo para el cuerpo de la tarjeta */
+.mat-card-content {
+  padding-top: 0;
+}
+
+/* Estilo para el campo editable */
+.ancho-completo {
+  width: 100%;
+}
+
+/* Estilo para el texto de observación */
+.observacion-texto {
+  margin: 10px 0;
+}
+
+/* Estilo para las acciones del comentario */
+.acciones-comentario {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Estilo para el botón de editar */
+
+/* Estilo para la tarjeta de información de fecha */
+.observacion-card {
+  background-color: #f0f0f0;
+  margin-top: 10px;
+}
+
+.fecha-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Estilo para el botón de guardar la nueva observación */

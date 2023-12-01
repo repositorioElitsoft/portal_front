@@ -20,9 +20,10 @@ export interface Usuario {
     herr_exp: string;
     cvPath?: string;
     laborales?: Laboral[];
+   
 }
 
 
 export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
 
-  
+export type UserSesionDTO = Omit<Usuario, 'usr_pass' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'>;

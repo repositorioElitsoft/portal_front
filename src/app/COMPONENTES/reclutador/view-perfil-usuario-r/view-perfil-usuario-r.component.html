@@ -20,7 +20,7 @@
             <mat-tab label="Datos Personales">
               <mat-list>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_nom }} {{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</span>
+                <span matListItemTitle>{{ usuarioData.usr_nom }} {{ usuarioData.usr_ap_pat }} {{ usuarioData.usr_ap_mat }}</span>
                 <span matListItemLine>Nombre</span>
                 <div matListItemIcon>
                   <mat-icon>person</mat-icon>
@@ -28,29 +28,29 @@
     
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_rut }}</span>
+                <span matListItemTitle>{{ usuarioData.usr_rut }}</span>
                 <span matListItemLine>Rut</span>
                 <div matListItemIcon>
                   <mat-icon>credit_card</mat-icon>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_email}}</span>
+                <span matListItemTitle>{{ usuarioData.usr_email}}</span>
                 <span matListItemLine>Correo Electrónico</span>
                 <div matListItemIcon>
                   <mat-icon>email</mat-icon>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_tel}}</span>
+                <span matListItemTitle>{{ usuarioData.usr_tel}}</span>
                 <span matListItemLine>Teléfono</span>
                 <div matListItemIcon>
                   <mat-icon>phone</mat-icon>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle *ngIf="usuario.usr_url_link">{{ usuario.usr_url_link}}</span>
-                <span matListItemTitle *ngIf="!usuario.usr_url_link">No especificado</span>
+                <span matListItemTitle *ngIf="usuarioData.usr_url_link">{{ usuarioData.usr_url_link}}</span>
+                <span matListItemTitle *ngIf="!usuarioData.usr_url_link">No especificado</span>
                 <span matListItemLine>LinkedIn</span>
             
                 <div matListItemIcon>
@@ -61,7 +61,7 @@
             </mat-tab>
             <mat-tab label="Información Laboral">
               <mat-list>
-                <mat-list-item *ngFor="let cargo of usuario.cargoUsuario">
+                <mat-list-item *ngFor="let cargo of usuarioData.cargoUsuario">
                   <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
                   <span matListItemLine>Cargo a postular</span>
                   <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
@@ -75,7 +75,7 @@
 
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
 
-                <mat-list-item *ngFor="let laboral of usuario.laborales">
+                <mat-list-item *ngFor="let laboral of usuarioData.laborales">
                   <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
       
                   <span matListItemLine>
@@ -102,7 +102,7 @@
             </mat-tab>
             <mat-tab label="Información Académica">
               <mat-list>
-              <mat-list-item *ngFor="let academica of usuario.academicas">
+              <mat-list-item *ngFor="let academica of usuarioData.academicas">
                 <span matListItemTitle>{{ academica.titl }}</span>
     
                 <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
@@ -119,6 +119,72 @@
             </mat-list>
             </mat-tab>
 
+
+            <mat-tab label="Observaciones">
+              <!-- Sección para mostrar observaciones existentes -->
+              <div *ngFor="let observacion of observacionesData; let i = index" class="observacion-comentario">
+                <!-- Caja de comentario para cada observación con clase "comentario-box" -->
+                
+                <mat-card class="comentario-card">
+                  <mat-card-header>
+                    <mat-card-avatar>
+                      <mat-icon>account_box</mat-icon>
+                    </mat-card-avatar>
+                    <mat-card-title>{{ usuarioGuardado.usr_nom }}</mat-card-title>
+                    <mat-card-subtitle>Modificado por: {{ observacion.usr_id_obs_mod }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <!-- Campo editable para la observación -->
+                    <div *ngIf="enEdicion === observacion.obs_id">
+                      <mat-form-field class="ancho-completo">
+                        <textarea matInput [(ngModel)]="observacion.obs_desc"></textarea>
+                      </mat-form-field>
+                    </div>
+                    <p *ngIf="enEdicion !== observacion.obs_id" class="observacion-texto">{{ observacion.obs_desc }}</p>
+                    <div class="acciones-comentario">
+                      <button mat-button *ngIf="enEdicion !== observacion.obs_id" (click)="editarObservacion(observacion.obs_id)">Editar</button>
+                      <button mat-button *ngIf="enEdicion === observacion.obs_id" (click)="actualizarObservacion(observacion)">Guardar</button>
+                      <!-- <button mat-button color="warn" (click)="eliminarObservacion(observacion.obsrec_id)">Eliminar</button> -->
+                    </div>
+                  </mat-card-content>
+
+                  <mat-card class="observacion-card">
+                    <mat-card-content>
+                      <div class="fecha-info">
+                        <mat-chip-list>
+                          <mat-chip color="primary" selected>
+                            Creado: {{ observacion.obs_fec_cre | date:'medium' }}
+                          </mat-chip>
+                          <mat-chip *ngIf="observacion.obs_fec_mod" color="accent" selected>
+                            Modificado: {{ observacion.obs_fec_mod | date:'medium' }}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </mat-card>
+                
+                
+              </div>
+            
+              <!-- Caja de comentario para la nueva observación con clase "comentario-box" -->
+              <div class="comentario-box mt-2">
+                <mat-form-field appearance="outline" class="ancho-completo">
+                  <mat-label>Escribe una observación...</mat-label>
+                  <textarea matInput [(ngModel)]="nuevaObservacion" class="nueva-observacion"></textarea>
+                </mat-form-field>
+              </div>
+            
+              <!-- Botón para guardar la nueva observación -->
+              
+              <button mat-raised-button class="botonprimario  m-2" (click)="guardarObservacion()" aria-label="Añadir una Nueva Observación">Guardar Nueva Observación</button>
+              <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
+
+            </mat-tab>
+            
+            
+            
+            
   
           </mat-tab-group>
 
