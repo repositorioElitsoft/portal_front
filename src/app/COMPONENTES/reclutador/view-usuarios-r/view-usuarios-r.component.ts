@@ -8,18 +8,25 @@ import { MatSort, Sort} from '@angular/material/sort';
 import { Usuario } from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
+
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
+import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
+
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
-import { LaboralService } from 'src/app/service/laboral.service';
+
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
+import { LaboralService } from 'src/app/service/laboral.service';
+import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
+
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -50,11 +57,18 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   inputContent: boolean = false;
   lastYears: number = 0;
 
+  usrId:number | null = null
+
+  // Define un formulario reactivo para manejar la edición
+  editForm: FormGroup;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
+    private usuarioService: UsuarioService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
@@ -63,8 +77,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
+    private formBuilder: FormBuilder,
     
-  ) {}
+  ) {// Inicializa el formulario reactivo en el constructor
+    this.editForm = this.formBuilder.group({
+      usr_nom: ['', Validators.required],
+      usr_tel: ['', Validators.required],
+      
+      // Agrega más campos según tus necesidades
+    });}
 
 
   ngOnInit(): void {
@@ -352,7 +373,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this._bottomSheet.open(viewCrudArchivoComponent);
   }
 
-
+  
   
   openUserDialog(event: any) {
 
@@ -362,6 +383,40 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   }
 
+ 
+
+openEditProfileDialog(event: any): void {
+ // Obtiene el ID desde el elemento del botón que dispara el evento
+ const id = event.target.parentElement.id;
+  
+ if (id) {
+   // Llama al servicio para obtener los datos del usuario usando el ID
+   this.usuarioService.getUsuarioId(id).subscribe({
+     next: (data) => {
+       console.log('Data llegada:', data);
+       // Abre el diálogo con los datos obtenidos
+       const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
+         width: '800px', 
+         height: '700px',
+         data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+       });
+
+       // Maneja el resultado después de que el diálogo se cierre
+       dialogRef.afterClosed().subscribe((result) => {
+         console.log(`Dialog result: ${result}`);
+         // Aquí puedes manejar el resultado del diálogo
+       });
+     },
+     error: (error) => {
+       console.log(error);
+       // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+     }
+   });
+ } else {
+   console.error('No se pudo obtener el ID del usuario');
+ }
+}
+  
 
 }
 function saveAs(blob: Blob, arg1: string) {

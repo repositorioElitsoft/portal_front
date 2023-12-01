@@ -69,7 +69,8 @@ export class AddUsuariosComponent implements OnInit {
     }
 
 
-  guardarUsuario() {
+  guardarUsuario() 
+  {
     if (this.userDataForm.invalid) {
       alert('Por favor, complete el formulario correctamente.');
       return;

@@ -90,9 +90,11 @@ import { UploadFilesComponent } from './COMPONENTES/upload-files/upload-files.co
 import { AddLaboralComponent } from './COMPONENTES/shared/add-laboral/add-laboral.component';
 import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-laboral.component';
 import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
+import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
+
 
 @NgModule({
-  declarations: [
+  declarations: [ 
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -142,7 +144,12 @@ import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.componen
     CaracterOnlyDirective,
     AñadirEstudioComponent,
     EditarAcademicaComponent,
-    UploadFilesComponent
+    UploadFilesComponent,
+    ViewFilesComponent,
+    AddLaboralComponent,
+    EditLaboralComponent,
+    NumericOnlyDirective,
+    EditPerfilUsuarioRComponent
     
 
   ],
