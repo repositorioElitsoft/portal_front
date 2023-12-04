@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observacion, ObservacionDTO } from 'src/app/interface/observacionreclutador.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { interval, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { UserSesionDTO, Usuario } from 'src/app/interface/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -149,8 +148,8 @@ guardarObservacion() {
           nuevaObservacion.usr_id_obs_mod).subscribe(
         (resultado) => {
           console.log('Observación guardada con éxito', resultado);
-          this.nuevaObservacion = ''; // Limpia el área de texto
           this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
+          this.nuevaObservacion = ''; // Limpia el área de texto
           this.openSnackBar('Observación guardada con éxito', 'Cerrar');
         },
         (error) => {

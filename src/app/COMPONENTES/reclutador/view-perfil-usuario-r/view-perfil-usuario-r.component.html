@@ -129,12 +129,12 @@
                   <mat-card>
                     <mat-card-header>
                       <div mat-card-avatar class="avatar">
-                        <img src="/assets/usericon.png" alt="user icon">
                       </div>
                       <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
                       <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
                     </mat-card-header>
                   </mat-card>
+                  <br>
                   <mat-card-content>       
                     <!-- Campo editable para la observación -->
                     <div *ngIf="enEdicion === observadores.obs_id">
@@ -144,8 +144,8 @@
                     </div>
                     <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
                     <div class="acciones-comentario">
-                      <button mat-button *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
-                      <button mat-button *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
+                      <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
+                      <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
                       <!-- <button mat-button color="warn" (click)="eliminarObservacion(observacion.obsrec_id)">Eliminar</button> -->
                     </div>
                   </mat-card-content>
