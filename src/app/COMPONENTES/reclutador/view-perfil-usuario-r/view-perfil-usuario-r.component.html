@@ -122,28 +122,30 @@
 
             <mat-tab label="Observaciones">
               <!-- Sección para mostrar observaciones existentes -->
-              <div *ngFor="let observacion of observacionesData; let i = index" class="observacion-comentario">
+              <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
                 <!-- Caja de comentario para cada observación con clase "comentario-box" -->
                 
                 <mat-card class="comentario-card">
-                  <mat-card-header>
-                    <mat-card-avatar>
-                      <mat-icon>account_box</mat-icon>
-                    </mat-card-avatar>
-                    <mat-card-title>{{ usuarioGuardado.usr_nom }}</mat-card-title>
-                    <mat-card-subtitle>Modificado por: {{ observacion.usr_id_obs_mod }}</mat-card-subtitle>
-                  </mat-card-header>
-                  <mat-card-content>
+                  <mat-card>
+                    <mat-card-header>
+                      <div mat-card-avatar class="avatar">
+                        <img src="/assets/usericon.png" alt="user icon">
+                      </div>
+                      <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
+                      <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
+                    </mat-card-header>
+                  </mat-card>
+                  <mat-card-content>       
                     <!-- Campo editable para la observación -->
-                    <div *ngIf="enEdicion === observacion.obs_id">
+                    <div *ngIf="enEdicion === observadores.obs_id">
                       <mat-form-field class="ancho-completo">
-                        <textarea matInput [(ngModel)]="observacion.obs_desc"></textarea>
+                        <textarea matInput [(ngModel)]="observadores.obs_desc"></textarea>
                       </mat-form-field>
                     </div>
-                    <p *ngIf="enEdicion !== observacion.obs_id" class="observacion-texto">{{ observacion.obs_desc }}</p>
+                    <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
                     <div class="acciones-comentario">
-                      <button mat-button *ngIf="enEdicion !== observacion.obs_id" (click)="editarObservacion(observacion.obs_id)">Editar</button>
-                      <button mat-button *ngIf="enEdicion === observacion.obs_id" (click)="actualizarObservacion(observacion)">Guardar</button>
+                      <button mat-button *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
+                      <button mat-button *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
                       <!-- <button mat-button color="warn" (click)="eliminarObservacion(observacion.obsrec_id)">Eliminar</button> -->
                     </div>
                   </mat-card-content>
@@ -153,10 +155,10 @@
                       <div class="fecha-info">
                         <mat-chip-list>
                           <mat-chip color="primary" selected>
-                            Creado: {{ observacion.obs_fec_cre | date:'medium' }}
+                            Creado: {{observadores.obs_fec_cre | date:'medium' }}
                           </mat-chip>
-                          <mat-chip *ngIf="observacion.obs_fec_mod" color="accent" selected>
-                            Modificado: {{ observacion.obs_fec_mod | date:'medium' }}
+                          <mat-chip *ngIf="observadores.obs_fec_mod" color="accent" selected>
+                            Modificado: {{ observadores.obs_fec_mod | date:'medium' }}
                           </mat-chip>
                         </mat-chip-list>
                       </div>

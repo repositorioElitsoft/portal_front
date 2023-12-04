@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observacion } from 'src/app/interface/observacionreclutador.interface';
+import { Observacion, ObservacionDTO } from 'src/app/interface/observacionreclutador.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { interval, Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { UserSesionDTO, Usuario } from 'src/app/interface/user.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-perfil-usuario-r',
@@ -15,8 +16,9 @@ import { UserSesionDTO, Usuario } from 'src/app/interface/user.interface';
 })
 export class ViewPerfilUsuarioRComponent implements OnInit {
   usuarioData: any;
-  observacionesData: Observacion[];
+  observadoresData: ObservacionDTO[];
   nuevaObservacion: string = '';
+  observaciones: ObservacionDTO[] = [];
   private observacionesSubscription!: Subscription;
   enEdicion: any;
   nombresUsuarios: Object[] = []; // Inicializado con un arreglo vacío
@@ -31,6 +33,34 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   };
 
 
+  observadores: ObservacionDTO ={
+
+
+    usr2_email: '', // ID del Usuario que la modificó
+    usr2_ap_pat: '',
+    usr2_nom: '',
+    usr2_id: 0,
+  
+    obs_id: 0,
+   apr_ger:'',
+   apr_tec:'',
+   apr_oper:'',
+   obs_desc:'',
+   obs_fec_cre: new Date(),
+   obs_fec_mod:new Date(),
+   usr1_id: 0,
+   usr_id_obs:0,    // ID del Usuario que hizo la observación
+   usr_id_obs_mod: 0,   // ID del Usuario que modificó la observación
+   // Campos de la entidad Usuario
+   usr_id: 0,   // ID del Usuario que hizo la observación
+   usr_nom:'',
+   usr_ap_pat:'',
+   usr_email:'',
+
+
+
+
+  }
 
 
 
@@ -40,107 +70,139 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     private usuarioService: UsuarioService,
     public dialogRef: MatDialogRef<ViewPerfilUsuarioRComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private observacionService: ObservacionService
+    private observacionService: ObservacionService,
+    private _snackBar: MatSnackBar
   ) {
     this.usuarioData = data.usuario;
-    this.observacionesData = data.observaciones;
+    this.observadoresData = data.observadores;
+  
   }
 
   ngOnInit(): void {
 
     this.ObtenerUsuarioGuardado();
-    this.obtenerNombresUsuarios();
-    console.log('Perfil del usuario:', this.usuarioData);
-    console.log('Observaciones del usuario:', this.observacionesData);
+
   }
 
 
 
   
 
-  cargarObservaciones() {
-    // Llama al servicio para obtener las observaciones del usuario desde el backend
-    this.observacionService.obtenerObservacionesPorUsuario(this.usuarioData.usr_id).subscribe(
-      (observaciones) => {
-        // Puedes realizar acciones adicionales aquí si es necesario, como filtrar, ordenar o procesar los datos recibidos
-        console.log('Observaciones cargadas:', observaciones);
-      },
-      (error) => {
-        console.error('Error al cargar las observaciones:', error);
-      }
-    );
-  }
+ 
 
-  // eliminarObservacion(obsrec_id: number) {
-  //   console.log('Eliminar observación', obsrec_id);
-  //   const index = this.observacionesData.findIndex((observacion) => observacion.obsrec_id === obsrec_id);
-  //   if (index !== -1) {
-  //     this.observacionesData.splice(index, 1);
+// Variable para almacenar las observaciones
 
-  //     // Llama a tu servicio para eliminarla en el backend
-  //     this.observacionService.eliminarObservacion(obsrec_id).subscribe(
-  //       () => {
-  //         console.log('Observación eliminada con éxito en el backend');
-  //       },
-  //       (error) => {
-  //         console.error('Error al eliminar la observación en el backend:', error);
-  //       }
-  //     );
-  //   }
-  // }
-
-  guardarObservacion() {
-    if (!this.nuevaObservacion.trim()) {
-      console.error('La observación no puede estar vacía.');
-      return;
+// Función para cargar observaciones desde el backend
+cargarObservaciones() {
+  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.usr_id).subscribe(
+    (observadores) => {
+      this.observaciones = observadores;
+      console.log('Observaciones cargadas:', observadores);
+    },
+    (error) => {
+      console.error('Error al cargar las observaciones:', error);
     }
-  
-    // Crea una nueva observación con el texto ingresado y otros campos necesarios
-    const nuevaObservacion: Observacion = {
-      obs_id: 0, // Asumiendo que el backend asignará un ID
-      obs_desc: this.nuevaObservacion,
-      obs_fec_cre: new Date(), // Puede ser manejado por el backend
-      obs_fec_mod: new Date(), // Puede ser manejado por el backend
-      apr_oper: '', // Valores predeterminados o obtenidos del usuario
-      apr_tec: '',
-      apr_ger: '',
-      usr_id_obs:  this.usuarioGuardado.usr_id ?? 0, // Asumiendo que estos valores están disponibles
-      usr_id_obs_mod: this.usuarioGuardado.usr_id ?? 0,
-    };
+  );
+}
 
-    // Llama al servicio para guardar la nueva observación en el backend
-    this.observacionService.guardarObservacionRec(nuevaObservacion, this.usuarioData.usr_id, nuevaObservacion.usr_id_obs,
-       nuevaObservacion.usr_id_obs_mod).subscribe(
-      (resultado) => {               
-        // Guardado exitoso
-        console.log('Observación guardada con éxito', resultado);
-        this.nuevaObservacion = ''; // Limpia el área de texto
-        this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
-      },
-      (error) => {
-        console.error('Error al guardar la observación:', error);
+// Función para guardar una nueva observación
+guardarObservacion() {
+  if (!this.nuevaObservacion.trim()) {
+    console.error('La observación no puede estar vacía.');
+    this.openSnackBar('La observación no puede estar vacía', 'Cerrar');
+    return;
+  }
+
+  // Obtener observaciones actuales del servidor
+  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.usr_id).subscribe(
+    (observaciones) => {
+      if (observaciones.length >= 10) {
+        console.error('Se ha alcanzado el límite máximo de observaciones.');
+        this.openSnackBar('Se ha alcanzado el límite máximo de observaciones', 'Cerrar');
+        return;
       }
-    );
-  }
 
-  editarObservacion(obsrec_id: number) {
-    this.enEdicion = obsrec_id;
-  }
-  
-  actualizarObservacion(observacion: Observacion) {
-    // Establece el usr_id_obs_mod al ID del usuario actual
-    observacion.usr_id_obs_mod = this.usuarioGuardado?.usr_id ?? 0; // Usar 0 como valor por defecto o ajustar a un valor adecuado
+      // Proceder con la creación de la nueva observación si el límite no se ha alcanzado
+      const nuevaObservacion: ObservacionDTO = {
+        obs_id: 0,
+        usr_id: 0,
+        usr_nom: '',
+        usr_email: '',
+        usr_ap_pat: '',
+        obs_desc: this.nuevaObservacion,
+        obs_fec_cre: new Date(),
+        obs_fec_mod: new Date(),
+        apr_tec: '',
+        apr_oper: '',
+        apr_ger: '',
+        usr_id_obs: this.usuarioGuardado.usr_id ?? 0,
+        usr_id_obs_mod: this.usuarioGuardado.usr_id ?? 0,
+        usr1_id: 0,
+        usr2_email: '', 
+        usr2_ap_pat: '',
+        usr2_nom: '',
+        usr2_id: 0,
+      };
 
-    this.observacionService.actualizarObservacionRec(observacion.obs_id, observacion, observacion.usr_id_obs_mod).subscribe(
+      // Llama al servicio para guardar la nueva observación en el backend
+      this.observacionService.guardarObservacionRec(nuevaObservacion, this.usuarioData.usr_id, nuevaObservacion.usr_id_obs,
+          nuevaObservacion.usr_id_obs_mod).subscribe(
         (resultado) => {
-            console.log('Observación actualizada con éxito', resultado);
-            this.enEdicion = null; // Salir del modo de edición
-            this.cargarObservaciones(); // Opcional, para recargar las observaciones
+          console.log('Observación guardada con éxito', resultado);
+          this.nuevaObservacion = ''; // Limpia el área de texto
+          this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
+          this.openSnackBar('Observación guardada con éxito', 'Cerrar');
         },
         (error) => {
-            console.error('Error al actualizar la observación:', error);
+          console.error('Error al guardar la observación:', error);
+          this.openSnackBar('Error al guardar la observación', 'Cerrar');
         }
-    );
+      );
+    },
+    (error) => {
+      console.error('Error al cargar las observaciones:', error);
+      this.openSnackBar('Error al cargar las observaciones', 'Cerrar');
+    }
+  );
+}
+
+
+  editarObservacion(obs_id: number) {
+    console.log('Iniciando la edición de la observación', obs_id);
+
+    // Antes de cambiar el estado, puedes imprimir el estado actual para comparar
+    console.log('Estado actual de enEdicion antes de la edición:', this.enEdicion);
+
+    this.enEdicion = obs_id;
+
+    // Después de cambiar el estado, imprime el nuevo estado para confirmar el cambio
+    console.log('Estado actualizado de enEdicion después de la edición:', this.enEdicion);
+}
+
+  
+actualizarObservacion(observadores: ObservacionDTO) {
+  // Verificar si la descripción de la observación está vacía
+  if (!observadores.obs_desc.trim()) {
+      console.error('La descripción de la observación no puede estar vacía.');
+      this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
+      return;
+  }
+
+  // Establece el usr_id_obs_mod al ID del usuario actual
+  observadores.usr_id_obs_mod = this.usuarioGuardado?.usr_id ?? 0;
+
+  this.observacionService.actualizarObservacionRec(observadores.usr_id, observadores, observadores.usr_id_obs_mod).subscribe(
+      (resultado) => {
+          console.log('Observación actualizada con éxito', resultado);
+          this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
+          this.enEdicion = null; // Salir del modo de edición
+          this.cargarObservaciones(); // Opcional, para recargar las observaciones
+      },
+      (error) => {
+          console.error('Error al actualizar la observación:', error);
+          this.openSnackBar('Error al actualizar la observación', 'Cerrar');
+      }
+  );
 }
 
 
@@ -152,16 +214,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   
   }
   
-   obtenerNombresUsuarios() {
-    this.observacionService.obtenerNombresUsuarios().subscribe(
-      (data) => {
-        this.nombresUsuarios = data;
-      },
-      (error) => {
-        console.error('Error al obtener los nombres de usuarios:', error);
-      }
-    );
-  }
+ 
 
   ObtenerUsuarioGuardado() {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
@@ -180,6 +233,11 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
         console.log(err);
       }
     });
+  }
+
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
 
 

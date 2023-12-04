@@ -400,23 +400,24 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
  openUserProfile(event: any) {
   const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+  console.log('User ID:', userId); // Imprime el ID del usuario en la consola
 
   // Llamadas simultáneas a los servicios
   forkJoin({
-    observaciones: this.observacionReclutadorService.obtenerObservacionesPorUsuario(userId),
+    observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
     usuario: this.usuarioService.getUsuarioId(userId)
   }).subscribe({
     next: (resultados) => {
       // Extraemos los resultados
-      const { observaciones, usuario } = resultados;
+      const { observadores, usuario } = resultados;
 
       // Lógica con los datos obtenidos
-      console.log('Observaciones del usuario:', observaciones);
+      console.log('Observaciones del usuario:', observadores);
       console.log('Perfil del usuario:', usuario);
 
       // Configura el tamaño del diálogo
       const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
-        data: { userId, observaciones, usuario }, // Pasa los datos combinados al componente hijo
+        data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
         height: '60vh', // Establece la altura del diálogo
       });
 

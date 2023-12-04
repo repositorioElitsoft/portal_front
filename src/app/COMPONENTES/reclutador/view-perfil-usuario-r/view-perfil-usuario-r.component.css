@@ -174,3 +174,54 @@
 }
 
 /* Estilo para el botón de guardar la nueva observación */
+.avatar {
+  background-color: #ffffff; /* Cambia esto a tu color de fondo deseado */
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* O el tamaño que prefieras */
+  height: 50px; /* O el tamaño que prefieras */
+  border: 2px solid #ddd; /* Borde para destacar el avatar */
+  overflow: hidden; /* Asegura que el contenido no sobresalga del círculo */
+  position: relative; /* Para posicionar elementos internos si es necesario */
+}
+
+/* Opcional: estilo para imágenes o texto dentro del avatar */
+.avatar img, .avatar span {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen cubra completamente el círculo */
+}
+
+/* Opcional: estilos para agregar un indicador de estado (online/offline, por ejemplo) */
+.avatar::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  background-color: #4caf50; /* Verde para online */
+  border: 2px solid #ffffff; /* Borde que coincide con el color de fondo del avatar */
+  border-radius: 50%;
+
+}
+
+
+
+
+.mat-card-header {
+  align-items: center;
+}
+
+.mat-card-title {
+  margin-left: 8px; /* Espacio al lado del avatar */
+  font-weight: bold; /* Estilo del título */
+}
+
+.mat-card-subtitle {
+  margin-left: 8px; /* Espacio al lado del avatar */
+  font-size: 0.85em; /* Tamaño del subtítulo */
+}
+
