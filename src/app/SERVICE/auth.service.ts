@@ -12,7 +12,7 @@ export class AuthService {
     const token = this.getToken();
     this.currentUser = token ? { token } : null;
   }
-  
+
   isAuthenticatedUser() {
     if (this.getToken()) {
       const token = jwtDecode(this.getToken());
@@ -27,4 +27,10 @@ export class AuthService {
   }
 
   logout(){}
+
+  getUserId(): number | null {
+    const usuario: any = this.getUserId();
+    return usuario?.usr_id ?? null;
+  }
+
 }

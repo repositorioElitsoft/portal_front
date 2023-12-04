@@ -41,7 +41,7 @@ export class UsuarioService {
   }
 
   obtenerUsuarios(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.url}/usuarios/usuarios-herramientas`);
+    return this.HttpClient.get<any[]>(`${this.url}/usuarios/usuarios/`);
   }
 
   eliminarUsuarioId(usuarioId: number): Observable<string> {
@@ -135,7 +135,7 @@ export class UsuarioService {
     return this.HttpClient.get(`${this.url}/usuarios/file/${userId}`, {responseType: 'blob'});
   }
   public borrarCV(usuarioId: number): Observable<any> {
-    const url = `${this.url}/usuarios/eliminar-cv/${usuarioId}`; 
+    const url = `${this.url}/usuarios/eliminar-cv/${usuarioId}`;
     return this.HttpClient.delete(url);
   }
 

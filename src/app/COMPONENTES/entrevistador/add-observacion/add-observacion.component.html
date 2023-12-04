@@ -2,16 +2,41 @@
 <form #observacionForm="ngForm" (ngSubmit)="guardarObservacion()">
   <mat-form-field>
     <mat-label>Categoría</mat-label>
-    <mat-select name="obs_categoria" [(ngModel)]="nuevaObservacion.obs_categoria" required>
-      <mat-option value="Evaluaciones Operacionales">Evaluaciones Operacionales</mat-option>
-      <mat-option value="Evaluaciones Tecnicas">Evaluaciones Tecnicas</mat-option>
-      <mat-option value="Evaluaciones Gerenciales">Evaluaciones Gerenciales</mat-option>
-      <mat-option value="Evaluacion Final">Evaluación Final</mat-option>
+    <mat-select name="obs_categoria" [(ngModel)]="nuevaObservacion.categoriaObservacion.cat_obs_desc" required>
+      <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_obs_desc">
+        {{ categoria.cat_obs_desc }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción" name="obs_desc" [(ngModel)]="nuevaObservacion.obs_desc" required></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Aprobación Operacional</mat-label>
+    <mat-select name="apr_oper" [(ngModel)]="nuevaObservacion.apr_oper" required>
+      <mat-option value="SI">SI</mat-option>
+      <mat-option value="NO">NO</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field>
-    <textarea matInput placeholder="Descripción" name="obs_texto" [(ngModel)]="nuevaObservacion.obs_texto" required></textarea>
+    <mat-label>Aprobación Técnica</mat-label>
+    <mat-select name="apr_tec" [(ngModel)]="nuevaObservacion.apr_tec" required>
+      <mat-option value="SI">SI</mat-option>
+      <mat-option value="NO">NO</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Aprobación Gerencial</mat-label>
+    <mat-select name="apr_ger" [(ngModel)]="nuevaObservacion.apr_ger" required>
+      <mat-option value="SI">SI</mat-option>
+      <mat-option value="NO">NO</mat-option>
+    </mat-select>
   </mat-form-field>
 
   <button mat-raised-button type="submit">Guardar</button>

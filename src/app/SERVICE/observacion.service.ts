@@ -13,19 +13,17 @@ export class ObservacionService {
 
   constructor(private http: HttpClient) { }
 
-  obtenerObservacionesPorUsuario(usuarioId: number): Observable<Observacion[]> {
-    return this.http.get<Observacion[]>(`${this.url}/usuario/${usuarioId}`);
+  obtenerObservacionesPorUsuario(userId: number): Observable<Observacion[]> {
+    const url = `${this.url}/por-usuario/${userId}`;
+    return this.http.get<Observacion[]>(url);
   }
 
-  guardarObservacion(observacion: Observacion): Observable<Observacion> {
-    return this.http.post<Observacion>(`${this.url}/guardar`, observacion);
+
+  guardarObservacionCat(observacion: Observacion, userId: number, catObsId: number, usr_id_obs: number, usr_id_obs_mod: number
+  ): Observable<boolean> {
+    const url = `${this.url}/guardarCat/${userId}/${catObsId}/${usr_id_obs}/${usr_id_obs_mod}`;
+    return this.http.post<boolean>(url, observacion);
   }
 
-  eliminarObservacion(observacionId: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/eliminar/${observacionId}`);
-  }
 
-  actualizarObservacion(obs_id: number, observacion: Observacion): Observable<Observacion> {
-    return this.http.put<Observacion>(`${this.url}/actualizar/${obs_id}`, observacion);
-  }
 }

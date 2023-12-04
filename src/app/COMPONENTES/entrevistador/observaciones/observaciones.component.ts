@@ -13,6 +13,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 import { AddObservacionComponent } from '../add-observacion/add-observacion.component';
 import { ViewObservacionesComponent } from '../view-observaciones/view-observaciones.component';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
+import { AuthService } from 'src/app/service/auth.service';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -23,7 +24,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 export class ObservacionesComponent {
 
-  displayedColumns: any[] = ['usr_nom', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'observaciones', 'acciones'];
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
 
@@ -39,7 +40,8 @@ export class ObservacionesComponent {
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     public dialog: MatDialog, private _snackBar: MatSnackBar,
-    public observacionService:ObservacionService ){}
+    public observacionService:ObservacionService,
+    private authService: AuthService ){}
 
     ngOnInit(): void {
       this.obtenerUsuarios();
@@ -71,29 +73,27 @@ export class ObservacionesComponent {
     }
 
 
-    agregarObservacion(usuarioId: number) {
-      const dialogRef = this.dialog.open(AddObservacionComponent, {
-        width: '400px',
-        data: { usuarioId: usuarioId } // Pasar el ID del usuario al diálogo
-      });
+    agregarObservacion (){
+    //   const usr_id_sesion = this.authService.getUserId();
 
-      dialogRef.afterClosed().subscribe((result: any) => {
-        if (result) {
-          const nuevaObservacion: Observacion = result; // Suponiendo que el diálogo devuelve la observación ingresada
-          nuevaObservacion.usr_id = usuarioId; // Asigna el usuario correspondiente a la observación
+    //   const dialogRef = this.dialog.open(AddObservacionComponent, {
+    //     width: '400px',
+    //     data: { usuarioId: usuarioId, usr_id_sesion: usr_id_sesion },
+    //   });
 
-          this.observacionService.guardarObservacion(nuevaObservacion).subscribe(
-            (observacionGuardada: Observacion) => {
-              // Actualizar la lista de observaciones asociadas al usuario
-              this.obtenerObservacionesPorUsuario(usuarioId);
-            },
-            (error: any) => {
-              console.error('Error al guardar la observación', error);
-            }
-          );
-        }
-      });
-    }
+    //   dialogRef.afterClosed().subscribe((result: any) => {
+    //     // No necesitas lógica de guardado aquí
+
+    //     // Actualizar la lista de observaciones asociadas al usuario
+    //     if (result) {
+    //       this.obtenerObservacionesPorUsuario(usuarioId);
+    //     }
+    //   });
+     }
+
+
+
+
 
     obtenerObservacionesPorUsuario(usuarioId: number) {
       this.observacionService.obtenerObservacionesPorUsuario(usuarioId).subscribe(
