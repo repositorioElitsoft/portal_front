@@ -2,57 +2,57 @@
         <div class="card">
           <div class="card-header ">
             <div class="card-custom">
-              <button mat-mini-fab color="primary" class="btn-custom" mat-dialog-close 
+              <button mat-mini-fab color="primary" class="btn-custom" mat-dialog-close
               aria-label="Example icon button with a menu icon">
               <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
-      
+
             <h2 class="card-title-custom">Perfil de Usuario </h2>
             </div>
           </div>
           <div class="card-body">
             <div class="user-profile">
-           
+
               <!-- Agrega más campos del perfil según tu entidad Usuario -->
-             
+
           <mat-tab-group>
-       
+
             <mat-tab label="Datos Personales">
               <mat-list>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_nom }} {{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</span>
+                <span matListItemTitle>{{ usuarioData.usr_nom }} {{ usuarioData.usr_ap_pat }} {{ usuarioData.usr_ap_mat }}</span>
                 <span matListItemLine>Nombre</span>
                 <div matListItemIcon>
                   <mat-icon>person</mat-icon>
                 </div>
-    
+
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_rut }}</span>
+                <span matListItemTitle>{{ usuarioData.usr_rut }}</span>
                 <span matListItemLine>Rut</span>
                 <div matListItemIcon>
                   <mat-icon>credit_card</mat-icon>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_email}}</span>
+                <span matListItemTitle>{{ usuarioData.usr_email}}</span>
                 <span matListItemLine>Correo Electrónico</span>
                 <div matListItemIcon>
                   <mat-icon>email</mat-icon>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle>{{ usuario.usr_tel}}</span>
+                <span matListItemTitle>{{ usuarioData.usr_tel}}</span>
                 <span matListItemLine>Teléfono</span>
                 <div matListItemIcon>
                   <mat-icon>phone</mat-icon>
                 </div>
               </mat-list-item>
               <mat-list-item>
-                <span matListItemTitle *ngIf="usuario.usr_url_link">{{ usuario.usr_url_link}}</span>
-                <span matListItemTitle *ngIf="!usuario.usr_url_link">No especificado</span>
+                <span matListItemTitle *ngIf="usuarioData.usr_url_link">{{ usuarioData.usr_url_link}}</span>
+                <span matListItemTitle *ngIf="!usuarioData.usr_url_link">No especificado</span>
                 <span matListItemLine>LinkedIn</span>
-            
+
                 <div matListItemIcon>
                   <mat-icon>public</mat-icon>
                 </div>
@@ -61,13 +61,13 @@
             </mat-tab>
             <mat-tab label="Información Laboral">
               <mat-list>
-                <mat-list-item *ngFor="let cargo of usuario.cargoUsuario">
-                  <span matListItemTitle>{{ cargo.cargoElitsoft?.crg_elit_nom }}</span>
+                <mat-list-item *ngFor="let cargo of usuarioData.cargoUsuario">
+                  <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
                   <span matListItemLine>Cargo a postular</span>
                   <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
-    
+
                   <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
-    
+
                   <div matListItemIcon>
                     <mat-icon>forward</mat-icon>
                   </div>
@@ -75,17 +75,17 @@
 
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
 
-                <mat-list-item *ngFor="let laboral of usuario.laborales">
+                <mat-list-item *ngFor="let laboral of usuarioData.laborales">
                   <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
-      
+
                   <span matListItemLine>
                     {{ laboral.inf_lab_emp }}
                   </span>
-                  
-                  
-        
+
+
+
                     <div *ngFor="let h of laboral.herramientas; let i = index" matListItemLine>
-                      <mat-chip  class="chips" > 
+                      <mat-chip  class="chips" >
                         {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})  - (Exp:{{ h.herr_usr_anos_exp }} año/s)
                       </mat-chip>
                     </div>
@@ -93,18 +93,18 @@
                   <div matListItemIcon>
                     <mat-icon>work</mat-icon>
                   </div>
- 
+
                   <span matListItemMeta> <div>Desde</div> {{ laboral.inf_lab_fec_ini }} </span>
                   <span matListItemMeta> <div>Hasta</div> {{ laboral.inf_lab_fec_fin }} </span>
                 </mat-list-item>
-           
+
               </mat-list>
             </mat-tab>
             <mat-tab label="Información Académica">
               <mat-list>
-              <mat-list-item *ngFor="let academica of usuario.academicas">
+              <mat-list-item *ngFor="let academica of usuarioData.academicas">
                 <span matListItemTitle>{{ academica.titl }}</span>
-    
+
                 <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
 
                 <span matListItemLine>{{academica.inf_acad_est }}</span>
@@ -114,9 +114,74 @@
                 </div>
                 <span matListItemMeta> <div>Desde</div> {{ academica.inf_acad_fec_ini }} </span>
                 <span matListItemMeta> <div>Hasta</div> {{ academica.inf_acad_fec_fin }} </span>
-             
+
               </mat-list-item>
             </mat-list>
+            </mat-tab>
+
+
+            <mat-tab label="Observaciones">
+              <!-- Sección para mostrar observaciones existentes -->
+              <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
+                <!-- Caja de comentario para cada observación con clase "comentario-box" -->
+
+                <mat-card class="comentario-card">
+                  <mat-card>
+                    <mat-card-header>
+                      <div mat-card-avatar class="avatar">
+                      </div>
+                      <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
+                      <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
+                    </mat-card-header>
+                  </mat-card>
+                  <br>
+                  <mat-card-content>
+                    <!-- Campo editable para la observación -->
+                    <div *ngIf="enEdicion === observadores.obs_id">
+                      <mat-form-field class="ancho-completo">
+                        <textarea matInput [(ngModel)]="observadores.obs_desc"></textarea>
+                      </mat-form-field>
+                    </div>
+                    <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
+                    <div class="acciones-comentario">
+                      <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
+                      <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
+                      <!-- <button mat-button color="warn" (click)="eliminarObservacion(observacion.obsrec_id)">Eliminar</button> -->
+                    </div>
+                  </mat-card-content>
+
+                  <mat-card class="observacion-card">
+                    <mat-card-content>
+                      <div class="fecha-info">
+                        <mat-chip-list>
+                          <mat-chip color="primary" selected>
+                            Creado: {{observadores.obs_fec_cre | date:'medium' }}
+                          </mat-chip>
+                          <mat-chip *ngIf="observadores.obs_fec_mod" color="accent" selected>
+                            Modificado: {{ observadores.obs_fec_mod | date:'medium' }}
+                          </mat-chip>
+                        </mat-chip-list>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </mat-card>
+
+
+              </div>
+
+              <!-- Caja de comentario para la nueva observación con clase "comentario-box" -->
+              <div class="comentario-box mt-2">
+                <mat-form-field appearance="outline" class="ancho-completo">
+                  <mat-label>Escribe una observación...</mat-label>
+                  <textarea matInput [(ngModel)]="nuevaObservacion" class="nueva-observacion"></textarea>
+                </mat-form-field>
+              </div>
+
+              <!-- Botón para guardar la nueva observación -->
+
+              <button mat-raised-button class="botonprimario  m-2" (click)="guardarObservacion()" aria-label="Añadir una Nueva Observación">Guardar Nueva Observación</button>
+              <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
+
             </mat-tab>
 
             <mat-tab label="Referencias Laborales">
@@ -126,7 +191,7 @@
                     <span matListItemTitle>{{ referencia.ref_lab_nom }}</span>
                     <span matListItemLine>{{ referencia.ref_lab_emp }}</span>
                     <span matListItemLine>{{ referencia.ref_lab_tel }}</span>
-            
+
                     <div matListItemIcon>
                       <mat-icon>business_center</mat-icon>
                     </div>
@@ -134,11 +199,14 @@
                 </ng-container>
               </mat-list>
             </mat-tab>
-  
+
+
+
+
           </mat-tab-group>
 
- 
-        
+
+
            </div>
           </div>
         </div>

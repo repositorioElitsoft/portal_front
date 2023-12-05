@@ -7,7 +7,7 @@
       <p>No se podrá deshacer</p>
 
       <mat-divider></mat-divider>
-      <mat-checkbox [(ngModel)]="accepted" > Sí, quiero eliminar</mat-checkbox>
+      <mat-checkbox class ="check1" [(ngModel)]="accepted" > Sí, quiero eliminar</mat-checkbox>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button color="warn" [disabled]="!accepted" [mat-dialog-close]="true">Eliminar</button>

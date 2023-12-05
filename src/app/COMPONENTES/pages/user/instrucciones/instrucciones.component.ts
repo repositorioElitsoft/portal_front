@@ -35,16 +35,21 @@ export class InstruccionesComponent implements OnInit {
 
   empezarExamen(){
     Swal.fire({
-      title:'¿Quieres comenzar el examen?',
-      showCancelButton:true,
-      cancelButtonText:'Cancelar',
-      confirmButtonText:'Empezar',
-      icon:'info'
+        title: '¿Quieres comenzar el examen?',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        cancelButtonColor: '#515151',
+        confirmButtonText: 'Empezar',
+        confirmButtonColor: '#F57C27',
+        icon: 'info',
+        customClass: {
+            popup: 'custom-border' // Aplica la clase al cuadro de diálogo
+        }
     }).then((result:any) => {
-      if(result.isConfirmed){
-        this.router.navigate(['/start/'+this.examenId]);
-      }
+        if(result.isConfirmed){
+            this.router.navigate(['/start/' + this.examenId]);
+        }
     })
-  }
+}
 
 }

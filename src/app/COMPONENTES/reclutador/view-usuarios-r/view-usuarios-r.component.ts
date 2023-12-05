@@ -1,10 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator} from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
+import { MatSort, Sort} from '@angular/material/sort';
 import { Usuario } from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
@@ -12,11 +12,18 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
-import { NgModel } from '@angular/forms';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { LaboralService } from 'src/app/service/laboral.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
+import * as Papa from 'papaparse';
+import { PreguntaService } from 'src/app/service/pregunta.service';
+import { ObservacionService } from 'src/app/service/observacionreclutador.service';
+import { forkJoin } from 'rxjs';
+
 import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
 import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
 import { EmailRService } from 'src/app/service/email-r.service';
@@ -33,7 +40,10 @@ const ELEMENT_DATA: Usuario[] = [];
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'seleccionar', 'motivo', 'acciones',];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  resultados  = [];
+  idUser: string = '';
   filtro: string = '';
+  filtroPuntaje: string = '';
   originalDataCopy: Usuario[] = [];
   usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
@@ -67,21 +77,27 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private usuarioService: UsuarioService,
+    private observacionReclutadorService: ObservacionService,
+    private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
     private cargosElitsoftService: CargosElitsoftService,
     private productoService: ProductoService,
     public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet,
     private emailRService: EmailRService,
+
   ) {}
 
 
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.getCategories();
+    this.obtenerResultadosByUser(); // Agrega los paréntesis para llamar a la función
     this.getCargosElitsoft();
   }
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -112,6 +128,29 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
+
+
+
+// Filtro por resultado del usuario
+  if (this.resultados !== undefined) {
+  this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+    (resultadoUsuario) => {
+      console.log('Resultado obtenido del servicio:', resultadoUsuario);
+      console.log('Resultados actuales en el componente:', this.resultados);
+
+      filteredArray = filteredArray.filter(usuario => {
+        // Usar una función de flecha para preservar el contexto
+        return resultadoUsuario === this.resultados;
+      });
+
+      console.log('Array filtrado:', filteredArray);
+    },
+    (error) => {
+      console.error('Error al obtener resultados del usuario: ', error);
+    }
+  );
+}
+
 
     // Filtro por rango de sueldos
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
@@ -233,6 +272,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.filterData();
   }
 
+
+  filterPuntaje() {
+    this.filtroPuntaje = `Filtrado por puntaje: ${this.filtroPuntaje}`;
+    this.filterData();
+  }
+
   filterVersion() {
     if (this.selectedVersion === 0) {
       this.selectedAniosExpRange = [1, 10];
@@ -282,6 +327,25 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
+
+  exportToCSV() {
+    const dataToExport = this.dataSource.data;
+    const csv = Papa.unparse(dataToExport);
+
+    // Crear un enlace de descarga para el archivo CSV
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'usuarios.csv'; // Nombre del archivo CSV
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  }
+
+
+
   getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
       (data: CategoriaProducto[]) => {
@@ -292,6 +356,47 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+
+  obtenerYFiltrarResultados() {
+    console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
+
+    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+      (resultadoUsuario) => {
+        console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
+
+        // Aquí puedes verificar si los datos recibidos son lo que esperas
+        this.dataSource.data = this.originalDataCopy.filter(usuario => {
+          // Añadir un console.log dentro del filtro para ver qué está pasando
+          const esIgual = this.resultados === resultadoUsuario;
+          console.log('Comparando resultados - Usuario:', usuario, '¿Es igual?:', esIgual);
+
+          return esIgual;
+        });
+
+        // Mostrar los datos filtrados
+        console.log('Datos después de aplicar el filtro:', this.dataSource.data);
+      },
+      (error) => {
+        console.error('Error al obtener resultados del usuario: ', error);
+      }
+    );
+  }
+
+
+  obtenerResultadosByUser() {
+    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+      (data: any) => {
+        this.resultados = data;
+        console.log('Resultados obtenidos:', this.resultados);
+      },
+      (error) => {
+        console.error('Error al obtener resultados:', error);
+      }
+    );
+  }
+
+
 
   getProductos(categoriaId: number){
     console.log('categoria id:', categoriaId)
@@ -359,25 +464,41 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
   }
-  openUserProfile(event: any){
-    const email = event.target.parentElement.id;
+ openUserProfile(event: any) {
+  const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+  console.log('User ID:', userId); // Imprime el ID del usuario en la consola
 
-    this.usuarioService.obtenerPerfil(email).subscribe({
-      next:(user) => {
-        const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent,{
-          data: user
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
+  // Llamadas simultáneas a los servicios
+  forkJoin({
+    observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
+    usuario: this.usuarioService.getUsuarioId(userId)
+  }).subscribe({
+    next: (resultados) => {
+      // Extraemos los resultados
+      const { observadores, usuario } = resultados;
 
-      },
-      error: (error) => {
-        console.error('Error al obtener el perfil del usuario:', error);
+      // Lógica con los datos obtenidos
+      console.log('Observaciones del usuario:', observadores);
+      console.log('Perfil del usuario:', usuario);
 
-      }
-    });
-  }
+      // Configura el tamaño del diálogo
+      const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+        data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
+        height: '60vh', // Establece la altura del diálogo
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    },
+    error: (error) => {
+      console.error('Error al obtener datos del usuario:', error);
+      // Manejo de errores aquí
+    }
+  });
+}
+
+
 
   downloadCv(event: any) {
     console.log('usuarioId', event.target?.parentElement)
@@ -395,54 +516,16 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
 
-  toggleSelectAll() {
-    console.log('Toggle select all called');
-    this.seleccionarTodos = !this.seleccionarTodos;
-
-    // Asigna la selección a cada usuario en el dataSource
-    this.dataSource.data.forEach((usuario: any) => {
-      usuario['seleccionado'] = this.seleccionarTodos;
-
-      // Asocia un motivo predeterminado si el usuario está seleccionado
-      if (usuario.seleccionado) {
-        this.motivosSeleccionados.set(usuario.usr_email, this.motivos[0]);  // Selecciona el primer motivo por defecto
-      } else {
-        this.motivosSeleccionados.delete(usuario.usr_email);
-      }
-    });
-
-    // Actualiza this.usuarios con los datos actuales del dataSource
-    this.usuarios = [...this.dataSource.data];
+  openBottomSheet(): void {
+    this._bottomSheet.open(viewCrudArchivoComponent);
   }
 
 
 
+  openUserDialog(event: any) {
 
 
-  toggleSelection(usuario: any) {
-    // Implementa lógica para seleccionar/deseleccionar un usuario
-    usuario.seleccionado = !usuario.seleccionado;
-
-    // Asocia un motivo predeterminado si el usuario está seleccionado
-    if (usuario.seleccionado) {
-      this.motivosSeleccionados.set(usuario.usr_email, this.motivos[0]);  // Selecciona el primer motivo por defecto
-    } else {
-      this.motivosSeleccionados.delete(usuario.usr_email);
-    }
-
-    // Actualiza this.usuarios para mantenerlo sincronizado con dataSource.data
-    this.usuarios = this.dataSource.data.map(u => ({ ...u })); // Crea una copia de cada usuario para forzar la actualización
-
-    // Forza la actualización de dataSource.data
-    this.dataSource.data = [...this.usuarios];
-    this.dataSource._updateChangeSubscription(); // Forzar actualización
-
-    console.log('Usuario seleccionado:', usuario);
   }
-
-
-
-
 
   enviarCorreosSeleccionados() {
     console.log('Botón Enviar Correos clickeado');
@@ -469,15 +552,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         }
       );
     });
-  }
-
-
-
-
-
 
 
 }
-
-
-

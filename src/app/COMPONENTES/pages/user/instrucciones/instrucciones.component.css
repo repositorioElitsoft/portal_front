@@ -1,46 +1,29 @@
-/* Estilo para el panel de instrucciones */
+.mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Añade espacio entre el ícono y el texto */
+}
 
-  .mat-card {
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .mat-card-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .mat-card-subtitle {
-    color: #888888;
-  }
-  
-  .mat-card-content {
-    padding: 20px;
-  }
-  
-  h1 {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  b {
-    font-weight: bold;
-  }
-  
-  /* Estilo para el botón "Comenzar prueba" */
-  mat-card-actions {
-    display: flex;
-    justify-content: center;
-  }
-  
+.mat-card-header {
+  margin-bottom: 16px; /* Añade margen al fondo en lugar de usar <br> */
+}
+
+.mat-card-content {
+  margin-left: 30px;
+  margin-right: 30px; /* Asegúrate de que el margen derecho sea el mismo que el izquierdo */
+}
+
+
+ul {
+  list-style: none; /* Elimina los estilos de lista predeterminados */
+  padding-left: 0; /* Elimina el padding izquierdo */
+}
+li {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Añade espacio entre el ícono y el texto */
+  margin-bottom: 8px; /* Añade un margen inferior para separar los ítems */
+}
+.material-icons {
+  font-size: 24px; /* Ajusta el tamaño de los íconos */
+}

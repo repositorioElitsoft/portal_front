@@ -5,10 +5,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { CategoriaExamen } from 'src/app/interface/categoria-examen.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CategoriaExamen } from 'src/app/interface/categoria-examen.interface';
+import { AddCategoriaComponent } from '../add-categoria/add-categoria.component';
 
 
 const ELEMENT_DATA: CategoriaExamen[] = [];
@@ -120,10 +121,7 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
 
     return `${value}`;
   }
-  addNewCategory(event: Event){
-    this.router.navigate(["/admin/add-categoria/"])
-  }
-  
+
 
   getExamCategories(): void {
     this.categoriaExamenService.listarCategorias().subscribe({
@@ -147,10 +145,48 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editCategoria(event: any){
-    const id = event.target.parentElement.id
-    this.router.navigate(["/admin/actualizar-categoria/"+id])
+ 
+
+
+  editCategoria(event: any) {
+    // Accede directamente al ID desde el botón que dispara el evento usando currentTarget
+    const categoriaId = event.currentTarget.id;
+  
+    if (categoriaId) {
+      this.categoriaExamenService.getCategoria(categoriaId).subscribe({
+        next: (data) => {
+          console.log('Data llegada:', data);
+          // Abrir el diálogo con los datos obtenidos
+          const dialogRef = this.dialog.open(AddCategoriaComponent, {
+            width: '800px', 
+            height: '400px',
+            data: data // Pasar los datos obtenidos al diálogo
+          });
+  
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+            // Manejar el resultado del diálogo
+          });
+        },
+        error: (error) => {
+          console.log(error);
+          // Manejar el error aquí, por ejemplo, mostrar un mensaje al usuario
+        }
+      });
+    } else {
+      console.error('No se pudo obtener el ID de la categoría');
+    }
   }
+  
+
+
+
+  addNewCategory(event: Event) {
+    this.dialog.open(AddCategoriaComponent, {
+      width: '800px', 
+      height: '400px'
+    });
+  }
+  
+
 }
-
-

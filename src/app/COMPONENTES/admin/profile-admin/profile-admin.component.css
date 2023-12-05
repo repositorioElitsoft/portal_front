@@ -6,13 +6,18 @@
 
 /* Estilos para el contenedor del perfil */
 .profile-container {
+  animation: fadeInUp 1s ease-out;
+  margin-top: 10vh;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 40vh; /* Ocupa el 100% del alto de la pantalla */
+  min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
   background-color: #f5f5f5; /* Color de fondo gris claro */
-  border: 2px solid orange;
+  border: 1px solid #F57C27;
   background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+  padding: 5%;
+  font-family: 'Meera Inimai', sans-serif;
 }
 
 .profile-details {
@@ -22,7 +27,7 @@
   width: 80%; /* Ajustar el ancho según sea necesario */
   background-color: #fff; /* Color de fondo blanco */
   color: #333; /* Color de texto principal */
-  border: 2px solid orange;
+  border: 1px solid #F57C27;
   background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
 }
 
@@ -74,13 +79,7 @@
   pointer-events: none;
 }
 
-.container-datos-personales {
 
-  border: 1px solid #F57C27;
-  border-radius: 10px;
-
-  
-}
 
 .perfilr{
   font-size: 2em;
@@ -90,6 +89,34 @@
 
 
 } 
+
+.admin-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-icon-container .material-icons {
+  margin-right: 10px; /* Espaciado entre el icono y el texto */
+  font-size: 24px; /* Tamaño del icono */
+  color: #F76805; /* Color del icono, puedes cambiarlo según tu preferencia */
+}
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
 @media (max-width: 600px) {
   .container-datos-personales {
   

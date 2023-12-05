@@ -1,45 +1,52 @@
-/* Estilo profesional para el elemento */
-.container {
-  background-color: #fff; /* Cambiar el color de fondo a blanco */
-  color: #000; /* Cambiar el color del texto a negro */
-  padding: 20px;
-  border: 2px solid #FFA500; /* Cambiar el color del borde a naranja */
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+.full-width {
+  width: 100%;
 }
 
-.container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #000; /* Cambiar el color del título a negro */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
 }
 
-.container .form-label {
-  color: #000; /* Cambiar el color de las etiquetas a negro */
+
+
+/* Estilo para el encabezado de la tarjeta */
+mat-card-header {
+  border-bottom: 1px solid #e0e0e0; /* Borde inferior para separar del contenido */
+  padding: 16px; /* Espaciado interno */
+  display: flex; /* Usa flexbox para alinear los elementos */
+  align-items: center; /* Alinea los elementos verticalmente al centro */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  text-align: center; /* Asegura que el texto esté centrado */
 }
 
-.container .form-control {
-  background-color: #fff; /* Cambiar el color de fondo de los campos de entrada a blanco */
-  color: #000; /* Cambiar el color del texto en los campos de entrada a negro */
+/* Estilo para el título dentro del encabezado */
+.perfilr {
+  margin: 0;
+
+  font-size: 24px; /* Tamaño del texto */
 }
 
-.container .form-check-input {
-  background-color: #fff; /* Cambiar el color de fondo de los checkboxes a blanco */
-  border-color: #FFA500; /* Cambiar el color del borde de los checkboxes a naranja */
+/* Estilo general del formulario */
+form {
+  padding: 20px; /* Espaciado interno */
 }
 
-.container .form-check-label {
-  color: #000; /* Cambiar el color del texto de las etiquetas de los checkboxes a negro */
+/* Estilo para los campos del formulario */
+mat-form-field {
+  width: 100%; /* Ancho completo */
+  margin-bottom: 20px; /* Espaciado entre campos */
 }
 
-.container .btn-primary {
-  background-color: #FFA500; /* Cambiar el color de fondo del botón a naranja */
-  border-color: #FFA500; /* Cambiar el color del borde del botón a naranja */
-  color: #fff; /* Cambiar el color del texto del botón a blanco */
-  font-weight: bold;
+/* Estilo para el área de texto */
+textarea.mat-input-element {
+  min-height: 100px; /* Altura mínima */
 }
 
-.container .btn-primary:hover {
-  background-color: #F76805; /* Cambiar el color de fondo del botón a naranja más oscuro al pasar el ratón */
-  border-color: #F76805; /* Cambiar el color del borde del botón a naranja más oscuro al pasar el ratón */
+/* Estilo para el grupo de botones */
+.form-group {
+  display: flex; /* Uso de Flexbox */
+  justify-content: center; /* Centrar los botones */
+  gap: 10px; /* Espacio entre botones */
 }
+

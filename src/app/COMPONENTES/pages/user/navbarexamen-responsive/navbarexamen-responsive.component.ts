@@ -15,9 +15,9 @@ import {MatMenuModule} from '@angular/material/menu';
 
 
 @Component({
-  selector: 'app-navbar-responsive',
-  templateUrl: './navbar-responsive.component.html',
-  styleUrls: ['./navbar-responsive.component.css'],
+  selector: 'app-navbarexamen-responsive',
+  templateUrl: './navbarexamen-responsive.component.html',
+  styleUrls: ['./navbarexamen-responsive.component.css'],
   standalone: true,
   imports: [
     NgIf,
@@ -31,7 +31,7 @@ import {MatMenuModule} from '@angular/material/menu';
     NgFor,
   ],
 })
-export class NavbarResponsiveComponent implements OnInit  {
+export class NavbarResponsiveExamenComponent implements OnInit  {
   mobileQuery: MediaQueryList;
 
 

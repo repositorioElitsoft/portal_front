@@ -1,5 +1,5 @@
 <div class="examen-form card mt-5 border-0">
-    <div class="card-body d-flex justify-content-center align-items-center">
+  <div class="card-body d-flex justify-content-center align-items-center">
       <form [formGroup]="examenForm" (ngSubmit)="saveExamen()">
         <div class="form-group">
           <mat-form-field appearance="fill" class="field-custom">
@@ -94,7 +94,7 @@
           <button mat-icon-button type="button" (click)="addPregunta()">
             <mat-icon>add</mat-icon>
           </button>
-          <button mat-raised-button color="primary" [disabled]="examenForm.invalid">Guardar</button>
+          <button mat-raised-button class="botonprimario" [disabled]="examenForm.invalid">Guardar</button>
         </div>
       </form>
     </div>

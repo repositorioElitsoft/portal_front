@@ -1,60 +1,41 @@
-/* Estilo profesional para el elemento */
-.add-categoria-container {
-    background-color: #fff; /* Cambiar el color de fondo a blanco */
-    color:  #FFA500; /* Cambiar el color del texto a naranja */
-    padding: 20px;
-    border: 2px solid  #FFA500; /* Cambiar el color del borde a naranja */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .add-categoria-container h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #000000; /* Cambiar el color del título a naranja */
-  }
-  
-  .add-categoria-container .form-group label {
-    color:  #000000; /* Cambiar el color de las etiquetas a naranja */
-  }
-  
-  .add-categoria-container .form-control {
-    background-color: #fff; /* Cambiar el color de fondo de los campos de entrada a blanco */
-    color: #FFA500; /* Cambiar el color del texto en los campos de entrada a naranja */
-  }
-  
-  .add-categoria-container .btn-primary {
-    background-color:  #FFA500; /* Cambiar el color de fondo del botón a naranja */
-    border-color:  #FFA500; /* Cambiar el color del borde del botón a naranja */
-    color: #fff; /* Cambiar el color del texto del botón a blanco */
-    font-weight: bold;
-    width: 100%;
+/* Estilo para el encabezado de la tarjeta */
+mat-card-header {
+  border-bottom: 1px solid #e0e0e0; /* Borde inferior para separar del contenido */
+  padding: 16px; /* Espaciado interno */
+  display: flex; /* Usa flexbox para alinear los elementos */
+  align-items: center; /* Alinea los elementos verticalmente al centro */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  text-align: center; /* Asegura que el texto esté centrado */
+}
 
-  }
   
-  .add-categoria-container .btn-primary:hover {
-    background-color: #F76805;/* Cambiar el color de fondo del botón al naranja más claro al pasar el ratón */
-    border-color: #FFA500; /* Cambiar el color del borde del botón al naranja más claro al pasar el ratón */
+  /* Estilo para el título dentro del encabezado */
+  .perfilr {
+    margin: 0;
 
+    font-size: 24px; /* Tamaño del texto */
   }
   
-  .add-categoria-container .btn-secondary {
-    background-color: #fff; /* Cambiar el color de fondo del segundo botón a blanco */
-    border-color:  #FFA500; /* Cambiar el color del borde del segundo botón a naranja */
-    color:  #FFA500; /* Cambiar el color del texto del segundo botón a naranja */
-    font-weight: bold;
-    width: 100%;
+  /* Estilo general del formulario */
+  form {
+    padding: 20px; /* Espaciado interno */
   }
   
-  .add-categoria-container .btn-secondary:hover {
-    background-color:   #F76805;/* Cambiar el color de fondo del segundo botón a naranja al pasar el ratón */
-    color: #fff; /* Cambiar el color del texto del segundo botón a blanco al pasar el ratón */
+  /* Estilo para los campos del formulario */
+  mat-form-field {
+    width: 100%; /* Ancho completo */
+    margin-bottom: 20px; /* Espaciado entre campos */
   }
-  .example-full-width{
-    width: 100%;
   
-    
+  /* Estilo para el área de texto */
+  textarea.mat-input-element {
+    min-height: 100px; /* Altura mínima */
   }
-
-
+  
+  /* Estilo para el grupo de botones */
+  .form-group {
+    display: flex; /* Uso de Flexbox */
+    justify-content: center; /* Centrar los botones */
+    gap: 10px; /* Espacio entre botones */
+  }
   

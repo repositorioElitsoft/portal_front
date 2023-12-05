@@ -11,6 +11,10 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
+  <div class="container">
+  <div class="sidebar">
+    <!-- Contenido de la barra lateral aquí -->
+</div>
 
   <mat-card class="container-datos-personales">
     <h4 class="perfilr">Datos Personales</h4>
@@ -19,12 +23,13 @@
     <div class="div-inputs"  *ngIf="isLoaded">
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
-          <label for="inputRut" class="col-sm-2 col-form-label">RUT:</label>
-          <div class="col-sm-10">
+          <label for="inputRut" class="col-m-2 col-form-label">RUT:</label>
+          <div class="col-sm-15">
+
             <input type="rut"
-              matTooltip="Rut sin puntos y con guion ej. 111111-1"
-              matTooltipPosition="after"
-              class="form-control" id="inputRut" formControlName="usr_rut" name="inputRut"
+            matTooltip="Rut sin puntos y con guion ej. 111111-1"
+            matTooltipPosition="after"
+            class="form-control" id="inputRut" formControlName="usr_rut" name="inputRut"
               [ngClass]="{'is-invalid': form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched}" >
             <div *ngIf="form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched" class="invalid-feedback">
               Rut no es válido
@@ -32,8 +37,8 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputNombres" class="col-sm-2 col-form-label">Nombres:</label>
-          <div class="col-sm-10">
+          <label for="inputNombres" class="col-m-2 col-form-label">Nombres:</label>
+          <div class="col-sm-15">
             <input type="nombres" class="form-control" id="inputNombres" formControlName="usr_nom" name="inputNombres"
               [ngClass]="{'is-invalid': form.get('usr_nom')?.invalid && form.get('usr_nom')?.touched}" >
             <div *ngIf="form.get('usr_nom')?.hasError('required') && form.get('usr_nom')?.touched" class="invalid-feedback">
@@ -42,8 +47,8 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputApellidop" class="col-sm-2 col-form-label"> Apellido Paterno:</label>
-          <div class="col-sm-10">
+          <label for="inputApellidop"  class="col-m-2 col-form-label">Apellido Paterno:</label>
+          <div class="col-sm-15">
             <input type="apellidop" class="form-control" id="inputApellidop" formControlName="usr_ap_pat" name="inputApellidop"
               [ngClass]="{'is-invalid': form.get('usr_ap_pat')?.invalid && form.get('usr_ap_pat')?.touched}">
             <div *ngIf="form.get('usr_ap_pat')?.hasError('required') && form.get('usr_ap_pat')?.touched" class="invalid-feedback">
@@ -52,8 +57,8 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputApellidom" class="col-sm-2 col-form-label">Apellido Materno:</label>
-          <div class="col-sm-10">
+          <label for="inputApellidom"  class="col-m-2 col-form-label">Apellido Materno:</label>
+          <div class="col-sm-15">
             <input type="apellidom" class="form-control" id="inputApellidom" formControlName="usr_ap_mat" name="inputApellidom"
               [ngClass]="{'is-invalid': form.get('usr_ap_mat')?.invalid && form.get('usr_ap_mat')?.touched}">
             <div *ngIf="form.get('usr_ap_mat')?.hasError('required') && form.get('usr_ap_mat')?.touched" class="invalid-feedback">
@@ -62,10 +67,11 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label for="inputTelefono" class="col-sm-2 col-form-label">Teléfono:</label>
-          <div class="col-sm-10">
-            <div class="d-flex">
-              <select class="form-control select-tel">
+          <label for="inputTelefono"  class="col-m-2 col-form-label">Teléfono:</label>
+          <div class="col-sm-15">
+
+            <div class="d-flex" >
+              <select class="form-control select-tel" >
                 <option value="55">🇧🇷 +55</option>
                 <option value="56" selected>🇨🇱 +56</option>
                 <option value="57">🇨🇴 +57</option>
@@ -74,7 +80,8 @@
                 <option value="591">🇧🇴 +591</option>
               </select>
               <input appNumericOnly type="text" class="form-control select-tel-input" id="inputTelefon" formControlName="usr_tel" name="inputTelefono"
-                [ngClass]="{'is-invalid': form.get('usr_tel')?.invalid && form.get('usr_tel')?.touched}">
+              [ngClass]="{'is-invalid': form.get('usr_tel')?.invalid && form.get('usr_tel')?.touched}" style="width: 100%;">
+
             </div>
             <br />
             <div *ngIf="form.get('usr_tel')?.hasError('required') && form.get('usr_tel')?.touched" class="invalid-feedback">
@@ -190,9 +197,14 @@
         <div class="div-form d-grid my-2">
           <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Siguiente</button>
         </div>
+
       </form>
+
     </div>
   </mat-card>
-</body>
+
 </html>
+
 <router-outlet></router-outlet>
+
+</body>

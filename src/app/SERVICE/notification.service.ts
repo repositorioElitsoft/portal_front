@@ -13,6 +13,11 @@ export class NotificationService {
       icon,
       title,
       text,
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' // Aplica la clase al cuadro de diálogo
+    }
     });
 
     return result.isConfirmed

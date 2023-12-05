@@ -1,5 +1,5 @@
-<mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
-    <mat-card>
+
+    <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
 
     <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
         <h4 class="perfilr">Herramientas y Tecnologías</h4>
@@ -64,14 +64,12 @@
                     </select>
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete_sweep</mat-icon></button>
-
-                </div>
-                <div class="mt-4 col-md-1">
                     <button mat-mini-fab  class="minifab" *ngIf="i === 0" type="button" id="addRow" (click)="addRow()">
                         <mat-icon>library_add</mat-icon>
                     </button>
+                    <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete</mat-icon></button>
                 </div>
+
             </div>
         </div>
         <div class="row mt-5">
@@ -81,4 +79,3 @@
             </div>
         </div>
     </form>
-</mat-card>

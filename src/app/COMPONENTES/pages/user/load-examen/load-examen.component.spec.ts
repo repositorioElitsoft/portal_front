@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LoadExamenComponent } from './load-examen.component';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
 import { ExamenService } from 'src/app/service/examen.service';
-import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute } from '@angular/router';

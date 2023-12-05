@@ -10,15 +10,19 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
+<div class="container">
+  <div class="sidebar">
+    <!-- Contenido de la barra lateral aquí -->
+</div>
 
   <mat-card class="container-datos-personales">
-    <h1 class="perfilr">Cargos</h1>
-    <h3 class="perfilr">Seleccione uno de los siguientes cargos a postular:</h3>
+    <h4 class="perfilr">Cargo a Postular</h4>
+    <mat-card class="contenedorform">
     <div class="div-inputs">
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
-          <label for="cargosE" class="col-m-2 col-form-label">Cargos Elitsoft:</label>
-          <div class="combobox col-sm-10">
+          <label for="cargosE"  class="col-m-2 col-form-label">Cargos Elitsoft:</label>
+          <div class="combobox col-sm-15">
             <select class="form-control" id="cargosE" formControlName="crg_elit_id" name="cargosE">
               <option *ngFor="let cargo of cargosElitsoft" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</option>
             </select>
@@ -26,7 +30,7 @@
         </div>
         <div class="row mb-3">
           <label for="inputPretension" class="col-m-2 col-form-label">Pretensión de renta:</label>
-          <div class="col-sm-10">
+          <div class="col-sm-15">
             <input
               type="text"
               class="form-control"
@@ -45,7 +49,7 @@
 
         <div class="row mb-3">
           <label for="inputPretension" class="col-m-2 col-form-label">Cargo preferente:</label>
-          <div class="col-sm-10">
+          <div class="col-sm-15">
             <input
               type="text"
               class="form-control"
@@ -62,7 +66,7 @@
         <!-- Nuevos campos para disponibilidad laboral -->
         <div class="row mb-3">
           <label for="inputDisponibilidad" class="col-m-2 col-form-label">Disponibilidad laboral:</label>
-          <div class="col-sm-10">
+          <div class="col-sm-15">
             <select class="form-control" id="inputDisponibilidad" formControlName="disponibilidad" name="inputDisponibilidad">
               <option value="disponible">Disponible</option>
               <option value="no-disponible">No Disponible</option>
@@ -72,7 +76,7 @@
         </div>
         <div class="row mb-3">
           <label for="inputTiempoIncorporacion" class="col-m-2 col-form-label">Tiempo de incorporación:</label>
-          <div class="col-sm-10">
+          <div class="col-sm-15">
             <select class="form-control" id="inputTiempoIncorporacion" formControlName="tiempo_incorporacion" name="inputTiempoIncorporacion">
               <option value="inmediata">Inmediata</option>
               <option value="otro">Otro</option>
@@ -81,7 +85,7 @@
         </div>
         <div class="row mb-3" *ngIf="form.get('tiempo_incorporacion')?.value === 'otro'">
           <label for="inputOtroTiempoIncorporacion" class="col-m-2 col-form-label">Especificar tiempo de incorporación:</label>
-          <div class="col-sm-10">
+          <div class="col-sm-15">
             <input
               type="text"
               class="form-control"
@@ -92,16 +96,20 @@
           </div>
         </div>
         <!-- Resto del formulario... -->
-        <div class="div-form d-grid justify-content-end">
+
+        <div class="div-form d-grid my-2">
+
           <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit" (click)="successMessage()">Finalizar</button>
+
+
+
         </div>
+
+
       </form>
     </div>
-
-
-
-</mat-card>
-
-
+  </mat-card>
+  </mat-card>
+</div>
 </body>
 </html>

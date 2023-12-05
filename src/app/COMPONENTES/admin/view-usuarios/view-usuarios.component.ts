@@ -13,7 +13,7 @@ import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/advertencia-eliminar.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import Swal from "sweetalert2";
+import { AddUsuariosComponent } from "../add-usuarios/add-usuarios.component";
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -24,7 +24,7 @@ const ELEMENT_DATA: Usuario[] = [];
   styleUrls: ['./view-usuarios.component.css']
 })
 export class ViewUsuariosComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'usr_email','usr_rol', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
@@ -66,9 +66,10 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
             usr_tel: usuario.usr_tel || '',
             usr_email: usuario.usr_email || '',
             usr_direcc:usuario.usr_direcc || '',
+            usr_rol: usuario.usr_rol || '',
             usr_herr: usuario.herramientas,
             herr_ver: usuario.herramientas,
-            herr_exp: usuario.herramientas
+            herr_exp: usuario.herramientas,
           }));
 
           this.originalDataCopy = usuarios;
@@ -80,73 +81,14 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
       );
     }
 
-  actualizarUsuario(usuario: any): void {
-     const dialogRef = this.dialog.open(EditUserDialogComponent, {
-      width: '600px',
-      data: usuario
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.usuarioService.updateUsuarioById(usuario.usr_id, result).subscribe(
-          (data) => {
-            console.log(data);
-            Swal.fire('Actualizado', 'Usuario actualizado con éxito', 'success');
-            this.obtenerUsuarios();
-          },
-          (error) => {
-            Swal.fire('Error', 'No se pudo actualizar el usuario', 'error');
-            console.log(error);
-          }
-        );
+    announceSortChange(sortState: Sort) {
+      if (sortState.direction) {
+        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      } else {
+        this._liveAnnouncer.announce('Sorting cleared');
       }
-    });
-  }
-
-  eliminarUsuario(usr_id: number): void {
-    Swal.fire({
-      title: 'Eliminar usuario',
-      text: '¿Estás seguro de eliminar este usuario?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((resultado) => {
-      if (resultado.isConfirmed) {
-        this.usuarioService.eliminarUsuarioId(usr_id).subscribe(
-          (data) => {
-            Swal.fire('Usuario eliminado', 'El usuario ha sido eliminado con éxito', 'success');
-            this.obtenerUsuarios(); // Actualizar la lista de usuarios después de eliminar
-          });
-      }  
-    });
-  }
-  
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
     }
-  }
-
-    //eliminarUsuario(usuarioId: number) {
-     // this.usuarioService.eliminarUsuarioId(usuarioId).subscribe(
-      //  (response) => {
-      //    console.log('Usuario eliminado:', response);
-      //    this.obtenerUsuarios();
-      //  },
-      //  (error) => {
-      //    console.error('Error al eliminar usuario:', error);
-
-     //     if (error.error && typeof error.error === 'string') {
-     //       console.log('Respuesta del servidor (texto):', error.error);
-     //     }
-     //   }
-    //  );
-   // }
 
    openDialogEliminar(event: any) {
 

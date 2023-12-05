@@ -1,72 +1,56 @@
-
 // Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// Incluye los estilos comunes para Angular Material
 @include mat.core();
 
-// GAMA COLORES
+// Define tu paleta de colores primarios personalizada
 $PortalElitsoft-Frontend-primary: (
-  200 : #F57C27,
-  500 :#F57C27,
-  700 :#F57C27,
+  50: #F57C27,
+  100: #F57C27,
+  200: #F57C27,
+  300: #F57C27,
+  400: #F57C27,
+  500: #F57C27,
+  600: #F57C27,
+  700: #F57C27,
+  800: #F57C27,
+  900: #F57C27,
+  A100: #F57C27,
+  A200: #F57C27,
+  A400: #F57C27,
+  A700: #F57C27,
   contrast: (
-    200 : #000000,
-    500 : #ffffff,
-    700 : #ffffff,
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
   )
 );
+$primary-color-palette: mat.define-palette($PortalElitsoft-Frontend-primary);
 
-$PortalElitsoft-Frontend-accent: (
-  200 : #3c3c3c,
-  500 : #3c3c3c,
-  700 : #3c3c3c,
-  contrast: (
-    200 : #000000,
-    500 : #ffffff,
-    700 : #ffffff,
-  )
-);
-
-$PortalElitsoft-Frontend-warn: (
-  200 : #f57d27,
-  500 : #f57d27,
-  700 : #a34f13,
-  contrast: (
-    200 : #000000,
-    500 : #000000,
-    700 : #000000,
-  )
-);
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$PortalElitsoft-Frontend-primary: mat.define-palette(mat.$indigo-palette);
-
+// Define tus paletas de colores de acento y advertencia (puedes ajustar estos valores)
 $PortalElitsoft-Frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
 $PortalElitsoft-Frontend-warn: mat.define-palette(mat.$red-palette);
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
+// Crea el tema
 $PortalElitsoft-Frontend-theme: mat.define-light-theme((
-
-
   color: (
-    primary: $PortalElitsoft-Frontend-primary,
+    primary: $primary-color-palette,
     accent: $PortalElitsoft-Frontend-accent,
     warn: $PortalElitsoft-Frontend-warn,
   )
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
+// Incluye estilos de tema para el núcleo y cada componente usado en tu aplicación
 @include mat.all-component-themes($PortalElitsoft-Frontend-theme);
-

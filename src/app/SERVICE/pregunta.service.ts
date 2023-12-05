@@ -32,6 +32,11 @@ export class PreguntaService {
     return this.http.get(`${this.url}/pregunta/${preguntaId}`);
   }
 
+  public obtenerResultadosByUser(idUser:any){
+    return this.http.get(`${this.url}/resultados/${idUser}`);
+  }
+
+
   public listarPreguntasDelExamenParaLaPrueba(examenId:any){
     return this.http.get(`${this.url}/pregunta/examen/todos/${examenId}`);
   }
