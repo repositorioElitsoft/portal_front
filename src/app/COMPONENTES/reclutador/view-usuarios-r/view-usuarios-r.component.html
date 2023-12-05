@@ -24,20 +24,21 @@
 
   <mat-form-field class="filter-select">
     <mat-label>Producto</mat-label>
-    <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getVersion(selectedProducto); filterProducto()">
+    <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getNiveles(); filterProducto()">
       <mat-option value="">Seleccione un opción</mat-option>
       <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   
-    <mat-form-field class ="filter-select">
-      <mat-label>Nivel de Examen</mat-label>
-      <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel" (selectionChange)="getNiveles(); filterNivel()">
-        <mat-option value="0">Seleccione un nivel</mat-option>
-        <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="filter-select">
+    <mat-label>Nivel de Examen</mat-label>
+    <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
+      <mat-option value="">Seleccione un nivel</mat-option>
+      <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
   
 
   <mat-form-field class="filter-select">

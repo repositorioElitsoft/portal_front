@@ -12,22 +12,6 @@
           </div>
 
 
-          <div class="mb-3">
-            <label for="nivel" class="form-label">Nivel</label>
-            <select class="form-control" id="nivel" [(ngModel)]="examenData.nivel" name="nivel" required>
-            </select>
-          </div>
-
-
-          <div class="mb-3">
-            <label for="categoria" class="form-label">nivel</label>
-            <select class="form-control" id="nivel" [(ngModel)]="examenData.nivel" name="nivel" required>
-              <option value="" disabled selected>Seleccione una categoría</option>
-              <option *ngFor="let nivel of niveles" [value]="niveles.nvl_id">{{ niveles.nvl }}</option>
-            </select>
-          </div>
-
-
 
           <div class="mb-3">
             <label for="exam_desc" class="form-label">Descripción del Examen</label>

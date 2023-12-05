@@ -27,8 +27,8 @@ export class AddExamenComponent implements OnInit {
     activo:true,
     categoria:{
       cat_exam_id:''
-    },
-    nivel:''
+    }
+
     
   }
 
@@ -85,8 +85,7 @@ export class AddExamenComponent implements OnInit {
          activo:true,
          categoria:{
          cat_exam_id:''
-          },
-         nivel:''
+          }
                  }
         this.router.navigate(['/admin/view-examenes']);
       },

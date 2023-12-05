@@ -3,7 +3,7 @@
       <form [formGroup]="examenForm" (ngSubmit)="saveExamen()">
         <div class="form-group">
           <mat-form-field appearance="fill" class="field-custom">
-            <mat-label>Título del Examen</mat-label>
+            <mat-label>Título del Examen </mat-label>
             <input matInput formControlName="titulo" name="titulo" required>
           </mat-form-field>
         </div>
@@ -40,6 +40,21 @@
             </mat-form-field>
           </div>
         </div>
+
+
+        <!-- Agrega el siguiente bloque dentro de tu formulario -->
+        <div class="form-group">
+          <mat-form-field appearance="fill" class="field-custom">
+            <mat-label>Nivel de Dificultad</mat-label>
+            <mat-select formControlName="nivelDificultad">
+              <mat-option value=3>Bajo</mat-option>
+              <mat-option value=2>Medio</mat-option>
+              <mat-option value=1>Alto</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        
 
         <div class="" formArrayName="preguntas">
           <div class="mt-5" *ngFor="let pregunta of preguntas.controls; let i = index">

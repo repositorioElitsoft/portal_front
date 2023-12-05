@@ -93,7 +93,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.getCategories();
   
   }
-
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
@@ -106,23 +105,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
-  obtenerExamen() {
-
-
-
-
-  }
-
-
-
-
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
   filterData() {
     let filteredArray = this.originalDataCopy;
 
@@ -141,23 +127,27 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
-
-        // Filtro por nivel de examen
+   
+    // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
       filteredArray = filteredArray.filter(resultados => {
-        console.log('Resultado:', resultados);
-        console.log('Nivel Seleccionado:', this.selectedNivel);
-        return this.resultados.some(resultado => {
-          console.log('Resultado Examen:', resultado.examen);
-          return resultado.examen.nivel.nvl_id === this.selectedNivel;
+        return this.resultados.find(resultado => {
+          const nivelDificultad = resultado.examen.nivelDificultad;
+          const productos = resultado.examen.productos;
+
+          console.log('nivel examen:', nivelDificultad);
+          console.log('nivel seleccionado:', this.selectedNivel);
+          console.log('Productos:', productos);
+          console.log('Producto seleccionado:', this.selectedProducto);
+          return productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
         });
       });
     }
 
+
+
+
     
-
-
-
 
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
@@ -178,10 +168,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
-      const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
+      const [min, max] = this.selectedAniosExpRange; 
       filteredArray = filteredArray.filter(element => {
-        const anosExp = element.herr_exp.split(', ').map(Number); // Dividimos la propiedad 'herr_exp' en un array de numeros
-        return anosExp.some(anos => anos >= min && anos <= max); // Verificamos si alguno de los numeros en el arreglo 'anosExp' se encuentra dentro del rango seleccionado
+        const anosExp = element.herr_exp.split(', ').map(Number); 
+        return anosExp.some(anos => anos >= min && anos <= max); 
       });
     }
 
@@ -279,8 +269,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         this.dataSource.data = usuarios;
         this.usuarios = usuarios;
 
-        // Llamar al nuevo método para calcular los porcentajes de aprobación
-        this.calcularPorcentajeAprobacion();
+        
       },
       (error) => {
         console.log(error);
@@ -288,56 +277,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
-  calcularPorcentajeAprobacion() {
-    this.usuarioService.obtenerResultados().subscribe(
-      (data) => {
-        this.resultados = data;
-        if (this.resultados.length > 0) {
-          // Filtrar resultados por nivel y tipo de producto
-          const resultadosFiltrados = this.resultados.filter(resultado => {
-            return (
-              resultado.examen.nvl === this.selectedNivel &&
-              resultado.examen.productos.prd_id === this.selectedProducto 
-            );
-          });
-  
-  
-          if (resultadosFiltrados.length > 0) {
-            resultadosFiltrados.forEach((resultado: any) => {
-              const resultadosExamen = resultado.resultadosExamen;
-              const puntosMaximos = resultado.examen.puntosMaximos;
-              const username = resultado.id;
-              const user = resultado.usuarioId;
-              const nivel = resultado.examen.nvl;
-  
-              console.log(`Resultado examen para el usuario ${user}: ${resultadosExamen}`);
-              console.log(`Puntos máximos para el usuario ${user}: ${puntosMaximos}`);
-              console.log(`Usuario: ${user}`);
-              console.log(`Nivel herramienta: ${nivel}`);
-  
-              // Verificar si puntosMaximos es mayor que cero para evitar división por cero
-              if (puntosMaximos > 0) {
-                const porcentaje = (resultadosExamen / puntosMaximos) * 100;
-  
-                // Imprimir el resultado en la consola
-                console.log(`Porcentaje de Aprobación para el usuario con id=${user} es: ${porcentaje}%`);
-              } else {
-                console.warn(`El puntaje máximo para el usuario ${user} es igual a cero.`);
-              }
-            });
-          } else {
-            console.warn('No hay resultados disponibles.');
-          }
-        } else {
-          console.warn('No hay resultados disponibles.');
-        }
-  
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-  }
 
   exportToCSV() {
     const dataToExport = this.dataSource.data;
@@ -366,16 +305,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
-  getNiveles() {
-    this.nivelService.listarNiveles().subscribe(
-      (data: Niveles[]) => {
-        this.niveles = data;
-      },
-      () => {
-        console.log('Error al obtener niveles:');
-      }
-    );
-  }
+  
 
   getProductos(categoriaId: number){
     console.log('categoria id:', categoriaId)
@@ -423,6 +353,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         );
       }
     }
+
+    getNiveles() {
+
+        this.nivelService.listarNiveles().subscribe(
+          (data: Niveles[]) => {
+            this.niveles = data;
+
+          },
+          (error) => {
+            console.log('Error al obtener niveles ', error);
+          }
+        );
+      
+    }
+    
+    
+    
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
