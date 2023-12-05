@@ -24,11 +24,11 @@ export class StateService {
 
   obtenerEstadosPorPais(countryId: number): Observable<State[]> {
     const url = `${environment.URL_HOST}/country/${countryId}/states`;
+
     return this.http.get<State[]>(url);
   }
 
   obtenerEstadosporCountry(countryId:number):Observable<State[]>{
-    const url = `${environment.URL_HOST}/country/${countryId}`;
-    return this.http.get<State[]>(url);
+    return this.http.get<State[]>(`${this.url}country/${countryId}`);
   }
 }

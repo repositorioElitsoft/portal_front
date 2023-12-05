@@ -26,4 +26,10 @@ export class CityService {
     const url = `${this.url}state/${stateId}/cities`;
     return this.http.get<City[]>(url);
   }
+
+  getStateByCountry(stateId:number):Observable<City[]>{
+    return this.http.get<City[]>(`${this.url}state/${stateId}`);
+  }
+
+
 }

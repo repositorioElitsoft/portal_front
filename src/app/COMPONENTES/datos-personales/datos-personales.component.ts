@@ -95,37 +95,44 @@ export class DatosPersonalesComponent implements OnInit {
 
   }
 
+  onCountrySelected(){
+    const countryId = this.form.get("country")!.value;
+    console.log("I'm gonna call states by country")
+    this.stateService.obtenerEstadosporCountry(countryId).subscribe({
+      next: (data:State[]) => {
+        this.states = this.sortByName(data);
+      },
+      error: (error) => {
+        console.error('Error fetching states:', error);
+      }
+    });
+  }
+
+  onStateSelected(){
+  
+    const stateId = this.form.get("state")!.value;
+    console.log("I'm gonna call cities by state")
+    this.cityService.getStateByCountry(stateId).subscribe({
+      next: (data:City[]) => {
+        this.cities = this.sortByName(data);
+      },
+      error: (error) => {
+        console.error('Error fetching states:', error);
+      }
+    });
+  }
+
+
   ngOnInit(): void {
-
-
-    this.countryService.obtenerPaises().subscribe(
-      (data: Country[]) => {
+    this.countryService.obtenerPaises().subscribe({
+      next: (data: Country[]) => {
         this.countries = this.sortByName(data);
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching countries:', error);
       }
-    );
-
-    this.stateService.obtenerEstados().subscribe(
-     (data:State[])=> {
-      this.states = this.sortByName(data);
-     },
-     (error) => {
-       console.error('Error fetching states:', error);
-     }
-     );
-
-
-     this.cityService.obtenerCiudades().subscribe(
-       (data:City[])=> {
-         this.states = this.sortByName(data);
-       },
-       (error) => {
-         console.error('Error fetching cities:', error);
-      }
-       );
-
+    });
+    this.form.get("country")!.patchValue("")
     this.ObtenerUsuarioGuardado();
 
   }

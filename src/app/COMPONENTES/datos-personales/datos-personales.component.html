@@ -113,6 +113,7 @@
           <label for="inputUbicacion" class="col-sm-2 col-form-label">País:</label>
           <div class="col-sm-10">
             <select type="ubicacion" class="form-control" id="inputUbicacion" formControlName="country" name="inputUbicacion"
+            (change)="onCountrySelected()"
             [ngClass]="{'is-invalid': form.get('country')?.invalid && form.get('country')?.touched}">
               <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
             </select>
@@ -121,10 +122,11 @@
             </div>
           </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3" [hidden]="states.length === 0">
           <label for="inputEstado" class="col-sm-2 col-form-label">Región o Estado:</label>
           <div class="col-sm-10">
             <select type="estado" class="form-control" id="inputEstado" formControlName="state" name="inputEstado"
+            (change)="onStateSelected()" 
             [ngClass]="{'is-invalid': form.get('state')?.invalid && form.get('state')?.touched}">
               <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
             </select>
@@ -133,7 +135,7 @@
             </div>
           </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3" [hidden]="cities.length === 0">
           <label for="inputCiudad" class="col-sm-2 col-form-label">Ciudad:</label>
           <div class="col-sm-10">
             <select type="ciudad" class="form-control" id="inputCiudad" formControlName="city" name="inputCiudad"
