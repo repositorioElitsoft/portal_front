@@ -12,8 +12,4 @@ export class DashboardComponent implements OnInit{
   ngOnInit(): void {
   }
 
-  cerrarSesion() {
-    // Simplemente redirige a la página de inicio de sesión
-    this.router.navigate(['/iniciar-sesion']);
-  }
 }

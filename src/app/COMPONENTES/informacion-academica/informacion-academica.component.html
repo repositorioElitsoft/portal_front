@@ -10,19 +10,20 @@
   <app-sidebar-user></app-sidebar-user>
   <br>
   <app-sidebar-userdesk></app-sidebar-userdesk>
+  <div class="container">
+    <div class="sidebar">
+      <!-- Contenido de la barra lateral aquí -->
+  </div>
 
-
-
-  
   <mat-card class="container-datos-personales">
-    
+
 
     <div class="div-inputs" *ngIf="!creationMode" >
       <h4 class="perfilr">Información académica</h4>
       <div *ngFor="let academica of academicas">
-        
+
         <div class="row celda-laboral">
-          
+
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Título / Profesion</h4>
               <p>{{ academica.titl}}</p>
@@ -40,9 +41,14 @@
 
             <div class="flex">
               <h4 class="Titulos  mb-4">Acciones</h4>
-           <button mat-mini-fab  class="minifab m-1" (click)="editarAcademica(academica.inf_acad_id)"><mat-icon>edit</mat-icon>
-           </button>
-           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)"> 
+              <button mat-mini-fab class="minifab m-1"  id="{{academica.inf_acad_id}}" (click)=" editarAcademica($event)">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+
+
+
+           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" >
           	<mat-icon>delete</mat-icon>
            </button>
 
@@ -50,13 +56,13 @@
           </div>
         </div>
       </div>
-      
+
       <div *ngIf="academicas.length === 0">
         No has definido ninguna experiencia académica
       </div>
-      
-      <button mat-raised-button class="botonprimario m-2"  (click)="addExperienceRow()">+ Añadir estudios</button>
-     
+
+      <button mat-raised-button class="botonprimario m-2"   (click)="openAddDialog('300ms', '150ms')">+ Añadir estudios</button>
+
       <button  mat-raised-button class="botonprimario m-2"  *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
     <div class="div-inputs" *ngIf="creationMode">
@@ -132,7 +138,7 @@
                 </button>
               </div>
             </div>
-          </div> 
+          </div>
           <button mat-raised-button type="button" (click)="addReferencia()">+ Añadir Referencia</button>
         </div>
 
@@ -140,7 +146,7 @@
           <div class="flex">
             <button button  mat-raised-button class="botonprimario m-2"  (click)="goBack()" >Cancelar</button>
             <button  [disabled]="!form.valid" type="submit" button  mat-raised-button  class="botonprimario m-2"> Guardar</button>
-          </div>   
+          </div>
         </div>
       </form>
     </div>

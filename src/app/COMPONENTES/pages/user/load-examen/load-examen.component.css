@@ -1,10 +1,44 @@
 .example-header-image {
- background-image: url('/assets/exam.png');
- background-size: cover;
+  width: 50px; /* Ancho del icono */
+  height: 60px; /* Altura del icono */
+  border: 3px solid #000; /* Borde del documento */
+  background-color: #fff; /* Fondo del documento */
+  border-radius: 3px; /* Bordes redondeados */
+  position: relative; /* Necesario para posicionar pseudo-elementos */
+  box-shadow: 0px 4px 8px rgba(0,0,0,0.1); /* Sombra para dar profundidad */
+}
 
+.example-header-image:before, .example-header-image:after {
+  content: ""; /* Pseudo-elementos para las líneas de texto */
+  position: absolute;
+  left: 8px; /* Espaciado desde la izquierda */
+  right: 8px; /* Espaciado desde la derecha */
+  height: 2px; /* Altura de la 'línea de texto' */
+  background: #000; /* Color de la 'línea de texto' */
+}
+
+.example-header-image:before {
+  top: 15px; /* Posición de la primera línea */
+}
+
+.example-header-image:after {
+  top: 25px; /* Posición de la segunda línea */
+}
+
+.example-header-image span {
+  position: absolute;
+  top: 35px; /* Posición del texto simulado */
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: #000;
+  border-top: 3px solid #000; /* 'Texto' simulado */
 }
 
 .botonmath
 {
-    z-index: 0 !important
+    z-index: 0 !important;
+    
 }; 
+
+

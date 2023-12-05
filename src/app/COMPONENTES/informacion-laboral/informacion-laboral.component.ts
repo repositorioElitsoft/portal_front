@@ -8,6 +8,9 @@ import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AddLaboralComponent } from '../shared/add-laboral/add-laboral.component';
+import { EditLaboralComponent } from '../shared/edit-laboral/edit-laboral.component';
 import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
 
 
@@ -34,6 +37,7 @@ export class InformacionLaboralComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
+    public dialog : MatDialog,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
     private route: ActivatedRoute, private router: Router) {
@@ -173,6 +177,17 @@ export class InformacionLaboralComponent implements OnInit {
   }
 
 
+  openaddExperienciaLaboral() {
+    const dialogRef = this.dialog.open(AddLaboralComponent, {
+      width: '600px',
+      height: '700px',
+      data: {} // Puedes pasar datos al modal si es necesario
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Modal cerrado', result);
+      // Aquí puedes realizar acciones después de cerrar el modal si es necesario
+    });
   addExperienceRow(){
     this.id = null;
     this.form.patchValue({
@@ -193,6 +208,19 @@ export class InformacionLaboralComponent implements OnInit {
   redirectTo(){
     this.navigateToRoute('/user/cargo-usuario')
   }
+
+ addExperienciaLaboral(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(AddLaboralComponent, {
+      width: '600px',
+      height: '700px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+
+  }
+
+
+
 
   submitForm(event: Event) {
 
@@ -293,4 +321,47 @@ export class InformacionLaboralComponent implements OnInit {
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
+
+
+  editLaboral(event: any) {
+    console.log('Evento recibido:', event); // Verificar el evento recibido
+
+    // Intentando obtener el ID del elemento padre del elemento que desencadenó el evento
+    const inf_lab_id = event.target.parentElement.id;
+    console.log('inf_lab_id:', inf_lab_id); // Verificar el ID obtenido
+
+    if (inf_lab_id) {
+      console.log('ID definido, solicitando datos...'); // Confirmar que el ID está definido
+
+      // Llamar al servicio para obtener los datos laborales utilizando inf_lab_id
+      this.laboralService.obtenerLaboralPorId( inf_lab_id).subscribe({
+        next: (data) => {
+          console.log('Data llegada:', data); // Inspeccionar los datos recibidos del servicio
+
+          // Aquí puedes continuar con el código para abrir el diálogo y pasar los datos
+          const dialogRef = this.dialog.open(EditLaboralComponent, {
+            width: '800px',
+            height: '700px',
+            data: { inf_lab_id: inf_lab_id } // Pasar inf_lab_id como parte de los datos
+          });
+
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`); // Resultado después de cerrar el diálogo
+          });
+        },
+        error: (error) => {
+          console.error('Error al obtener datos:', error); // Capturar y mostrar errores
+        }
+      });
+    } else {
+      console.error('inf_lab_id es undefined o null'); // Manejar el caso de que inf_lab_id no esté definido
+    }
+  }
+
+
+
+
+
+
+
 }

@@ -3,35 +3,20 @@
   font-size: 15px;
 }
 
-.div-menu {
-  margin: 50px;
-}
+
 
 .form {
   width: fit-content;
 }
 
-.btn-guardar{
-  font-size: 14px;
-  padding: 8px 16px;
-  background-color: #F57C27;
-  border-color: #F57C27;
-  font-family: 'Meera Inimai', sans-serif;
+
+
+
+.contenedorform{
+ padding-left: 30%;
+ padding-right: 30%;
+ box-shadow: none;
 }
-
-.btn-guardar:hover {
-  background-color: #ffffff;
-  border-color: #F57C27;
-  color: #F57C27;
-
-}
-
-
-.col-form-label{
-  color: #333;   font-family: 'Meera Inimai', sans-serif;
-  font-size: 14px;
-}
-
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {

@@ -1,9 +1,10 @@
 
 /* Estilos para el formulario */
 .form-container {
+  margin-top: 4vh;
   padding: 20px;
   border: 1px solid #F57C27;
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex; /* Establece el contenedor como un flexbox */
   flex-wrap: wrap; /* Permite que los elementos se ajusten a la línea siguiente si no caben en una sola línea */
   gap: 40px; /* Espacio entre los elementos */
@@ -29,10 +30,6 @@
   max-width: 100px; /* Ancho máximo para que no se vean muy ancho*/
 }
 
-
-.container {
- margin-top: 10vh;
-}
 
 
 

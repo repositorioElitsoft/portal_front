@@ -1,5 +1,5 @@
-<br><br><br>
-<mat-card class="container-datos-personales">
+
+<mat-card class="profile-container">
 
 <h4 class="perfilr">Detalles del perfil</h4>
 
@@ -51,24 +51,20 @@
           </div>
         </div>
 
-        <button mat-raised-button type="button" class="btn btn-primary"
-        (click)="toggleEditable()" *ngIf="!editable"
-        style="background-color: #F76805; border: 0; color: #ffff;"
-        onmouseover="this.style.backgroundColor='#ffff'; this.style.color='#F76805';"
-        onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">
+        <button mat-raised-button type="button" class="botonprimario m-2"
+        (click)="toggleEditable()" *ngIf="!editable">
         <mat-icon>edit</mat-icon>Editar
       </button>
 
 
-        <button  mat-raised-button type="submit" class="btn btn-primary" *ngIf="editable"style="background-color: #F76805; border: 0; color: #ffff;"
-        onmouseover="this.style.backgroundColor='#ffff'; this.style.color='#F76805';"
-        onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">Guardar</button>
+        <button  mat-raised-button type="submit" class="botonprimario m-2" *ngIf="editable">Guardar</button>
 
 
 
       </form>
 
     </div>
+
 
   </mat-card>
 

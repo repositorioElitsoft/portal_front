@@ -1,0 +1,154 @@
+/* Colores corporativos */
+:root {
+    --color-primary: #F57C27; /* Naranja corporativo */
+    --color-background: #FFFFFF; /* Blanco */
+    --color-text: #333; /* Un color oscuro para el texto */
+  }
+  
+  .mat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Centrar el contenido dentro de cada box */
+  .box1,
+  .box2,
+  .box3,
+  .box4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  /* Ajustar los estilos del listado de archivos para que estén centrados */
+  ul {
+    list-style: none;
+    padding: 0;
+    width: 100%; /* Asegúrate de que ocupa el ancho completo para centrar los elementos */
+    text-align: center; /* Centrar los textos y enlaces dentro de la lista */
+  }
+  
+  li {
+    text-align: center; /* Centrar los textos y enlaces dentro de la lista */
+  }
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .file-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .file-name {
+    font-weight: bold;
+    color: var(--color-primary);
+    margin-bottom: 5px;
+  }
+  
+  mat-progress-bar {
+    width: 100%;
+  }
+  
+  
+  .selected-filename {
+    margin: 10px 0;
+    font-style: italic;
+  }
+  
+  .message {
+    color: #F57C27; /* Color para los mensajes de éxito */
+    text-align: center;
+  }
+  
+  .delete-icon {
+    cursor: pointer;
+    color: var(--color-primary);
+    margin-left: 10px;
+  }
+  
+  /* Estilo de pantalla de carga */
+  .screen-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+  }
+  
+  
+  .titulo{text-align: center; color:  #F57C27;
+  font-size: 22px;}
+  
+  .loading-text {
+    font-size: 1.5em;
+    color: var(--color-primary);
+    margin-right: 15px;
+  }
+  
+  /* Añade una animación al icono de carga */
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .loading-icon {
+    border: 5px solid #F57C27;
+    border-top: 5px solid var(--color-primary);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  .box4 .mat-card {
+    /* Estilo para la tarjeta contenedora */
+    margin: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  
+  .titulo {
+    /* Estilo para el título de la tarjeta */
+    font-size: 1.5rem;
+    color: #424242;
+  }
+  
+  .mat-icon-button {
+    /* Estilo para los botones de iconos */
+    color: rgba(0,0,0,0.54);
+  }
+  
+  .mat-list-item {
+    /* Estilo para los elementos de la lista */
+    border-bottom: 1px solid #eeeeee;
+    align-items: center;
+  }
+  
+  .mat-list-item:last-child {
+    border-bottom: none;
+  }
+  
+  .mat-list-item a {
+    /* Estilo para los enlaces */
+    text-decoration: none;
+    padding-right: 20px;
+    flex-grow: 1;
+  }
+  
+  .mat-card-content {
+    padding: 0;
+  }
+  

@@ -1,4 +1,5 @@
 export interface Academica {
+id: number;
     inf_acad_id?:number,
     titl:string,
     inf_acad_nom_esc: string,

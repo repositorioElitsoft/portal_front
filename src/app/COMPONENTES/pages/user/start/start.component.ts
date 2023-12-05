@@ -1,11 +1,12 @@
-
 import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
 import { Component, ElementRef, OnInit } from '@angular/core';
-
+import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
+import 'chartjs-plugin-annotation';
+
 
 //se declara fuera de la clase de forma global
 let vecesEnviado = 0;
@@ -35,6 +36,9 @@ export class StartComponent implements OnInit {
 
 
 
+
+
+
   constructor(
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
@@ -47,8 +51,93 @@ export class StartComponent implements OnInit {
     this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
+    
+
 
   }
+
+
+  ngAfterViewInit(): void {
+    this.mostrarGrafico();
+  }
+  mostrarGrafico(): void {
+    setTimeout(() => {
+      const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: ['Puntos Conseguidos'],
+              datasets: [{
+                label: 'Resultados del Examen',
+                data: [this.puntosConseguidos, this.respuestasCorrectas],
+                backgroundColor: ['grey', '#F57C27'],
+                borderColor: ['grey', '#F57C27'],
+                borderWidth: 1,
+                  barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
+
+              }]
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  min: 0, // Define el valor mínimo del eje Y
+                  max: parseInt (this.examen.puntosMaximos),
+                  title: {
+        display: true,
+        text: 'Puntuacion Maxima', // Aquí escribes el texto de tu etiqueta
+        color: '#666', // Puedes personalizar el color
+        font: {
+          size: 11, // Tamaño de la fuente
+          weight: 'bold', // Peso de la fuente
+        }
+      },
+                }
+              },
+              plugins: {
+                legend: {
+                  labels: {
+                    color: 'black',
+                    font: {
+                      size: 14
+                    }
+                  }
+                },
+                tooltip: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                annotation: {
+                  annotations: {
+                    line1: {
+                      type: 'line',
+                      yMin:  this.preguntasTotales,
+                      yMax: 4,
+                      borderColor: 'red',
+                      borderWidth: 2,
+                      borderDash: [6, 6]
+                    }
+                  }
+                }
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              aspectRatio: 2 // Ajuste el valor según sea necesario para hacer el gráfico más estrecho
+            }
+          });
+        } else {
+          console.error('No se pudo obtener el contexto del canvas');
+        }
+      } else {
+        console.error('Elemento canvas no encontrado');
+      }
+    }, 0);
+  }
+  
+
 
 
   cargarPreguntas(){
@@ -131,7 +220,12 @@ export class StartComponent implements OnInit {
       showCancelButton: true,
       cancelButtonText:'Cancelar',
       confirmButtonText: 'Enviar',
-      icon:'info'
+        cancelButtonColor: '#515151',
+        confirmButtonColor: '#F57C27',
+        icon: 'info',
+        customClass: {
+            popup: 'custom-border' // Aplica la clase al cuadro de diálogo
+        }
     }).then((e) => {
       if(e.isConfirmed){
 
@@ -169,27 +263,8 @@ export class StartComponent implements OnInit {
 
   evaluarExamen(){
 
-   /*  this.preguntaService.evaluarExamen(this.preguntas).subscribe(
-      (data:any) => {
-        console.log(data);
-        this.puntosConseguidos = data.puntosMaximos;
-        this.respuestasCorrectas = data.respuestasCorrectas;
-        this.intentos = data.intentos;
-        this.intentosTotales = data.intentosTotales;
-        //this.intentos ++;
-        this.esEnviado = true;
-
-        // Incrementar la variable vecesEnviado
-        this.vecesEnviado++;
-        this.enviosTotales = this.vecesEnviado;
-      },
-      (error) => {
-        console.log(error);
-
-      }
-
-
-    ) */
+ 
+ 
 
     this.esEnviado = true;
       
@@ -210,12 +285,20 @@ export class StartComponent implements OnInit {
         this.preguntasTotales ++;
 
       }
+      
+      
     });
     //const newLocal = this.enviosTotales = this.vecesEnviado;
     console.log("Respuestas correctas : " + this.respuestasCorrectas);
     console.log("Puntos conseguidos : " + this.puntosConseguidos);
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
+ 
+    this.mostrarGrafico();
+    
+ 
+    this.mostrarGrafico();
+    
   }
 
   obtenerHoraFormateada(){
@@ -232,3 +315,6 @@ export class StartComponent implements OnInit {
 function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {
   throw new Error('Function not implemented.');
 }
+
+
+
