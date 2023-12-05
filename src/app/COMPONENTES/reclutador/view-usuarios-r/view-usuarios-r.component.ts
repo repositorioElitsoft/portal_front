@@ -5,14 +5,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator} from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort} from '@angular/material/sort';
-import { Usuario } from 'src/app/interface/user.interface';
+import { Usuario} from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
-
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
@@ -20,9 +19,18 @@ import { LaboralService } from 'src/app/service/laboral.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
+import { PreguntaService } from 'src/app/service/pregunta.service';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
+import { UserGuard } from 'src/app/core/guards/user.guard';
+import { NivelService } from 'src/app/service/nivel.service';
+import { Niveles } from 'src/app/interface/niveles.interface';
+
 
 
 const ELEMENT_DATA: Usuario[] = [];
+
 
 @Component({
   selector: 'app-view-usuarios-r',
@@ -35,12 +43,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
-  usuarios: Usuario[] = [];
+  usuarios: any[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
+  niveles : Niveles []=[];
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
+  
 
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
@@ -49,12 +59,20 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
   lastYears: number = 0;
-
+  resultadosExam: any[]=[];
+  idUser:number = 0;
+  resultados: any[] = [];
+  porcentajeAprobacion:number = 0;
+  filteredUsuarios:any=[]=[];
+  selectedOption:String = '';
+  selectedNivel : number = 0;
+  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private usuarioService: UsuarioService,
+    private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
@@ -62,15 +80,43 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private laboralService: LaboralService,
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
-    private _snackBar: MatSnackBar,
+    //private _snackBar: MatSnackBar,
+    private httpClient: HttpClient,
+    private nivelService: NivelService,
+   
     
   ) {}
 
-
   ngOnInit(): void {
+    this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
+  
   }
+
+  obtenerResultados() {
+    this.usuarioService.obtenerResultados().subscribe(
+      (data) => {
+        this.resultados = data;
+        console.log('Data:',data);
+        this.filterData();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  obtenerExamen() {
+
+
+
+
+  }
+
+
+
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -95,6 +141,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
+
+        // Filtro por nivel de examen
+    if (this.selectedNivel > 0) {
+      filteredArray = filteredArray.filter(resultados => {
+        console.log('Resultado:', resultados);
+        console.log('Nivel Seleccionado:', this.selectedNivel);
+        return this.resultados.some(resultado => {
+          console.log('Resultado Examen:', resultado.examen);
+          return resultado.examen.nivel.nvl_id === this.selectedNivel;
+        });
+      });
+    }
+
+    
+
+
+
 
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
@@ -137,7 +200,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   onLast5YearsChange() {
-    // Llamar a filterData cuando cambie el valor de this.last5Years
+    
     this.filterData();
   }
 
@@ -168,6 +231,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterProducto() {
     this.filterData();
   }
+  filterNivel() {
+    this.filterData();
+  }
 
   filterVersion() {
     if (this.selectedVersion === 0) {
@@ -181,10 +247,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.filterData();
   }
 
+ 
+
+
   obtenerUsuarios(): void {
     this.usuarioService.obtenerUsuarios().subscribe(
       (data: any[]) => {
-        console.log('data:', data);
+        
         const usuarios = data.map((usuario) => ({
           usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
           usr_tel: usuario.usr_tel || '',
@@ -208,6 +277,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
         this.originalDataCopy = usuarios;
         this.dataSource.data = usuarios;
+        this.usuarios = usuarios;
+
+        // Llamar al nuevo método para calcular los porcentajes de aprobación
+        this.calcularPorcentajeAprobacion();
       },
       (error) => {
         console.log(error);
@@ -215,17 +288,65 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
+  calcularPorcentajeAprobacion() {
+    this.usuarioService.obtenerResultados().subscribe(
+      (data) => {
+        this.resultados = data;
+        if (this.resultados.length > 0) {
+          // Filtrar resultados por nivel y tipo de producto
+          const resultadosFiltrados = this.resultados.filter(resultado => {
+            return (
+              resultado.examen.nvl === this.selectedNivel &&
+              resultado.examen.productos.prd_id === this.selectedProducto 
+            );
+          });
+  
+  
+          if (resultadosFiltrados.length > 0) {
+            resultadosFiltrados.forEach((resultado: any) => {
+              const resultadosExamen = resultado.resultadosExamen;
+              const puntosMaximos = resultado.examen.puntosMaximos;
+              const username = resultado.id;
+              const user = resultado.usuarioId;
+              const nivel = resultado.examen.nvl;
+  
+              console.log(`Resultado examen para el usuario ${user}: ${resultadosExamen}`);
+              console.log(`Puntos máximos para el usuario ${user}: ${puntosMaximos}`);
+              console.log(`Usuario: ${user}`);
+              console.log(`Nivel herramienta: ${nivel}`);
+  
+              // Verificar si puntosMaximos es mayor que cero para evitar división por cero
+              if (puntosMaximos > 0) {
+                const porcentaje = (resultadosExamen / puntosMaximos) * 100;
+  
+                // Imprimir el resultado en la consola
+                console.log(`Porcentaje de Aprobación para el usuario con id=${user} es: ${porcentaje}%`);
+              } else {
+                console.warn(`El puntaje máximo para el usuario ${user} es igual a cero.`);
+              }
+            });
+          } else {
+            console.warn('No hay resultados disponibles.');
+          }
+        } else {
+          console.warn('No hay resultados disponibles.');
+        }
+  
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
 
   exportToCSV() {
     const dataToExport = this.dataSource.data;
     const csv = Papa.unparse(dataToExport);
-
-    // Crear un enlace de descarga para el archivo CSV
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'usuarios.csv'; // Nombre del archivo CSV
+    a.download = 'usuarios.csv'; 
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -241,6 +362,17 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       },
       () => {
         console.log('Error al obtener categorías:');
+      }
+    );
+  }
+
+  getNiveles() {
+    this.nivelService.listarNiveles().subscribe(
+      (data: Niveles[]) => {
+        this.niveles = data;
+      },
+      () => {
+        console.log('Error al obtener niveles:');
       }
     );
   }
@@ -327,7 +459,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       },
       error: (error) => {
         console.error('Error al obtener el perfil del usuario:', error);
-        // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
+      
       }
     });
   }
@@ -339,7 +471,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       (data: Blob) => {
         const url = window.URL.createObjectURL(data);
         window.open(url, '_blank');
-        // console.log('data:', data);
+        
       },
       (error) => {
         

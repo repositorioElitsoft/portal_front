@@ -263,7 +263,7 @@ export class StartComponent implements OnInit {
 
     this.esEnviado = true;
       
-    console.log("tis preguntas", this.preguntas)
+    console.log("preguntas", this.preguntas)
     this.preguntas.forEach((p:any) => {
       console.log("The p es", p)
 

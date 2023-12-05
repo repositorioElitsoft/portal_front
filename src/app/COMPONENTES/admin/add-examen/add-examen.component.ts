@@ -6,6 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import Swal from 'sweetalert2';
 import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
+import { NivelService } from 'src/app/service/nivel.service';
 
 @Component({
   selector: 'app-add-examen',
@@ -16,6 +17,7 @@ export class AddExamenComponent implements OnInit {
 
 
   categorias:any = [];
+  niveles:any=[];
 
   examenData = {
     exam_titl:'',
@@ -25,13 +27,16 @@ export class AddExamenComponent implements OnInit {
     activo:true,
     categoria:{
       cat_exam_id:''
-    }
+    },
+    nivel:''
+    
   }
 
   constructor(
     private categoriaService:CategoriaService,
     private examenService:ExamenService,
     private dialog: MatDialog,
+    private nivelservice: NivelService,
     private router:Router) { }
 
   ngOnInit(): void {
@@ -43,6 +48,20 @@ export class AddExamenComponent implements OnInit {
         console.log(error);
         Swal.fire('Error !!','Error al cargar los datos','error');
       }
+    )
+
+    this.nivelservice.listarNiveles().subscribe(
+      (data : any)=> {
+        this.niveles = data;
+        console.log(this.niveles);
+      },
+      (error)=> {
+        console.log(error);
+        Swal.fire('Error !!', 'Error al cargar los niveles', 'error');
+      }
+
+
+
     )
   }
 
@@ -66,8 +85,9 @@ export class AddExamenComponent implements OnInit {
          activo:true,
          categoria:{
          cat_exam_id:''
-          }
-        }
+          },
+         nivel:''
+                 }
         this.router.navigate(['/admin/view-examenes']);
       },
       (error) => {

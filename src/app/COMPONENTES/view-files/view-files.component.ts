@@ -29,6 +29,7 @@ export class ViewFilesComponent implements OnInit {
     usr_pass: '',
     usr_tel: '',
     usr_url_link: '',
+    
     pais: {
       pais_id: undefined,
       pais_nom: ''
@@ -37,7 +38,9 @@ export class ViewFilesComponent implements OnInit {
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
-    laborales: []
+    laborales: [],
+    
+    
   };
 
   constructor(private uploadService: UploadFilesService) { }

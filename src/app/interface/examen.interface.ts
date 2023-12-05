@@ -8,4 +8,5 @@ export interface Examen{
     titulo: string;
     categoria_categoria_id: number;
     preguntas: Pregunta[];
+    nivel: number;
 }

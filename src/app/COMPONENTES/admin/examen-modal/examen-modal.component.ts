@@ -44,7 +44,8 @@ export class ExamenModalComponent implements OnInit {
         categoriaId: ['', Validators.required]
       }),
       preguntas: this.formBuilder.array([]),
-      productos: this.formBuilder.array([])
+      productos: this.formBuilder.array([]),
+      nivel : this.formBuilder.array([])
     });
 
 

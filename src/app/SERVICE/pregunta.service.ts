@@ -42,4 +42,8 @@ export class PreguntaService {
   public guardarResultados(resultados:any){
     return this.http.post(`${this.url}/resultados/`, resultados);
     }
+
+ public obtenerResultadosByUser(idUser:number){
+    return this.http.post(`${this.url}/resultados/`, idUser);
+    }
 }

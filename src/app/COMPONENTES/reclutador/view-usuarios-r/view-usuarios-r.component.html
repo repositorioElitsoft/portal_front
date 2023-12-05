@@ -30,13 +30,25 @@
     </mat-select>
   </mat-form-field>
 
+  
+    <mat-form-field class ="filter-select">
+      <mat-label>Nivel de Examen</mat-label>
+      <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel" (selectionChange)="getNiveles(); filterNivel()">
+        <mat-option value="0">Seleccione un nivel</mat-option>
+        <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+
   <mat-form-field class="filter-select">
     <mat-label>Versión</mat-label>
-    <mat-select [disabled]="!selectedProducto" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
+    <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
       <mat-option value="">Seleccione un opción</mat-option>
       <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
     </mat-select>
   </mat-form-field>
+
+  
   
 
     <div class="filter-slider d-flex flex-column align-items-center">
@@ -67,7 +79,9 @@
 
   
   
-</div>
+ 
+  
+
 
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"

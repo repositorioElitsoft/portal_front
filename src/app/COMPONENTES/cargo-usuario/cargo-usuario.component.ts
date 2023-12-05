@@ -68,6 +68,9 @@ export class CargoUsuarioComponent implements OnInit {
     );
   }
 
+  
+
+
   getCargoUsuairo() {
     this.cargosusuarioService.getCargosByUserId().subscribe(
       (data: CargoUsuario) => {
@@ -86,13 +89,20 @@ export class CargoUsuarioComponent implements OnInit {
     );
   }
 
-  successMessage(){
-    this.notification.showNotification(
-      'success',
-      'Éxito',
-      'Tus datos han sido guardados correctamente, te contactaremos a la brevedad.'
-    )
+  successMessage() {
+    const newCargo: CargoUsuario = this.form.value;
+  
+    // Supongamos que usuarioId está disponible en tu newCargo
+    const usuarioId = newCargo.usuarioId;
+  
+   
   }
+
+
+
+
+
+
 
   submitForm(event: Event){
     event.preventDefault();
