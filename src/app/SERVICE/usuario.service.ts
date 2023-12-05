@@ -41,7 +41,7 @@ export class UsuarioService {
   }
 
   obtenerUsuarios(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.url}/usuarios/usuarios/`);
+    return this.HttpClient.get<any[]>(`${this.url}/usuarios/usuarios-herramientas`);
   }
 
   eliminarUsuarioId(usuarioId: number): Observable<string> {
@@ -144,7 +144,7 @@ export class UsuarioService {
 
 
 
-  
+
 
 
 }

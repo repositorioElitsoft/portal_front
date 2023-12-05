@@ -38,8 +38,8 @@ import { AddUsuariosComponent } from './COMPONENTES/admin/add-usuarios/add-usuar
 import { EstadisticasComponent } from './COMPONENTES/reclutador/estadisticas/estadisticas.component';
 import { DashboardEComponent } from './COMPONENTES/entrevistador/dashboard-e/dashboard-e.component';
 import { WelcomeEntrevistadorComponent } from './COMPONENTES/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
-import { ProfileEComponent } from './COMPONENTES/entrevistador/profile-e/profile-e.component';
 import { ObservacionesComponent } from './COMPONENTES/entrevistador/observaciones/observaciones.component';
+import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 
 
 const routes: Routes = [
@@ -197,7 +197,7 @@ const routes: Routes = [
       },
       {
         path:'profile-e',
-        component:ProfileEComponent
+        component:ViewPerfilUsuarioEComponent
       },
       {
         path:'observaciones',

@@ -83,9 +83,7 @@ import { WelcomeEntrevistadorComponent } from './COMPONENTES/entrevistador/welco
 import { DashboardEComponent } from './COMPONENTES/entrevistador/dashboard-e/dashboard-e.component';
 import { SidebarEComponent } from './COMPONENTES/entrevistador/sidebar-e/sidebar-e.component';
 import { ObservacionesComponent } from './COMPONENTES/entrevistador/observaciones/observaciones.component';
-import { ProfileEComponent } from './COMPONENTES/entrevistador/profile-e/profile-e.component';
 import { SidebarEResponsiveComponent } from './COMPONENTES/entrevistador/sidebar-e-responsive/sidebar-e-responsive.component';
-import { AddObservacionComponent } from './COMPONENTES/entrevistador/add-observacion/add-observacion.component';
 import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-observaciones/view-observaciones.component';
 import { NavbarResponsiveExamenComponent } from './COMPONENTES/pages/user/navbarexamen-responsive/navbarexamen-responsive.component';
 import { AñadirEstudioComponent } from './COMPONENTES/shared/añadir-estudio/añadir-estudio.component';
@@ -165,9 +163,7 @@ import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.
     DashboardEComponent,
     SidebarEComponent,
     ObservacionesComponent,
-    ProfileEComponent,
     SidebarEResponsiveComponent,
-    AddObservacionComponent,
     ViewObservacionesComponent,
     ViewPerfilUsuarioEComponent,
   ],

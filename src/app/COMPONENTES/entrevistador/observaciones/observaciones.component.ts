@@ -8,12 +8,19 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Observacion } from 'src/app/interface/observacion.interface';
 import { Usuario } from 'src/app/interface/user.interface';
-import { ObservacionService } from 'src/app/service/observacion.service';
+import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { AddObservacionComponent } from '../add-observacion/add-observacion.component';
+import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ViewObservacionesComponent } from '../view-observaciones/view-observaciones.component';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { AuthService } from 'src/app/service/auth.service';
+import { forkJoin } from 'rxjs';
+import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { Producto } from 'src/app/interface/producto.interface';
+import { VersionProducto } from 'src/app/interface/version.interface';
+import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
+import { ProductoService } from 'src/app/service/producto.service';
+import { PreguntaService } from 'src/app/service/pregunta.service';
 
 const ELEMENT_DATA: Usuario[] = [];
 
@@ -25,13 +32,27 @@ const ELEMENT_DATA: Usuario[] = [];
 export class ObservacionesComponent {
 
   displayedColumns: any[] = ['usr_nom', 'observaciones', 'acciones'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  resultados  = [];
+  idUser: string = '';
   filtro: string = '';
+  filtroPuntaje: string = '';
   originalDataCopy: Usuario[] = [];
+  usuarios: Usuario[] = [];
+  categorias: CategoriaProducto[] = [];
+  productos: Producto[] = [];
+  versiones: VersionProducto[] = [];
+  selectedAniosExpRange: number[] = [1, 10];
+  isIrrelevant: boolean = true;
 
-  observaciones: Observacion[] = [];
-  dataSource = new MatTableDataSource<Usuario>();
-
+  selectedCategoria: number = 0;
+  selectedProducto: number = 0;
+  selectedVersion: number = 0;
+  selectedAniosExp: number = 0;
+  selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
+  lastYears: number = 0;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,10 +62,15 @@ export class ObservacionesComponent {
     private router: Router,
     public dialog: MatDialog, private _snackBar: MatSnackBar,
     public observacionService:ObservacionService,
-    private authService: AuthService ){}
+    private observacionReclutadorService: ObservacionService,
+    private categoriaProductoService: CategoriaProductoService,
+    private productoService: ProductoService,
+    private preguntaService: PreguntaService ){}
 
     ngOnInit(): void {
       this.obtenerUsuarios();
+      this.getCategories();
+      this.obtenerResultadosByUser();
     }
 
     ngAfterViewInit() {
@@ -55,14 +81,148 @@ export class ObservacionesComponent {
 
     obtenerUsuarios(): void {
       this.usuarioService.obtenerUsuarios().subscribe(
-        (usuarios: Usuario[]) => {
-          this.dataSource.data = usuarios; // Asigna datos de usuarios a la tabla
+        (data: any[]) => {
+          console.log('data:', data);
+          const usuarios = data.map((usuario) => ({
+            usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
+            usr_tel: usuario.usr_tel || '',
+            usr_email: usuario.usr_email || '',
+            usr_herr: usuario.herramientas
+              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+              .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+              .join(', '),
+            herr_ver: usuario.herramientas
+              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
+              .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
+              .join(', '),
+            herr_exp: usuario.herramientas
+              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+              .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
+              .join(', '),
+            laborales: usuario.laborales,
+            usr_id: usuario.usr_id,
+            cvPath: usuario.cvPath,
+            usr_direcc:''
+
+          }));
+
+          this.originalDataCopy = usuarios;
+          this.dataSource.data = usuarios;
         },
         (error) => {
           console.log(error);
         }
       );
     }
+
+    getCategories() {
+      this.categoriaProductoService.getCategoriasDisponibles().subscribe(
+        (data: CategoriaProducto[]) => {
+          this.categorias = data;
+        },
+        () => {
+          console.log('Error al obtener categorías:');
+        }
+      );
+    }
+
+    obtenerResultadosByUser() {
+      this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+        (data: any) => {
+          this.resultados = data;
+          console.log('Resultados obtenidos:', this.resultados);
+        },
+        (error) => {
+          console.error('Error al obtener resultados:', error);
+        }
+      );
+    }
+
+
+
+    getProductos(categoriaId: number){
+      console.log('categoria id:', categoriaId)
+
+      this.selectedProducto = 0;
+      this.selectedVersion = 0;
+      this.selectedProductoNombre = '';
+
+      if (categoriaId) {
+        this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
+          (productos: Producto[]) => {
+            this.productos = productos;
+            this.selectedProducto = 0;
+            this.versiones = [];
+            this.originalDataCopy = this.dataSource.data;
+
+            this.selectedProductoNombre = this.productos.find((producto) => producto.prd_id === this.selectedProducto)?.prd_nom;
+            this.getVersion(this.selectedProducto);
+          },
+          (error) => {
+            console.log('Error al cargar productos ', error);
+          }
+        );
+      } else {
+        this.selectedProducto = 0;
+        this.versiones = [];
+        this.productos = [];
+        this.selectedProductoNombre = '';
+        this.originalDataCopy = this.dataSource.data;
+
+      }
+    }
+
+
+    getVersion(productoId: number) {
+        if (productoId) {
+          this.productoService.getVersionByProduct(productoId).subscribe(
+            (data: VersionProducto[]) => {
+              this.versiones = data;
+              // this.filter(new Event('input'));
+            },
+            (error) => {
+              console.log('Error al cargar version ', error);
+            }
+          );
+        }
+    }
+
+
+
+    openUserProfile(event: any) {
+      const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+      console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+
+      // Llamadas simultáneas a los servicios
+      forkJoin({
+        observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
+        usuario: this.usuarioService.getUsuarioId(userId)
+      }).subscribe({
+        next: (resultados) => {
+          // Extraemos los resultados
+          const { observadores, usuario } = resultados;
+
+          // Lógica con los datos obtenidos
+          console.log('Observaciones del usuario:', observadores);
+          console.log('Perfil del usuario:', usuario);
+
+          // Configura el tamaño del diálogo
+          const dialogRef = this.dialog.open(ViewPerfilUsuarioEComponent, {
+            data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
+            height: '60vh', // Establece la altura del diálogo
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+          });
+        },
+        error: (error) => {
+          console.error('Error al obtener datos del usuario:', error);
+          // Manejo de errores aquí
+        }
+      });
+    }
+
 
     announceSortChange(sortState: Sort) {
       if (sortState.direction) {
@@ -73,65 +233,13 @@ export class ObservacionesComponent {
     }
 
 
-    agregarObservacion (){
-    //   const usr_id_sesion = this.authService.getUserId();
-
-    //   const dialogRef = this.dialog.open(AddObservacionComponent, {
-    //     width: '400px',
-    //     data: { usuarioId: usuarioId, usr_id_sesion: usr_id_sesion },
-    //   });
-
-    //   dialogRef.afterClosed().subscribe((result: any) => {
-    //     // No necesitas lógica de guardado aquí
-
-    //     // Actualizar la lista de observaciones asociadas al usuario
-    //     if (result) {
-    //       this.obtenerObservacionesPorUsuario(usuarioId);
-    //     }
-    //   });
-     }
 
 
 
 
 
-    obtenerObservacionesPorUsuario(usuarioId: number) {
-      this.observacionService.obtenerObservacionesPorUsuario(usuarioId).subscribe(
-        (observaciones: Observacion[]) => {
-          const dialogRef = this.dialog.open(ViewObservacionesComponent, {
-            width: '400px',
-            data: { observaciones: observaciones } // Pasar las observaciones al diálogo
-          });
-
-          dialogRef.afterClosed().subscribe((result: any) => {
-            // Lógica posterior a cerrar el diálogo si es necesaria
-          });
-        },
-        (error: any) => {
-          console.error('Error al obtener las observaciones del usuario', error);
-        }
-      );
-    }
 
 
-    openUserProfile(event: any){
-      const email = event.target.parentElement.id;
 
-      this.usuarioService.obtenerPerfil(email).subscribe({
-        next:(user) => {
-          const dialogRef = this.dialog.open(ViewPerfilUsuarioEComponent,{
-            data: user
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-          });
-
-        },
-        error: (error) => {
-          console.error('Error al obtener el perfil del usuario:', error);
-
-        }
-      });
-    }
 
 }

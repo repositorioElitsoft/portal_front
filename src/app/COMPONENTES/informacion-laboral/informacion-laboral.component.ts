@@ -188,6 +188,9 @@ export class InformacionLaboralComponent implements OnInit {
       console.log('Modal cerrado', result);
       // Aquí puedes realizar acciones después de cerrar el modal si es necesario
     });
+  }
+
+
   addExperienceRow(){
     this.id = null;
     this.form.patchValue({
@@ -241,34 +244,6 @@ export class InformacionLaboralComponent implements OnInit {
       })
     };
 
-    // let herramientasFinal: HerramientaData[] = [];
-    // this.herrIdList.forEach(id =>{
-    //   let herra: HerramientaData = {
-    //       herr_usr_id: id,
-    //       herr_is_cert: false,
-    //       herr_nvl: "",
-    //       herr_usr_anos_exp: "",
-    //       versionProducto: {
-    //         vrs_id: 0,
-    //         vrs_name: "",
-    //         prd: {
-    //           prd_id:0,
-    //           prd_nom:"",
-    //           cat_prod_id:{
-    //             cat_prod_id: 0,
-    //             cat_prod_nom: ""
-    //           }
-    //         }
-    //       }
-    //   }
-
-    //   if (this.form.get(id.toString())?.value == true) {
-    //     herramientasFinal.push(herra);
-    //   }
-
-    // })
-
-    // laboralNueva.herramientas = herramientasFinal;
 
     console.log("Laboral final guardada", laboralNueva)
     this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
@@ -357,11 +332,6 @@ export class InformacionLaboralComponent implements OnInit {
       console.error('inf_lab_id es undefined o null'); // Manejar el caso de que inf_lab_id no esté definido
     }
   }
-
-
-
-
-
 
 
 }

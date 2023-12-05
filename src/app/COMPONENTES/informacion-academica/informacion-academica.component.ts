@@ -158,6 +158,47 @@ export class InformacionAcademicaComponent implements OnInit {
     }
   }
 
+  submitForm(event: Event) {
+
+    event.preventDefault();
+
+    const academicaNueva: Academica = {
+      ...this.form.value,
+      referenciaAcademicas: this.referenciaFormArray.value.map( (ref: ReferenciaAcademica) => {
+        return {
+          ref_acad_id: ref.ref_acad_id,
+          ref_acad_nom: ref.ref_acad_nom,
+          ref_acad_ins: ref.ref_acad_ins,
+          ref_acad_email: ref.ref_acad_email,
+          ref_acad_tel: ref.ref_acad_tel,
+        };
+      })
+    };
+    console.log(academicaNueva)
+
+    this.academicaService.guardarAcademica(academicaNueva, this.id).subscribe(
+      (academicaGuardada: Academica) => {
+        console.log('Información laboral guardada:', academicaGuardada);
+        this.creationMode = false;
+        this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+          next:(data)=>{
+            this.academicas = data;
+          },
+          error:(err)=>{
+            console.log(err);
+          }
+        })
+      },
+      (error) => {
+        console.error('Error al guardar información laboral:', error);
+      }
+    );
+  }
+
+  goBack(){
+    this.creationMode = false;
+  }
+
 
 
 }

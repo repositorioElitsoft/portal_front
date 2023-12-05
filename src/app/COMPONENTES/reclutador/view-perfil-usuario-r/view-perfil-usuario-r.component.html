@@ -184,22 +184,6 @@
 
             </mat-tab>
 
-            <mat-tab label="Referencias Laborales">
-              <mat-list>
-                <ng-container *ngFor="let laboral of usuario.laborales">
-                  <mat-list-item *ngFor="let referencia of laboral.referenciasLaborales">
-                    <span matListItemTitle>{{ referencia.ref_lab_nom }}</span>
-                    <span matListItemLine>{{ referencia.ref_lab_emp }}</span>
-                    <span matListItemLine>{{ referencia.ref_lab_tel }}</span>
-
-                    <div matListItemIcon>
-                      <mat-icon>business_center</mat-icon>
-                    </div>
-                  </mat-list-item>
-                </ng-container>
-              </mat-list>
-            </mat-tab>
-
 
 
 
