@@ -246,7 +246,7 @@ obtenerUsuarios(): void {
           usr_tel: usuario.usr_tel || '',
           usr_email: usuario.usr_email || '',
           usr_rol: usuario.usr_rol || '',
-          usr_desc: usuario.usr_desc || '',
+          usr_direcc: usuario.usr_direcc || '',
           usr_herr: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
             .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
