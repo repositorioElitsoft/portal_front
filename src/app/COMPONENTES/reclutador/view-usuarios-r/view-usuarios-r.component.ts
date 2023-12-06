@@ -66,6 +66,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filteredUsuarios:any=[]=[];
   selectedOption:String = '';
   selectedNivel : number = 0;
+  porcentajesAprobacion = [
+    { value: 100, label: '100%' },
+    { value: [70, 99], label: '70% - 99%' },
+    { value: [40, 69], label: '40% - 69%' }
+  ];
+  selectedPorcentajeAprobacion: any;
   
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -144,11 +150,61 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     }
 
+        
+    // Filtro por porcentaje de aprobación
+    if (this.selectedPorcentajeAprobacion) {
+      filteredArray = filteredArray.filter(usuario => {
+        const resultadosDeUsuario= this.resultados.filter(resultado => {
+          return resultado.usuarioId === usuario.usr_id;
+       
+        });
+        
+        const resultadoFinal = resultadosDeUsuario.find(resultado =>{
+
+          const resultadoExamen = resultado.resultadosExamen;
+          const puntosMaximos = resultado.examen.puntosMaximos;
+          const nivelDificultad = resultado.examen.nivelDificultad;
+          const productos = resultado.examen.productos;
+          const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
+          
+  
+          // Verifica si el usuario cumple con los filtros anteriores
+          const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+          
+          // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
+          if (cumpleFiltrosAnteriores) {
+            
+            if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
+              //console.log(`Porcentaje de aprobación para el usuario ${resultado.usuarioId} en el producto ${resultado.examen.productos[0].prd_nom}: ${porcentajeAprobacion}`);
+              return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
+                    porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
+            } else {
+              console.log("usuario", resultado.usuarioId);
+              console.log("% aprobacion", porcentajeAprobacion);
+              console.log("% aprobacion seleccionado", this.selectedPorcentajeAprobacion.value);
+              console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
+              return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
+            }
+          }
+          return false;
+        });
+        console.log("resultado final",resultadoFinal);
+        if (resultadoFinal){
+          return true;
+
+        }
+        return false;
+
+        })
+        
+      
+    }
 
 
 
-    
 
+
+    //Filtro
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
         return usuario.laborales?.some((experiencia) => {
@@ -224,6 +280,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterNivel() {
     this.filterData();
   }
+  filterPorcentaje() {
+    this.filterData();
+  }
 
   filterVersion() {
     if (this.selectedVersion === 0) {
@@ -263,12 +322,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           laborales: usuario.laborales,
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
+          
         }));
 
         this.originalDataCopy = usuarios;
         this.dataSource.data = usuarios;
         this.usuarios = usuarios;
-
+        
         
       },
       (error) => {
@@ -276,6 +336,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
+
+  
+
 
 
   exportToCSV() {

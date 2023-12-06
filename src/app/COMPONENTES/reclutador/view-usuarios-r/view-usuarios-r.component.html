@@ -49,6 +49,21 @@
     </mat-select>
   </mat-form-field>
 
+
+
+  <mat-form-field class="filter-select">
+    <mat-label>Porcentaje de aprobación</mat-label>
+    <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  
+
+
+
+
+
   
   
 
@@ -77,13 +92,8 @@
     </div>
 
 
-
   
   
- 
-  
-
-
 
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
        class="mat-elevation-z8" style="width: 40%;">
