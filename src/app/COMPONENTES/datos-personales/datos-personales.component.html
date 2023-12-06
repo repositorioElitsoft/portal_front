@@ -175,7 +175,7 @@
           </div>
         </div>
         <label for="file" class="col-sm-2 col-form-label">Subir CV:</label>
-        <button type="button" class="cv-btn" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
+        <button type="button" class="botonprimario m-2" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
           <div *ngIf="!isUploadingFile">
             <div *ngIf="currentResumeName">Cargar nuevo CV </div>
             <div *ngIf="!currentResumeName"> Sube tu CV </div>
@@ -183,7 +183,7 @@
           <div *ngIf="isUploadingFile"> Cargando CV...</div>
         </button>
 
-        <button mat-raised-button class ="cv-btn" [disabled]="isUploadingFile" (click)="borrarCV()" type="button">
+        <button mat-raised-button class ="botonprimario m-2" [disabled]="isUploadingFile" (click)="borrarCV()" type="button">
           Eliminar CV
         </button>
 
