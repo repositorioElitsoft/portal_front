@@ -214,7 +214,6 @@ actualizarObservacion(observadores: ObservacionDTO) {
 
 
   ObtenerUsuarioGuardado() {
-    const userId = 8; // ID 23
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;

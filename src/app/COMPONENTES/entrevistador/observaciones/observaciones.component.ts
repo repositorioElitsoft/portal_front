@@ -80,28 +80,33 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       this.usuarioService.obtenerUsuarios().subscribe(
         (data: any[]) => {
           console.log('data:', data);
-          const usuarios = data.map((usuario) => ({
-            usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
-            usr_tel: usuario.usr_tel || '',
-            usr_email: usuario.usr_email || '',
-            usr_herr: usuario.herramientas
-              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-              .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
-              .join(', '),
-            herr_ver: usuario.herramientas
-              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
-              .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
-              .join(', '),
-            herr_exp: usuario.herramientas
-              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-              .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
-              .join(', '),
-            laborales: usuario.laborales,
-            usr_id: usuario.usr_id,
-            cvPath: usuario.cvPath,
-            usr_direcc:''
 
-          }));
+          // Filtrar usuarios por usr_rol igual a "GUEST"
+          const usuarios = data
+            .filter((usuario) => usuario.usr_rol === 'GUEST')
+            .map((usuario) => ({
+              usr_nom: usuario.usr_nom + " " + usuario.usr_ap_pat + " " + usuario.usr_ap_mat || '',
+              usr_tel: usuario.usr_tel || '',
+              usr_email: usuario.usr_email || '',
+              usr_rol: usuario.usr_rol || '',
+              usr_direcc:usuario.usr_direcc || '',
+              usr_herr: usuario.herramientas
+                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+                .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+                .join(', '),
+              herr_ver: usuario.herramientas
+                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
+                .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
+                .join(', '),
+              herr_exp: usuario.herramientas
+                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+                .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
+                .join(', '),
+              laborales: usuario.laborales,
+              usr_id: usuario.usr_id,
+              cvPath: usuario.cvPath,
+
+            }));
 
           this.originalDataCopy = usuarios;
           this.dataSource.data = usuarios;
