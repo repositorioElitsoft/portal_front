@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
+import { UsuarioService } from 'src/app/service/usuario.service';
 
 
 //se declara fuera de la clase de forma global
@@ -31,7 +32,8 @@ export class StartComponent implements OnInit {
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-
+  resultadosExamenes: any[] = [];
+  resultados: any[] = [];   
 
 
 
@@ -43,7 +45,8 @@ export class StartComponent implements OnInit {
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
     private preguntaService:PreguntaService,
-    private examenService:ExamenService
+    private examenService:ExamenService,
+    private usuarioService: UsuarioService
       ) { }
 
   ngOnInit(): void {
@@ -60,9 +63,30 @@ export class StartComponent implements OnInit {
   ngAfterViewInit(): void {
     this.mostrarGrafico();
   }
+  
+  obtenerResultados() {
+    this.usuarioService.obtenerResultados().subscribe(
+      (data) => {
+        this.resultados = data;
+        console.log('Data:',data);
+        
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  
   mostrarGrafico(): void {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
+      
+      // Destruir gráfico existente si hay uno
+      const existingChart = Chart.getChart(canvas);
+      if (existingChart) {
+        existingChart.destroy();
+      }
+  
       if (canvas) {
         const ctx = canvas.getContext('2d');
         if (ctx) {
@@ -76,25 +100,24 @@ export class StartComponent implements OnInit {
                 backgroundColor: ['grey', '#F57C27'],
                 borderColor: ['grey', '#F57C27'],
                 borderWidth: 1,
-                  barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
-
+                barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
               }]
             },
             options: {
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0, // Define el valor mínimo del eje Y
-                  max: parseInt (this.examen.puntosMaximos),
+                  min: 0,
+                  max: parseInt(this.examen.puntosMaximos),
                   title: {
-        display: true,
-        text: 'Puntuacion Maxima', // Aquí escribes el texto de tu etiqueta
-        color: '#666', // Puedes personalizar el color
-        font: {
-          size: 11, // Tamaño de la fuente
-          weight: 'bold', // Peso de la fuente
-        }
-      },
+                    display: true,
+                    text: 'Puntuacion Maxima',
+                    color: '#666',
+                    font: {
+                      size: 11,
+                      weight: 'bold',
+                    }
+                  },
                 }
               },
               plugins: {
@@ -114,7 +137,7 @@ export class StartComponent implements OnInit {
                   annotations: {
                     line1: {
                       type: 'line',
-                      yMin:  this.preguntasTotales,
+                      yMin: this.preguntasTotales,
                       yMax: 4,
                       borderColor: 'red',
                       borderWidth: 2,
