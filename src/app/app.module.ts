@@ -84,7 +84,6 @@ import { DashboardEComponent } from './COMPONENTES/entrevistador/dashboard-e/das
 import { SidebarEComponent } from './COMPONENTES/entrevistador/sidebar-e/sidebar-e.component';
 import { ObservacionesComponent } from './COMPONENTES/entrevistador/observaciones/observaciones.component';
 import { SidebarEResponsiveComponent } from './COMPONENTES/entrevistador/sidebar-e-responsive/sidebar-e-responsive.component';
-import { ViewObservacionesComponent } from './COMPONENTES/entrevistador/view-observaciones/view-observaciones.component';
 import { NavbarResponsiveExamenComponent } from './COMPONENTES/pages/user/navbarexamen-responsive/navbarexamen-responsive.component';
 import { AñadirEstudioComponent } from './COMPONENTES/shared/añadir-estudio/añadir-estudio.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -164,7 +163,6 @@ import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.
     SidebarEComponent,
     ObservacionesComponent,
     SidebarEResponsiveComponent,
-    ViewObservacionesComponent,
     ViewPerfilUsuarioEComponent,
   ],
   imports: [

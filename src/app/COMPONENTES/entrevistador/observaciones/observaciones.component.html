@@ -1,25 +1,8 @@
-<mat-card class="dashboard-panel">
 
-
-
-
-
-
-
-
-    <mat-form-field class="filter-select">
-      <mat-label>Categoria</mat-label>
-      <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
-        <mat-option value="">Seleccione un opción</mat-option>
-        <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-
-
-
-  </mat-card>
-
+  <br>
+  <br>
+  <br>
+  <br>
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
          class="mat-elevation-z8">
 
@@ -49,7 +32,6 @@
         <button mat-mini-fab class="minifab" id="{{element.usr_id}}" matTooltip="Ver perfil" (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
           <mat-icon>menu</mat-icon>
         </button>
-          <mat-icon>apps</mat-icon>
       </td>
     </ng-container>
 

@@ -1,5 +1,5 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,9 +11,7 @@ import { Usuario } from 'src/app/interface/user.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
-import { ViewObservacionesComponent } from '../view-observaciones/view-observaciones.component';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
-import { AuthService } from 'src/app/service/auth.service';
 import { forkJoin } from 'rxjs';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
@@ -29,9 +27,9 @@ const ELEMENT_DATA: Usuario[] = [];
   templateUrl: './observaciones.component.html',
   styleUrls: ['./observaciones.component.css']
 })
-export class ObservacionesComponent {
+export class ObservacionesComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['usr_nom', 'observaciones', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
   idUser: string = '';
@@ -61,7 +59,6 @@ export class ObservacionesComponent {
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     public dialog: MatDialog, private _snackBar: MatSnackBar,
-    public observacionService:ObservacionService,
     private observacionReclutadorService: ObservacionService,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,

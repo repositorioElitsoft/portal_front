@@ -206,10 +206,8 @@ actualizarObservacion(observadores: ObservacionDTO) {
 
 
     salir() {
-
     this.dialogRef.close();
     console.log('Se ha cerrado la ventana')
-
   }
 
 
@@ -219,13 +217,6 @@ actualizarObservacion(observadores: ObservacionDTO) {
       next: (data) => {
         this.usuarioGuardado = data;
         console.log(this.usuarioGuardado);
-
-
-        const inputElement = document.getElementById("inputTelefono");
-        console.log(inputElement);
-        if (inputElement) {
-          ;
-        }
       },
       error: (err) => {
         console.log(err);

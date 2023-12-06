@@ -214,17 +214,11 @@ actualizarObservacion(observadores: ObservacionDTO) {
 
 
   ObtenerUsuarioGuardado() {
+    const userId = 8; // ID 23
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
         console.log(this.usuarioGuardado);
-
-
-        const inputElement = document.getElementById("inputTelefono");
-        console.log(inputElement);
-        if (inputElement) {
-          ;
-        }
       },
       error: (err) => {
         console.log(err);

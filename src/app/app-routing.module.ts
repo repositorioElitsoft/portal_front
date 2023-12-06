@@ -196,7 +196,7 @@ const routes: Routes = [
         component:WelcomeEntrevistadorComponent
       },
       {
-        path:'profile-e',
+        path:'viewperfilusuarioe',
         component:ViewPerfilUsuarioEComponent
       },
       {
