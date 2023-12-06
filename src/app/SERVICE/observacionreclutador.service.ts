@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Observacion, ObservacionDTO } from '../interface/observacionreclutador.interface';
+import { CatObservacionDTO, Observacion, ObservacionDTO } from '../interface/observacionreclutador.interface';
 
 
 @Injectable({
@@ -32,7 +32,19 @@ export class ObservacionService {
     return this.http.get<ObservacionDTO[]>(`${this.baseUrl}/${usrId}`);
   }
 
-  
+  guardarObservacionCat(catObservacion: CatObservacionDTO, userId: number, catObsId: number, usr_id_obs: number, usr_id_obs_mod: number): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}/guardarCat/${userId}/${catObsId}/${usr_id_obs}/${usr_id_obs_mod}`, catObservacion);
+  }
+
+  actualizarObservacionCat(obsId: number, catObsId: number, usrIdObsMod: number, catObservacion: CatObservacionDTO ): Observable<CatObservacionDTO> {
+    return this.http.put<CatObservacionDTO>(`${this.baseUrl}/actualizarCat/${obsId}/${catObsId}/${usrIdObsMod}`, catObservacion);
+  }
+
+  obtenerCatObservacionesPorUsuarioId(usrId: number): Observable<CatObservacionDTO[]> {
+    return this.http.get<CatObservacionDTO[]>(`${this.baseUrl}/Cat/${usrId}`);
+  }
+
+
 }
 
 
