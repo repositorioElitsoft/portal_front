@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -11,7 +13,8 @@ import { CookieService } from 'ngx-cookie-service';
 export class AppNavbarComponent implements OnInit  {
 
   constructor(private router: Router, 
-  private cookieService: CookieService){}
+    public dialog: MatDialog,
+    private cookieService: CookieService){}
 
   ngOnInit(): void {
   }
@@ -20,5 +23,16 @@ export class AppNavbarComponent implements OnInit  {
     this.cookieService.delete('token')
     this.router.navigate(['/iniciar-sesion']);
   }
+
+
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CerrarSesionComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
+
 
 }

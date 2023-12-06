@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { UploadFilesService } from 'src/app/service/upload-files.service';
 import { FileDescriptor } from 'src/app/interface/file-descriptor.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'; // Importa MAT_DIALOG_DATA
 
 @Component({
   selector: 'app-upload-files',
@@ -20,7 +21,7 @@ export class UploadFilesComponent implements OnInit {
   isLoading = false;
 
   usuarioGuardado: Usuario = {
-    usr_id: 29,  // Asegúrate de tener un ID de usuario válido
+    usr_id: 0,  // Asegúrate de tener un ID de usuario válido
     usr_rut: '',
     usr_nom: '',
     usr_ap_pat: '',
@@ -40,11 +41,15 @@ export class UploadFilesComponent implements OnInit {
     laborales: []
   };
 
-  constructor(private uploadService: UploadFilesService) { }
+  constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA) public data: any) { 
+    this.usuarioGuardado.usr_id = data.userId; 
+    console.log('User ID recibido en UploadFilesComponent:', data.userId); // Agrega este console.log
+}
 
-  ngOnInit(): void {
+ ngOnInit(): void {
     this.loadFiles();
   }
+
 
   selectFiles(event: any): void {
     this.progressInfo = [];

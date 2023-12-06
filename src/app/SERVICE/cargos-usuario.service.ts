@@ -28,4 +28,6 @@ export class CargosUsuarioService {
   getCargosByUserId(){
     return this.http.get<CargoUsuario>(`${this.url}`);
   }
+
+  
 }

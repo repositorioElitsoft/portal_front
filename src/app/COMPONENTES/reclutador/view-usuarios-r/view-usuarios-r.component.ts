@@ -23,6 +23,8 @@ import * as Papa from 'papaparse';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { forkJoin } from 'rxjs';
+import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -47,7 +49,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-
+  cargos: CargoUsuario[] = [];
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
@@ -55,7 +57,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
   lastYears: number = 0;
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -71,6 +72,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
+    private cargoService: CargosUsuarioService
     
   ) {}
 
@@ -78,7 +80,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.getCategories();
-    this.obtenerResultadosByUser(); // Agrega los paréntesis para llamar a la función
+    this.obtenerResultadosByUser(); 
+    this.cargoService.listarCargos()
+    .subscribe((data: CargoUsuario[]) => {
+      this.cargos = data;
+      console.log("Datos de cargos recibidos por cargo usuario:", data); // Agregar este console.log
+    });
+  
+
   }
   
 
@@ -86,6 +95,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  
+  
 
   filterData() {
     let filteredArray = this.originalDataCopy;
@@ -192,17 +203,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
 
-
-
-
-
   formatLabel(value: number): string {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
     }
 
-    return `${value}`;
-  }
+        return `${value}`;
+    }
 
   filterProducto() {
     this.filterData();
@@ -230,28 +237,32 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.usuarioService.obtenerUsuarios().subscribe(
       (data: any[]) => {
         console.log('data:', data);
-        const usuarios = data.map((usuario) => ({
-          usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
-          usr_tel: usuario.usr_tel || '',
-          usr_email: usuario.usr_email || '',
-          usr_herr: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
-            .join(', '),
-          herr_ver: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
-            .join(', '),
-          herr_exp: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-            .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
-            .join(', '),
-          laborales: usuario.laborales,
-          usr_id: usuario.usr_id,
-          cvPath: usuario.cvPath,
-          
-        }));
-
+  
+        // Filtrar usuarios por usr_rol igual a "GUEST"
+        const usuarios = data
+          .filter((usuario) => usuario.usr_rol === 'GUEST')
+          .map((usuario) => ({
+            usr_nom: usuario.usr_nom + " " + usuario.usr_ap_pat + " " + usuario.usr_ap_mat || '',
+            usr_tel: usuario.usr_tel || '',
+            usr_email: usuario.usr_email || '',
+            usr_rol: usuario.usr_rol || '',
+            usr_herr: usuario.herramientas
+              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+              .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+              .join(', '),
+            herr_ver: usuario.herramientas
+              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
+              .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
+              .join(', '),
+            herr_exp: usuario.herramientas
+              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+              .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
+              .join(', '),
+            laborales: usuario.laborales,
+            usr_id: usuario.usr_id,
+            cvPath: usuario.cvPath,
+          }));
+  
         this.originalDataCopy = usuarios;
         this.dataSource.data = usuarios;
       },
@@ -260,8 +271,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
-
+  
   exportToCSV() {
     const dataToExport = this.dataSource.data;
     const csv = Papa.unparse(dataToExport);
@@ -434,27 +444,17 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   
 
-  downloadCv(event: any) {
-    console.log('usuarioId', event.target?.parentElement)
-    const userId = event.target?.parentElement.id
-    this.usuarioService.downloadCv(userId).subscribe(
-      (data: Blob) => {
-        const url = window.URL.createObjectURL(data);
-        window.open(url, '_blank');
-        // console.log('data:', data);
-      },
-      (error) => {
-        
-      }
-    )
-  }
+openBottomSheet(event: any) {
+  const userId = event.currentTarget.id;
+  console.log('User ID:', userId);
+  // Abre el componente hijo y pasa userId como un parámetro de datos
+  this._bottomSheet.open(viewCrudArchivoComponent, {
+    data: { userId: userId }
+  });
+}
 
 
-  openBottomSheet(): void {
-    this._bottomSheet.open(viewCrudArchivoComponent);
-  }
-
-
+ 
   
   openUserDialog(event: any) {
 

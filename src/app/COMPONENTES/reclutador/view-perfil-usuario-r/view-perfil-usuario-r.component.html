@@ -65,7 +65,7 @@
                   <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
                   <span matListItemLine>Cargo a postular</span>
                   <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
-    
+                  <span matListItemLine>Fecha de postulación: {{ cargo.fechaPostulacion | date: 'dd/MM/yyyy' }}</span>
                   <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
     
                   <div matListItemIcon>
