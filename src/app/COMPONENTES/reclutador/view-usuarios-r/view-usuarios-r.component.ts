@@ -24,6 +24,8 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { forkJoin } from 'rxjs';
 import { Dialog } from '@angular/cdk/dialog';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -35,7 +37,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
   idUser: string = '';
@@ -49,6 +51,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
 
+  selectedCheckbox: FormGroup;
+
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
@@ -61,7 +65,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
     private observacionReclutadorService: ObservacionService,
     private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -73,7 +79,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
 
-  ) {}
+  ) {
+    this.selectedCheckbox = this.fb.group({
+    });
+  }
+
 
 
   ngOnInit(): void {
@@ -227,7 +237,9 @@ obtenerUsuarios(): void {
   this.usuarioService.obtenerUsuarios().subscribe(
     (data: any[]) => {
       console.log('data:', data);
-      const usuarios = data.map((usuario) => ({
+      const usuarios = data.map((usuario) => (
+        
+        {
         usr_nom: usuario.usr_nom + " " +usuario.usr_ap_pat + " "+ usuario.usr_ap_mat || '',
         usr_tel: usuario.usr_tel || '',
         usr_email: usuario.usr_email || '',
@@ -247,17 +259,54 @@ obtenerUsuarios(): void {
         usr_id: usuario.usr_id,
         cvPath: usuario.cvPath,
         usr_direcc:''
+      }
+      ));
 
-      }));
-
+      const controlNames = Object.keys(this.selectedCheckbox.controls);
+      controlNames.forEach(controlName => {
+        this.selectedCheckbox.removeControl(controlName);
+      });
+    
+     
+      usuarios.forEach(usuario =>{
+        this.selectedCheckbox.addControl(String(usuario.usr_email), this.fb.control(false))
+      });
+   
       this.originalDataCopy = usuarios;
       this.dataSource.data = usuarios;
+
+
+
+
     },
     (error) => {
       console.log(error);
     }
   );
 }
+
+
+  onSendMailPressed(){
+    const values = this.selectedCheckbox.value
+
+    const emails: any = []
+
+    for (const key in values) {
+      if (!values.hasOwnProperty(key)){continue}
+      const value = values[key];
+      if (!value){continue}
+      emails.push(key)
+    }
+
+    const dialogRef = this.dialog.open(SendMailToUsersDialogueComponent, {
+      data: {emails},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
+  }
 
 
   exportToCSV() {
@@ -313,7 +362,11 @@ obtenerUsuarios(): void {
         console.error('Error al obtener resultados del usuario: ', error);
       }
     );
+    
   }
+
+
+
 
 
   obtenerResultadosByUser() {

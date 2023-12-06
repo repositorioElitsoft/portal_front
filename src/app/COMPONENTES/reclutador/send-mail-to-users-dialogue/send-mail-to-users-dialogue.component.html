@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Enviar correos masicvos</h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field >
+    <mat-label>Motivo</mat-label>
+    <mat-select  [(ngModel)]="selectedSubject">
+        <mat-option value="Solicitud de datos">Solicitud de datos</mat-option>
+        <mat-option value="Contactar">Contactar</mat-option>
+        <mat-option value="Invitar a nueva postulación">Invitar a nueva postulación</mat-option>
+        <mat-option value="Informar Resultados de proceso de selección">Informar Resultados de proceso de selección</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button (click)="onSendClick()" cdkFocusInitial>Enviar</button>
+  <!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+</div>

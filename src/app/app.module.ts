@@ -99,6 +99,7 @@ import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-lab
 import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
+import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 
 @NgModule({
   declarations: [
@@ -166,6 +167,7 @@ import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.
     SidebarEResponsiveComponent,
     ViewObservacionesComponent,
     ViewPerfilUsuarioEComponent,
+    SendMailToUsersDialogueComponent,
   ],
   imports: [
     MatCheckboxModule,
