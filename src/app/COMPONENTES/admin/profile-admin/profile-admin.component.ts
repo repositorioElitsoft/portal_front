@@ -21,10 +21,12 @@ export class ProfileAdminComponent implements OnInit {
     usr_ap_pat: '',
     usr_ap_mat: '',
     usr_email: '',
+    usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
-    laborales: []
+    laborales: [],
+    cargoUsuario: []
   };
   router: any;
 
@@ -34,7 +36,7 @@ export class ProfileAdminComponent implements OnInit {
     private notification: NotificationService
   ) {
     this.buildForm();
-    
+
   }
 
   private buildForm() {
@@ -52,7 +54,7 @@ export class ProfileAdminComponent implements OnInit {
   }
 
   ObtenerUsuarioGuardado() {
-    
+
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
@@ -87,8 +89,8 @@ export class ProfileAdminComponent implements OnInit {
       this.form.disable();
     }
   }
-  
-  
+
+
 
   async submitForm(event: Event) {
     event.preventDefault();
@@ -110,6 +112,6 @@ export class ProfileAdminComponent implements OnInit {
       // Manejar errores
     }
   }
-  
+
 
   }

@@ -73,7 +73,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
     private cargoService: CargosUsuarioService
-    
+
   ) {}
 
 
@@ -89,7 +89,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   
 
   }
-  
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -118,7 +118,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
 
 
-     
+
 // Filtro por resultado del usuario
   if (this.resultados !== undefined) {
   this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
@@ -150,13 +150,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
               const currentYear = new Date().getFullYear();
               return fechaFin.getFullYear() >= currentYear - this.lastYears;
             }
-    
+
             return false;
           });
         });
       });
     }
-  
+
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
       const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
@@ -176,7 +176,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     if (this.isIrrelevant) {
       this.lastYears = 0;
     }
-  
+
     this.filterData();
   }
 
@@ -188,10 +188,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterInput() {
     let filteredArray = this.originalDataCopy;
 
-    if (this.filtro) { 
+    if (this.filtro) {
       const filtroLowerCase = this.filtro.toLowerCase();
       filteredArray = filteredArray.filter(element => {
-        if (element.usr_nom) { 
+        if (element.usr_nom) {
           return element.usr_nom.toLowerCase().includes(filtroLowerCase);
         }
         return false;
@@ -215,7 +215,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.filterData();
   }
 
-  
+
   filterPuntaje() {
     this.filtroPuntaje = `Filtrado por puntaje: ${this.filtroPuntaje}`;
     this.filterData();
@@ -231,46 +231,47 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   filterAniosExp() {
     this.filterData();
-  }
+}
 
-  obtenerUsuarios(): void {
-    this.usuarioService.obtenerUsuarios().subscribe(
-      (data: any[]) => {
-        console.log('data:', data);
-  
-        // Filtrar usuarios por usr_rol igual a "GUEST"
-        const usuarios = data
-          .filter((usuario) => usuario.usr_rol === 'GUEST')
-          .map((usuario) => ({
-            usr_nom: usuario.usr_nom + " " + usuario.usr_ap_pat + " " + usuario.usr_ap_mat || '',
-            usr_tel: usuario.usr_tel || '',
-            usr_email: usuario.usr_email || '',
-            usr_rol: usuario.usr_rol || '',
-            usr_herr: usuario.herramientas
-              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-              .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
-              .join(', '),
-            herr_ver: usuario.herramientas
-              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
-              .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
-              .join(', '),
-            herr_exp: usuario.herramientas
-              .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-              .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
-              .join(', '),
-            laborales: usuario.laborales,
-            usr_id: usuario.usr_id,
-            cvPath: usuario.cvPath,
-          }));
-  
-        this.originalDataCopy = usuarios;
-        this.dataSource.data = usuarios;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
+obtenerUsuarios(): void {
+  this.usuarioService.obtenerUsuarios().subscribe(
+    (data: any[]) => {
+      console.log('data:', data);
+
+      // Filtrar usuarios por usr_rol igual a "GUEST"
+      const usuarios = data
+        .filter((usuario) => usuario.usr_rol === 'GUEST')
+        .map((usuario) => ({
+          usr_nom: usuario.usr_nom + " " + usuario.usr_ap_pat + " " + usuario.usr_ap_mat || '',
+          usr_tel: usuario.usr_tel || '',
+          usr_email: usuario.usr_email || '',
+          usr_rol: usuario.usr_rol || '',
+          usr_desc: usuario.usr_desc || '',
+          usr_herr: usuario.herramientas
+            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+            .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+            .join(', '),
+          herr_ver: usuario.herramientas
+            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
+            .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
+            .join(', '),
+          herr_exp: usuario.herramientas
+            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+            .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
+            .join(', '),
+          laborales: usuario.laborales,
+          usr_id: usuario.usr_id,
+          cvPath: usuario.cvPath,
+        }));
+
+      this.originalDataCopy = usuarios;
+      this.dataSource.data = usuarios;
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+}
   
   exportToCSV() {
     const dataToExport = this.dataSource.data;
@@ -301,23 +302,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     );
   }
 
-  
+
   obtenerYFiltrarResultados() {
     console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
-  
+
     this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
       (resultadoUsuario) => {
         console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
-  
+
         // Aquí puedes verificar si los datos recibidos son lo que esperas
         this.dataSource.data = this.originalDataCopy.filter(usuario => {
           // Añadir un console.log dentro del filtro para ver qué está pasando
           const esIgual = this.resultados === resultadoUsuario;
           console.log('Comparando resultados - Usuario:', usuario, '¿Es igual?:', esIgual);
-  
+
           return esIgual;
         });
-  
+
         // Mostrar los datos filtrados
         console.log('Datos después de aplicar el filtro:', this.dataSource.data);
       },
@@ -326,7 +327,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  
+
 
   obtenerResultadosByUser() {
     this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
@@ -339,7 +340,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  
+
 
 
   getProductos(categoriaId: number){
@@ -373,7 +374,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this.filterProducto();
     }
   }
-    
+
 
     getVersion(productoId: number) {
       if (productoId) {
@@ -389,60 +390,61 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     }
 
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
+    announceSortChange(sortState: Sort) {
+      if (sortState.direction) {
+        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      } else {
+        this._liveAnnouncer.announce('Sorting cleared');
+      }
     }
-  }
-  botonEstadistica(event: any){
-    event.preventDefault()
-    const elementId = event.target.parentElement.id
-    console.log('Element ID:', elementId);
+    botonEstadistica(event: any){
+      event.preventDefault()
+      const elementId = event.target.parentElement.id
+      console.log('Element ID:', elementId);
 
-  this.router.navigate([
-    "reclutador/estadisticas"
+    this.router.navigate([
+      "reclutador/estadisticas"
 
-  ])
+    ])
 
-
-  }
- openUserProfile(event: any) {
-  const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-  console.log('User ID:', userId); // Imprime el ID del usuario en la consola
-
-  // Llamadas simultáneas a los servicios
-  forkJoin({
-    observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
-    usuario: this.usuarioService.getUsuarioId(userId)
-  }).subscribe({
-    next: (resultados) => {
-      // Extraemos los resultados
-      const { observadores, usuario } = resultados;
-
-      // Lógica con los datos obtenidos
-      console.log('Observaciones del usuario:', observadores);
-      console.log('Perfil del usuario:', usuario);
-
-      // Configura el tamaño del diálogo
-      const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
-        data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
-        height: '60vh', // Establece la altura del diálogo
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
-    },
-    error: (error) => {
-      console.error('Error al obtener datos del usuario:', error);
-      // Manejo de errores aquí
     }
-  });
-}
 
-  
+
+    openUserProfile(event: any) {
+      const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+      console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+
+      // Llamadas simultáneas a los servicios
+      forkJoin({
+        observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
+        usuario: this.usuarioService.getUsuarioId(userId)
+      }).subscribe({
+        next: (resultados) => {
+          // Extraemos los resultados
+          const { observadores, usuario } = resultados;
+
+          // Lógica con los datos obtenidos
+          console.log('Observaciones del usuario:', observadores);
+          console.log('Perfil del usuario:', usuario);
+
+          // Configura el tamaño del diálogo
+          const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+            data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
+            height: '60vh', // Establece la altura del diálogo
+          });
+
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+          });
+        },
+        error: (error) => {
+          console.error('Error al obtener datos del usuario:', error);
+          // Manejo de errores aquí
+        }
+      });
+    }
+
+
 
 openBottomSheet(event: any) {
   const userId = event.currentTarget.id;
@@ -462,7 +464,7 @@ openBottomSheet(event: any) {
 
 
 
-  }
+  }
 
 
 }

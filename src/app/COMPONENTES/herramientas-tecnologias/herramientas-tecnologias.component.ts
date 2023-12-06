@@ -27,20 +27,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
     usr_id: -1
   };
 
-  // usuario: Usuario = {
-  //   usr_id: -1,
-  //   usr_rut: '',
-  //   usr_nom: '',
-  //   usr_ap_pat: '',
-  //   usr_ap_mat: '',
-  //   usr_email: '',
-  //   usr_pass: '',
-  //   usr_tel: '',
-  //   usr_url_link: '',
-  //   pais_nom: '',
-  //   pais: { pais_id: undefined,
-  //           pais_nom: '' } // Asegúrate de tener una instancia de Pais aquí
-  // };
 
 
   selectedCategoriaId: number | undefined;
@@ -105,7 +91,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
         (data: Producto[]) => {
           console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
-          console.log('Productos cargados:', this.productos);
 
         },
         (error) => {
@@ -118,7 +103,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
       this.certificacionService.obtenerTodosLosCertificados().subscribe(
         (data: Certificacion[]) => {
           this.certificados = data;
-          console.log('Certificaciones cargadas:', this.certificados);
         },
         (error) => {
           console.log('Error al obtener certificaciones:', error);
@@ -130,7 +114,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
       this.nivelService.listarNiveles().subscribe(
         (data: Niveles[]) => {
           this.niveles = data;
-          console.log('Niveles cargados:', this.niveles);
         },
         (error) => {
           console.log('Error al obtener niveles:', error);
@@ -189,11 +172,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
       return;
     }
 
-    // Verificamos si tenemos un usuario válido antes de guardar
-    // if (!this.usuario || this.usuario.usr_id === undefined) {
-    //   console.log('No se encontró un usuario válido.');
-    //   return;
-    // }
 
     // Completamos los datos de la herramienta con las selecciones
     this.herramienta.cat_prod_id = this.selectedCategoriaId;
@@ -201,16 +179,6 @@ export class HerramientasTecnologiasComponent implements OnInit {
     this.herramienta.cert_id = this.selectedCertificadoId;
     this.herramienta.nvl_id = this.selectedNivelId;
 
-    // Llamamos al servicio para guardar la herramienta
-    // this.herramientasService.guardarHerramienta(this.herramienta, this.usuario.usr_id).subscribe(
-    //   (nuevaHerramienta: Herramientas) => {
-    //     console.log('Herramienta guardada exitosamente:', nuevaHerramienta);
-    //     // Puedes redirigir al usuario a otra página o realizar alguna otra acción después de guardar.
-    //   },
-    //   (error) => {
-    //     console.log('Error al guardar herramienta:', error);
-    //   }
-    // );
   }
 }
 

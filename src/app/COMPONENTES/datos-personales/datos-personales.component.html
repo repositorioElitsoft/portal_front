@@ -6,7 +6,7 @@
   <title>Datos personales</title>
 </head>
 <link rel="stylesheet" href="\datos-personales.component.css">
- 
+
 <body>
   <app-sidebar-user></app-sidebar-user>
   <br>
@@ -21,30 +21,26 @@
     <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
 
     <div class="div-inputs"  *ngIf="isLoaded">
-
-
-
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
-
         <div class="row mb-3">
           <label for="inputRut" class="col-m-2 col-form-label">RUT:</label>
           <div class="col-sm-15">
-            
-            <input type="rut" 
+
+            <input type="rut"
             matTooltip="Rut sin puntos y con guion ej. 111111-1"
             matTooltipPosition="after"
             class="form-control" id="inputRut" formControlName="usr_rut" name="inputRut"
               [ngClass]="{'is-invalid': form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched}" >
-              <div *ngIf="form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched" class="invalid-feedback">
-                Rut no es válido
-              </div>
+            <div *ngIf="form.get('usr_rut')?.invalid && form.get('usr_rut')?.touched" class="invalid-feedback">
+              Rut no es válido
+            </div>
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputNombres" class="col-m-2 col-form-label">Nombres:</label>
           <div class="col-sm-15">
             <input type="nombres" class="form-control" id="inputNombres" formControlName="usr_nom" name="inputNombres"
-            [ngClass]="{'is-invalid': form.get('usr_nom')?.invalid && form.get('usr_nom')?.touched}" >
+              [ngClass]="{'is-invalid': form.get('usr_nom')?.invalid && form.get('usr_nom')?.touched}" >
             <div *ngIf="form.get('usr_nom')?.hasError('required') && form.get('usr_nom')?.touched" class="invalid-feedback">
               Debe ingresar nombre
             </div>
@@ -54,7 +50,7 @@
           <label for="inputApellidop"  class="col-m-2 col-form-label">Apellido Paterno:</label>
           <div class="col-sm-15">
             <input type="apellidop" class="form-control" id="inputApellidop" formControlName="usr_ap_pat" name="inputApellidop"
-            [ngClass]="{'is-invalid': form.get('usr_ap_pat')?.invalid && form.get('usr_ap_pat')?.touched}">
+              [ngClass]="{'is-invalid': form.get('usr_ap_pat')?.invalid && form.get('usr_ap_pat')?.touched}">
             <div *ngIf="form.get('usr_ap_pat')?.hasError('required') && form.get('usr_ap_pat')?.touched" class="invalid-feedback">
               Debe ingresar apellido
             </div>
@@ -64,8 +60,7 @@
           <label for="inputApellidom"  class="col-m-2 col-form-label">Apellido Materno:</label>
           <div class="col-sm-15">
             <input type="apellidom" class="form-control" id="inputApellidom" formControlName="usr_ap_mat" name="inputApellidom"
-            [ngClass]="{'is-invalid': form.get('usr_ap_mat')?.invalid && form.get('usr_ap_mat')?.touched}">
-            
+              [ngClass]="{'is-invalid': form.get('usr_ap_mat')?.invalid && form.get('usr_ap_mat')?.touched}">
             <div *ngIf="form.get('usr_ap_mat')?.hasError('required') && form.get('usr_ap_mat')?.touched" class="invalid-feedback">
               Debe ingresar apellido
             </div>
@@ -83,97 +78,132 @@
                 <option value="58">🇻🇪 +58</option>
                 <option value="506">🇨🇷 +506</option>
                 <option value="591">🇧🇴 +591</option>
-                
               </select>
-
-
               <input appNumericOnly type="text" class="form-control select-tel-input" id="inputTelefon" formControlName="usr_tel" name="inputTelefono"
               [ngClass]="{'is-invalid': form.get('usr_tel')?.invalid && form.get('usr_tel')?.touched}" style="width: 100%;">
 
             </div>
-    
             <br />
             <div *ngIf="form.get('usr_tel')?.hasError('required') && form.get('usr_tel')?.touched" class="invalid-feedback">
               Debe ingresar número de teléfono
             </div>
-            
-         
           </div>
         </div>
+
         <div class="row mb-3">
-          <label for="inputUbicación"  class="col-m-2 col-form-label">Ubicación:</label>
-          <div class="col-sm-15">
-            <select type="ubicacion" class="form-control" id="inputUbicación" formControlName="pais" name="inputUbicacion">
-              <option *ngFor="let country of countries" [value]="country.pais_id">{{ country.pais_nom }}</option>
+          <label for="inputGenero" class="col-sm-2 col-form-label">Género:</label>
+          <div class="col-sm-10">
+            <select  class="form-control" id="inputGenero" formControlName="usr_gen" name="inputGenero"
+            [ngClass]="{'is-invalid': form.get('usr_gen')?.invalid && form.get('usr_gen')?.touched}">
+            <option [value]="usuarioGuardado.usr_gen">{{ usuarioGuardado.usr_gen }}</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
             </select>
+            <div *ngIf="form.get('usr_gen')?.hasError('required') && form.get('usr_gen')?.touched" class="invalid-feedback">
+              Género es obligatorio
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3" *ngIf="form.get('usr_gen')?.value === 'Otro'">
+          <label for="inputGeneroOtro" class="col-sm-2 col-form-label">Especificar Género:</label>
+          <div class="col-sm-10">
+            <input class="form-control" id="inputGeneroOtro" formControlName="usr_gen_otro" name="inputGeneroOtro"
+            [ngClass]="{'is-invalid': form.get('usr_gen_otro')?.invalid && form.get('usr_gen_otro')?.touched}">
+            <div *ngIf="form.get('usr_gen_otro')?.hasError('required') && form.get('usr_gen_otro')?.touched" class="invalid-feedback">
+              Debe especificar el género
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label for="inputUbicacion" class="col-sm-2 col-form-label">País:</label>
+          <div class="col-sm-10">
+            <select type="ubicacion" class="form-control" id="inputUbicacion" formControlName="country" name="inputUbicacion"
+            (change)="onCountrySelected()"
+            [ngClass]="{'is-invalid': form.get('country')?.invalid && form.get('country')?.touched}">
+              <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+            </select>
+            <div *ngIf="form.get('country')?.invalid && form.get('country')?.touched" class="invalid-feedback">
+              Debe seleccionar un país
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3" [hidden]="states.length === 0">
+          <label for="inputEstado" class="col-sm-2 col-form-label">Región o Estado:</label>
+          <div class="col-sm-10">
+            <select type="estado" class="form-control" id="inputEstado" formControlName="state" name="inputEstado"
+            (change)="onStateSelected()" 
+            [ngClass]="{'is-invalid': form.get('state')?.invalid && form.get('state')?.touched}">
+              <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
+            </select>
+            <div *ngIf="form.get('state')?.invalid && form.get('state')?.touched" class="invalid-feedback">
+              Debe seleccionar una región o estado
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3" [hidden]="cities.length === 0">
+          <label for="inputCiudad" class="col-sm-2 col-form-label">Ciudad:</label>
+          <div class="col-sm-10">
+            <select type="ciudad" class="form-control" id="inputCiudad" formControlName="city" name="inputCiudad"
+            [ngClass]="{'is-invalid': form.get('city')?.invalid && form.get('city')?.touched}">
+              <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+            </select>
+            <div *ngIf="form.get('city')?.invalid && form.get('city')?.touched" class="invalid-feedback">
+              Debe seleccionar una ciudad
+            </div>
           </div>
         </div>
         <div class="row mb-3">
-          <label 
-
-          for="inputLinkedin"  class="col-m-2 col-form-label">URL Linkedin:</label>
-          <div class="col-sm-15">
-            <input type="linkedin" 
-            matTooltip="Opcional"
-            matTooltipPosition="after"
-            class="form-control" id="inputLinkedin" formControlName="usr_url_link" name="inputLinkedin">
+          <label for="inputDireccion" class="col-sm-2 col-form-label">Dirección:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputDireccion" formControlName="usr_direcc" name="inputDireccion"
+              [ngClass]="{'is-invalid': form.get('usr_direcc')?.invalid && form.get('usr_direcc')?.touched}">
+            <div *ngIf="form.get('usr_direcc')?.hasError('required') && form.get('usr_direcc')?.touched" class="invalid-feedback">
+              Debe ingresar dirección
+            </div>
           </div>
         </div>
 
+        <div class="row mb-3">
+          <label for="inputLinkedin" class="col-sm-2 col-form-label">URL Linkedin:</label>
+          <div class="col-sm-10">
+            <input type="linkedin"
+              matTooltip="Opcional"
+              matTooltipPosition="after"
+              class="form-control" id="inputLinkedin" formControlName="usr_url_link" name="inputLinkedin">
+          </div>
+        </div>
+        <label for="file" class="col-sm-2 col-form-label">Subir CV:</label>
+        <button type="button" class="cv-btn" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
+          <div *ngIf="!isUploadingFile">
+            <div *ngIf="currentResumeName">Cargar nuevo CV </div>
+            <div *ngIf="!currentResumeName"> Sube tu CV </div>
+          </div>
+          <div *ngIf="isUploadingFile"> Cargando CV...</div>
+        </button>
 
-        <label 
+        <button mat-raised-button class ="cv-btn" [disabled]="isUploadingFile" (click)="borrarCV()" type="button">
+          Eliminar CV
+        </button>
 
-        for="file"   class="col-m-2 col-form-label">Subir CV:</label>
-        <div class="col-sm-15" style="display: flex;">
 
-          <button type="button" mat-raised-button class="botonprimario m-2" style="flex-grow: 1;" (click)="fileInput.click()" [disabled]="isUploadingFile">
-            <div *ngIf="!isUploadingFile">
-              <div *ngIf="currentResumeName">Cargar nuevo CV</div>
-              <div *ngIf="!currentResumeName">Sube tu CV</div>
-            </div>
-            <div *ngIf="isUploadingFile">Cargando CV...</div>
-          </button>
-          
-          <button mat-raised-button class="botonprimario m-2" style="flex-grow: 1;" [disabled]="isUploadingFile" (click)="borrarCV()" type="button">
-            Eliminar CV
-          </button>
-      
-      </div>
-      
-      <div class="col-m-2 col-form-label" style="display: flex; align-items: center;">
-
-        <mat-icon *ngIf="currentResumeName" class="bg-green" style="flex-shrink: 0;">check_circle</mat-icon>
-    
+        <mat-icon *ngIf="currentResumeName" class="bg-green">check_circle</mat-icon>
         <input name="file" hidden (change)="onFileSelected()" #fileInput type="file" id="file">
-    
-        <label class="my-2" for="file" *ngIf="currentResumeName" style="margin-left: 8px; white-space: nowrap;">
-            CV Actual: {{ currentResumeName }}
+        <br/>
+        <label class="my-2" for="file" *ngIf="currentResumeName">
+          CV Actual: {{currentResumeName }}
         </label>
-    
-    </div>
-    
-        
         <div class="div-form d-grid my-2">
-
-          <button  mat-raised-button class="botonprimario m-2"  [disabled]="!form.valid" type="submit" >Siguiente</button>
-          
-         
-
-
+          <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Siguiente</button>
         </div>
 
-        
       </form>
-      
-    </div>
 
+    </div>
   </mat-card>
-   
-    </div>
-<br>
 
 
 
-</body>
-</html>
 <router-outlet></router-outlet>
+

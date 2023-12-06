@@ -1,6 +1,7 @@
+import { CargoUsuario } from "./cargos-usuario.interface"
 import { HerramientaData } from "./herramienta-data.interface"
 import { Laboral } from "./laboral.interface"
-import { Pais } from "./pais.interface"
+import { Observacion } from "./observacion.interface"
 
 export interface Usuario {
     usr_id?:number
@@ -11,19 +12,25 @@ export interface Usuario {
     usr_email:string
     usr_pass?:string
     usr_tel?:string
+    usr_gen?:string
+    usr_gen_otro?: string;
     usr_url_link?:string
-    pais_nom?: string;
-    pais?: Pais; // Agregar esta línea para definir la propiedad pais
+    city?: {
+      id?: number;
+    };
+    usr_direcc:string;
     herramientas?: HerramientaData[];
     usr_herr: string;
     herr_ver: string;
     herr_exp: string;
     cvPath?: string;
     laborales?: Laboral[];
-   
+    observaciones?: Observacion[];
+    cargoUsuario?: CargoUsuario[];
+    seleccionado?: boolean;
 }
 
 
-export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
+export type UserEditarDTO = Omit<Usuario, 'usr_tel' |'usr_url_link'| 'city' | 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
 
-export type UserSesionDTO = Omit<Usuario, 'usr_pass' |'usr_url_link'|'pais_nom'| 'pais'| 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'>;
+export type UserSesionDTO = Omit<Usuario, 'usr_pass' |'usr_url_link'|'pais_nom'| 'pais'|'usr_direcc' |'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'>;

@@ -1,98 +1,98 @@
 <mat-card class="dashboard-panel">
 
-<mat-toolbar>
-  <mat-toolbar-row>
-    <button mat-raised-button class="botonprimario m-2"  (click)="botonEstadistica($event)">
-      <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
-    </button>
-    <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
-      <mat-icon>get_app</mat-icon> Exportar a CSV
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <button mat-raised-button class="botonprimario m-2"  (click)="botonEstadistica($event)">
+        <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
+      </button>
+      <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
+        <mat-icon>get_app</mat-icon> Exportar a CSV
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
 
 
-<div class="filter-container p-4">
-  <mat-form-field class="filter-input" appearance="fill">
-    <mat-label>Filtrar por nombre...</mat-label>
-    <input matInput (input)="filterInput()" [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
-  </mat-form-field>
+  <div class="filter-container p-4">
+    <mat-form-field class="filter-input" appearance="fill">
+      <mat-label>Filtrar por nombre...</mat-label>
+      <input matInput (input)="filterInput()" [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
+    </mat-form-field>
 
 
 
 
-  <mat-form-field class="filter-select">
-    <mat-label>Categoria</mat-label>
-    <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="filter-select">
+      <mat-label>Categoria</mat-label>
+      <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
+        <mat-option value="">Seleccione un opción</mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="filter-select">
-    <mat-label>Producto</mat-label>
-    <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getVersion(selectedProducto); filterProducto()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="filter-select">
+      <mat-label>Producto</mat-label>
+      <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getVersion(selectedProducto); filterProducto()">
+        <mat-option value="">Seleccione un opción</mat-option>
+        <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field class="filter-select">
-    <mat-label>Versión</mat-label>
-    <mat-select [disabled]="!selectedProducto" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  
+    <mat-form-field class="filter-select">
+      <mat-label>Versión</mat-label>
+      <mat-select [disabled]="!selectedProducto" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
+        <mat-option value="">Seleccione un opción</mat-option>
+        <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <div class="filter-slider d-flex flex-column align-items-center">
-      <mat-label>Rango de años de Experiencia: </mat-label>
-      <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
-        <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
-        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
-      </mat-slider>
-    </div>
 
-    <div class="filter-slider d-flex flex-column align-items-center">
-
-      <div class="d-flex">
-          <div class="d-flex flex-column align-items-center mb-4 me-4">
-            <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
-          </div>
-          <mat-form-field class="d-flex flex-column align-items-center">
-            <mat-label>Años de experiencia reciente</mat-label>
-            <section class="example-section">
-              <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
-            </section>
-          </mat-form-field>
+      <div class="filter-slider d-flex flex-column align-items-center">
+        <mat-label>Rango de años de Experiencia: </mat-label>
+        <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
+          <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
+          <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+        </mat-slider>
       </div>
 
-    </div>
-  
-</div>
-</mat-card>
+      <div class="filter-slider d-flex flex-column align-items-center">
 
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
-       class="mat-elevation-z8">
+        <div class="d-flex">
+            <div class="d-flex flex-column align-items-center mb-4 me-4">
+              <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
+            </div>
+            <mat-form-field class="d-flex flex-column align-items-center">
+              <mat-label>Años de experiencia reciente</mat-label>
+              <section class="example-section">
+                <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
+              </section>
+            </mat-form-field>
+        </div>
 
-  <ng-container matColumnDef="usr_nom">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.usr_nom}} {{element.usr_ap_pat}}  {{element.usr_ap_mat}}  </td>
+      </div>
 
-  </ng-container>
+  </div>
+  </mat-card>
 
-  <!-- Name Column -->
-  <ng-container matColumnDef="usr_tel">
-    <th mat-header-cell *matHeaderCellDef > Telefono </th>
-    <td mat-cell *matCellDef="let element"> {{element.usr_tel}} </td>
-  </ng-container>
+  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
+         class="mat-elevation-z8">
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="usr_email">
-    <th mat-header-cell *matHeaderCellDef> Correo </th>
-    <td mat-cell *matCellDef="let element"> {{element.usr_email}} </td>
-  </ng-container>
+    <ng-container matColumnDef="usr_nom">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.usr_nom}} {{element.usr_ap_pat}}  {{element.usr_ap_mat}}  </td>
+
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="usr_tel">
+      <th mat-header-cell *matHeaderCellDef > Telefono </th>
+      <td mat-cell *matCellDef="let element"> {{element.usr_tel}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="usr_email">
+      <th mat-header-cell *matHeaderCellDef> Correo </th>
+      <td mat-cell *matCellDef="let element"> {{element.usr_email}} </td>
+    </ng-container>
 
 
 
@@ -109,30 +109,28 @@
   </ng-container>
 
 
-  <ng-container matColumnDef="usr_herr">
-    <th mat-header-cell *matHeaderCellDef> Herramientas </th>
-    <td mat-cell *matCellDef="let element">{{element.usr_herr}}</td>
-  </ng-container>
+    <ng-container matColumnDef="usr_herr">
+      <th mat-header-cell *matHeaderCellDef> Herramientas </th>
+      <td mat-cell *matCellDef="let element">{{element.usr_herr}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="herr_ver">
-    <th mat-header-cell *matHeaderCellDef> Versiones </th>
-    <td mat-cell *matCellDef="let element">{{element.herr_ver}}</td>
-  </ng-container>
+    <ng-container matColumnDef="herr_ver">
+      <th mat-header-cell *matHeaderCellDef> Versiones </th>
+      <td mat-cell *matCellDef="let element">{{element.herr_ver}}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="herr_exp">
-    <th mat-header-cell *matHeaderCellDef> Años de experiencia </th>
-    <td mat-cell *matCellDef="let element">{{element.herr_exp}}</td>
-  </ng-container>
-
-
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
-
-<mat-paginator [pageSizeOptions]="[5, 10, 20]"
-               showFirstLastButtons
-               aria-label="Select page of periodic elements">
-</mat-paginator>
+    <ng-container matColumnDef="herr_exp">
+      <th mat-header-cell *matHeaderCellDef> Años de experiencia </th>
+      <td mat-cell *matCellDef="let element">{{element.herr_exp}}</td>
+    </ng-container>
 
 
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>

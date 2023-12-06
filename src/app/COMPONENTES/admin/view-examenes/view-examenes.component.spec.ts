@@ -11,6 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Importa BrowserAnimationsModule
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
 
 describe('ViewExamenesComponent', () => {
   let component: ViewExamenesComponent;
@@ -28,9 +30,10 @@ describe('ViewExamenesComponent', () => {
         FormsModule,
         MatInputModule,
         MatTableModule,
-        BrowserAnimationsModule, // Agrega BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatIconModule
       ],
-      providers: [ExamenService,HttpClient],
+      providers: [ExamenService, HttpClient, LiveAnnouncer, MatDialogModule, MatSnackBarModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ViewExamenesComponent);

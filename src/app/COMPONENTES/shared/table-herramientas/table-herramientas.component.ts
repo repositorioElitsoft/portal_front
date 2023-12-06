@@ -52,8 +52,11 @@ export class TableHerramientasComponent implements OnInit {
           console.log('respuesta: ', herramientas);
           this.herramientas = herramientas;
           this.createFormRows();
+
+
         } else {
           this.addRow();
+
         }
         this.isLoaded = true;
       },
@@ -81,7 +84,7 @@ export class TableHerramientasComponent implements OnInit {
 
   getProducts(index: number) {
     const row = this.rowsFormArray.at(index);
-    const selectedCategoriaIdControl = row.get('herr_cat_name');    
+    const selectedCategoriaIdControl = row.get('herr_cat_name');
     const selectedCategoriaIdValue = selectedCategoriaIdControl?.value;
 
     if (!selectedCategoriaIdValue) {
@@ -95,27 +98,31 @@ export class TableHerramientasComponent implements OnInit {
       (data: Producto[]) => {
         this.productByRow[index] = data;
         console.log('Productos cargados para la fila ' + index + ':', this.productByRow[index]);
-     
+
       },
       (error) => {
         console.log('Error al obtener productos:', error);
       }
     );
   }
-    
+
   getVersion(index: number) {
     const row = this.rowsFormArray.at(index);
     const selectedProductoIdControl = row.get('herr_prd_name');
     const selectedProductoIdValue = selectedProductoIdControl?.value;
 
+    if (selectedProductoIdValue === 'otro') {
+      this.versionByRow[index] = [];
+    }
+
     if (!selectedProductoIdValue) {
-      console.log('No se ha seleccionado un producto');
       return;
     }
-    
+
     this.productoService.getVersionByProduct(selectedProductoIdValue).subscribe(
       (data: VersionProducto[]) => {
         this.versionByRow[index] = data;
+        console.log('servicio getVersion'+ data)
         console.log(`Versiones cargadas para la fila ${index}:`, this.versionByRow[index]);
       },
       (error) => {
@@ -125,6 +132,7 @@ export class TableHerramientasComponent implements OnInit {
   }
 
     createFormRows() {
+
       const rowsArray = this.herramientas.map((herramienta, index) => {
         this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
           next: (data: Producto[]) => {
@@ -142,21 +150,29 @@ export class TableHerramientasComponent implements OnInit {
             console.log('Error al obtener versiones:', error);
           }
         })
+
+
         const row = this.formBuilder.group({
           herr_usr_id:[herramienta.herr_usr_id],
           herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
           herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
           herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
           versionProducto: this.formBuilder.group({
-            vrs_id: [herramienta.versionProducto.vrs_id, Validators.required]
+            vrs_id: [herramienta.versionProducto.vrs_id, Validators.required],
+            vrs_name: [herramienta.versionProducto.vrs_name],
           }),
           herr_is_cert: [herramienta.herr_is_cert],
           herr_nvl: [herramienta.herr_nvl]
         });
+
         return row;
+
     });
 
       this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
+
+
+
     }
 
   async guardarDatos() {
@@ -169,9 +185,26 @@ export class TableHerramientasComponent implements OnInit {
       return;
     }
 
-    const herramientas = this.herramientasForm.value.rows;
+    const herramientas = this.herramientasForm.value.rows.map((row: any) => {
+      if ( row.herr_prd_name === 'otro' ) {
+        row.herr_prd_name = row.herr_otro_prd_name;
+        console.log('metodo guardarDatos:' + row.herr_otro_prd_name )
+        delete row.herr_otro_prd_name;
+      }
+
+      if ( row.versionProducto.vrs_id === 'otro' ) {
+        row.versionProducto.vrs_id = 0;
+        row.versionProducto.vrs_name = row.versionProducto.herr_otro_vrs_name;
+        delete row.versionProducto.herr_otro_vrs_name;
+      }
+
+      return row;
+    });
+
+    console.log('Herramiengas enviadas:', herramientas);
+
     try {
-      this.herramientasService.guardarHerramienta(herramientas).toPromise();  
+      this.herramientasService.guardarHerramienta(herramientas).toPromise();
       console.log('Herramienta:', herramientas);
       const isConfirmed = await this.notification.showNotification(
         'success',
@@ -179,7 +212,7 @@ export class TableHerramientasComponent implements OnInit {
         'Herramientas guardadas correctamente'
       )
       if (isConfirmed) {
-        this.router.navigate(['/user/informacion-academica']);
+        this.router.navigate(['/informacion-academica']);
       }
     } catch (error) {
       this.notification.showNotification(
@@ -191,17 +224,22 @@ export class TableHerramientasComponent implements OnInit {
   }
 
   addRow() {
+    console.log('metodo AddRow')
     const newRow = this.formBuilder.group({
       herr_cat_name: [{ value: '', disabled: false }, Validators.required],
       herr_prd_name: [{ value: '', disabled: true }, Validators.required],
       herr_usr_anos_exp: [''],
       versionProducto: this.formBuilder.group({
-        vrs_id: [{ value: 0, disabled: true }, Validators.required]
+        vrs_id: [{ value: 0, disabled: true }, Validators.required],
+        herr_otro_vrs_name: ['']
+
       }),
       herr_is_cert: [false],
       herr_nvl: [''],
+      herr_otro_prd_name: [''],
     });
-  
+
+
     newRow.get('herr_cat_name')?.valueChanges.subscribe((value) => {
       const selectedProductoIdControl = newRow.get('herr_prd_name');
       if (value) {
@@ -210,18 +248,20 @@ export class TableHerramientasComponent implements OnInit {
         selectedProductoIdControl?.disable();
       }
     });
-  
+
     newRow.get('herr_prd_name')?.valueChanges.subscribe((value) => {
       const versionProductoControl = newRow.get('versionProducto.vrs_id');
+
       if (value) {
         versionProductoControl?.enable();
       } else {
         versionProductoControl?.disable();
       }
     });
-  
+
     this.rowsFormArray.push(newRow);
     console.log('Filas', this.rowsFormArray.value);
+
   }
 
   removeRow(index: number) {

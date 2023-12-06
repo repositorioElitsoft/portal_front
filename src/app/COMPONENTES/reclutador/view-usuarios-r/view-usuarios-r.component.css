@@ -1,4 +1,3 @@
-
 .dashboard-panel {
   display: flex;
   flex-direction: column;
@@ -59,4 +58,4 @@ button.mat-raised-button mat-icon {
 }
 
 /* Si deseas un ancho máximo para tu panel, puedes descomentar la siguiente línea */
-/* .dashboard-panel { max-width: 1200px; margin: auto; } */
+/* .dashboard-panel { max-width: 1200px; margin: auto; } */

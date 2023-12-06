@@ -19,7 +19,7 @@
     <h4 class="perfilr">Cargo a Postular</h4>
     <mat-card class="contenedorform">
     <div class="div-inputs">
-      <form [formGroup]="form" (ngSubmit)="submitForm($event)">  
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
           <label for="cargosE"  class="col-m-2 col-form-label">Cargos Elitsoft:</label>
           <div class="combobox col-sm-15">
@@ -58,8 +58,10 @@
               [ngClass]="{'is-invalid': form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched}"
             >
             <div *ngIf="form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched" class="invalid-feedback">
+
             </div>
           </div>
+
         </div>
         <!-- Nuevos campos para disponibilidad laboral -->
         <div class="row mb-3">
@@ -94,16 +96,16 @@
           </div>
         </div>
         <!-- Resto del formulario... -->
-       
+
         <div class="div-form d-grid my-2">
 
           <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit" (click)="successMessage()">Finalizar</button>
-          
-        
+
+
 
         </div>
 
-        
+
       </form>
     </div>
   </mat-card>

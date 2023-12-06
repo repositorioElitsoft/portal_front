@@ -2,11 +2,11 @@
 
 @media (max-width: 600px) {
   .container-datos-personales {
-  
+
     border: 1px solid #F57C27;
     border-radius: 10px;
- 
-    
+
+
   }
 
 }
@@ -16,7 +16,7 @@
   width: 80px;
   background-color: #e8e8e8!important;
   color: rgb(71, 71, 71);
-  font-size: medium;
+  font-size: 17px;
   font-weight: 200!important;
 }
 

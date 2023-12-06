@@ -14,16 +14,16 @@
     <div class="sidebar">
       <!-- Contenido de la barra lateral aquí -->
   </div>
-  
+
   <mat-card class="container-datos-personales">
-    
+
 
     <div class="div-inputs" *ngIf="!creationMode" >
       <h4 class="perfilr">Información académica</h4>
       <div *ngFor="let academica of academicas">
-        
+
         <div class="row celda-laboral">
-          
+
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Título / Profesion</h4>
               <p>{{ academica.titl}}</p>
@@ -44,11 +44,11 @@
               <button mat-mini-fab class="minifab m-1"  id="{{academica.inf_acad_id}}" (click)=" editarAcademica($event)">
                 <mat-icon>edit</mat-icon>
               </button>
-              
-              
-              
-              
-           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" > 
+
+
+
+
+           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" >
           	<mat-icon>delete</mat-icon>
            </button>
 
@@ -56,18 +56,99 @@
           </div>
         </div>
       </div>
-      
+
       <div *ngIf="academicas.length === 0">
         No has definido ninguna experiencia académica
       </div>
-      
+
       <button mat-raised-button class="botonprimario m-2"   (click)="openAddDialog('300ms', '150ms')">+ Añadir estudios</button>
-     
+
       <button  mat-raised-button class="botonprimario m-2"  *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
+    <div class="div-inputs" *ngIf="creationMode">
+
+      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
+
+        <div class="row mb-3">
+          <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
+          <div class="col-sm-10">
+            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="titl" name="inputTitulo" >
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputEducacion" class="col-sm-2 col-form-label">Institución Educativa:</label>
+          <div class="col-sm-10">
+            <input type="inputEducacion" class="form-control" id="inputEducacion" formControlName="inf_acad_nom_esc" name="inputEducacion">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" id="inputFechain" formControlName="inf_acad_fec_ini" [min]="minFecha" [max]="today" name="inputFechaini">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
+          <div class="col-sm-10">
+            <input type="date" class="form-control" id="inputFechafin" formControlName="inf_acad_fec_fin" [min]="minFecha" [max]="today" name="inputFechafin">
+          </div>
+        </div>
+        <div class="row mb-3">
+          <label for="selectEstadoAcademico" class="col-sm-2 col-form-label">Estado Academico:</label>
+            <select class="form-select" id="selectEstadoAcademico" formControlName="inf_acad_est" name="estadoAcademico">
+              <option selected disabled >Selecciona una opción...</option>
+              <option value="En curso">En curso</option>
+              <option value="En práctica">En práctica</option>
+              <option value="Egresado">Egresado</option>
+              <option value="Titulado">Titulado</option>
+            </select>
+        </div>
+
+        <div>
+          <h4 class="perfilr">Referencias Academicas</h4>
+          <div formArrayName="referenciaAcademicas">
+            <div *ngFor="let ref of referenciaFormArray.controls; let i = index" [formGroupName]="i">
+              <div class="referencia-individual">
+                <div class="row mb-3">
+                  <label for="inputNombreRef{{i}}" class="col-sm-2 col-form-label">Nombre:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputNombreRef{{i}}" formControlName="ref_acad_nom">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputInstitucionRef{{i}}" class="col-sm-2 col-form-label">Institución:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputInstitucionRef{{i}}" formControlName="ref_acad_ins">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputEmailRef{{i}}" class="col-sm-2 col-form-label">Email:</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmailRef{{i}}" formControlName="ref_acad_email">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputTelefonoRef{{i}}" class="col-sm-2 col-form-label">Teléfono:</label>
+                  <div class="col-sm-10">
+                    <input type="tel" class="form-control" id="inputTelefonoRef{{i}}" formControlName="ref_acad_tel">
+                  </div>
+                </div>
+                <button mat-mini-fab class="minifabdanger m-1" (click)="eliminarReferencia(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <button mat-raised-button type="button" (click)="addReferencia()">+ Añadir Referencia</button>
+        </div>
+
+        <div class="div-form d-grid justify-content-end">
+          <div class="flex">
+            <button button  mat-raised-button class="botonprimario m-2"  (click)="goBack()" >Cancelar</button>
+            <button  [disabled]="!form.valid" type="submit" button  mat-raised-button  class="botonprimario m-2"> Guardar</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </mat-card>
-  
-</div>
-  
-</body>
-</html>
+

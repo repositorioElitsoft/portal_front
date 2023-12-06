@@ -29,11 +29,7 @@ export class ViewFilesComponent implements OnInit {
     usr_pass: '',
     usr_tel: '',
     usr_url_link: '',
-    pais: {
-      pais_id: undefined,
-      pais_nom: ''
-    },
-    pais_nom: '',
+    usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',

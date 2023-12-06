@@ -3,15 +3,18 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Usuario } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { Pais } from 'src/app/interface/pais.interface';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
 
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { PaisService } from 'src/app/service/pais.service';
+import { State } from 'src/app/interface/state.interface';
+import { City } from 'src/app/interface/city.interface';
+import { CityService } from 'src/app/service/city.service';
+import { CountryService } from 'src/app/service/country.service';
+import { StateService } from 'src/app/service/state.service';
+import { Country } from 'src/app/interface/country.interface';
 
 @Component({
   selector: 'app-datos-personales',
@@ -21,10 +24,12 @@ import { PaisService } from 'src/app/service/pais.service';
 export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
   currentResumeName?: string = "";
-  usuarioId: number= 0;
-  countries: Pais[] = [];
-  isLoaded: boolean = true;
-  isUploadingFile: boolean = false;
+  countries: Country[] = [];
+  states: State[] = []; // Lista de estados
+  cities: City[] = []; // Lista de ciudades
+
+  isLoaded: boolean = true
+  isUploadingFile: boolean = false
 
   usuarioGuardado: Usuario = {
     usr_id:0,
@@ -35,23 +40,27 @@ export class DatosPersonalesComponent implements OnInit {
     usr_email: '',
     usr_pass: '',
     usr_tel: '',
+    usr_gen:'',
+    usr_gen_otro:'',
     usr_url_link: '',
-    pais: {
-      pais_id: undefined,
-      pais_nom: ''
+    city: {
+      id: undefined,
     },
-    pais_nom: '',
+    usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
-    laborales: []
+    laborales: [],
+    cargoUsuario: []
   };
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private usuarioService: UsuarioService,
-    private paisService: PaisService,
+    private countryService: CountryService,
+    private stateService: StateService,
+    private cityService: CityService,
     private snackBar: MatSnackBar,
     private notification: NotificationService,
     private route: ActivatedRoute
@@ -61,30 +70,116 @@ export class DatosPersonalesComponent implements OnInit {
 
   private buildForm() {
     this.form = this.formBuilder.group({
-      usr_rut: ["", [Validators.required, rutValido]],
-      usr_nom: ["", [Validators.required]],
-      usr_ap_pat: ["", [Validators.required]],
-      usr_ap_mat: ["", [Validators.required]],
-      pais: ["1", [Validators.required]],
-      usr_url_link: ["", []],
-      usr_tel: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
+      usr_rut: ["",[Validators.required, rutValido]],
+      usr_nom: ["",[Validators.required]],
+      usr_ap_pat: ["",[Validators.required]],
+      usr_ap_mat: ["",[Validators.required]],
+      country: ["1", [Validators.required]],
+      state: ["", [Validators.required]],
+      city: ["", [Validators.required]],
+      usr_direcc:["", Validators.required],
+      usr_url_link: ["",[]],
+      usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+      usr_gen:["Masculino", [Validators.required]],
+      usr_gen_otro: ["", [Validators.required]]
+    });
+
+  this.form.get('usr_gen')?.valueChanges.subscribe((value) => {
+    if (value === 'Otro') {
+      this.form.get('usr_gen_otro')?.setValidators([Validators.required]);
+    } else {
+      this.form.get('usr_gen_otro')?.setValidators(null);
+      this.form.get('usr_gen_otro')?.setValue('');
+    }
+    this.form.get('usr_gen_otro')?.updateValueAndValidity();
+  });
+
+  }
+
+  onCountrySelected(){
+    const countryId = this.form.get("country")!.value;
+    console.log("I'm gonna call states by country")
+    this.stateService.obtenerEstadosporCountry(countryId).subscribe({
+      next: (data:State[]) => {
+        this.states = this.sortByName(data);
+      },
+      error: (error) => {
+        console.error('Error fetching states:', error);
+      }
     });
   }
 
-  ngOnInit(): void {
-    this.paisService.obtenerPaises().subscribe(
-      (data: any[]) => {
-        this.countries = data;
+  onStateSelected(){
+  
+    const stateId = this.form.get("state")!.value;
+    console.log("I'm gonna call cities by state")
+    this.cityService.getStateByCountry(stateId).subscribe({
+      next: (data:City[]) => {
+        this.cities = this.sortByName(data);
       },
-      (error) => {
+      error: (error) => {
+        console.error('Error fetching states:', error);
+      }
+    });
+  }
+
+
+  ngOnInit(): void {
+    this.countryService.obtenerPaises().subscribe({
+      next: (data: Country[]) => {
+        this.countries = this.sortByName(data);
+      },
+      error: (error) => {
         console.error('Error fetching countries:', error);
       }
-    );
+    });
+    this.form.get("country")!.patchValue("")
     this.ObtenerUsuarioGuardado();
+
+  }
+
+  obtenerEstadosporCountry(countryId: number) {
+    this.stateService.obtenerEstadosporCountry(countryId).subscribe(
+      (data: State[]) => {
+        this.states = this.sortByName(data);
+      },
+      (error) => {
+        console.error('Error fetching states:', error);
+      }
+    );
+  }
+
+  cargarCiudadesPorEstado(estadoId: number) {
+    this.cityService.obtenerCiudadesPorEstado(estadoId).subscribe(
+      (data: City[]) => {
+        this.cities = this.sortByName(data);
+
+      },
+      (error) => {
+        console.error('Error fetching cities:', error);
+      }
+    );
   }
 
   navigateToRoute(route: string) {
     this.router.navigate([route]);
+  }
+
+
+  private sortByName(data: any): any[] {
+    console.log('Data received:', data);
+
+    if (Array.isArray(data)) {
+      // data es un array, puedes ordenarlo directamente
+      return data.sort((a: any, b: any) => a.name.localeCompare(b.name));
+    } else if (data && Array.isArray(data.states)) {
+      // data es un objeto con una propiedad states, puedes ordenar data.states
+      return data.states.sort((a: any, b: any) => a.name.localeCompare(b.name));
+    } else {
+      // Manejo de casos donde data no es un array o data.states no es un array
+      console.error('Error: Unable to sort data.');
+      return [];
+    }
   }
 
   onFileSelected() {
@@ -103,7 +198,9 @@ export class DatosPersonalesComponent implements OnInit {
       const formData: FormData = new FormData();
       formData.append('file', inputNode.files[0]);
 
-      this.isUploadingFile = true;
+
+
+      this.isUploadingFile = true
       this.usuarioService.actualizarCV(formData).subscribe({
         next: (response) => {
           console.log("Subido con éxito:", inputNode.files[0].fileName, response);
@@ -125,20 +222,32 @@ export class DatosPersonalesComponent implements OnInit {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
-        console.log(this.usuarioGuardado);
-        this.currentResumeName = data.cvPath?.substring(37, data.cvPath.length);
+        console.log(data)
+
+        this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
+
+
 
         this.form.patchValue({
           usr_rut: this.usuarioGuardado.usr_rut,
           usr_nom: this.usuarioGuardado.usr_nom,
           usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
           usr_ap_mat: this.usuarioGuardado.usr_ap_mat,
-          pais: this.usuarioGuardado.pais?.pais_id,
+          usr_direcc: this.usuarioGuardado.usr_direcc,
           usr_url_link: this.usuarioGuardado.usr_url_link,
           usr_tel: this.usuarioGuardado.usr_tel,
+          usr_gen:this.usuarioGuardado.usr_gen,
+          usr_gen_otro:this.usuarioGuardado.usr_gen_otro,
+
         });
 
-        this.isLoaded = true;
+
+
+      if (this.usuarioGuardado.usr_gen === 'Otro') {
+        this.form.get('usr_gen')?.setValue('Otro');
+      }
+
+        this.isLoaded= true;
         const inputElement = document.getElementById("inputTelefono");
         console.log(inputElement);
         if (inputElement) {
@@ -161,12 +270,13 @@ export class DatosPersonalesComponent implements OnInit {
 
     const user: Usuario = this.form.value;
 
+    // Si se selecciona "Otro", establece el valor de usr_gen a usr_gen_otro
+  if (user.usr_gen === 'Otro') {
+    user.usr_gen = user.usr_gen_otro;
+    }
+
     console.log(user);
 
-    user.pais = {
-      pais_id: this.form.value.pais,
-      pais_nom: ""
-    };
 
     console.log(user);
     try {

@@ -1,5 +1,7 @@
 import { Router } from "@angular/router";
 import { UsuarioService } from "src/app/service/usuario.service";
+import { MatDialog } from "@angular/material/dialog";
+import { EditUserDialogComponent } from "./edit-user-dialog/edit-user-dialog.component";
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -10,7 +12,6 @@ import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/advertencia-eliminar.component";
-import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AddUsuariosComponent } from "../add-usuarios/add-usuarios.component";
 
@@ -64,6 +65,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
             usr_nom: usuario.usr_nom || '',
             usr_tel: usuario.usr_tel || '',
             usr_email: usuario.usr_email || '',
+            usr_direcc:usuario.usr_direcc || '',
             usr_rol: usuario.usr_rol || '',
             usr_herr: usuario.herramientas,
             herr_ver: usuario.herramientas,
@@ -90,8 +92,6 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
 
    openDialogEliminar(event: any) {
 
-
-
     const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -115,56 +115,10 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
     });
   }
 
-   
+    editUser(event: any){
+      const id = event.target.parentElement.id
 
-  editUser(event: any) {
-    // Obtiene el ID desde el elemento del botón que dispara el evento
-    const id = event.target.parentElement.id;
-  
-    if (id) {
-      // Llama al servicio para obtener los datos del usuario usando el ID
-      this.usuarioService.getUsuarioId(id).subscribe({
-        next: (data) => {
-          console.log('Data llegada:', data);
-          // Abre el diálogo con los datos obtenidos
-          const dialogRef = this.dialog.open(AddUsuariosComponent, {
-            width: '800px', 
-            height: '700px',
-            data: { usuarioId: id } // Pasa el ID del usuario al diálogo
-          });
-  
-          // Maneja el resultado después de que el diálogo se cierre
-          dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`);
-            // Aquí puedes manejar el resultado del diálogo
-          });
-        },
-        error: (error) => {
-          console.log(error);
-          // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
-        }
-      });
-    } else {
-      console.error('No se pudo obtener el ID del usuario');
+      this.router.navigate(["/admin/actualizar-usuario/"+id])
     }
-  }
-  
-  
-
-
-
-
-
-
-  addNewCategory(event: Event) {
-    this.dialog.open(AddUsuariosComponent, {
-      width: '800px', 
-      height: '700px'
-    });
-  }
-  
-
-
-
 
 }

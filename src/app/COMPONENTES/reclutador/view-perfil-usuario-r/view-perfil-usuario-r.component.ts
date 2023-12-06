@@ -39,7 +39,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     usr2_ap_pat: '',
     usr2_nom: '',
     usr2_id: 0,
-  
+
     obs_id: 0,
    apr_ger:'',
    apr_tec:'',
@@ -57,8 +57,6 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
    usr_email:'',
 
 
-
-
   }
 
 
@@ -74,7 +72,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   ) {
     this.usuarioData = data.usuario;
     this.observadoresData = data.observadores;
-  
+
   }
 
   ngOnInit(): void {
@@ -85,9 +83,9 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
 
 
 
-  
 
- 
+
+
 
 // Variable para almacenar las observaciones
 
@@ -137,7 +135,7 @@ guardarObservacion() {
         usr_id_obs: this.usuarioGuardado.usr_id ?? 0,
         usr_id_obs_mod: this.usuarioGuardado.usr_id ?? 0,
         usr1_id: 0,
-        usr2_email: '', 
+        usr2_email: '',
         usr2_ap_pat: '',
         usr2_nom: '',
         usr2_id: 0,
@@ -178,7 +176,7 @@ guardarObservacion() {
     console.log('Estado actualizado de enEdicion después de la edición:', this.enEdicion);
 }
 
-  
+
 actualizarObservacion(observadores: ObservacionDTO) {
   // Verificar si la descripción de la observación está vacía
   if (!observadores.obs_desc.trim()) {
@@ -205,15 +203,15 @@ actualizarObservacion(observadores: ObservacionDTO) {
 }
 
 
-  
+
   salir() {
-  
+
     this.dialogRef.close();
     console.log('Se ha cerrado la ventana')
-  
+
   }
-  
- 
+
+
 
   ObtenerUsuarioGuardado() {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({

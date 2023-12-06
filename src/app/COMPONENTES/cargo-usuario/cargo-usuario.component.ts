@@ -76,7 +76,7 @@ export class CargoUsuarioComponent implements OnInit {
           {
             crg_usr_pret: data.crg_usr_pret,
             crg_prf: data.crg_prf,
-            crg_elit_id: data.cargoElitsoft.crg_elit_id,
+            crg_elit_id: data.cargoElitsoft?.crg_elit_id,
             disponibilidad:data.disponibilidad,
             tiempo_incorporacion:data.tiempo_incorporacion,
             otro_tiempo_incorporacion: "",
@@ -111,7 +111,7 @@ export class CargoUsuarioComponent implements OnInit {
   }
 
   newCargo.cargoElitsoft = {
-    crg_elit_id: this.form.value.crg_elit_id
+    crg_elit_id: this.form.value.crg_elit_id,
   }
 
   console.log(newCargo)

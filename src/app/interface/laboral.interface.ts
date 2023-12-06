@@ -2,6 +2,7 @@
 import { HerramientaData } from "./herramienta-data.interface";
 
 import { Herramientas } from "./herramientas.interface";
+import { ReferenciaLaboral } from "./referenciaLaboral.interface";
 
 export interface Laboral{
     inf_lab_id?:number,
@@ -13,4 +14,5 @@ export interface Laboral{
     usr_id?:number,
     herr_usr_id?:number
     herramientas?: HerramientaData[];
+    referenciasLaborales?: ReferenciaLaboral[];
 }

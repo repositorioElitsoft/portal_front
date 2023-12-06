@@ -1,8 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ViewExamenPreguntasComponent } from './view-examen-preguntas.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { PreguntaService } from 'src/app/service/pregunta.service';
+import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -11,21 +15,18 @@ describe('ViewExamenPreguntasComponent', () => {
   let component: ViewExamenPreguntasComponent;
   let fixture: ComponentFixture<ViewExamenPreguntasComponent>;
 
+
   beforeEach(async () => {
-    // Crea un objeto simulado de ActivatedRoute
-    const activatedRouteStub = {
-      paramMap: of({ get: (key: string) => 'some-value' }), // Simula los parámetros de la ruta
-    };
+
 
     await TestBed.configureTestingModule({
       declarations: [ViewExamenPreguntasComponent],
-      imports:[HttpClientModule],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteStub  },
-        // Puedes proporcionar otros servicios necesarios, como Router
+      imports:[HttpClientModule, HttpClientTestingModule, RouterModule, MatCardModule, FormsModule],
+      providers: [ PreguntaService ,HttpClient, {provide: ActivatedRoute, useValue:{snapshot:{params:{exam_id:'exam_id',exam_titl:'exam_titl'}}}}
       ],
 
-      
+
+
     }).compileComponents();
 
     fixture = TestBed.createComponent(ViewExamenPreguntasComponent);

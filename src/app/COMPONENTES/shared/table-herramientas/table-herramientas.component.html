@@ -1,6 +1,6 @@
 
     <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
-        
+
     <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
         <h4 class="perfilr">Herramientas y Tecnologías</h4>
         <div formArrayName="rows">
@@ -17,14 +17,18 @@
                     <select class="form-control" id="producto" formControlName="herr_prd_name" name="producto" (change)="getVersion(i)">
                         <option value="" selected>Selecciona una opcion</option>
                         <option *ngFor="let producto of productByRow[i]" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
+                        <option value="otro">Otro</option>
                     </select>
+                    <input type="text" *ngIf="row.get('herr_prd_name')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="herr_otro_prd_name">
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="versionProducto">
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
                     <select class="form-control" id="version" formControlName="vrs_id" name="version">
                         <option value="" selected>Selecciona una opcion</option>
                         <option *ngFor="let version of versionByRow[i]" [value]="version.vrs_id">{{ version.vrs_name }}</option>
+                        <option value="otro">Otro</option>
                     </select>
+                    <input type="text" *ngIf="row.get('versionProducto.vrs_id')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe la version utilizada" formControlName="herr_otro_vrs_name">
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="certificado">Certificado</label>
@@ -46,7 +50,7 @@
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
                     <select class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
-                        <option value="" selected>Selecciona una opcion</option>    
+                        <option value="" selected>Selecciona una opcion</option>
                         <option value=1>1</option>
                         <option value=2>2</option>
                         <option value=3>3</option>
@@ -65,13 +69,13 @@
                     </button>
                     <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete</mat-icon></button>
                 </div>
-              
+
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-2 offset-md-5">
                 <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>
-                
+
             </div>
         </div>
     </form>

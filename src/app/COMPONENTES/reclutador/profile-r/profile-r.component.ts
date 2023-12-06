@@ -19,10 +19,12 @@ export class ProfileRComponent implements OnInit {
     usr_ap_pat: '',
     usr_ap_mat: '',
     usr_email: '',
+    usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
     laborales: [],
+    cargoUsuario: [],
   };
   router: any;
 
@@ -83,8 +85,8 @@ export class ProfileRComponent implements OnInit {
       this.form.disable();
     }
   }
-  
-  
+
+
 
   async submitForm(event: Event) {
     event.preventDefault();
@@ -105,6 +107,6 @@ export class ProfileRComponent implements OnInit {
       // Manejar errores
     }
   }
-  
+
 
   }
