@@ -121,8 +121,8 @@
 
 
     <mat-tab label="Observaciones">
-      
-      <mat-stepper *ngIf="mostrarStepper" headerPosition="bottom" #stepper id="miStepper">
+     
+      <mat-stepper *ngIf="mostrarStepper" headerPosition="bottom" #stepper id="miStepper" class="observacion-comentario">
               <mat-step>
           <ng-template matStepLabel>Categoría</ng-template>
           <mat-form-field>
@@ -134,16 +134,17 @@
             </mat-select>
           </mat-form-field>
           <div>
-            <button mat-button matStepperNext>Siguiente</button>
+            <button mat-button matStepperNext class ="botonprimario m-1">Siguiente</button>
           </div>
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Observación</ng-template>
           <mat-label>Escribe una observación...</mat-label>
-          <textarea matInput [(ngModel)]="nuevaObservacion" class="nuevaCat-observacion"></textarea>
+          <br>
+          <textarea matInput [(ngModel)]="nuevaObservacion" class="nueva-observacion"></textarea>
           <div>
-            <button mat-button matStepperPrevious>Regresar</button>
-            <button mat-button matStepperNext>Siguiente</button>
+            <button mat-button matStepperPrevious class ="botonprimario m-1">Regresar</button>
+            <button mat-button matStepperNext class ="botonprimario m-1">Siguiente</button>
           </div>
         </mat-step>
         <mat-step>
@@ -185,7 +186,7 @@
           </div>
         </mat-step>
       </mat-stepper>
-    
+   
       <!-- Sección para mostrar observaciones existentes -->
      
       
@@ -221,7 +222,7 @@
                 <mat-label>{{ observadores.apr_ger }}</mat-label>
                 <mat-card-subtitle>Aprobación: Operaciones</mat-card-subtitle>
                 <mat-label>{{ observadores.apr_oper }}</mat-label>
-                <mat-card-subtitle>>Aprobación: Técnica</mat-card-subtitle>
+                <mat-card-subtitle>Aprobación: Técnica</mat-card-subtitle>
                 <mat-label>{{ observadores.apr_tec }}</mat-label>
               </mat-expansion-panel>
             </mat-accordion>
