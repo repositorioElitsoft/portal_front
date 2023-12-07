@@ -26,6 +26,10 @@ import { NumberValueAccessor } from '@angular/forms';
 import { UserGuard } from 'src/app/core/guards/user.guard';
 import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
+import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
+import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 
 
@@ -42,6 +46,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
+  filtroCargo: string = '';
   originalDataCopy: Usuario[] = [];
   usuarios: any[] = [];
   categorias: CategoriaProducto[] = [];
@@ -50,17 +55,20 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-  
-
+  selectedSueldoRange: number[] = [1, 10000000];
+  selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
+  selectedEstado: string = '';
   inputContent: boolean = false;
   lastYears: number = 0;
   resultadosExam: any[]=[];
+  cargos: CargosElitsoft[] = [];
   idUser:number = 0;
+  filterCargo: string = '';
   resultados: any[] = [];
   porcentajeAprobacion:number = 0;
   filteredUsuarios:any=[]=[];
@@ -76,6 +84,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  
 
   constructor(private usuarioService: UsuarioService,
     private preguntaService:PreguntaService,
@@ -89,6 +98,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     //private _snackBar: MatSnackBar,
     private httpClient: HttpClient,
     private nivelService: NivelService,
+    private cargosElitsoftService: CargosElitsoftService,
    
     
   ) {}
@@ -97,8 +107,18 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
+    this.getCargosElitsoft();
   
   }
+
+  getCargosElitsoft() {
+    this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
+      (data: CargosElitsoft[]) => {
+        this.cargos = data;
+      }
+    )
+  }
+  
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
@@ -117,6 +137,36 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
   filterData() {
     let filteredArray = this.originalDataCopy;
+
+    // Filtro por rango de sueldos
+    const [minSueldo, maxSueldo] = this.selectedSueldoRange;
+    filteredArray = filteredArray.filter(usuario => {
+      return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
+        const sueldo = cargo.crg_usr_pret; // Asume que 'crg_usr_pret' es el sueldo pretendido por el usuario
+        return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
+      });
+    });
+
+    // Filtro por cargo
+    if (this.selectedCargo > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+      });
+    }
+
+    // Filtro por cargo
+    if (this.selectedCargo > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+      });
+    }
+
+    // Filtro por estado
+    if (this.selectedEstado && this.selectedEstado !== '') {
+      filteredArray = filteredArray.filter((usuario) => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some((estado) => estado.disponibilidad === this.selectedEstado);
+      });
+    }
 
     // Filtro por producto
     if (this.selectedProducto > 0) {
@@ -237,6 +287,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.data = filteredArray;
   }
 
+  filterByCargo() {
+    let filteredArray = this.originalDataCopy;
+
+    if (this.filterCargo) {
+      const filtroCargoLowerCase = this.filterCargo.toLowerCase();
+      filteredArray = filteredArray.filter(usuario =>
+        usuario.cargoUsuario?.some(cargo =>
+          cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
+        )
+      );
+    }
+
+    this.dataSource.data = filteredArray;
+    console.log('Usuarios filtrados', filteredArray);
+  }
+
+
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
       this.lastYears = 0;
@@ -265,6 +332,30 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     this.dataSource.data = filteredArray;
   }
+
+  filterInputCargoOcupado() {
+    let filteredArray = this.originalDataCopy;
+
+    if (this.filtroCargo) { 
+      const filtroLowerCase = this.filtroCargo.toLowerCase();
+      filteredArray = filteredArray.filter(usuario => {
+        const cargo=usuario.laborales;
+        if(cargo && cargo.length >0){
+          const primerCargo = cargo[0];
+          const cargoOcupado= primerCargo.inf_lab_crg_emp;
+          if (cargoOcupado) { 
+            return cargoOcupado.toLowerCase().includes(filtroLowerCase);
+          }
+          return false;
+          
+        }
+        return false;
+      }); 
+    }
+    this.dataSource.data = filteredArray;
+  }
+
+
 
   formatLabel(value: number): string {
     if (value >= 1000) {
@@ -322,6 +413,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           laborales: usuario.laborales,
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
+          cargoUsuario: usuario.cargoUsuario,
           
         }));
 

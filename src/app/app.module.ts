@@ -89,6 +89,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './COMPONENTES/upload-files/upload-files.component';
 import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,6 +156,7 @@ import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.componen
     AppRoutingModule,
     CommonModule,
     MatBottomSheetModule,
+    MatSliderModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,

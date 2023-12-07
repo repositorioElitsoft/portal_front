@@ -9,11 +9,20 @@
 <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()" aria-label="Exportar a CSV">
   Exportar a CSV
 </button>
-<div class="filter-container">
-  <mat-form-field class="filter-input" >
-    <input matInput (input)="filterInput()" placeholder="Filtrar por nombre..." [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0 ">
+<div class="filter-container">  
+  <div class="filter-row">
+  <mat-form-field class="filter-input">
+    <input matInput (input)="filterInput()" placeholder="Filtrar por nombre..." [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
   </mat-form-field>
+  </div>
+  <div class="filter-row">
+  <mat-form-field class="filter-input">
+    <input matInput (input)="filterInputCargoOcupado()" placeholder="Filtrar por cargo ocupado" [(ngModel)]="filtroCargo" [disabled]="selectedCategoria !== 0">
+  </mat-form-field>
+</div>
+  
 
+  <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
@@ -21,7 +30,10 @@
       <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
     </mat-select>
   </mat-form-field>
+  </div>
 
+
+  <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Producto</mat-label>
     <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getNiveles(); filterProducto()">
@@ -29,8 +41,9 @@
       <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
     </mat-select>
   </mat-form-field>
-
-  
+  </div>  
+ 
+  <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Nivel de Examen</mat-label>
     <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
@@ -38,9 +51,12 @@
       <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
     </mat-select>
   </mat-form-field>
-  
-  
+  </div>
 
+  
+  
+  
+  <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Versión</mat-label>
     <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
@@ -48,6 +64,64 @@
       <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
     </mat-select>
   </mat-form-field>
+  </div>  
+
+
+  
+
+  <!-- Filtro por rango de sueldos
+  <div class="filter-slider d-flex flex-column align-items-center">
+    <mat-label>Rango de Sueldos:</mat-label>
+    <mat-slider
+      min="1"
+      max="10000001"
+      step="100000"
+      [thumbLabel]="true"
+      [displayWith]="formatLabel"
+      (input)="filterData()"
+      discrete
+    >
+      <mat-slider-thumb [value]="selectedSueldoRange[0]"></mat-slider-thumb>
+      <mat-slider-thumb [value]="selectedSueldoRange[1]"></mat-slider-thumb>
+    </mat-slider>
+
+    <div class="d-flex justify-content-between mt-2">
+      <span>{{ selectedSueldoRange[0] | currency }}</span>
+      <span>{{ selectedSueldoRange[1] | currency }}</span>
+    </div>
+  </div>  -->
+
+  <!-- Filtro por cargo  -->
+  <div class="filter-row">
+  <mat-form-field class="filter-select">
+    <mat-label>Cargo a postular</mat-label>
+    <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+
+
+  
+  <mat-form-field class="filter-select">
+    <mat-label>Estado laboral</mat-label>
+    <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option value="disponible">Disponible</mat-option>
+      <mat-option value="no-disponible">No Disponible</mat-option>
+      <mat-option value="contratado">Contratado</mat-option>
+    </mat-select>
+  </mat-form-field>
+ 
+
+  
+
+
+  
+
+
+
 
 
 
@@ -58,6 +132,7 @@
       <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
     </mat-select>
   </mat-form-field>
+ 
   
 
 

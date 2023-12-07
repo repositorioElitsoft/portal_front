@@ -7,6 +7,7 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { DatosPersonalesComponent } from 'src/app/COMPONENTES/datos-personales/datos-personales.component';
 
 
 //se declara fuera de la clase de forma global
@@ -32,8 +33,9 @@ export class StartComponent implements OnInit {
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-  resultadosExamenes: any[] = [];
+  resultadosExamenes: number[] = [];
   resultados: any[] = [];   
+  
 
 
 
@@ -54,6 +56,7 @@ export class StartComponent implements OnInit {
     this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
+    this.obtenerResultados();
     
 
 
@@ -61,7 +64,7 @@ export class StartComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-    this.mostrarGrafico();
+    this.mostrarGrafico() ;
   }
   
   obtenerResultados() {
@@ -77,47 +80,49 @@ export class StartComponent implements OnInit {
     );
   }
   
+
   mostrarGrafico(): void {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
-      
-      // Destruir gráfico existente si hay uno
-      const existingChart = Chart.getChart(canvas);
-      if (existingChart) {
-        existingChart.destroy();
-      }
-  
       if (canvas) {
         const ctx = canvas.getContext('2d');
+        const dataParaMostrar:any = [];
+        console.log("resultados:", this.resultados);
+        this.resultados.forEach(resultado => {
+          dataParaMostrar.push({
+            label: 'Resultados del Examen',
+                data: [resultado.resultadoExamen, 5],
+                backgroundColor: ['grey', '#F57C27'],
+                borderColor: ['grey', '#F57C27'],
+                borderWidth: 1,
+                barThickness: 70 
+
+          })
+
+        })
+        console.log("datos para mostrar:",dataParaMostrar)
         if (ctx) {
           const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
               labels: ['Puntos Conseguidos'],
-              datasets: [{
-                label: 'Resultados del Examen',
-                data: [this.puntosConseguidos, this.respuestasCorrectas],
-                backgroundColor: ['grey', '#F57C27'],
-                borderColor: ['grey', '#F57C27'],
-                borderWidth: 1,
-                barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
-              }]
-            },
+              datasets: dataParaMostrar},
+            
             options: {
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0,
-                  max: parseInt(this.examen.puntosMaximos),
+                  min: 0, 
+                  max: parseInt (this.examen.puntosMaximos),
                   title: {
-                    display: true,
-                    text: 'Puntuacion Maxima',
-                    color: '#666',
-                    font: {
-                      size: 11,
-                      weight: 'bold',
-                    }
-                  },
+        display: true,
+        text: 'Puntuacion Maxima', 
+        color: '#666', 
+        font: {
+          size: 11, 
+          weight: 'bold', 
+        }
+      },
                 }
               },
               plugins: {
@@ -137,8 +142,8 @@ export class StartComponent implements OnInit {
                   annotations: {
                     line1: {
                       type: 'line',
-                      yMin: this.preguntasTotales,
-                      yMax: 4,
+                      yMin:  0,
+                      yMax: 100,
                       borderColor: 'red',
                       borderWidth: 2,
                       borderDash: [6, 6]
@@ -148,7 +153,7 @@ export class StartComponent implements OnInit {
               },
               responsive: true,
               maintainAspectRatio: false,
-              aspectRatio: 2 // Ajuste el valor según sea necesario para hacer el gráfico más estrecho
+              aspectRatio: 2 
             }
           });
         } else {
@@ -159,9 +164,6 @@ export class StartComponent implements OnInit {
       }
     }, 0);
   }
-  
-
-
 
   cargarPreguntas(){
 
@@ -312,10 +314,10 @@ export class StartComponent implements OnInit {
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
  
-    this.mostrarGrafico();
+    this.mostrarGrafico()
     
  
-    this.mostrarGrafico();
+   
     
   }
 
