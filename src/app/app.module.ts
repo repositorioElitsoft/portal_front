@@ -98,6 +98,7 @@ import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-lab
 import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -182,6 +183,7 @@ import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.
     BrowserAnimationsModule,
     MatTableModule,
     MatIconModule,
+    MatStepperModule,
     MatButtonModule,
     MatIconModule,
     MatPaginatorModule,

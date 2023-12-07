@@ -121,22 +121,111 @@
 
 
     <mat-tab label="Observaciones">
+      
+      <mat-stepper *ngIf="mostrarStepper" headerPosition="bottom" #stepper id="miStepper">
+              <mat-step>
+          <ng-template matStepLabel>Categoría</ng-template>
+          <mat-form-field>
+            <mat-label>Seleccione su categoría</mat-label>
+            <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategorySelectionChange()">
+              <mat-option *ngFor="let observadorCat of categorias" [value]="observadorCat.cat_obs_id">
+                {{ observadorCat.cat_obs_desc }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Observación</ng-template>
+          <mat-label>Escribe una observación...</mat-label>
+          <textarea matInput [(ngModel)]="nuevaObservacion" class="nuevaCat-observacion"></textarea>
+          <div>
+            <button mat-button matStepperPrevious>Regresar</button>
+            <button mat-button matStepperNext>Siguiente</button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Aprobaciones</ng-template>
+    
+          <!-- Gerencia -->
+          <mat-card-title>Gerencia</mat-card-title>
+          <mat-form-field>
+            <mat-label>Aprobación</mat-label>
+            <mat-select [(ngModel)]="observadoresCat.apr_ger">
+              <mat-option value="Si">Si</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <!-- Operación -->
+          <mat-card-title>Operación</mat-card-title>
+          <mat-form-field>
+            <mat-label>Aprobación</mat-label>
+            <mat-select [(ngModel)]="observadoresCat.apr_oper">
+              <mat-option value="Si">Si</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <!-- Técnica -->
+          <mat-card-title>Técnica</mat-card-title>
+          <mat-form-field>
+            <mat-label>Aprobación</mat-label>
+            <mat-select [(ngModel)]="observadoresCat.apr_tec">
+              <mat-option value="Si">Si</mat-option>
+              <mat-option value="No">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+    
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="guardarObservacionCat(this.usuarioData.usr_id)">Siguiente</button>
+          </div>
+        </mat-step>
+      </mat-stepper>
+    
       <!-- Sección para mostrar observaciones existentes -->
+     
+      
+      
       <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
         <!-- Caja de comentario para cada observación con clase "comentario-box" -->
+    
+       
+        
 
         <mat-card class="comentario-card">
           <mat-card>
             <mat-card-header>
               <div mat-card-avatar class="avatar">
               </div>
+
               <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
               <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
             </mat-card-header>
           </mat-card>
           <br>
           <mat-card-content>
-            <!-- Campo editable para la observación -->
+            <mat-accordion>
+              <mat-expansion-panel (opened)="panelOpenState = true"
+                                   (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                   Aprovaciones: 
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-card-subtitle>{{ observadores.cat_obs_desc }}</mat-card-subtitle>
+                <mat-card-subtitle>Aprobación: Gerencia</mat-card-subtitle>
+                <mat-label>{{ observadores.apr_ger }}</mat-label>
+                <mat-card-subtitle>Aprobación: Operaciones</mat-card-subtitle>
+                <mat-label>{{ observadores.apr_oper }}</mat-label>
+                <mat-card-subtitle>>Aprobación: Técnica</mat-card-subtitle>
+                <mat-label>{{ observadores.apr_tec }}</mat-label>
+              </mat-expansion-panel>
+            </mat-accordion>
+            <br>
             <div *ngIf="enEdicion === observadores.obs_id">
               <mat-form-field class="ancho-completo">
                 <textarea matInput [(ngModel)]="observadores.obs_desc"></textarea>
@@ -145,11 +234,10 @@
             <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
             <div class="acciones-comentario">
               <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
-              <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
-              <!-- <button mat-button color="warn" (click)="eliminarObservacion(observacion.obsrec_id)">Eliminar</button> -->
+              <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacionCat(observadores)">Guardar</button>
             </div>
           </mat-card-content>
-
+    
           <mat-card class="observacion-card">
             <mat-card-content>
               <div class="fecha-info">
@@ -165,29 +253,15 @@
             </mat-card-content>
           </mat-card>
         </mat-card>
-
-
       </div>
-
-      <!-- Caja de comentario para la nueva observación con clase "comentario-box" -->
-      <div class="comentario-box mt-2">
-        <mat-form-field appearance="outline" class="ancho-completo">
-          <mat-label>Escribe una observación...</mat-label>
-          <textarea matInput [(ngModel)]="nuevaObservacion" class="nueva-observacion"></textarea>
-        </mat-form-field>
-      </div>
-
+    
       <!-- Botón para guardar la nueva observación -->
+      <button mat-raised-button class="botonprimario m-2" (click)="agregarNuevaObservacion()">Agregar Nueva Observación</button>
 
-      <button mat-raised-button class="botonprimario  m-2" (click)="guardarObservacion()" aria-label="Añadir una Nueva Observación">Guardar Nueva Observación</button>
       <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
-
     </mat-tab>
-
-
-
-
-  </mat-tab-group>
+    </mat-tab-group>
+    
 
 
 

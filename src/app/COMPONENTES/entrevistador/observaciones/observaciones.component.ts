@@ -197,7 +197,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
       // Llamadas simultáneas a los servicios
       forkJoin({
-        observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
+        observadores: this.observacionReclutadorService.obtenerCatObservacionesPorUsuarioId(userId),
         usuario: this.usuarioService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/service/login.service';
+import { CerrarSesionComponent } from '../../shared/cerrar-sesion/cerrar-sesion.component';
 
 @Component({
   selector: 'app-sidebar-e-responsive',
@@ -40,21 +41,12 @@ export class SidebarEResponsiveComponent {
 
   shouldRun = true;
 
-  cerrarSesion(): void {
-    const confirmacion = window.confirm('¿Deseas cerrar la sesión?');
-
-    if (confirmacion) {
-      // Realiza las acciones para cerrar la sesión aquí
-      // Por ejemplo, puedes eliminar la cookie de autenticación o realizar una solicitud HTTP al servidor para cerrar la sesión.
-
-      // Ejemplo: Elimina una cookie llamada 'token'
-      document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-      // Redirige al usuario a la página de inicio de sesión
-      window.location.href = '/iniciar-sesion';
-    } else {
-      console.log('Sesión no cerrada.');
-    }
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CerrarSesionComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 
 }
