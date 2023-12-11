@@ -18,6 +18,7 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 export class ViewPerfilUsuarioEComponent implements OnInit {
   categoriasFiltradas: any[] = [];
   mostrarStepper: boolean = false;
+  selectedObservacionId: number | null = null;
   usuarioData: any;
   panelOpenState = false;
   observadoresData: CatObservacionDTO[];
@@ -107,7 +108,7 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
 
   agregarNuevaObservacion() {
     this.mostrarStepper = true;
-  
+  this.selectedObservacionId = null ;
     // Espera a que la vista se actualice
     setTimeout(() => {
       // Busca el elemento del stepper en el DOM
@@ -164,71 +165,12 @@ cargarObservaciones() {
   );
 }
 
-// Función para guardar una nueva observación
-guardarObservacion() {
-  if (!this.nuevaObservacion.trim()) {
-    console.error('La observación no puede estar vacía.');
-    this.openSnackBar('La observación no puede estar vacía', 'Cerrar');
-    return;
-  }
 
-  // Obtener observaciones actuales del servidor
-  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.usr_id).subscribe(
-    (observaciones) => {
-      if (observaciones.length >= 10) {
-        console.error('Se ha alcanzado el límite máximo de observaciones.');
-        this.openSnackBar('Se ha alcanzado el límite máximo de observaciones', 'Cerrar');
-        return;
-      }
-
-      // Proceder con la creación de la nueva observación si el límite no se ha alcanzado
-      const nuevaObservacion: CatObservacionDTO = {
-        cat_obs_id:0,
-        cat_obs_desc: '',
-        obs_id: 0,
-        usr_id: 0,
-        usr_nom: '',
-        usr_email: '',
-        usr_ap_pat: '',
-        obs_desc: this.nuevaObservacion,
-        obs_fec_cre: new Date(),
-        obs_fec_mod: new Date(),
-        apr_tec: '',
-        apr_oper: '',
-        apr_ger: '',
-        usr_id_obs: this.usuarioGuardado.usr_id ?? 0,
-        usr_id_obs_mod: this.usuarioGuardado.usr_id ?? 0,
-        usr1_id: 0,
-        usr2_email: '',
-        usr2_ap_pat: '',
-        usr2_nom: '',
-        usr2_id: 0,
-      };
-
-      // Llama al servicio para guardar la nueva observación en el backend
-      this.observacionService.guardarObservacionCat(nuevaObservacion, this.usuarioData.usr_id, nuevaObservacion.usr_id_obs,nuevaObservacion.cat_obs_id,
-          nuevaObservacion.usr_id_obs_mod).subscribe(
-        (resultado) => {
-          console.log('Observación guardada con éxito', resultado);
-          this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
-          this.nuevaObservacion = ''; // Limpia el área de texto
-          this.openSnackBar('Observación guardada con éxito', 'Cerrar');
-        },
-        (error) => {
-          console.error('Error al guardar la observación:', error);
-          this.openSnackBar('Error al guardar la observación', 'Cerrar');
-        }
-      );
-    },
-    (error) => {
-      console.error('Error al cargar las observaciones:', error);
-      this.openSnackBar('Error al cargar las observaciones', 'Cerrar');
-    }
-  );
-}
 
 
 editarObservacion(obs_id: number) {
+
+  this.selectedObservacionId = obs_id;
   console.log('Iniciando la edición de la observación', obs_id);
 
   // Imprimir el estado actual para comparar
@@ -247,30 +189,6 @@ editarObservacion(obs_id: number) {
 
 
 
-
-
-actualizarObservacionCat(catObservacion: CatObservacionDTO) {
-  if (!catObservacion.obs_desc.trim()) {
-    console.error('La descripción de la observación no puede estar vacía.');
-    // this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
-    return;
-  }
-  catObservacion.usr_id_obs_mod = this.usuarioGuardado?.usr_id ?? 0;
-  this.observacionService.actualizarObservacionCat(catObservacion.obs_id, catObservacion.cat_obs_id, catObservacion.usr_id_obs_mod, catObservacion).subscribe(
-    resultado => {
-      console.log('Observación actualizada con éxito', resultado);
-      // this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
-      this.enEdicion = null;
-
-      this.mostrarStepper = false;
-      this.cargarObservaciones();
-    },
-    error => {
-      console.error('Error al actualizar la observación:', error);
-      // this.openSnackBar('Error al actualizar la observación', 'Cerrar');
-    }
-  );
-}
 
     salir() {
     this.dialogRef.close();
@@ -313,7 +231,10 @@ actualizarObservacionCat(catObservacion: CatObservacionDTO) {
     // Usar los valores de usr_id_obs y usr_id_obs_mod del usuarioGuardado
     this.observadoresCat.usr_id_obs = this.usuarioGuardado.usr_id ?? 0;
     this.observadoresCat.usr_id_obs_mod = this.usuarioGuardado.usr_id ?? 0;
-  
+    if(
+      !this.selectedObservacionId
+
+    ){
     // Llama al servicio para guardar la nueva observación en el backend
     this.observacionService.guardarObservacionCat(
       this.observadoresCat,
@@ -333,8 +254,21 @@ actualizarObservacionCat(catObservacion: CatObservacionDTO) {
         console.error('Error al guardar la observación:', error);
         this.openSnackBar('Error al guardar la observación', 'Cerrar');
       }
-    );
-  }
+    );}
+
+    else{ 
+      this.observacionService.actualizarObservacionCat(this.selectedObservacionId, this.observadoresCat.cat_obs_id,this.observadoresCat.usr_id_obs_mod, this.observadoresCat).subscribe({
+      next: (data) => {
+        console.log('Observación actualizada con éxito', data);
+        this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
+        this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
+        this.mostrarStepper = false; // Ocultar el stepper
+      },
+      error:(err)=>{
+        console.log(err)
+      }
+     })
+    }}
   
 // Opcional: Método para resetear los valores del stepper
 resetearFormularioStepper() {

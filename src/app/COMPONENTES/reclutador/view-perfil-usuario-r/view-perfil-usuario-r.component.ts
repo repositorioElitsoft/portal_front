@@ -30,7 +30,8 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     usr_email: '',
     usr_tel: '',
   };
-
+  
+  panelOpenState = false;
 
   observadores: ObservacionDTO ={
 

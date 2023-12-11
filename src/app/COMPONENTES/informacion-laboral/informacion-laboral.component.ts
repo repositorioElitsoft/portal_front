@@ -68,10 +68,11 @@ export class InformacionLaboralComponent implements OnInit {
   }
 
   obtenerLaboralesGuardados(){
+    console.log('obteniendo datos, espere, estamos chambeando para ud')
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
       next: (data) =>{
         this.laborales = data;
-        console.log(this.laborales)
+        console.log('estos son los laborales :',this.laborales)
       },
       error: (err)=>{
         console.log(err)
@@ -187,6 +188,7 @@ export class InformacionLaboralComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Modal cerrado', result);
       // Aquí puedes realizar acciones después de cerrar el modal si es necesario
+      this.obtenerLaboralesGuardados();
     });
   }
 
@@ -249,15 +251,8 @@ export class InformacionLaboralComponent implements OnInit {
     this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
       (laboralGuardada: Laboral) => {
         console.log('Información laboral guardada:', laboralGuardada);
+        this.obtenerLaboralesGuardados();
         this.creationMode = false;
-        this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
-          next:(data)=>{
-            this.laborales = data;
-          },
-          error:(err)=>{
-            console.log(err);
-          }
-        })
       },
       (error) => {
         console.error('Error al guardar información laboral:', error);

@@ -183,6 +183,8 @@
           <div>
             <button mat-button matStepperPrevious class="botonprimario m-1">Regresar</button>
             <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.usr_id)">Guardar</button>
+            <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.usr_id)">Actualizar</button>
+
           </div>
         </mat-step>
       </mat-stepper>
@@ -213,7 +215,7 @@
                                    (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                   Aprovaciones: 
+                   Aprobaciones: 
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-card-subtitle>{{ observadores.cat_obs_desc }}</mat-card-subtitle>
@@ -234,7 +236,7 @@
             <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
             <div class="acciones-comentario">
               <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
-              <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacionCat(observadores)">Guardar</button>
+              
             </div>
           </mat-card-content>
     

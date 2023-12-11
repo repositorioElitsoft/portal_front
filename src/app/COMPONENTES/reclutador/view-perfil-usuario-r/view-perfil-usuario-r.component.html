@@ -134,6 +134,22 @@
                       <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
                     </mat-card-header>
                   </mat-card>
+                  <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true"
+                                         (closed)="panelOpenState = false">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                         Aprobaciones: 
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                      <mat-card-subtitle>Aprobación: Gerencia</mat-card-subtitle>
+                      <mat-label>{{ observadores.apr_ger }}</mat-label>
+                      <mat-card-subtitle>Aprobación: Operaciones</mat-card-subtitle>
+                      <mat-label>{{ observadores.apr_oper }}</mat-label>
+                      <mat-card-subtitle>Aprobación: Técnica</mat-card-subtitle>
+                      <mat-label>{{ observadores.apr_tec }}</mat-label>
+                    </mat-expansion-panel>
+                  </mat-accordion>
                   <br>
                   <mat-card-content>
                     <!-- Campo editable para la observación -->
