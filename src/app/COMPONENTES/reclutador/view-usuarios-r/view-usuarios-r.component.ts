@@ -29,6 +29,8 @@ import { ObservacionService } from 'src/app/service/observacionreclutador.servic
 import { forkJoin } from 'rxjs';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
+import { LaboralService } from 'src/app/service/laboral.service';
+import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 
 
 const ELEMENT_DATA: Usuario[] = [];

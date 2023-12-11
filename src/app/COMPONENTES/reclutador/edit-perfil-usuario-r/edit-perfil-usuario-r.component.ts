@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewUsuariosRComponent } from '../view-usuarios-r/view-usuarios-r.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
-import { UserEditarDTO, UserEditarDTO2 } from 'src/app/interface/user.interface';
+import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
 
 @Component({
   selector: 'app-edit-perfil-usuario-r',
@@ -31,7 +31,8 @@ export class EditPerfilUsuarioRComponent implements OnInit {
     usr_email:'',
     usr_tel:'',
     usr_pass:'',
-    usr_rol:''
+    usr_rol:'',
+    usr_direcc: ''
 
   }
 
