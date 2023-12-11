@@ -103,12 +103,11 @@
         <mat-icon>menu</mat-icon>
       </button>
       <!-- Nuevo botón de editar perfil -->
-      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" matTooltip="Editar perfil" (click)="openEditProfileDialog($event)" aria-label="Editar perfil">
-        <mat-icon>edit</mat-icon>
+      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" matTooltip="Editar perfil" (click)="openEditProfileDialog($event)" aria-label="Editar perfil">        <mat-icon>edit</mat-icon>
       </button>
 
 
-      <button class="ms-3" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Descarga CV" [disabled]="!element.cvPath" id="{{element.usr_id}}" (click)="openBottomSheet()">
+      <button class="ms-3" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Descarga CV" [disabled]="!element.cvPath" id="{{element.usr_id}}" (click)="openBottomSheet($event)">
         <mat-icon>picture_as_pdf</mat-icon>
       </button>
     </td>

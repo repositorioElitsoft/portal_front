@@ -462,15 +462,41 @@ openBottomSheet(event: any) {
 }
 
 
+openEditProfileDialog(event: any): void {
+  // Obtiene el ID desde el elemento del botón que dispara el evento
+  const id = event.target.parentElement.id;
+   
+  if (id) {
+    // Llama al servicio para obtener los datos del usuario usando el ID
+    this.usuarioService.getUsuarioId(id).subscribe({
+      next: (data) => {
+        console.log('Data llegada:', data);
+        // Abre el diálogo con los datos obtenidos
+        const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
+          width: '800px', 
+          height: '700px',
+          data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+        });
  
-  
-  openUserDialog(event: any) {
-
-
-
-
-
-  }
-
-
-}
+        // Maneja el resultado después de que el diálogo se cierre
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log(`Dialog result: ${result}`);
+          // Aquí puedes manejar el resultado del diálogo
+        });
+      },
+      error: (error) => {
+        console.log(error);
+        // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+      }
+    });
+  } else {
+    console.error('No se pudo obtener el ID del usuario');
+  }
+ }
+   
+ 
+ }
+ function saveAs(blob: Blob, arg1: string) {
+   throw new Error('Function not implemented.');
+ }
+ 
