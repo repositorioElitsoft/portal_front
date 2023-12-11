@@ -181,8 +181,8 @@
           </mat-form-field>
     
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="guardarObservacionCat(this.usuarioData.usr_id)">Siguiente</button>
+            <button mat-button matStepperPrevious class="botonprimario m-1">Regresar</button>
+            <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.usr_id)">Guardar</button>
           </div>
         </mat-step>
       </mat-stepper>
@@ -193,9 +193,7 @@
       
       <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
         <!-- Caja de comentario para cada observación con clase "comentario-box" -->
-    
-       
-        
+        <div *ngIf="enEdicion !== observadores.obs_id">
 
         <mat-card class="comentario-card">
           <mat-card>
@@ -205,6 +203,7 @@
 
               <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
               <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
+              <mat-card-subtitle>Id Tarjeta: {{ observadores.obs_id}}</mat-card-subtitle>
             </mat-card-header>
           </mat-card>
           <br>
@@ -254,6 +253,7 @@
             </mat-card-content>
           </mat-card>
         </mat-card>
+      </div>
       </div>
     
       <!-- Botón para guardar la nueva observación -->

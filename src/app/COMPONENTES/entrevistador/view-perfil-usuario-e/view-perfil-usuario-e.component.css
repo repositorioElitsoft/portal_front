@@ -222,3 +222,41 @@ font-size: 0.85em; /* Tamaño del subtítulo */
 
 
 
+.observacion-comentario .mat-stepper-vertical, .observacion-comentario .mat-stepper-horizontal {
+  max-width: 800px; /* Ajusta al ancho que prefieras */
+  margin: auto;
+}
+
+
+.observacion-comentario mat-step-header {
+  background-color: #f4f4f4; /* Color de fondo */
+  color:  #F57C27; /* Color del texto */
+  /* Otros estilos que necesites */
+}
+
+.observacion-comentario .mat-step-label {
+  font-weight: bold; /* Texto en negrita */
+}
+
+.observacion-comentario mat-form-field {
+  width: 100%; /* Ancho completo */
+  margin-bottom: 15px; /* Espaciado */
+}
+.observacion-comentario .botonprimario {
+  background-color:  #F57C27;/* Color azul de LinkedIn */
+  color: white;
+  border-radius: 4px; /* Bordes redondeados */
+}
+
+.observacion-comentario .nueva-observacion {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+@media (max-width: 768px) {
+  .observacion-comentario .mat-stepper-vertical, .observacion-comentario .mat-stepper-horizontal {
+    max-width: 100%;
+  }
+}

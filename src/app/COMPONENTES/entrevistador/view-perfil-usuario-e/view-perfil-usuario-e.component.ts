@@ -25,6 +25,7 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
   observaciones: CatObservacionDTO[] = [];
   observacionesSubscription!: Subscription;
   enEdicion: any;
+  isEditing: boolean = false;
   nombresUsuarios: Object[] = []; // Inicializado con un arreglo vacío
   usuarioGuardado: UserSesionDTO = {
     usr_id:0,
@@ -227,16 +228,21 @@ guardarObservacion() {
 }
 
 
-  editarObservacion(obs_id: number) {
-    console.log('Iniciando la edición de la observación', obs_id);
+editarObservacion(obs_id: number) {
+  console.log('Iniciando la edición de la observación', obs_id);
 
-    // Antes de cambiar el estado, puedes imprimir el estado actual para comparar
-    console.log('Estado actual de enEdicion antes de la edición:', this.enEdicion);
+  // Imprimir el estado actual para comparar
+  console.log('Estado actual de enEdicion antes de la edición:', this.enEdicion);
 
-    this.enEdicion = obs_id;
+  // Establecer el ID del observador que está siendo editado
+  this.enEdicion = obs_id;
 
-    // Después de cambiar el estado, imprime el nuevo estado para confirmar el cambio
-    console.log('Estado actualizado de enEdicion después de la edición:', this.enEdicion);
+  // Cambiar el estado de edición a verdadero
+  this.isEditing = true;
+  this.mostrarStepper = true;
+  // Imprimir el nuevo estado para confirmar el cambio
+  console.log('Estado actualizado de enEdicion después de la edición:', this.enEdicion);
+
 }
 
 
@@ -244,31 +250,27 @@ guardarObservacion() {
 
 
 actualizarObservacionCat(catObservacion: CatObservacionDTO) {
-  // Verificar si la descripción de la observación está vacía
   if (!catObservacion.obs_desc.trim()) {
-      console.error('La descripción de la observación no puede estar vacía.');
-      this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
-      return;
+    console.error('La descripción de la observación no puede estar vacía.');
+    // this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
+    return;
   }
-
-  // Establece el usr_id_obs_mod al ID del usuario actual
   catObservacion.usr_id_obs_mod = this.usuarioGuardado?.usr_id ?? 0;
+  this.observacionService.actualizarObservacionCat(catObservacion.obs_id, catObservacion.cat_obs_id, catObservacion.usr_id_obs_mod, catObservacion).subscribe(
+    resultado => {
+      console.log('Observación actualizada con éxito', resultado);
+      // this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
+      this.enEdicion = null;
 
-  this.observacionService.actualizarObservacionCat( catObservacion.obs_id ,catObservacion.cat_obs_id,catObservacion.usr_id_obs_mod,catObservacion).subscribe(
-      (resultado) => {
-          console.log('Observación actualizada con éxito', resultado);
-          this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
-          this.enEdicion = null; // Salir del modo de edición
-          this.cargarObservaciones(); // Opcional, para recargar las observaciones
-      },
-      (error) => {
-          console.error('Error al actualizar la observación:', error);
-          this.openSnackBar('Error al actualizar la observación', 'Cerrar');
-      }
+      this.mostrarStepper = false;
+      this.cargarObservaciones();
+    },
+    error => {
+      console.error('Error al actualizar la observación:', error);
+      // this.openSnackBar('Error al actualizar la observación', 'Cerrar');
+    }
   );
 }
-
-
 
     salir() {
     this.dialogRef.close();
