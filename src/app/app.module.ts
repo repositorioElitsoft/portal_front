@@ -101,6 +101,7 @@ import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.
 import {MatStepperModule} from '@angular/material/stepper';
 import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 
+import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 
 @NgModule({
   declarations: [ 
@@ -170,7 +171,8 @@ import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfi
     EditPerfilUsuarioRComponent,
     NumericOnlyDirective,
     ViewUsuariosRComponent,
-    ],
+      SendMailToUsersDialogueComponent,
+  ],
   imports: [
     MatCheckboxModule,
     MatButtonModule,

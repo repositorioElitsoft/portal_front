@@ -12,8 +12,8 @@ export class EmailRService {
 
   constructor(private http: HttpClient) { }
 
-  enviarCorreo(toEmail: string, motivo: string): Observable<any> {
-    const body = { toEmail, motivo };
+  enviarCorreo(emails: string[], subject: string): Observable<any> {
+    const body = { emails, subject };
     return this.http.post(`${this.url}/enviar-correo`, body);
   }
 
