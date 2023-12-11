@@ -8,15 +8,19 @@ import { MatSort, Sort} from '@angular/material/sort';
 import { Usuario } from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
+
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
+import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
+
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
-import { LaboralService } from 'src/app/service/laboral.service';
+
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';

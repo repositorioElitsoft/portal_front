@@ -99,9 +99,11 @@ import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.componen
 import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
 import {MatStepperModule} from '@angular/material/stepper';
+import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
+
 
 @NgModule({
-  declarations: [
+  declarations: [ 
     AppComponent,
     RegistrarComponent,
     IniciarSesionComponent,
@@ -116,7 +118,6 @@ import {MatStepperModule} from '@angular/material/stepper';
     DashboardRComponent,
     WelcomeReclutadorComponent,
     ProfileRComponent,
-    ViewUsuariosRComponent,
     ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
