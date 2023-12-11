@@ -24,3 +24,11 @@
   height: 80px; /* Ajusta la altura según tus preferencias */
   font-size: 12px; /* Ajusta el tamaño de fuente según tus preferencias */
 }
+.custom-range {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #333;
+  font-size: 14px;
+}

@@ -85,13 +85,15 @@ export class StartComponent implements OnInit {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
       if (canvas) {
+        canvas.width = 1200; // Ajusta según tus necesidades
+        canvas.height = 600; // Ajusta según tus necesidades
         const ctx = canvas.getContext('2d');
         const dataParaMostrar:any = [];
         console.log("resultados:", this.resultados);
         this.resultados.forEach(resultado => {
           dataParaMostrar.push({
             label: 'Resultados del Examen',
-                data: [resultado.resultadoExamen, 5],
+                data: [resultado.resultadoExamen, resultado.examen.titulo],
                 backgroundColor: ['grey', '#F57C27'],
                 borderColor: ['grey', '#F57C27'],
                 borderWidth: 1,
@@ -113,7 +115,7 @@ export class StartComponent implements OnInit {
                 y: {
                   beginAtZero: true,
                   min: 0, 
-                  max: parseInt (this.examen.puntosMaximos),
+                  max: 100,
                   title: {
         display: true,
         text: 'Puntuacion Maxima', 

@@ -53,9 +53,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   productos: Producto[] = [];
   niveles : Niveles []=[];
   versiones: VersionProducto[] = [];
+  selectedfechaPostulacion: Date | null = null;
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-  selectedSueldoRange: number[] = [1, 10000000];
+  selectedSueldoRange: number[] = [1, 3000000];
   selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
@@ -74,6 +75,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filteredUsuarios:any=[]=[];
   selectedOption:String = '';
   selectedNivel : number = 0;
+  isSueldoSliderEnabled = true;
   porcentajesAprobacion = [
     { value: 100, label: '100%' },
     { value: [70, 99], label: '70% - 99%' },
@@ -118,6 +120,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     )
   }
+  toggleSueldoSlider() {
+    this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
+  }
   
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
@@ -154,12 +159,43 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     }
 
-    // Filtro por cargo
-    if (this.selectedCargo > 0) {
-      filteredArray = filteredArray.filter(usuario => {
-        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
-      });
-    }
+    //filtro por fecha postulacion
+
+if (this.selectedfechaPostulacion) {
+  console.log("seleccioné fecha");
+  // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
+  const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
+
+   // Filtrar los cargos por fecha de postulación
+   filteredArray = filteredArray.filter(usuario => {
+    const cargos = usuario.cargoUsuario
+    console.log("cargos", cargos);
+        // Check if cargos is defined and has at least one element
+        if (cargos && cargos.length > 0) {
+          console.log("cargos es mayor que 1");
+          // Assuming fechaPostulacion is a property of CargoUsuario
+          const primerCargo = cargos[0];
+          const fechaPostulacion = primerCargo.fechaPostulacion;
+
+           // Verificar si la propiedad fechaPostulacion existe y no es undefined
+      if(!fechaPostulacion)return false;
+      console.log("tipo de la fecha:",typeof fechaPostulacion );
+      console.log("fecha obtenida:", fechaPostulacion );
+      // Comparar solo la parte de la fecha
+       console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
+       console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
+       return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
+    
+      }
+
+      return false;
+    
+  });
+ 
+  // Imprimir el array de cargos filtrados
+  console.log("Cargos filtrados por fecha de postulación:", this.cargos);
+}
+
 
     // Filtro por estado
     if (this.selectedEstado && this.selectedEstado !== '') {
@@ -223,9 +259,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           
           // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
           if (cumpleFiltrosAnteriores) {
-            
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
-              //console.log(`Porcentaje de aprobación para el usuario ${resultado.usuarioId} en el producto ${resultado.examen.productos[0].prd_nom}: ${porcentajeAprobacion}`);
               return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
                     porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
             } else {
@@ -431,7 +465,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   
 
-
+  clearDate() {
+    this.selectedfechaPostulacion = null;
+    this.filterData();
+  }
 
   exportToCSV() {
     const dataToExport = this.dataSource.data;

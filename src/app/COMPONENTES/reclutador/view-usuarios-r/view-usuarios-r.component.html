@@ -68,30 +68,30 @@
 
 
   
-
   <!-- Filtro por rango de sueldos
   <div class="filter-slider d-flex flex-column align-items-center">
     <mat-label>Rango de Sueldos:</mat-label>
-    <mat-slider
+    <mat-slider-range>
       min="1"
       max="10000001"
       step="100000"
       [thumbLabel]="true"
       [displayWith]="formatLabel"
-      (input)="filterData()"
-      discrete
-    >
-      <mat-slider-thumb [value]="selectedSueldoRange[0]"></mat-slider-thumb>
-      <mat-slider-thumb [value]="selectedSueldoRange[1]"></mat-slider-thumb>
-    </mat-slider>
+      (change)="filterData()"
+      [(value)]="selectedSueldoRange">
+    </mat-slider-range>
 
     <div class="d-flex justify-content-between mt-2">
       <span>{{ selectedSueldoRange[0] | currency }}</span>
       <span>{{ selectedSueldoRange[1] | currency }}</span>
     </div>
-  </div>  -->
+  </div> -->
+
+  
+  
 
   <!-- Filtro por cargo  -->
+  
   <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Cargo a postular</mat-label>
@@ -101,9 +101,12 @@
     </mat-select>
   </mat-form-field>
   </div>
-
-
   
+
+
+
+
+  <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Estado laboral</mat-label>
     <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
@@ -113,6 +116,7 @@
       <mat-option value="contratado">Contratado</mat-option>
     </mat-select>
   </mat-form-field>
+  </div>
  
 
   
@@ -124,7 +128,7 @@
 
 
 
-
+  <div class="filter-row">
   <mat-form-field class="filter-select">
     <mat-label>Porcentaje de aprobación</mat-label>
     <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
@@ -132,14 +136,51 @@
       <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
     </mat-select>
   </mat-form-field>
+  </div>
  
   
+  <div class="filter-row">
+    <mat-form-field class="filter-datepicker">
+      <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <!-- Botón para limpiar la fecha -->
+    <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
+      <mat-icon>clear</mat-icon>
+    </button>
+    </mat-form-field>
+    </div>  
 
 
-
-
+  <!-- </div>
+  <div class="filter-slider d-flex flex-column align-items-center">
+    <mat-label>Rango de Sueldos:</mat-label>
+    
+        <mat-slider min="1" max="3000001" (input)="filterData()" discrete [displayWith]="formatLabel">
+          <div class="custom-range">
+            {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} - 
+            {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
+          </div>
+          <input [(ngModel)]="selectedSueldoRange[0]" matSliderThumb>
+          <input [(ngModel)]="selectedSueldoRange[1]" matSliderThumb>
+        </mat-slider>
+      </div> -->
+   
+    <div class="filter-slider d-flex flex-column align-items-center">
+      <mat-label>Rango de Sueldos: </mat-label>
+      <mat-slider min="1" max="3000001" (input)="filterData()" [displayWith]="formatLabel" >
+        <div class="custom-range">
+          {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} - 
+          {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
+        </div>
+        <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
 
   
+
+
   
 
     <div class="filter-slider d-flex flex-column align-items-center">
@@ -151,7 +192,6 @@
     </div>
 
     <div class="filter-slider d-flex flex-column align-items-center">
-
       <div class="d-flex">
           <div class="d-flex flex-column align-items-center mb-4 me-4">
             <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
