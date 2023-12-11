@@ -99,7 +99,7 @@ import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.componen
 import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
 import {MatStepperModule} from '@angular/material/stepper';
-
+import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -165,6 +165,7 @@ import {MatStepperModule} from '@angular/material/stepper';
     ObservacionesComponent,
     SidebarEResponsiveComponent,
     ViewPerfilUsuarioEComponent,
+    SendMailToUsersDialogueComponent,
   ],
   imports: [
     MatCheckboxModule,

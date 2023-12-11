@@ -25,6 +25,8 @@ import { ObservacionService } from 'src/app/service/observacionreclutador.servic
 import { forkJoin } from 'rxjs';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -36,7 +38,7 @@ const ELEMENT_DATA: Usuario[] = [];
 })
 
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
   idUser: string = '';
@@ -50,6 +52,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
   cargos: CargoUsuario[] = [];
+  selectedCheckbox: FormGroup;
+
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
@@ -61,7 +65,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
     private observacionReclutadorService: ObservacionService,
     private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -74,19 +80,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar,
     private cargoService: CargosUsuarioService
 
-  ) {}
+  ) {
+    this.selectedCheckbox = this.fb.group({
+    });
+  }
+
 
 
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.getCategories();
-    this.obtenerResultadosByUser(); 
+    this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
     .subscribe((data: CargoUsuario[]) => {
       this.cargos = data;
       console.log("Datos de cargos recibidos por cargo usuario:", data); // Agregar este console.log
     });
-  
+
 
   }
 
@@ -95,8 +105,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  
-  
+
+
 
   filterData() {
     let filteredArray = this.originalDataCopy;
@@ -264,6 +274,16 @@ obtenerUsuarios(): void {
           cvPath: usuario.cvPath,
         }));
 
+        const controlNames = Object.keys(this.selectedCheckbox.controls);
+        controlNames.forEach(controlName => {
+          this.selectedCheckbox.removeControl(controlName);
+        });
+
+
+        usuarios.forEach(usuario =>{
+          this.selectedCheckbox.addControl(String(usuario.usr_email), this.fb.control(false))
+        });
+
       this.originalDataCopy = usuarios;
       this.dataSource.data = usuarios;
     },
@@ -272,7 +292,31 @@ obtenerUsuarios(): void {
     }
   );
 }
-  
+
+
+  onSendMailPressed(){
+    const values = this.selectedCheckbox.value
+
+    const emails: any = []
+
+    for (const key in values) {
+      if (!values.hasOwnProperty(key)){continue}
+      const value = values[key];
+      if (!value){continue}
+      emails.push(key)
+    }
+
+    const dialogRef = this.dialog.open(SendMailToUsersDialogueComponent, {
+      data: {emails},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+
+  }
+
+
   exportToCSV() {
     const dataToExport = this.dataSource.data;
     const csv = Papa.unparse(dataToExport);
@@ -326,7 +370,11 @@ obtenerUsuarios(): void {
         console.error('Error al obtener resultados del usuario: ', error);
       }
     );
+
   }
+
+
+
 
 
   obtenerResultadosByUser() {
@@ -456,8 +504,8 @@ openBottomSheet(event: any) {
 }
 
 
- 
-  
+
+
   openUserDialog(event: any) {
 
 
