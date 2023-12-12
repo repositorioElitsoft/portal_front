@@ -26,7 +26,7 @@ export class StartComponent implements OnInit {
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
   preguntasTotales = 0;
-
+  idUser: number = 0;
   esEnviado = false;
   timer:any;
   examen!: any;
@@ -52,20 +52,31 @@ export class StartComponent implements OnInit {
       ) { }
 
   ngOnInit(): void {
-    this.prevenirElBotonDeRetroceso();
-    this.examenId = this.route.snapshot.params['exam_id'];
-    console.log(this.examenId);
-    this.cargarPreguntas();
-    this.obtenerResultados();
     
-
+    this.usuarioService.obtenerUsuarioGuardado().subscribe(
+      (usuarioGuardado ) => {
+        if (usuarioGuardado) {
+          this.idUser = usuarioGuardado.usr_id ?? 0;
+          console.log('ID del usuario:', this.idUser);
+        }
+        this.prevenirElBotonDeRetroceso();
+        this.examenId = this.route.snapshot.params['exam_id'];
+        console.log(this.examenId);
+        this.cargarPreguntas();
+        this.obtenerResultados();
+        
+      },
+      (error) => {
+        console.error('Error al obtener el usuario guardado:', error);
+      }
+    );
 
   }
-
 
   ngAfterViewInit(): void {
     this.mostrarGrafico() ;
   }
+
   
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
@@ -85,46 +96,84 @@ export class StartComponent implements OnInit {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
       if (canvas) {
-        canvas.width = 1200; // Ajusta según tus necesidades
+        canvas.width = 800; // Ajusta según tus necesidades
         canvas.height = 600; // Ajusta según tus necesidades
         const ctx = canvas.getContext('2d');
-        const dataParaMostrar:any = [];
+        const dataParaMostrar: any = [];
         console.log("resultados:", this.resultados);
-        this.resultados.forEach(resultado => {
-          dataParaMostrar.push({
-            label: 'Resultados del Examen',
-                data: [resultado.resultadoExamen, resultado.examen.titulo],
-                backgroundColor: ['grey', '#F57C27'],
-                borderColor: ['grey', '#F57C27'],
-                borderWidth: 1,
-                barThickness: 70 
-
-          })
-
-        })
-        console.log("datos para mostrar:",dataParaMostrar)
+  
+        // Filtra los resultados del usuario y examen
+        const resultadosFiltrados = this.resultados.filter(resultado => {
+          console.log("resultados:", resultado.usuarioId);
+          return resultado.usuarioId === this.idUser;
+        });
+  
+        // Filtra los resultados para el examen específico incluyendo el examen actual
+        const examenesFiltrados = resultadosFiltrados.filter(resultado => {
+          console.log("id examen:", this.examenId);
+          console.log("id examen 2:", resultado.examen.examenId);
+          return String(resultado.examen.examenId) === String(this.examenId);
+        });
+        this.vecesEnviado = examenesFiltrados.length;
+  
+        console.log("examenes filtrados:", examenesFiltrados);
+        console.log("resultados filtrados:", resultadosFiltrados);
+  
+        // Toma los últimos 3 exámenes, incluyendo el examen actual
+        const ultimosTresExamenes = examenesFiltrados.slice(-3);
+  
+        ultimosTresExamenes.forEach(resultado => {
+          dataParaMostrar.push(resultado.resultadosExamen);
+        });
+  
+       
+        console.log("datos para mostrar:", dataParaMostrar);
+        const labelsConPuntos = dataParaMostrar.map((valor: string) => valor + ' puntos');
+        const puntuacionMaxima = examenesFiltrados[0]?.examen.puntuacionMaxima; 
+  
         if (ctx) {
           const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: ['Puntos Conseguidos'],
-              datasets: dataParaMostrar},
-            
+              labels: labelsConPuntos,
+              datasets: [{
+                label: 'Resultados de tus ultimos 3 examenes realizados',
+                data: dataParaMostrar,
+                backgroundColor: ['orange'],
+                borderColor: ['grey', '#F57C27'],
+                borderWidth: 1,
+                barThickness: 70
+              }],
+            },
             options: {
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0, 
-                  max: 100,
+                  min: 0,
+                  max: puntuacionMaxima,
                   title: {
-        display: true,
-        text: 'Puntuacion Maxima', 
-        color: '#666', 
-        font: {
-          size: 11, 
-          weight: 'bold', 
-        }
-      },
+                    display: true,
+                    text: 'Puntuacion Maxima',
+                    color: '#666',
+                    font: {
+                      size: 11,
+                      weight: 'bold',
+                    }
+                  },
+                },
+                x: {
+                  beginAtZero: true,
+                  min: 0,
+                  max: 10,
+                  title: {
+                    display: true,
+                    text: 'Puntuacion Conseguida',
+                    color: '#666',
+                    font: {
+                      size: 11,
+                      weight: 'bold',
+                    }
+                  },
                 }
               },
               plugins: {
@@ -155,7 +204,7 @@ export class StartComponent implements OnInit {
               },
               responsive: true,
               maintainAspectRatio: false,
-              aspectRatio: 2 
+              aspectRatio: 2
             }
           });
         } else {
@@ -164,8 +213,15 @@ export class StartComponent implements OnInit {
       } else {
         console.error('Elemento canvas no encontrado');
       }
-    }, 0);
+    }, 1);
   }
+  
+  
+  
+
+
+
+
 
   cargarPreguntas(){
 

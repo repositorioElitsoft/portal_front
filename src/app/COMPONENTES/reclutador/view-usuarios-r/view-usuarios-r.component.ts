@@ -71,6 +71,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   idUser:number = 0;
   filterCargo: string = '';
   resultados: any[] = [];
+  usuarioGuardado: any []=[];
   porcentajeAprobacion:number = 0;
   filteredUsuarios:any=[]=[];
   selectedOption:String = '';
@@ -102,16 +103,25 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private nivelService: NivelService,
     private cargosElitsoftService: CargosElitsoftService,
    
+   
     
   ) {}
 
   ngOnInit(): void {
+
+    
+
+
     this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
     this.getCargosElitsoft();
   
   }
+
+  
+  
+
 
   getCargosElitsoft() {
     this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
@@ -124,6 +134,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   
+
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
