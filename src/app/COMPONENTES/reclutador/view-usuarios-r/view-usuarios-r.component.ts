@@ -53,8 +53,6 @@ const ELEMENT_DATA: Usuario[] = [];
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  resultados  = [];
-  idUser: string = '';
   filtro: string = '';
   filtroPuntaje: string = '';
   filtroCargo: string = '';
@@ -67,9 +65,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedfechaPostulacion: Date | null = null;
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-  cargos: CargoUsuario[] = [];
   selectedCheckbox: FormGroup;
-  selectedSueldoRange: number[] = [1, 3000000];
+  selectedSueldoRange: number[] = [1, 5000000];
   selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
@@ -80,10 +77,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   inputContent: boolean = false;
   lastYears: number = 0;
   resultadosExam: any[]=[];
-  cargosc: CargosElitsoft[] = [];
-  idUserc:number = 0;
+  cargos: CargosElitsoft[] = [];
+  idUser:number = 0;
   filterCargo: string = '';
-  resultadosc: any[] = [];
+  resultados: any[] = [];
   porcentajeAprobacion:number = 0;
   filteredUsuarios:any=[]=[];
   selectedOption:String = '';
@@ -142,7 +139,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   getCargosElitsoft() {
     this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
       (data: CargosElitsoft[]) => {
-        this.cargosc = data;
+        this.cargos = data;
       }
     )
   }
@@ -154,7 +151,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
-        this.resultadosc = data;
+        this.resultados = data;
         console.log('Data:',data);
         this.filterData();
       },
@@ -254,15 +251,15 @@ if (this.selectedfechaPostulacion) {
 
 
 // Filtro por resultado del usuario
-  if (this.resultadosc !== undefined) {
-  this.preguntaService.obtenerResultadosByUser(this.idUserc).subscribe(
+  if (this.resultados !== undefined) {
+  this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
     (resultadoUsuario) => {
       console.log('Resultado obtenido del servicio:', resultadoUsuario);
-      console.log('Resultados actuales en el componente:', this.resultadosc);
+      console.log('Resultados actuales en el componente:', this.resultados);
 
       filteredArray = filteredArray.filter(usuario => {
         // Usar una función de flecha para preservar el contexto
-        return resultadoUsuario === this.resultadosc;
+        return resultadoUsuario === this.resultados;
       });
 
       console.log('Array filtrado:', filteredArray);
@@ -276,10 +273,10 @@ if (this.selectedfechaPostulacion) {
    
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
-      filteredArray = filteredArray.filter(resultadosc => {
-        return this.resultadosc.find(resultadoc => {
-          const nivelDificultad = resultadoc.examen.nivelDificultad;
-          const productos = resultadoc.examen.productos;
+      filteredArray = filteredArray.filter(resultados => {
+        return this.resultados.find(resultado => {
+          const nivelDificultad = resultado.examen.nivelDificultad;
+          const productos = resultado.examen.productos;
 
           console.log('nivel examen:', nivelDificultad);
           console.log('nivel seleccionado:', this.selectedNivel);
@@ -294,17 +291,17 @@ if (this.selectedfechaPostulacion) {
     // Filtro por porcentaje de aprobación
     if (this.selectedPorcentajeAprobacion) {
       filteredArray = filteredArray.filter(usuario => {
-        const resultadosDeUsuario= this.resultadosc.filter(resultadoc => {
-          return resultadoc.usuarioId === usuario.usr_id;
+        const resultadosDeUsuario= this.resultados.filter(resultado => {
+          return resultado.usuarioId === usuario.usr_id;
        
         });
         
-        const resultadoFinal = resultadosDeUsuario.find(resultadoc =>{
+        const resultadoFinal = resultadosDeUsuario.find(resultado =>{
 
-          const resultadoExamen = resultadoc.resultadosExamen;
-          const puntosMaximos = resultadoc.examen.puntosMaximos;
-          const nivelDificultad = resultadoc.examen.nivelDificultad;
-          const productos = resultadoc.examen.productos;
+          const resultadoExamen = resultado.resultadosExamen;
+          const puntosMaximos = resultado.examen.puntosMaximos;
+          const nivelDificultad = resultado.examen.nivelDificultad;
+          const productos = resultado.examen.productos;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
           
   
@@ -317,7 +314,7 @@ if (this.selectedfechaPostulacion) {
               return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
                     porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
             } else {
-              console.log("usuario", resultadoc.usuarioId);
+              console.log("usuario", resultado.usuarioId);
               console.log("% aprobacion", porcentajeAprobacion);
               console.log("% aprobacion seleccionado", this.selectedPorcentajeAprobacion.value);
               console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
@@ -557,7 +554,7 @@ obtenerUsuarios(): void {
 
   }
 
-  
+
 
   clearDate() {
     this.selectedfechaPostulacion = null;
@@ -797,10 +794,37 @@ openEditProfileDialog(event: any): void {
     console.error('No se pudo obtener el ID del usuario');
   }
  }
+
+
+ clearFilters(): void {
+  this.filtro = '';
+  this.filtroPuntaje = '';
+  this.filtroCargo = '';
+  this.selectedfechaPostulacion = null;
+  this.selectedAniosExpRange = [1, 10];
+  this.isIrrelevant = true;
+  this.selectedSueldoRange = [1, 5000000];
+  this.selectedCargo = 0;
+  this.selectedCategoria = 0;
+  this.selectedProducto = 0;
+  this.selectedVersion = 0;
+  this.selectedAniosExp = 0;
+  this.selectedProductoNombre = "";
+  this.selectedEstado = '';
+  this.inputContent = false;
+  this.lastYears = 0;
+  this.resultadosExam = [];
+  this.selectedOption = '';
+  this.selectedNivel = 0;
+  this.isSueldoSliderEnabled = true;
+  this.selectedPorcentajeAprobacion = null;
+  this.porcentajeAprobacion = 0;
+
+  // Vuelve a cargar o filtrar los datos según sea necesario
+  this.filterData();
+}
+
+
    
  
  }
- function saveAs(blob: Blob, arg1: string) {
-   throw new Error('Function not implemented.');
- }
- 

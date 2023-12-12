@@ -3,12 +3,18 @@
     <button mat-raised-button class="botonprimario m-2"  (click)="botonEstadistica($event)">
       <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
     </button>
+
+    <button mat-button (click)="clearFilters()" class="botonprimario m-2" >Limpiar Filtros 
+      <mat-icon>delete</mat-icon></button>
+    
     <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
       <mat-icon>get_app</mat-icon> Exportar a CSV
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
 
+
+<!-- Filtro por Nombre -->
 <div class="filter-container p-4">
   <mat-form-field class="filter-input" appearance="fill">
     <mat-label>Filtrar por nombre...</mat-label>
@@ -16,6 +22,8 @@
   </mat-form-field>
 
 
+
+  <!-- Filtro por Cargo Ocupado -->
   <div class="filter-row">
     <mat-form-field class="filter-input">
       <input matInput (input)="filterInputCargoOcupado()" placeholder="Filtrar por cargo ocupado" [(ngModel)]="filtroCargo" [disabled]="selectedCategoria !== 0">
@@ -23,6 +31,46 @@
   </div>
 
 
+ <!-- Cargo a Postular -->
+ <div class="filter-row">
+  <mat-form-field class="filter-select">
+    <mat-label>Cargo a postular</mat-label>
+    <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
+      <mat-option value="">Seleccione un opción</mat-option>
+      <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+  
+
+    <!-- Filtro por Estado Laboral-->
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Estado laboral</mat-label>
+        <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
+          <mat-option value="">Seleccione un opción</mat-option>
+          <mat-option value="disponible">Disponible</mat-option>
+          <mat-option value="no-disponible">No Disponible</mat-option>
+          <mat-option value="contratado">Contratado</mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+     
+  
+             <!-- Filtro por Fecha de Postulación -->
+             <div class="filter-row">
+              <mat-form-field class="filter-datepicker">
+                <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <!-- Botón para limpiar la fecha -->
+              <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
+                <mat-icon>clear</mat-icon>
+              </button>
+              </mat-form-field>
+              </div>  
+
+  <!-- Filtro por Categoria -->
   <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
@@ -31,7 +79,7 @@
     </mat-select>
   </mat-form-field>
 
-
+  <!-- Filtro por Producto -->
   <div class="filter-row">
     <mat-form-field class="filter-select">
       <mat-label>Producto</mat-label>
@@ -42,7 +90,7 @@
     </mat-form-field>
     </div>  
 
-
+ <!-- Filtro por Nivel -->
     <div class="filter-row">
       <mat-form-field class="filter-select">
         <mat-label>Nivel de Examen</mat-label>
@@ -53,6 +101,8 @@
       </mat-form-field>
       </div>
     
+
+      <!-- Filtro por Versión -->
       <div class="filter-row">
         <mat-form-field class="filter-select">
           <mat-label>Versión</mat-label>
@@ -63,32 +113,10 @@
         </mat-form-field>
         </div>  
       
+       
+ 
         
-        <div class="filter-row">
-        <mat-form-field class="filter-select">
-          <mat-label>Cargo a postular</mat-label>
-          <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
-            <mat-option value="">Seleccione un opción</mat-option>
-            <mat-option *ngFor="let cargo of cargosc" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        </div>
-        
-
-        <div class="filter-row">
-          <mat-form-field class="filter-select">
-            <mat-label>Estado laboral</mat-label>
-            <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
-              <mat-option value="">Seleccione un opción</mat-option>
-              <mat-option value="disponible">Disponible</mat-option>
-              <mat-option value="no-disponible">No Disponible</mat-option>
-              <mat-option value="contratado">Contratado</mat-option>
-            </mat-select>
-          </mat-form-field>
-          </div>
-         
-        
-        
+           <!-- Filtro por Porcentaje Aprobación -->
           <div class="filter-row">
           <mat-form-field class="filter-select">
             <mat-label>Porcentaje de aprobación</mat-label>
@@ -100,34 +128,25 @@
           </div>
 
 
-          <div class="filter-row">
-            <mat-form-field class="filter-datepicker">
-              <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-              <!-- Botón para limpiar la fecha -->
-            <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
-              <mat-icon>clear</mat-icon>
-            </button>
-            </mat-form-field>
-            </div>  
-         
 
+         
+            <!-- Filtro por Rango de Sueldo-->
+          
             <div class="filter-slider d-flex flex-column align-items-center">
               <mat-label>Rango de Sueldos: </mat-label>
-              <mat-slider min="1" max="3000001" (input)="filterData()" [displayWith]="formatLabel" >
+              <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel" >
                 <div class="custom-range">
                   {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} - 
                   {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
                 </div>
                 <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
-                <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+                <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
               </mat-slider>
             </div>
-        
-
        
 
+       
+               <!-- Filtro por Rango Años Experiencia -->
     <div class="filter-slider d-flex flex-column align-items-center m-2">
       <mat-label>Rango de años de Experiencia: </mat-label>
       <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
