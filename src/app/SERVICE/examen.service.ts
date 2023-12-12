@@ -43,6 +43,8 @@ export class ExamenService {
     return this.http.get(`${this.url}/examen/usuario/`);
   }
 
+
+  
   public obtenerExamenesActivosDeUnaCategoria(categoriaId:any){
     return this.http.get(`${this.url}/examen/categoria/${categoriaId}`);
   }

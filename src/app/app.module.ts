@@ -183,6 +183,7 @@ import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-
     AppRoutingModule,
     CommonModule,
     MatBottomSheetModule,
+    MatSliderModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -230,6 +231,7 @@ import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+      
     }
   ],
   bootstrap: [AppComponent],

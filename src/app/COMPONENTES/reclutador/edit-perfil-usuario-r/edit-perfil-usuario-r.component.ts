@@ -85,6 +85,10 @@ export class EditPerfilUsuarioRComponent implements OnInit {
       this.userDataForm.reset();
       // Otros ajustes para el caso de un nuevo usuario
     }
+
+
+
+    
   }
   guardarUsuario() {
     if (this.userDataForm.invalid) {

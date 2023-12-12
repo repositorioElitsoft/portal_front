@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { DatosPersonalesComponent } from 'src/app/COMPONENTES/datos-personales/datos-personales.component';
 
 
 //se declara fuera de la clase de forma global
@@ -31,7 +33,9 @@ export class StartComponent implements OnInit {
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-
+  resultadosExamenes: number[] = [];
+  resultados: any[] = [];   
+  
 
 
 
@@ -43,7 +47,8 @@ export class StartComponent implements OnInit {
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
     private preguntaService:PreguntaService,
-    private examenService:ExamenService
+    private examenService:ExamenService,
+    private usuarioService: UsuarioService
       ) { }
 
   ngOnInit(): void {
@@ -51,6 +56,7 @@ export class StartComponent implements OnInit {
     this.examenId = this.route.snapshot.params['exam_id'];
     console.log(this.examenId);
     this.cargarPreguntas();
+    this.obtenerResultados();
     
 
 
@@ -58,41 +64,65 @@ export class StartComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
-    this.mostrarGrafico();
+    this.mostrarGrafico() ;
   }
+  
+  obtenerResultados() {
+    this.usuarioService.obtenerResultados().subscribe(
+      (data) => {
+        this.resultados = data;
+        console.log('Data:',data);
+        
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  
+
   mostrarGrafico(): void {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
       if (canvas) {
+        canvas.width = 1200; // Ajusta según tus necesidades
+        canvas.height = 600; // Ajusta según tus necesidades
         const ctx = canvas.getContext('2d');
+        const dataParaMostrar:any = [];
+        console.log("resultados:", this.resultados);
+        this.resultados.forEach(resultado => {
+          dataParaMostrar.push({
+            label: 'Resultados del Examen',
+                data: [resultado.resultadoExamen, resultado.examen.titulo],
+                backgroundColor: ['grey', '#F57C27'],
+                borderColor: ['grey', '#F57C27'],
+                borderWidth: 1,
+                barThickness: 70 
+
+          })
+
+        })
+        console.log("datos para mostrar:",dataParaMostrar)
         if (ctx) {
           const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
               labels: ['Puntos Conseguidos'],
-              datasets: [{
-                label: 'Resultados del Examen',
-                data: [this.puntosConseguidos, this.respuestasCorrectas],
-                backgroundColor: ['grey', '#F57C27'],
-                borderColor: ['grey', '#F57C27'],
-                borderWidth: 1,
-                  barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
-
-              }]
-            },
+              datasets: dataParaMostrar},
+            
             options: {
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0, // Define el valor mínimo del eje Y
-                  max: parseInt (this.examen.puntosMaximos),
+                  min: 0, 
+                  max: 100,
                   title: {
         display: true,
-        text: 'Puntuacion Maxima', // Aquí escribes el texto de tu etiqueta
-        color: '#666', // Puedes personalizar el color
+        text: 'Puntuacion Maxima', 
+        color: '#666', 
         font: {
-          size: 11, // Tamaño de la fuente
-          weight: 'bold', // Peso de la fuente
+          size: 11, 
+          weight: 'bold', 
         }
       },
                 }
@@ -114,8 +144,8 @@ export class StartComponent implements OnInit {
                   annotations: {
                     line1: {
                       type: 'line',
-                      yMin:  this.preguntasTotales,
-                      yMax: 4,
+                      yMin:  0,
+                      yMax: 100,
                       borderColor: 'red',
                       borderWidth: 2,
                       borderDash: [6, 6]
@@ -125,7 +155,7 @@ export class StartComponent implements OnInit {
               },
               responsive: true,
               maintainAspectRatio: false,
-              aspectRatio: 2 // Ajuste el valor según sea necesario para hacer el gráfico más estrecho
+              aspectRatio: 2 
             }
           });
         } else {
@@ -136,9 +166,6 @@ export class StartComponent implements OnInit {
       }
     }, 0);
   }
-  
-
-
 
   cargarPreguntas(){
 
@@ -268,7 +295,7 @@ export class StartComponent implements OnInit {
 
     this.esEnviado = true;
       
-    console.log("tis preguntas", this.preguntas)
+    console.log("preguntas", this.preguntas)
     this.preguntas.forEach((p:any) => {
       console.log("The p es", p)
 
@@ -294,10 +321,10 @@ export class StartComponent implements OnInit {
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
  
-    this.mostrarGrafico();
+    this.mostrarGrafico()
     
  
-    this.mostrarGrafico();
+   
     
   }
 
