@@ -8,25 +8,28 @@ import { MatSort, Sort} from '@angular/material/sort';
 import { Usuario } from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
-
+import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
-import { LaboralService } from 'src/app/service/laboral.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { forkJoin } from 'rxjs';
+import { LaboralService } from 'src/app/service/laboral.service';
+import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
+import { Dialog } from '@angular/cdk/dialog';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
+
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -284,6 +287,7 @@ obtenerUsuarios(): void {
           this.selectedCheckbox.addControl(String(usuario.usr_email), this.fb.control(false))
         });
 
+
       this.originalDataCopy = usuarios;
       this.dataSource.data = usuarios;
     },
@@ -504,15 +508,41 @@ openBottomSheet(event: any) {
 }
 
 
+openEditProfileDialog(event: any): void {
+  // Obtiene el ID desde el elemento del botón que dispara el evento
+  const id = event.target.parentElement.id;
+
+  if (id) {
+    // Llama al servicio para obtener los datos del usuario usando el ID
+    this.usuarioService.getUsuarioId(id).subscribe({
+      next: (data) => {
+        console.log('Data llegada:', data);
+        // Abre el diálogo con los datos obtenidos
+        const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
+          width: '800px',
+          height: '700px',
+          data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+        });
+
+        // Maneja el resultado después de que el diálogo se cierre
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log(`Dialog result: ${result}`);
+          // Aquí puedes manejar el resultado del diálogo
+        });
+      },
+      error: (error) => {
+        console.log(error);
+        // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+      }
+    });
+  } else {
+    console.error('No se pudo obtener el ID del usuario');
+  }
+ }
 
 
-  openUserDialog(event: any) {
+ }
+ function saveAs(blob: Blob, arg1: string) {
+   throw new Error('Function not implemented.');
+ }
 
-
-
-
-
-  }
-
-
-}

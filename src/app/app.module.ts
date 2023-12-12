@@ -22,7 +22,6 @@ import { SidebarRComponent } from './COMPONENTES/reclutador/sidebar-r/sidebar-r.
 import { DashboardRComponent } from './COMPONENTES/reclutador/dashboard-r/dashboard-r.component';
 import { WelcomeReclutadorComponent } from './COMPONENTES/reclutador/welcome-reclutador/welcome-reclutador.component';
 import { ProfileRComponent } from './COMPONENTES/reclutador/profile-r/profile-r.component';
-import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r/view-usuarios-r.component';
 import { ViewPerfilUsuarioRComponent } from './COMPONENTES/reclutador/view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatosPersonalesComponent } from './COMPONENTES/datos-personales/datos-personales.component';
@@ -99,7 +98,10 @@ import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.componen
 import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
 import {MatStepperModule} from '@angular/material/stepper';
+import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
+import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r/view-usuarios-r.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -116,7 +118,6 @@ import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-
     DashboardRComponent,
     WelcomeReclutadorComponent,
     ProfileRComponent,
-    ViewUsuariosRComponent,
     ViewPerfilUsuarioRComponent,
     DatosPersonalesComponent,
     HerramientasTecnologiasComponent,
@@ -124,6 +125,7 @@ import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-
     InformacionAcademicaComponent,
     CargoUsuarioComponent,
     AppNavbarComponent,
+    EditPerfilUsuarioRComponent,
     AppSidebarComponent,
     CerrarSesionComponent,
     AppSidebar2Component,
@@ -165,6 +167,8 @@ import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-
     ObservacionesComponent,
     SidebarEResponsiveComponent,
     ViewPerfilUsuarioEComponent,
+    NumericOnlyDirective,
+    ViewUsuariosRComponent,
     SendMailToUsersDialogueComponent,
   ],
   imports: [

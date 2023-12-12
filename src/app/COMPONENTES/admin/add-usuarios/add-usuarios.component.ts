@@ -84,7 +84,8 @@ export class AddUsuariosComponent implements OnInit {
   
 
 
-  guardarUsuario() {
+  guardarUsuario() 
+  {
     if (this.userDataForm.invalid) {
       console.log('Ventana Cerrada');
       return;
