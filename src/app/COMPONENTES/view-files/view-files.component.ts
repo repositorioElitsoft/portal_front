@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { UploadFilesService } from 'src/app/service/upload-files.service';
 import { FileDescriptor } from 'src/app/interface/file-descriptor.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { UsuarioService } from 'src/app/service/usuario.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-view-files',
@@ -20,7 +21,7 @@ export class ViewFilesComponent implements OnInit {
   isLoading = false;
 
   usuarioGuardado: Usuario = {
-    usr_id: 29,  // Asegúrate de tener un ID de usuario válido
+    usr_id: 0,  // Asegúrate de tener un ID de usuario válido
     usr_rut: '',
     usr_nom: '',
     usr_ap_pat: '',
@@ -39,7 +40,10 @@ export class ViewFilesComponent implements OnInit {
     
   };
 
-  constructor(private uploadService: UploadFilesService) { }
+  constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA,) 
+  public data: any,
+  private dialogRef: MatDialogRef<ViewFilesComponent>
+     )  {     this.usuarioGuardado.usr_id = data.userId; }
 
   ngOnInit(): void {
     this.loadFiles();
@@ -121,5 +125,10 @@ export class ViewFilesComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+
+  closeWindow(): void {
+    this.dialogRef.close();
   }
 }

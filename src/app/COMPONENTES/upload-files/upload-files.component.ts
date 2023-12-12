@@ -5,7 +5,7 @@ import { UploadFilesService } from 'src/app/service/upload-files.service';
 import { FileDescriptor } from 'src/app/interface/file-descriptor.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog'; // Importa MAT_DIALOG_DATA
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'; // Importa MAT_DIALOG_DATA
 
 @Component({
   selector: 'app-upload-files',
@@ -37,7 +37,8 @@ export class UploadFilesComponent implements OnInit {
     laborales: []
   };
 
-  constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA) public data: any) { 
+  constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA) public data: any,
+  private dialogRef: MatDialogRef<UploadFilesComponent>) { 
     this.usuarioGuardado.usr_id = data.userId; 
     console.log('User ID recibido en UploadFilesComponent:', data.userId); // Agrega este console.log
 }
@@ -123,5 +124,9 @@ export class UploadFilesComponent implements OnInit {
         this.isLoading = false;
       }
     );
+  }
+
+  closeWindow(): void {
+    this.dialogRef.close();
   }
 }

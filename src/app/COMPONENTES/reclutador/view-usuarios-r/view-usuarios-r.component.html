@@ -1,50 +1,28 @@
-<mat-card class="dashboard-panel">  </mat-card>
+<mat-card class="dashboard-panel"> <mat-toolbar>
+  <mat-toolbar-row>
+    <button mat-raised-button class="botonprimario m-2"  (click)="botonEstadistica($event)">
+      <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
+    </button>
+    <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
+      <mat-icon>get_app</mat-icon> Exportar a CSV
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
 
-  <mat-toolbar>
-    <mat-toolbar-row>
-      <button mat-raised-button class="botonprimario m-2"  (click)="botonEstadistica($event)">
-        <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
-      </button>
-      <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
-        <mat-icon>get_app</mat-icon> Exportar a CSV
-      </button>
-    </mat-toolbar-row>
-  </mat-toolbar>
-
-
-  <div class="filter-container p-4">
-    <mat-form-field class="filter-input" appearance="fill">
-      <mat-label>Filtrar por nombre...</mat-label>
-      <input matInput (input)="filterInput()" [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
-    </mat-form-field>
-
-
-
-
-    <mat-form-field class="filter-select">
-      <mat-label>Categoria</mat-label>
-      <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
-        <mat-option value="">Seleccione un opción</mat-option>
-        <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-<button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()" aria-label="Exportar a CSV">
-  Exportar a CSV
-</button>
-<div class="filter-container">  
-  <div class="filter-row">
-  <mat-form-field class="filter-input">
-    <input matInput (input)="filterInput()" placeholder="Filtrar por nombre..." [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
+<div class="filter-container p-4">
+  <mat-form-field class="filter-input" appearance="fill">
+    <mat-label>Filtrar por nombre...</mat-label>
+    <input matInput (input)="filterInput()" [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
   </mat-form-field>
+
+
+  <div class="filter-row">
+    <mat-form-field class="filter-input">
+      <input matInput (input)="filterInputCargoOcupado()" placeholder="Filtrar por cargo ocupado" [(ngModel)]="filtroCargo" [disabled]="selectedCategoria !== 0">
+    </mat-form-field>
   </div>
-  <div class="filter-row">
-  <mat-form-field class="filter-input">
-    <input matInput (input)="filterInputCargoOcupado()" placeholder="Filtrar por cargo ocupado" [(ngModel)]="filtroCargo" [disabled]="selectedCategoria !== 0">
-  </mat-form-field>
-</div>
-  
 
-  <div class="filter-row">
+
   <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
@@ -52,175 +30,133 @@
       <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
     </mat-select>
   </mat-form-field>
-  </div>
 
 
   <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Producto</mat-label>
-    <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getNiveles(); filterProducto()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>  
- 
-  <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Nivel de Examen</mat-label>
-    <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
-      <mat-option value="">Seleccione un nivel</mat-option>
-      <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>
-
-  
-  
-  
-  <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Versión</mat-label>
-    <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>  
-
-  
-  <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Cargo a postular</mat-label>
-    <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let cargo of cargosc" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>
-  
-
-
-
-
-  <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Estado laboral</mat-label>
-    <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option value="disponible">Disponible</mat-option>
-      <mat-option value="no-disponible">No Disponible</mat-option>
-      <mat-option value="contratado">Contratado</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>
- 
-
-  
-
-
-  
-
-
-
-
-
-  <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Porcentaje de aprobación</mat-label>
-    <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>
- 
-  
-  <div class="filter-row">
-    <mat-form-field class="filter-datepicker">
-      <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-      <!-- Botón para limpiar la fecha -->
-    <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
-      <mat-icon>clear</mat-icon>
-    </button>
-    </mat-form-field>
-    </div>  
-
-
-    <div class="filter-slider d-flex flex-column align-items-center">
-      <mat-label>Rango de Sueldos: </mat-label>
-      <mat-slider min="1" max="3000001" (input)="filterData()" [displayWith]="formatLabel" >
-        <div class="custom-range">
-          {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} - 
-          {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
-        </div>
-        <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
-        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
-      </mat-slider>
-    </div>
-
-  
-
-
-  
-
     <mat-form-field class="filter-select">
       <mat-label>Producto</mat-label>
-      <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getVersion(selectedProducto); filterProducto()">
+      <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getNiveles(); filterProducto()">
         <mat-option value="">Seleccione un opción</mat-option>
         <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
       </mat-select>
     </mat-form-field>
-
-    <mat-form-field class="filter-select">
-      <mat-label>Versión</mat-label>
-      <mat-select [disabled]="!selectedProducto" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
-        <mat-option value="">Seleccione un opción</mat-option>
-        <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    </div>  
 
 
-      <div class="filter-slider d-flex flex-column align-items-center">
-        <mat-label>Rango de años de Experiencia: </mat-label>
-        <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
-          <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
-          <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
-        </mat-slider>
-    <div class="filter-slider d-flex flex-column align-items-center">
-      <div class="d-flex">
-          <div class="d-flex flex-column align-items-center mb-4 me-4">
-            <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
-          </div>
-          <mat-form-field class="d-flex flex-column align-items-center">
-            <mat-label>Años de experiencia reciente</mat-label>
-            <section class="example-section">
-              <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
-            </section>
-          </mat-form-field>
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Nivel de Examen</mat-label>
+        <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
+          <mat-option value="">Seleccione un nivel</mat-option>
+          <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
+        </mat-select>
+      </mat-form-field>
       </div>
-
-      <div class="filter-slider d-flex flex-column align-items-center">
-
-        <div class="d-flex">
-            <div class="d-flex flex-column align-items-center mb-4 me-4">
-              <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
-            </div>
-            <mat-form-field class="d-flex flex-column align-items-center">
-              <mat-label>Años de experiencia reciente</mat-label>
-              <section class="example-section">
-                <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
-              </section>
-            </mat-form-field>
+    
+      <div class="filter-row">
+        <mat-form-field class="filter-select">
+          <mat-label>Versión</mat-label>
+          <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
+            <mat-option value="">Seleccione un opción</mat-option>
+            <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>  
+      
+        
+        <div class="filter-row">
+        <mat-form-field class="filter-select">
+          <mat-label>Cargo a postular</mat-label>
+          <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
+            <mat-option value="">Seleccione un opción</mat-option>
+            <mat-option *ngFor="let cargo of cargosc" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+          </mat-select>
+        </mat-form-field>
         </div>
+        
 
-      </div>
+        <div class="filter-row">
+          <mat-form-field class="filter-select">
+            <mat-label>Estado laboral</mat-label>
+            <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
+              <mat-option value="">Seleccione un opción</mat-option>
+              <mat-option value="disponible">Disponible</mat-option>
+              <mat-option value="no-disponible">No Disponible</mat-option>
+              <mat-option value="contratado">Contratado</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+         
+        
+        
+          <div class="filter-row">
+          <mat-form-field class="filter-select">
+            <mat-label>Porcentaje de aprobación</mat-label>
+            <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
+              <mat-option value="">Seleccione un opción</mat-option>
+              <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+
+
+          <div class="filter-row">
+            <mat-form-field class="filter-datepicker">
+              <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <!-- Botón para limpiar la fecha -->
+            <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
+              <mat-icon>clear</mat-icon>
+            </button>
+            </mat-form-field>
+            </div>  
+         
+
+            <div class="filter-slider d-flex flex-column align-items-center">
+              <mat-label>Rango de Sueldos: </mat-label>
+              <mat-slider min="1" max="3000001" (input)="filterData()" [displayWith]="formatLabel" >
+                <div class="custom-range">
+                  {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} - 
+                  {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
+                </div>
+                <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
+                <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+              </mat-slider>
+            </div>
+        
+
+       
+
+    <div class="filter-slider d-flex flex-column align-items-center m-2">
+      <mat-label>Rango de años de Experiencia: </mat-label>
+      <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
+        <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
+      </mat-slider>  
+
+    <div class="d-flex">
+        <div class="d-flex flex-column align-items-center mb-4 me-4">
+          <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
+        </div>
+        <mat-form-field class="d-flex flex-column align-items-center">
+          <mat-label>Años de experiencia reciente</mat-label>
+          <section class="example-section">
+            <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
+          </section>
+        </mat-form-field>
+    </div>
 
   </div>
 
 
+</div>
+
+
+
+</mat-card>
+
+ 
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
          class="mat-elevation-z8">
   
