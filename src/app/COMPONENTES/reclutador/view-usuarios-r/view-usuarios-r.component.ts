@@ -116,6 +116,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private httpClient: HttpClient,
     private nivelService: NivelService,
     private cargosElitsoftService: CargosElitsoftService,
+   
     private cargoService: CargosUsuarioService
 
   ) {
@@ -126,19 +127,16 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
+    
+
+
     this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
     this.cargoService.listarCargos()
     this.getCargosElitsoft();
-    this.obtenerResultadosByUser(); 
-    this.cargoService.listarCargos()
-    .subscribe((data: CargoUsuario[]) => {
-      this.cargosc = data;
-      console.log("Datos de cargos recibidos por cargo usuario:", data); // Agregar este console.log
-    });
-
-   
+  
   }
 
   getCargosElitsoft() {
@@ -152,6 +150,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   
+
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
