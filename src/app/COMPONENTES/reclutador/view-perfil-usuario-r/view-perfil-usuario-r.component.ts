@@ -18,7 +18,6 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   observadoresData: ObservacionDTO[];
   nuevaObservacion: string = '';
   observaciones: ObservacionDTO[] = [];
-  private observacionesSubscription!: Subscription;
   enEdicion: any;
   nombresUsuarios: Object[] = []; // Inicializado con un arreglo vacío
   usuarioGuardado: UserSesionDTO = {
@@ -79,6 +78,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   ngOnInit(): void {
 
     this.ObtenerUsuarioGuardado();
+    this.cargarObservaciones();
 
   }
 
@@ -181,27 +181,30 @@ guardarObservacion() {
 actualizarObservacion(observadores: ObservacionDTO) {
   // Verificar si la descripción de la observación está vacía
   if (!observadores.obs_desc.trim()) {
-      console.error('La descripción de la observación no puede estar vacía.');
-      this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
-      return;
+    console.error('La descripción de la observación no puede estar vacía.');
+    this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
+    return;
   }
 
   // Establece el usr_id_obs_mod al ID del usuario actual
   observadores.usr_id_obs_mod = this.usuarioGuardado?.usr_id ?? 0;
 
   this.observacionService.actualizarObservacionRec(observadores.usr_id, observadores, observadores.usr_id_obs_mod).subscribe(
-      (resultado) => {
-          console.log('Observación actualizada con éxito', resultado);
-          this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
-          this.enEdicion = null; // Salir del modo de edición
-          this.cargarObservaciones(); // Opcional, para recargar las observaciones
-      },
-      (error) => {
-          console.error('Error al actualizar la observación:', error);
-          this.openSnackBar('Error al actualizar la observación', 'Cerrar');
-      }
+    (resultado) => {
+      console.log('Observación actualizada con éxito', resultado);
+      this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
+      this.enEdicion = null; // Salir del modo de edición
+
+      // Cargar nuevamente las observaciones actualizadas y mostrarlas
+      this.cargarObservaciones();
+    },
+    (error) => {
+      console.error('Error al actualizar la observación:', error);
+      this.openSnackBar('Error al actualizar la observación', 'Cerrar');
+    }
   );
 }
+
 
 
 

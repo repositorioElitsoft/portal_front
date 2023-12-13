@@ -165,8 +165,7 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
   
           dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
-            // Manejar el resultado del diálogo
-          });
+            this.getExamCategories();          });
         },
         error: (error) => {
           console.log(error);

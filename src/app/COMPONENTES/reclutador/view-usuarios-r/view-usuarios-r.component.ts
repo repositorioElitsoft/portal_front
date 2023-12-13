@@ -745,6 +745,7 @@ obtenerUsuarios(): void {
 
           dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
+             this.obtenerUsuarios();
           });
         },
         error: (error) => {
@@ -785,7 +786,7 @@ openEditProfileDialog(event: any): void {
         // Maneja el resultado después de que el diálogo se cierre
         dialogRef.afterClosed().subscribe((result) => {
           console.log(`Dialog result: ${result}`);
-          // Aquí puedes manejar el resultado del diálogo
+          this.obtenerUsuarios();
         });
       },
       error: (error) => {

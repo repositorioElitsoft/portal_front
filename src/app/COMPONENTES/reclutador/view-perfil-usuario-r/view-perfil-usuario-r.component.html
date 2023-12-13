@@ -130,8 +130,9 @@
                     <mat-card-header>
                       <div mat-card-avatar class="avatar">
                       </div>
-                      <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
-                      <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
+                      <mat-card-subtitle style="color: #000000">Autor de la observación: </mat-card-subtitle>
+                      <mat-card-title class="mb-2">{{ observadores.usr_nom }} {{ observadores.usr_ap_pat }}</mat-card-title>
+                      <mat-card-subtitle class="mb-2">Modificado por: {{ observadores.usr2_nom }} {{ observadores.usr2_ap_pat }}</mat-card-subtitle>
                     </mat-card-header>
                   </mat-card>
                   <mat-accordion>

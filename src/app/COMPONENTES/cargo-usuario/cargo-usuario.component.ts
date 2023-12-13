@@ -9,6 +9,7 @@ import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/service/notification.service';
 import { Pipe, PipeTransform } from '@angular/core';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -91,14 +92,23 @@ export class CargoUsuarioComponent implements OnInit {
 
   successMessage() {
     const newCargo: CargoUsuario = this.form.value;
-  
+    
     // Supongamos que usuarioId está disponible en tu newCargo
     const usuarioId = newCargo.usuarioId;
   
-   
+    // Mostrar SweetAlert personalizado
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos enviados exitosamente',
+      text: 'Gracias por postular en Elitsoft',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' // Aplica la clase al cuadro de diálogo
+      }
+    });
   }
-
-
+  
 
 
 

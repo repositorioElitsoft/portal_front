@@ -14,6 +14,7 @@ import { VersionProducto } from 'src/app/interface/version.interface';
 import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/advertencia-eliminar.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AddUsuariosComponent } from "../add-usuarios/add-usuarios.component";
+import { EditPerfilUsuarioAdminComponent } from "../edit-perfil-usuario-admin/edit-perfil-usuario-admin.component";
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -115,10 +116,42 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
     });
   }
 
-    editUser(event: any){
-      const id = event.target.parentElement.id
 
-      this.router.navigate(["/admin/actualizar-usuario/"+id])
-    }
+
+
+
+  
+    editUser(event: any): void {
+      // Obtiene el ID desde el elemento del botón que dispara el evento
+      const id = event.target.parentElement.id;
+       
+      if (id) {
+        // Llama al servicio para obtener los datos del usuario usando el ID
+        this.usuarioService.getUsuarioId(id).subscribe({
+          next: (data) => {
+            console.log('Data llegada:', data);
+            // Abre el diálogo con los datos obtenidos
+            const dialogRef = this.dialog.open(EditPerfilUsuarioAdminComponent, {
+              width: '800px', 
+              height: '700px',
+              data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+            });
+     
+            // Maneja el resultado después de que el diálogo se cierre
+            dialogRef.afterClosed().subscribe((result) => {
+              console.log(`Dialog result: ${result}`);
+              this.obtenerUsuarios();
+            });
+          },
+          error: (error) => {
+            console.log(error);
+            // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+          }
+        });
+      } else {
+        console.error('No se pudo obtener el ID del usuario');
+      }
+     }
+    
 
 }

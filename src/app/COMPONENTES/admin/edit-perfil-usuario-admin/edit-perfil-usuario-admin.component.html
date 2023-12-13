@@ -41,16 +41,19 @@
        <!-- Rut -->
        <mat-form-field class="full-width">
         <mat-label>Rut</mat-label>
-        <input matInput formControlName="usr_rut" required maxlength="30" readonly>
-        
+        <input matInput formControlName="usr_rut" required maxlength="30" >
+      
+
         
       </mat-form-field>
 
       <!-- Telefono -->
       <mat-form-field class="full-width">
-        <mat-label>Teléfono</mat-label>
-        <input matInput formControlName="usr_tel" required maxlength="30">
+   
         
+            <mat-label>Teléfono</mat-label>
+            <input  type="tel" matInput placeholder="9-9550-1234" formControlName="usr_tel" required maxlength="30">
+         
         
       </mat-form-field>
 
@@ -64,10 +67,14 @@
   <!-- rol -->
   <mat-form-field class="full-width">
     <mat-label>Rol</mat-label>
-    <input matInput formControlName="usr_rol" required maxlength="30" readonly>
-    
-    
+    <mat-select formControlName="usr_rol" required>
+      <mat-option value="ADMIN">Administrador</mat-option>
+      <mat-option value="REC">Reclutador</mat-option>
+      <mat-option value="ENTR">Entrevistador</mat-option>
+      <mat-option value="GUEST">Usuario</mat-option>
+    </mat-select>
   </mat-form-field>
+  
 
 
 

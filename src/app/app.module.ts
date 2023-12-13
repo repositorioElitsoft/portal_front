@@ -101,6 +101,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r/view-usuarios-r.component';
+import { EditPerfilUsuarioAdminComponent } from './COMPONENTES/admin/edit-perfil-usuario-admin/edit-perfil-usuario-admin.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r
     AddCategoriaComponent,
     ViewExamenesComponent,
     EditUserDialogComponent,
+    EditPerfilUsuarioAdminComponent,
     CurrencyFormatPipe,
     ViewExamenPreguntasComponent,
     CaracterOnlyDirective,
@@ -229,7 +231,7 @@ import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-      
+
     }
   ],
   bootstrap: [AppComponent],
