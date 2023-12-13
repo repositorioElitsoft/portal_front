@@ -45,9 +45,16 @@ export class  EditLaboralComponent implements OnInit {
     if (this.id) {
       this.obtenerLaboralesGuardados(this.id);
     }
+
+    
   }
 
+  ngAfterViewInit() {
+    console.log("Ejecutando ngAfterViewInit con id:", this.id ?? 0);
+    this.obtenerLaboralesGuardados(this.id ?? 0);
+  }
   
+
 
 
   private buildForm() {

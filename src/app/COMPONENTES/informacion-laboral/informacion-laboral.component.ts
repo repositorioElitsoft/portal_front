@@ -316,7 +316,8 @@ export class InformacionLaboralComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`); // Resultado después de cerrar el diálogo
+            console.log(`Dialog result: ${result}`); 
+            this.obtenerLaboralesGuardados();
           });
         },
         error: (error) => {

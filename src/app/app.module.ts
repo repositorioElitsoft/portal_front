@@ -102,6 +102,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 
 import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
+import { EditPerfilUsuarioAdminComponent } from './COMPONENTES/admin/edit-perfil-usuario-admin/edit-perfil-usuario-admin.component';
 
 @NgModule({
   declarations: [ 
@@ -140,6 +141,7 @@ import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-
     AddCategoriaComponent,
     ViewExamenesComponent,
     EditUserDialogComponent,
+    EditPerfilUsuarioAdminComponent,
     CurrencyFormatPipe,
     ViewExamenPreguntasComponent,
     CaracterOnlyDirective,

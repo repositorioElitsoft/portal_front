@@ -48,6 +48,8 @@ export class AñadirEstudioComponent implements OnInit {
         // Código para el modo de creación
         this.creationMode = true;
       }
+
+    
     }
     
   

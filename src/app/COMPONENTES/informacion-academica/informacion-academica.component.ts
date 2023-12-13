@@ -147,6 +147,7 @@ export class InformacionAcademicaComponent implements OnInit {
           dialogRef.afterClosed().subscribe((result) => {
 
             console.log(`Dialog result: ${result}`); // Resultado después de cerrar el diálogo
+            this.obtenerAcademicasGuardados();
           });
         },
         error: (error) => {
