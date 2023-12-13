@@ -28,6 +28,7 @@ export interface Usuario {
     observaciones?: Observacion[];
     cargoUsuario?: CargoUsuario[];
     seleccionado?: boolean;
+
 }
 
 

@@ -139,7 +139,11 @@ export class UsuarioService {
     return this.HttpClient.delete(url);
   }
 
+  obtenerResultados(): Observable<any[]> {
+    return this.HttpClient.get<any[]>(`${this.url}/resultados/`);
+  }
 
+  
 
 
 

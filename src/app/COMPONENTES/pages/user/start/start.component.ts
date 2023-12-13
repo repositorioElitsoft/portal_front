@@ -6,6 +6,8 @@ import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
+import { UsuarioService } from 'src/app/service/usuario.service';
+import { DatosPersonalesComponent } from 'src/app/COMPONENTES/datos-personales/datos-personales.component';
 
 
 //se declara fuera de la clase de forma global
@@ -24,14 +26,16 @@ export class StartComponent implements OnInit {
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
   preguntasTotales = 0;
-
+  idUser: number = 0;
   esEnviado = false;
   timer:any;
   examen!: any;
   intentosTotales: any;
   vecesEnviado: number = 0;
   enviosTotales = 0;
-
+  resultadosExamenes: number[] = [];
+  resultados: any[] = [];   
+  
 
 
 
@@ -43,58 +47,133 @@ export class StartComponent implements OnInit {
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
     private preguntaService:PreguntaService,
-    private examenService:ExamenService
+    private examenService:ExamenService,
+    private usuarioService: UsuarioService
       ) { }
 
   ngOnInit(): void {
-    this.prevenirElBotonDeRetroceso();
-    this.examenId = this.route.snapshot.params['exam_id'];
-    console.log(this.examenId);
-    this.cargarPreguntas();
     
-
+    this.usuarioService.obtenerUsuarioGuardado().subscribe(
+      (usuarioGuardado ) => {
+        if (usuarioGuardado) {
+          this.idUser = usuarioGuardado.usr_id ?? 0;
+          console.log('ID del usuario:', this.idUser);
+        }
+        this.prevenirElBotonDeRetroceso();
+        this.examenId = this.route.snapshot.params['exam_id'];
+        console.log(this.examenId);
+        this.cargarPreguntas();
+        this.obtenerResultados();
+        
+      },
+      (error) => {
+        console.error('Error al obtener el usuario guardado:', error);
+      }
+    );
 
   }
-
 
   ngAfterViewInit(): void {
-    this.mostrarGrafico();
+    this.mostrarGrafico() ;
   }
+
+  
+  obtenerResultados() {
+    this.usuarioService.obtenerResultados().subscribe(
+      (data) => {
+        this.resultados = data;
+        console.log('Data:',data);
+        
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+  
+
   mostrarGrafico(): void {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
       if (canvas) {
+        canvas.width = 800; // Ajusta según tus necesidades
+        canvas.height = 600; // Ajusta según tus necesidades
         const ctx = canvas.getContext('2d');
+        const dataParaMostrar: any = [];
+        console.log("resultados:", this.resultados);
+  
+        // Filtra los resultados del usuario y examen
+        const resultadosFiltrados = this.resultados.filter(resultado => {
+          console.log("resultados:", resultado.usuarioId);
+          return resultado.usuarioId === this.idUser;
+        });
+  
+        // Filtra los resultados para el examen específico incluyendo el examen actual
+        const examenesFiltrados = resultadosFiltrados.filter(resultado => {
+          console.log("id examen:", this.examenId);
+          console.log("id examen 2:", resultado.examen.examenId);
+          return String(resultado.examen.examenId) === String(this.examenId);
+        });
+        this.vecesEnviado = examenesFiltrados.length;
+  
+        console.log("examenes filtrados:", examenesFiltrados);
+        console.log("resultados filtrados:", resultadosFiltrados);
+  
+        // Toma los últimos 3 exámenes, incluyendo el examen actual
+        const ultimosTresExamenes = examenesFiltrados.slice(-3);
+  
+        ultimosTresExamenes.forEach(resultado => {
+          dataParaMostrar.push(resultado.resultadosExamen);
+        });
+  
+       
+        console.log("datos para mostrar:", dataParaMostrar);
+        const labelsConPuntos = dataParaMostrar.map((valor: string) => valor + ' puntos');
+        const puntuacionMaxima = examenesFiltrados[0]?.examen.puntuacionMaxima; 
+  
         if (ctx) {
           const myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: ['Puntos Conseguidos'],
+              labels: labelsConPuntos,
               datasets: [{
-                label: 'Resultados del Examen',
-                data: [this.puntosConseguidos, this.respuestasCorrectas],
-                backgroundColor: ['grey', '#F57C27'],
+                label: 'Resultados de tus ultimos 3 examenes realizados',
+                data: dataParaMostrar,
+                backgroundColor: ['orange'],
                 borderColor: ['grey', '#F57C27'],
                 borderWidth: 1,
-                  barThickness: 70 // Ajusta este valor para cambiar el ancho de las barras
-
-              }]
+                barThickness: 70
+              }],
             },
             options: {
               scales: {
                 y: {
                   beginAtZero: true,
-                  min: 0, // Define el valor mínimo del eje Y
-                  max: parseInt (this.examen.puntosMaximos),
+                  min: 0,
+                  max: puntuacionMaxima,
                   title: {
-        display: true,
-        text: 'Puntuacion Maxima', // Aquí escribes el texto de tu etiqueta
-        color: '#666', // Puedes personalizar el color
-        font: {
-          size: 11, // Tamaño de la fuente
-          weight: 'bold', // Peso de la fuente
-        }
-      },
+                    display: true,
+                    text: 'Puntuacion Maxima',
+                    color: '#666',
+                    font: {
+                      size: 11,
+                      weight: 'bold',
+                    }
+                  },
+                },
+                x: {
+                  beginAtZero: true,
+                  min: 0,
+                  max: 10,
+                  title: {
+                    display: true,
+                    text: 'Puntuacion Conseguida',
+                    color: '#666',
+                    font: {
+                      size: 11,
+                      weight: 'bold',
+                    }
+                  },
                 }
               },
               plugins: {
@@ -114,8 +193,8 @@ export class StartComponent implements OnInit {
                   annotations: {
                     line1: {
                       type: 'line',
-                      yMin:  this.preguntasTotales,
-                      yMax: 4,
+                      yMin:  0,
+                      yMax: 100,
                       borderColor: 'red',
                       borderWidth: 2,
                       borderDash: [6, 6]
@@ -125,7 +204,7 @@ export class StartComponent implements OnInit {
               },
               responsive: true,
               maintainAspectRatio: false,
-              aspectRatio: 2 // Ajuste el valor según sea necesario para hacer el gráfico más estrecho
+              aspectRatio: 2
             }
           });
         } else {
@@ -134,9 +213,13 @@ export class StartComponent implements OnInit {
       } else {
         console.error('Elemento canvas no encontrado');
       }
-    }, 0);
+    }, 1);
   }
   
+  
+  
+
+
 
 
 
@@ -268,7 +351,7 @@ export class StartComponent implements OnInit {
 
     this.esEnviado = true;
       
-    console.log("tis preguntas", this.preguntas)
+    console.log("preguntas", this.preguntas)
     this.preguntas.forEach((p:any) => {
       console.log("The p es", p)
 
@@ -294,10 +377,10 @@ export class StartComponent implements OnInit {
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
  
-    this.mostrarGrafico();
+    this.mostrarGrafico()
     
  
-    this.mostrarGrafico();
+   
     
   }
 

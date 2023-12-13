@@ -68,8 +68,8 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
     openDialogVerArchivos(enterAnimationDuration: string, exitAnimationDuration: string, userId: string): void {
       console.log('User ID en openDialog:', userId);
     
-      this.dialog.open(UploadFilesComponent, {
-        width: '500px',
+      this.dialog.open(ViewFilesComponent, {
+        width: '700px',
         enterAnimationDuration,
         exitAnimationDuration,
         data: { userId: userId }

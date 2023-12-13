@@ -47,4 +47,5 @@ export class PreguntaService {
   public guardarResultados(resultados:any){
     return this.http.post(`${this.url}/resultados/`, resultados);
     }
+
 }

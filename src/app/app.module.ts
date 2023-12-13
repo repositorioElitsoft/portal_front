@@ -181,6 +181,7 @@ import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r
     AppRoutingModule,
     CommonModule,
     MatBottomSheetModule,
+    MatSliderModule,
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -228,6 +229,7 @@ import { ViewUsuariosRComponent } from './COMPONENTES/reclutador/view-usuarios-r
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+      
     }
   ],
   bootstrap: [AppComponent],

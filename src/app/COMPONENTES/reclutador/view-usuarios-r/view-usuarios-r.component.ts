@@ -5,7 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator} from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort} from '@angular/material/sort';
-import { Usuario } from 'src/app/interface/user.interface';
+import { Usuario} from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
@@ -19,7 +19,6 @@ import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfi
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
-import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { forkJoin } from 'rxjs';
 import { LaboralService } from 'src/app/service/laboral.service';
@@ -29,10 +28,22 @@ import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 import { Dialog } from '@angular/cdk/dialog';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
+import { PreguntaService } from 'src/app/service/pregunta.service';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
+import { UserGuard } from 'src/app/core/guards/user.guard';
+import { NivelService } from 'src/app/service/nivel.service';
+import { Niveles } from 'src/app/interface/niveles.interface';
+import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
+import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 
 
 const ELEMENT_DATA: Usuario[] = [];
+
 
 @Component({
   selector: 'app-view-usuarios-r',
@@ -43,27 +54,46 @@ const ELEMENT_DATA: Usuario[] = [];
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  resultados  = [];
-  idUser: string = '';
   filtro: string = '';
   filtroPuntaje: string = '';
+  filtroCargo: string = '';
   originalDataCopy: Usuario[] = [];
-  usuarios: Usuario[] = [];
+  usuarios: any[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
+  niveles : Niveles []=[];
   versiones: VersionProducto[] = [];
+  selectedfechaPostulacion: Date | null = null;
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-  cargos: CargoUsuario[] = [];
   selectedCheckbox: FormGroup;
-
+  selectedSueldoRange: number[] = [1, 5000000];
+  selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
+  selectedEstado: string = '';
   inputContent: boolean = false;
   lastYears: number = 0;
+  resultadosExam: any[]=[];
+  cargos: CargosElitsoft[] = [];
+  idUser:number = 0;
+  filterCargo: string = '';
+  resultados: any[] = [];
+  porcentajeAprobacion:number = 0;
+  filteredUsuarios:any=[]=[];
+  selectedOption:String = '';
+  selectedNivel : number = 0;
+  isSueldoSliderEnabled = true;
+  porcentajesAprobacion = [
+    { value: 100, label: '100%' },
+    { value: [70, 99], label: '70% - 99%' },
+    { value: [40, 69], label: '40% - 69%' }
+  ];
+  selectedPorcentajeAprobacion: any;
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -81,6 +111,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private _snackBar: MatSnackBar,
+    private httpClient: HttpClient,
+    private nivelService: NivelService,
+    private cargosElitsoftService: CargosElitsoftService,
+
     private cargoService: CargosUsuarioService
 
   ) {
@@ -91,18 +125,43 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+
+
+
+
+    this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
     this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
-    .subscribe((data: CargoUsuario[]) => {
-      this.cargos = data;
-      console.log("Datos de cargos recibidos por cargo usuario:", data); // Agregar este console.log
-    });
-
+    this.getCargosElitsoft();
 
   }
 
+  getCargosElitsoft() {
+    this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
+      (data: CargosElitsoft[]) => {
+        this.cargos = data;
+      }
+    )
+  }
+  toggleSueldoSlider() {
+    this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
+  }
+
+
+  obtenerResultados() {
+    this.usuarioService.obtenerResultados().subscribe(
+      (data) => {
+        this.resultados = data;
+        console.log('Data:',data);
+        this.filterData();
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -113,6 +172,67 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   filterData() {
     let filteredArray = this.originalDataCopy;
+
+    // Filtro por rango de sueldos
+    const [minSueldo, maxSueldo] = this.selectedSueldoRange;
+    filteredArray = filteredArray.filter(usuario => {
+      return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
+        const sueldo = cargo.crg_usr_pret; // Asume que 'crg_usr_pret' es el sueldo pretendido por el usuario
+        return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
+      });
+    });
+
+    // Filtro por cargo
+    if (this.selectedCargo > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+      });
+    }
+
+    //filtro por fecha postulacion
+
+if (this.selectedfechaPostulacion) {
+  console.log("seleccioné fecha");
+  // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
+  const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
+
+   // Filtrar los cargos por fecha de postulación
+   filteredArray = filteredArray.filter(usuario => {
+    const cargos = usuario.cargoUsuario
+    console.log("cargos", cargos);
+        // Check if cargos is defined and has at least one element
+        if (cargos && cargos.length > 0) {
+          console.log("cargos es mayor que 1");
+          // Assuming fechaPostulacion is a property of CargoUsuario
+          const primerCargo = cargos[0];
+          const fechaPostulacion = primerCargo.fechaPostulacion;
+
+           // Verificar si la propiedad fechaPostulacion existe y no es undefined
+      if(!fechaPostulacion)return false;
+      console.log("tipo de la fecha:",typeof fechaPostulacion );
+      console.log("fecha obtenida:", fechaPostulacion );
+      // Comparar solo la parte de la fecha
+       console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
+       console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
+       return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
+
+      }
+
+      return false;
+
+  });
+
+  // Imprimir el array de cargos filtrados
+  console.log("Cargos filtrados por fecha de postulación:", this.cargos);
+}
+
+
+    // Filtro por estado
+    if (this.selectedEstado && this.selectedEstado !== '') {
+      filteredArray = filteredArray.filter((usuario) => {
+        return usuario.cargoUsuario && usuario.cargoUsuario.some((estado) => estado.disponibilidad === this.selectedEstado);
+      });
+    }
 
     // Filtro por producto
     if (this.selectedProducto > 0) {
@@ -153,6 +273,75 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 }
 
 
+    // Filtro por nivel de examen
+    if (this.selectedNivel > 0) {
+      filteredArray = filteredArray.filter(resultados => {
+        return this.resultados.find(resultado => {
+          const nivelDificultad = resultado.examen.nivelDificultad;
+          const productos = resultado.examen.productos;
+
+          console.log('nivel examen:', nivelDificultad);
+          console.log('nivel seleccionado:', this.selectedNivel);
+          console.log('Productos:', productos);
+          console.log('Producto seleccionado:', this.selectedProducto);
+          return productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+        });
+      });
+    }
+
+
+    // Filtro por porcentaje de aprobación
+    if (this.selectedPorcentajeAprobacion) {
+      filteredArray = filteredArray.filter(usuario => {
+        const resultadosDeUsuario= this.resultados.filter(resultado => {
+          return resultado.usuarioId === usuario.usr_id;
+
+        });
+
+        const resultadoFinal = resultadosDeUsuario.find(resultado =>{
+
+          const resultadoExamen = resultado.resultadosExamen;
+          const puntosMaximos = resultado.examen.puntosMaximos;
+          const nivelDificultad = resultado.examen.nivelDificultad;
+          const productos = resultado.examen.productos;
+          const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
+
+
+          // Verifica si el usuario cumple con los filtros anteriores
+          const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+
+          // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
+          if (cumpleFiltrosAnteriores) {
+            if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
+              return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
+                    porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
+            } else {
+              console.log("usuario", resultado.usuarioId);
+              console.log("% aprobacion", porcentajeAprobacion);
+              console.log("% aprobacion seleccionado", this.selectedPorcentajeAprobacion.value);
+              console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
+              return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
+            }
+          }
+          return false;
+        });
+        console.log("resultado final",resultadoFinal);
+        if (resultadoFinal){
+          return true;
+
+        }
+        return false;
+
+        })
+
+
+    }
+
+
+
+
+
+    //Filtro
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
         return usuario.laborales?.some((experiencia) => {
@@ -172,10 +361,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
-      const [min, max] = this.selectedAniosExpRange; // Desestructuramos el arreglo 'selectedAniosExpRange' en las variables 'min' y 'max'
+      const [min, max] = this.selectedAniosExpRange;
       filteredArray = filteredArray.filter(element => {
-        const anosExp = element.herr_exp.split(', ').map(Number); // Dividimos la propiedad 'herr_exp' en un array de numeros
-        return anosExp.some(anos => anos >= min && anos <= max); // Verificamos si alguno de los numeros en el arreglo 'anosExp' se encuentra dentro del rango seleccionado
+        const anosExp = element.herr_exp.split(', ').map(Number);
+        return anosExp.some(anos => anos >= min && anos <= max);
       });
     }
 
@@ -184,6 +373,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     this.dataSource.data = filteredArray;
   }
+
+  filterByCargo() {
+    let filteredArray = this.originalDataCopy;
+
+    if (this.filterCargo) {
+      const filtroCargoLowerCase = this.filterCargo.toLowerCase();
+      filteredArray = filteredArray.filter(usuario =>
+        usuario.cargoUsuario?.some(cargo =>
+          cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
+        )
+      );
+    }
+
+    this.dataSource.data = filteredArray;
+    console.log('Usuarios filtrados', filteredArray);
+  }
+
 
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
@@ -194,7 +400,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   onLast5YearsChange() {
-    // Llamar a filterData cuando cambie el valor de this.last5Years
+
     this.filterData();
   }
 
@@ -214,6 +420,28 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.data = filteredArray;
   }
 
+  filterInputCargoOcupado() {
+    let filteredArray = this.originalDataCopy;
+
+    if (this.filtroCargo) {
+      const filtroLowerCase = this.filtroCargo.toLowerCase();
+      filteredArray = filteredArray.filter(usuario => {
+        const cargo=usuario.laborales;
+        if(cargo && cargo.length >0){
+          const primerCargo = cargo[0];
+          const cargoOcupado= primerCargo.inf_lab_crg_emp;
+          if (cargoOcupado) {
+            return cargoOcupado.toLowerCase().includes(filtroLowerCase);
+          }
+          return false;
+
+        }
+        return false;
+      });
+    }
+    this.dataSource.data = filteredArray;
+  }
+
 
 
   formatLabel(value: number): string {
@@ -227,12 +455,19 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterProducto() {
     this.filterData();
   }
+  filterNivel() {
+    this.filterData();
+  }
+  filterPorcentaje() {
+    this.filterData();
+  }
 
 
   filterPuntaje() {
     this.filtroPuntaje = `Filtrado por puntaje: ${this.filtroPuntaje}`;
     this.filterData();
   }
+
 
   filterVersion() {
     if (this.selectedVersion === 0) {
@@ -244,7 +479,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   filterAniosExp() {
     this.filterData();
-}
+  }
 
 obtenerUsuarios(): void {
   this.usuarioService.obtenerUsuarios().subscribe(
@@ -275,6 +510,8 @@ obtenerUsuarios(): void {
           laborales: usuario.laborales,
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
+          cargoUsuario: usuario.cargoUsuario,
+
         }));
 
         const controlNames = Object.keys(this.selectedCheckbox.controls);
@@ -321,16 +558,20 @@ obtenerUsuarios(): void {
   }
 
 
+
+  clearDate() {
+    this.selectedfechaPostulacion = null;
+    this.filterData();
+  }
+
   exportToCSV() {
     const dataToExport = this.dataSource.data;
     const csv = Papa.unparse(dataToExport);
-
-    // Crear un enlace de descarga para el archivo CSV
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'usuarios.csv'; // Nombre del archivo CSV
+    a.download = 'usuarios.csv';
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -442,7 +683,24 @@ obtenerUsuarios(): void {
       }
     }
 
-    announceSortChange(sortState: Sort) {
+      getNiveles() {
+
+        this.nivelService.listarNiveles().subscribe(
+          (data: Niveles[]) => {
+            this.niveles = data;
+
+          },
+          (error) => {
+            console.log('Error al obtener niveles ', error);
+          }
+        );
+
+    }
+
+
+
+
+  announceSortChange(sortState: Sort) {
       if (sortState.direction) {
         this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
       } else {
@@ -541,8 +799,41 @@ openEditProfileDialog(event: any): void {
  }
 
 
- }
- function saveAs(blob: Blob, arg1: string) {
-   throw new Error('Function not implemented.');
+ clearFilters(): void {
+  this.filtro = '';
+  this.filtroPuntaje = '';
+  this.filtroCargo = '';
+  this.selectedfechaPostulacion = null;
+  this.selectedAniosExpRange = [1, 10];
+  this.isIrrelevant = true;
+  this.selectedSueldoRange = [1, 5000000];
+  this.selectedCargo = 0;
+  this.selectedCategoria = 0;
+  this.selectedProducto = 0;
+  this.selectedVersion = 0;
+  this.selectedAniosExp = 0;
+  this.selectedProductoNombre = "";
+  this.selectedEstado = '';
+  this.inputContent = false;
+  this.lastYears = 0;
+  this.resultadosExam = [];
+  this.selectedOption = '';
+  this.selectedNivel = 0;
+  this.isSueldoSliderEnabled = true;
+  this.selectedPorcentajeAprobacion = null;
+  this.porcentajeAprobacion = 0;
+
+  // Vuelve a cargar o filtrar los datos según sea necesario
+  this.filterData();
+}
+
+
+
+
+
  }
 
+
+function saveAs(blob: Blob, arg1: string) {
+  throw new Error('Function not implemented.');
+}
