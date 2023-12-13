@@ -76,7 +76,9 @@ export class DatosPersonalesComponent implements OnInit {
       usr_ap_mat: ["",[Validators.required]],
       country: ["1", [Validators.required]],
       state: ["", [Validators.required]],
-      city: ["", [Validators.required]],
+      city: this.formBuilder.group({
+        id:['', Validators.required]
+      }),
       usr_direcc:["", Validators.required],
       usr_url_link: ["",[]],
       usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
@@ -110,7 +112,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   onStateSelected(){
-  
+
     const stateId = this.form.get("state")!.value;
     console.log("I'm gonna call cities by state")
     this.cityService.getStateByCountry(stateId).subscribe({
@@ -125,20 +127,11 @@ export class DatosPersonalesComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.countryService.obtenerPaises().subscribe({
-      next: (data: Country[]) => {
-        this.countries = this.sortByName(data);
-      },
-      error: (error) => {
-        console.error('Error fetching countries:', error);
-      }
-    });
-    this.form.get("country")!.patchValue("")
     this.ObtenerUsuarioGuardado();
 
   }
 
-  obtenerEstadosporCountry(countryId: number) {
+   obtenerEstadosporCountry(countryId: number) {
     this.stateService.obtenerEstadosporCountry(countryId).subscribe(
       (data: State[]) => {
         this.states = this.sortByName(data);
@@ -218,7 +211,7 @@ export class DatosPersonalesComponent implements OnInit {
     }
   }
 
-  ObtenerUsuarioGuardado() {
+   ObtenerUsuarioGuardado() {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
@@ -234,12 +227,15 @@ export class DatosPersonalesComponent implements OnInit {
           usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
           usr_ap_mat: this.usuarioGuardado.usr_ap_mat,
           usr_direcc: this.usuarioGuardado.usr_direcc,
+          city:this.usuarioGuardado.city,
           usr_url_link: this.usuarioGuardado.usr_url_link,
           usr_tel: this.usuarioGuardado.usr_tel,
-          usr_gen:this.usuarioGuardado.usr_gen,
+          // usr_gen:this.usuarioGuardado.usr_gen,
+
           usr_gen_otro:this.usuarioGuardado.usr_gen_otro,
 
         });
+        this.form.get('usr_gen')?.setValue(this.usuarioGuardado.usr_gen)
 
 
 
@@ -258,6 +254,38 @@ export class DatosPersonalesComponent implements OnInit {
             placeholderNumberType: "UNKNOWN"
           });
         }
+
+        this.countryService.obtenerPaises().subscribe({
+          next: (data: Country[]) => {
+            this.countries = this.sortByName(data);
+            this.form.get('country')?.patchValue(this.usuarioGuardado.city?.state?.country?.id)
+            this.stateService.obtenerEstadosporCountry(this.usuarioGuardado.city?.state?.country?.id ?? 0).subscribe(
+              (data: State[]) => {
+                this.states = this.sortByName(data);
+                this.form.get('state')?.patchValue(this.usuarioGuardado.city?.state?.id)
+                this.cityService.getStateByCountry(this.usuarioGuardado.city?.state?.id ?? 0).subscribe({
+                  next: (data:City[]) => {
+                    this.cities = this.sortByName(data);
+                    this.form.get('city')?.get('id')?.patchValue(this.usuarioGuardado.city?.id)
+                  },
+                  error: (error) => {
+                    console.error('Error fetching states:', error);
+                  }
+                });
+
+
+              },
+              (error) => {
+                console.error('Error fetching states:', error);
+              }
+            );
+          },
+
+          error: (error) => {
+            console.error('Error fetching countries:', error);
+          }
+        });
+
       },
       error: (err) => {
         console.log(err);
@@ -270,13 +298,11 @@ export class DatosPersonalesComponent implements OnInit {
 
     const user: Usuario = this.form.value;
 
+
     // Si se selecciona "Otro", establece el valor de usr_gen a usr_gen_otro
   if (user.usr_gen === 'Otro') {
     user.usr_gen = user.usr_gen_otro;
     }
-
-    console.log(user);
-
 
     console.log(user);
     try {
