@@ -120,6 +120,9 @@ export class TableHerramientasComponent implements OnInit {
       this.versionByRow[index] = [];
       this.otroProductoValues[index] = otroProductoValue;
       return;
+    } else {
+
+      row.get('herr_prd_otro')?.patchValue('')
     }
 
     if (!selectedProductoIdValue) {
