@@ -49,7 +49,7 @@
             <button (click) = "enviarCuestionario()" mat-raised-button class="botonprimario">Enviar cuestionario</button>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 temporizador" >
           <!--Progreso-->
           <mat-card class ="mt-5 mb-5">
             <mat-card-header>
@@ -60,7 +60,7 @@
                 El exámen se enviará automáticamente cuando el temporizador llegue a 0:0
               </mat-card-subtitle>
             </mat-card-header>
-            <mat-card-content>
+            <mat-card-content >
               <h1 class="text-center">{{ obtenerHoraFormateada() }}</h1>
               <mat-spinner mode="determinate" style="margin: auto;" [value] = "(timer/(this.preguntas?.length * 60)*100)"></mat-spinner>
             </mat-card-content>
