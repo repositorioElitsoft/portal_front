@@ -26,19 +26,31 @@
       <mat-form-field>
         <mat-label>Fecha Fin:</mat-label>
         <input matInput formControlName="inf_lab_fec_fin" type="date" placeholder="Fecha Fin">
-        
+
       </mat-form-field>
-     
+
       <mat-card>
         <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
+
         <div *ngIf="herramientasDisponibles && checkboxFormCreated">
+
           <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
-            <mat-checkbox [formControlName]="herramienta.herr_usr_id">
-              {{ herramienta.versionProducto.prd.prd_nom }} ({{ herramienta.versionProducto.vrs_name }})
-            </mat-checkbox>
+
+            <div *ngIf="!herramienta.herr_prd_otro">
+              <mat-checkbox [formControlName]="herramienta.herr_usr_id">
+                {{ herramienta.versionProducto.prd.prd_nom }} ({{ herramienta.versionProducto.vrs_name }})
+              </mat-checkbox>
+            </div>
+
+            <div *ngIf="herramienta.herr_prd_otro">
+              <mat-checkbox [formControlName]="herramienta.herr_prd_otro">
+                {{ herramienta.herr_prd_otro }}
+              </mat-checkbox>
+            </div>
+
           </div>
         </div>
-    
+
       </mat-card>
       <br>
       <mat-card class="guardarycancelar">

@@ -121,7 +121,7 @@
 
 
     <mat-tab label="Observaciones">
-     
+
       <mat-stepper *ngIf="mostrarStepper" headerPosition="bottom" #stepper id="miStepper" class="observacion-comentario">
               <mat-step>
           <ng-template matStepLabel>Categoría</ng-template>
@@ -149,7 +149,7 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Aprobaciones</ng-template>
-    
+
           <!-- Gerencia -->
           <mat-card-title>Gerencia</mat-card-title>
           <mat-form-field>
@@ -159,7 +159,7 @@
               <mat-option value="No">No</mat-option>
             </mat-select>
           </mat-form-field>
-    
+
           <!-- Operación -->
           <mat-card-title>Operación</mat-card-title>
           <mat-form-field>
@@ -169,7 +169,7 @@
               <mat-option value="No">No</mat-option>
             </mat-select>
           </mat-form-field>
-    
+
           <!-- Técnica -->
           <mat-card-title>Técnica</mat-card-title>
           <mat-form-field>
@@ -179,7 +179,7 @@
               <mat-option value="No">No</mat-option>
             </mat-select>
           </mat-form-field>
-    
+
           <div>
             <button mat-button matStepperPrevious class="botonprimario m-1">Regresar</button>
             <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.usr_id)">Guardar</button>
@@ -187,11 +187,11 @@
           </div>
         </mat-step>
       </mat-stepper>
-   
+
       <!-- Sección para mostrar observaciones existentes -->
-     
-      
-      
+
+
+
       <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
         <!-- Caja de comentario para cada observación con clase "comentario-box" -->
         <div *ngIf="enEdicion !== observadores.obs_id">
@@ -202,7 +202,7 @@
               <div mat-card-avatar class="avatar">
               </div>
 
-              <mat-card-title>{{ observadores.usr_nom }}</mat-card-title>
+              <mat-card-title>Creador por: {{ observadores.usr_nom }}</mat-card-title>
               <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
             </mat-card-header>
           </mat-card>
@@ -213,7 +213,7 @@
                                    (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                   <mat-panel-title>
-                   Aprobaciones: 
+                   Aprobaciones:
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-card-subtitle>{{ observadores.cat_obs_desc }}</mat-card-subtitle>
@@ -234,10 +234,10 @@
             <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
             <div class="acciones-comentario">
               <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
-              
+
             </div>
           </mat-card-content>
-    
+
           <mat-card class="observacion-card">
             <mat-card-content>
               <div class="fecha-info">
@@ -255,14 +255,14 @@
         </mat-card>
       </div>
       </div>
-    
+
       <!-- Botón para guardar la nueva observación -->
       <button mat-raised-button class="botonprimario m-2" (click)="agregarNuevaObservacion()">Agregar Nueva Observación</button>
 
       <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
     </mat-tab>
     </mat-tab-group>
-    
+
 
 
 

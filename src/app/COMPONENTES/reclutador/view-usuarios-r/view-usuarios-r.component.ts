@@ -13,7 +13,6 @@ import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
@@ -22,10 +21,12 @@ import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.c
 import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { forkJoin } from 'rxjs';
-import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
-import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
+import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
+import { Dialog } from '@angular/cdk/dialog';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { HttpClient } from '@angular/common/http';
@@ -92,7 +93,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     { value: [40, 69], label: '40% - 69%' }
   ];
   selectedPorcentajeAprobacion: any;
-  
+
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -113,7 +114,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private httpClient: HttpClient,
     private nivelService: NivelService,
     private cargosElitsoftService: CargosElitsoftService,
-   
+
     private cargoService: CargosUsuarioService
 
   ) {
@@ -125,15 +126,16 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    
+
 
 
     this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
+    this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
     this.getCargosElitsoft();
-  
+
   }
 
   getCargosElitsoft() {
@@ -146,7 +148,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   toggleSueldoSlider() {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
-  
+
 
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
@@ -165,8 +167,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-  
-  
+
+
 
   filterData() {
     let filteredArray = this.originalDataCopy;
@@ -213,13 +215,13 @@ if (this.selectedfechaPostulacion) {
        console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
        console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
        return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
-    
+
       }
 
       return false;
-    
+
   });
- 
+
   // Imprimir el array de cargos filtrados
   console.log("Cargos filtrados por fecha de postulación:", this.cargos);
 }
@@ -270,7 +272,7 @@ if (this.selectedfechaPostulacion) {
   );
 }
 
-   
+
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
       filteredArray = filteredArray.filter(resultados => {
@@ -287,15 +289,15 @@ if (this.selectedfechaPostulacion) {
       });
     }
 
-        
+
     // Filtro por porcentaje de aprobación
     if (this.selectedPorcentajeAprobacion) {
       filteredArray = filteredArray.filter(usuario => {
         const resultadosDeUsuario= this.resultados.filter(resultado => {
           return resultado.usuarioId === usuario.usr_id;
-       
+
         });
-        
+
         const resultadoFinal = resultadosDeUsuario.find(resultado =>{
 
           const resultadoExamen = resultado.resultadosExamen;
@@ -303,11 +305,11 @@ if (this.selectedfechaPostulacion) {
           const nivelDificultad = resultado.examen.nivelDificultad;
           const productos = resultado.examen.productos;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
-          
-  
+
+
           // Verifica si el usuario cumple con los filtros anteriores
           const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
-          
+
           // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
           if (cumpleFiltrosAnteriores) {
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
@@ -331,8 +333,8 @@ if (this.selectedfechaPostulacion) {
         return false;
 
         })
-        
-      
+
+
     }
 
 
@@ -359,10 +361,10 @@ if (this.selectedfechaPostulacion) {
 
     // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
-      const [min, max] = this.selectedAniosExpRange; 
+      const [min, max] = this.selectedAniosExpRange;
       filteredArray = filteredArray.filter(element => {
-        const anosExp = element.herr_exp.split(', ').map(Number); 
-        return anosExp.some(anos => anos >= min && anos <= max); 
+        const anosExp = element.herr_exp.split(', ').map(Number);
+        return anosExp.some(anos => anos >= min && anos <= max);
       });
     }
 
@@ -398,7 +400,7 @@ if (this.selectedfechaPostulacion) {
   }
 
   onLast5YearsChange() {
-    
+
     this.filterData();
   }
 
@@ -421,21 +423,21 @@ if (this.selectedfechaPostulacion) {
   filterInputCargoOcupado() {
     let filteredArray = this.originalDataCopy;
 
-    if (this.filtroCargo) { 
+    if (this.filtroCargo) {
       const filtroLowerCase = this.filtroCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario => {
         const cargo=usuario.laborales;
         if(cargo && cargo.length >0){
           const primerCargo = cargo[0];
           const cargoOcupado= primerCargo.inf_lab_crg_emp;
-          if (cargoOcupado) { 
+          if (cargoOcupado) {
             return cargoOcupado.toLowerCase().includes(filtroLowerCase);
           }
           return false;
-          
+
         }
         return false;
-      }); 
+      });
     }
     this.dataSource.data = filteredArray;
   }
@@ -509,7 +511,7 @@ obtenerUsuarios(): void {
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
           cargoUsuario: usuario.cargoUsuario,
-          
+
         }));
 
         const controlNames = Object.keys(this.selectedCheckbox.controls);
@@ -521,6 +523,7 @@ obtenerUsuarios(): void {
         usuarios.forEach(usuario =>{
           this.selectedCheckbox.addControl(String(usuario.usr_email), this.fb.control(false))
         });
+
 
       this.originalDataCopy = usuarios;
       this.dataSource.data = usuarios;
@@ -568,7 +571,7 @@ obtenerUsuarios(): void {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'usuarios.csv'; 
+    a.download = 'usuarios.csv';
     document.body.appendChild(a);
     a.click();
     window.URL.revokeObjectURL(url);
@@ -612,7 +615,7 @@ obtenerUsuarios(): void {
         console.error('Error al obtener resultados del usuario: ', error);
       }
     );
-    
+
   }
 
 
@@ -691,11 +694,11 @@ obtenerUsuarios(): void {
             console.log('Error al obtener niveles ', error);
           }
         );
-      
+
     }
-    
-    
-    
+
+
+
 
   announceSortChange(sortState: Sort) {
       if (sortState.direction) {
@@ -767,7 +770,7 @@ openBottomSheet(event: any) {
 openEditProfileDialog(event: any): void {
   // Obtiene el ID desde el elemento del botón que dispara el evento
   const id = event.target.parentElement.id;
-   
+
   if (id) {
     // Llama al servicio para obtener los datos del usuario usando el ID
     this.usuarioService.getUsuarioId(id).subscribe({
@@ -775,11 +778,11 @@ openEditProfileDialog(event: any): void {
         console.log('Data llegada:', data);
         // Abre el diálogo con los datos obtenidos
         const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
-          width: '800px', 
+          width: '800px',
           height: '700px',
           data: { usuarioId: id } // Pasa el ID del usuario al diálogo
         });
- 
+
         // Maneja el resultado después de que el diálogo se cierre
         dialogRef.afterClosed().subscribe((result) => {
           console.log(`Dialog result: ${result}`);
@@ -826,9 +829,12 @@ openEditProfileDialog(event: any): void {
 }
 
 
-   
 
 
 
- 
  }
+
+
+function saveAs(blob: Blob, arg1: string) {
+  throw new Error('Function not implemented.');
+}

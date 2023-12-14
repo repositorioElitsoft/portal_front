@@ -19,17 +19,16 @@
                         <option *ngFor="let producto of productByRow[i]" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
                         <option value="otro">Otro</option>
                     </select>
-                    <input type="text" *ngIf="row.get('herr_prd_name')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="herr_otro_prd_name">
+                    <input type="text" *ngIf="row.get('herr_prd_name')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="herr_prd_otro">
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="versionProducto">
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                    <select class="form-control" id="version" formControlName="vrs_id" name="version">
+                    <select class="form-control" id="version" formControlName="vrs_id" name="version" [hidden]="row.get('herr_prd_name')?.value === 'otro'">
                         <option value="" selected>Selecciona una opcion</option>
                         <option *ngFor="let version of versionByRow[i]" [value]="version.vrs_id">{{ version.vrs_name }}</option>
-                        <option value="otro">Otro</option>
                     </select>
-                    <input type="text" *ngIf="row.get('versionProducto.vrs_id')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe la version utilizada" formControlName="herr_otro_vrs_name">
                 </div>
+
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="certificado">Certificado</label>
                     <select class="form-control" id="certificado" formControlName="herr_is_cert" name="certificado">

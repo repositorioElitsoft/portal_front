@@ -1,4 +1,5 @@
 import { CargoUsuario } from "./cargos-usuario.interface"
+import { City } from "./city.interface"
 import { HerramientaData } from "./herramienta-data.interface"
 import { Laboral } from "./laboral.interface"
 import { Observacion } from "./observacion.interface"
@@ -15,9 +16,7 @@ export interface Usuario {
     usr_gen?:string
     usr_gen_otro?: string;
     usr_url_link?:string
-    city?: {
-      id?: number;
-    };
+    city?: City ;
     usr_direcc:string;
     herramientas?: HerramientaData[];
     usr_herr: string;

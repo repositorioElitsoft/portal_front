@@ -70,6 +70,12 @@ button.mat-raised-button mat-icon {
   border-radius: 50%;
 
 }
+.custom-range {
+  position: absolute;
+  top: -10px; /* Ajusta la posición vertical según tus necesidades */
+  left: 0;
+  right: 50;
+  margin: auto;
+  font-size: 16px;
+}
 
-/* Si deseas un ancho máximo para tu panel, puedes descomentar la siguiente línea */
-/* .dashboard-panel { max-width: 1200px; margin: auto; } */
