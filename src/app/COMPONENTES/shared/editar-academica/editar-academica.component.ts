@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Academica } from 'src/app/interface/academica.interface';
+import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
+import { ReferenciaAcademica } from 'src/app/interface/referencia-academica.interface';
 
 @Component({
   selector: 'app-informacion-academica',
@@ -39,10 +41,9 @@ export class EditarAcademicaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = this.data.inf_acad_id;
-    if (this.id) {
-      this.cargarAcademica(this.id);
-    }
+    console.log('esta es la data del hijo ', this.data)
+    this.form.patchValue(this.data);
+   this.crearReferenciasForm(this.data.referenciaAcademicas);
   }
 
   
@@ -54,21 +55,28 @@ export class EditarAcademicaComponent implements OnInit {
       inf_acad_nom_esc: ['', Validators.required],
       inf_acad_fec_ini: ['', Validators.required],
       inf_acad_fec_fin: ['', Validators.required],
+      referenciaAcademicas: this.formBuilder.array([])
     });
   }
 
-  cargarAcademica(id: number) {
-    this.academicaService.obtenerAcademica(id).subscribe({
-      next: (data: Academica) => {
-        this.form.patchValue(data);
-      },
-      error: (err) => console.log(err)
-    });
-  }
+ 
 
   goBack() {
     this.dialog.closeAll();
   }
+
+  crearReferenciasForm(data: ReferenciaAcademica[]) {
+    const rowArray = data.map((academica, index) => {
+      return this.formBuilder.group({
+        ref_acad_nom: [academica.ref_acad_nom], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
+        ref_acad_ins: [academica.ref_acad_ins], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
+        ref_acad_email: [academica.ref_acad_email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
+        ref_acad_tel: [academica.ref_acad_tel] // Suponiendo que 'telefono' es una propiedad del objeto 'academica'
+      });
+    });
+    this.form.setControl('referenciaAcademicas', this.formBuilder.array(rowArray))
+  }
+  
 
 
   submitForm(event: Event) {
@@ -125,4 +133,26 @@ export class EditarAcademicaComponent implements OnInit {
       console.log('Estado del formulario:', this.form.value);
     }
   }
+
+  get referenciaFormArray(){
+    return this.form.get('referenciaAcademicas') as FormArray;
+  }
+  addReferencia() {
+    const referenciaFormGroup = this.formBuilder.group({
+      ref_acad_nom: [''],
+      ref_acad_ins: [''],
+      ref_acad_email: [''],
+      ref_acad_tel: ['']
+    });
+    this.referenciaFormArray.push(referenciaFormGroup);
+  }
+
+  
+  eliminarReferencia(index: number) {
+    this.referenciaFormArray.removeAt(index);
+  }
+
+
+
+
 }

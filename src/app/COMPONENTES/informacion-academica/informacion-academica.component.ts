@@ -140,7 +140,7 @@ export class InformacionAcademicaComponent implements OnInit {
           const dialogRef = this.dialog.open(EditarAcademicaComponent, {
             width: '800px',
             height: '700px',
-            data: { inf_acad_id: inf_acad_id } // Pasar inf_acad_id como parte de los datos
+            data:  data  // Pasar inf_acad_id como parte de los datos
 
           });
 
