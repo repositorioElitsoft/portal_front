@@ -5,6 +5,7 @@ import { Laboral } from 'src/app/interface/laboral.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 
 @Component({
@@ -74,14 +75,23 @@ export class  EditLaboralComponent implements OnInit {
 
   obtenerLaboralesGuardados(id: number) {
     this.laboralService.obtenerLaboralPorId(id).subscribe({
-      next: (data:Laboral[]) => {
+      next: (data:Laboral) => {
         this.form.patchValue(data);
+        console.log('Esta es la data del metodo', data)
+        this.checkBoxMarcado(data);
       },
       error: (err) => console.log(err)
     });
   }
 
-
+  checkBoxMarcado(laboral : Laboral){
+    console.log(laboral, 'esta es la laboral')
+    laboral.herramientas?.forEach(h => {
+      this.form.get(h.herr_usr_id.toString())?.patchValue(true)
+      if(h.herr_prd_otro)
+        this.form.get(h.herr_prd_otro.toString())?.patchValue(true)
+    })
+  }
 
   goBack() {
     // Restablecer el formulario a su estado inicial
@@ -93,44 +103,35 @@ export class  EditLaboralComponent implements OnInit {
 
 
 
-  generateHerrForm(){
-
-
+  generateHerrForm() {
     this.herramientaService.getHerramientasByUserId().subscribe({
-      next:(data: HerramientaData[])=>{
-
-        console.log("recieved data herramientas: ",data)
+      next: (data: HerramientaData[]) => {
+        console.log("received data herramientas: ", data);
         this.herramientasDisponibles = data;
 
-        this.herramientasDisponibles.forEach((herramienta)=>{
-
-          let wasCheckedAlready = false
-
-
+        this.herramientasDisponibles.forEach((herramienta) => {
+          // Verificar si la herramienta estaba marcada previamente durante el guardado
+          const wasCheckedAlready = this.herrIdList.includes(herramienta.herr_usr_id);
 
           const newControl = new FormControl(wasCheckedAlready);
-          if (!herramienta.herr_prd_otro){
 
+          if (!herramienta.herr_prd_otro) {
             this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-
-          }
-          else {
+          } else {
             this.form.addControl(herramienta.herr_prd_otro, newControl);
           }
 
-          this.herrIdList.push(herramienta.herr_usr_id)
-
-
-        })
+          this.herrIdList.push(herramienta.herr_usr_id);
+        });
 
         this.checkboxFormCreated = true;
       },
-      error:(err: any)=>{
-        console.log(err)
-      }
-    })
-
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
   }
+
 
 
 

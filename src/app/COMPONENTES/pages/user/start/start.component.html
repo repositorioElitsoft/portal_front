@@ -44,12 +44,12 @@
               </div>
             </mat-card-content>
           </mat-card>
-  
+
           <div class="container text-center mt-4 mb-4">
             <button (click) = "enviarCuestionario()" mat-raised-button class="botonprimario">Enviar cuestionario</button>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 temporizador">
           <!--Progreso-->
           <mat-card class ="mt-5 mb-5">
             <mat-card-header>
@@ -85,7 +85,7 @@
                   <h1>Has conseguido un total de {{ puntosConseguidos }} puntos de {{ examen.puntosMaximos }}</h1>
                   <h1>Respuestas correctas: {{ respuestasCorrectas }}</h1>
                   <h1>Has realizado el examen {{ vecesEnviado }} veces</h1>
-                 
+
                   <!-- Contenedor para el gráfico de barras -->
                   <br>
                   <div>
