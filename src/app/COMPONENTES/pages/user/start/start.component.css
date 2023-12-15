@@ -119,3 +119,8 @@ mat-card-header {
 }
 
 
+@media (max-width: 768px) {
+  .temporizador {
+    order: -1; /* Esto coloca el div al principio */
+  }
+}

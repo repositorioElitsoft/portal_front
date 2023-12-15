@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
-import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
+import {  UserEditarDTO, UserEditarDTO2 } from 'src/app/interface/user.interface';
 import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component';
 
 @Component({
@@ -23,6 +23,7 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
 
   userDataForm: FormGroup;
   usrId:number | null = null
+  hide = true;
   usuario: UserEditarDTO2 = {
     usr_nom: '',
     usr_ap_pat: '',
@@ -35,6 +36,7 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     usr_direcc: ''
 
   }
+  hidePassword: boolean = true; // Inicialmente, ocultar la contraseña
 
    
   constructor( private usuarioService:UsuarioService,
@@ -54,6 +56,7 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
       usr_rut: [''],
       usr_email: [''],
       usr_tel: [''],
+      usr_pass: ['', Validators.required],
       usr_rol: ['', Validators.required],
     });
   }
@@ -144,6 +147,11 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
         }
     });
 
+}
+
+
+togglePasswordVisibility(): void {
+  this.hidePassword = !this.hidePassword; // Cambiar entre mostrar y ocultar la contraseña
 }
 
 

@@ -169,22 +169,30 @@ cargarObservaciones() {
 
 
 editarObservacion(obs_id: number) {
-
   this.selectedObservacionId = obs_id;
   console.log('Iniciando la edición de la observación', obs_id);
 
-  // Imprimir el estado actual para comparar
-  console.log('Estado actual de enEdicion antes de la edición:', this.enEdicion);
+  // Obtener la observación correspondiente a obs_id (suponiendo que tienes un arreglo de observaciones llamado 'observaciones')
+  const observacionEditada = this.observaciones.find(observacion => observacion.obs_id === obs_id);
 
-  // Establecer el ID del observador que está siendo editado
-  this.enEdicion = obs_id;
+  if (observacionEditada) {
+    // Si se encuentra la observación, establecer selectedCategory en el cat_obs_id de esa observación
+    this.selectedCategory = observacionEditada.cat_obs_id;
+    // Establecer los valores preexistentes en los otros campos
+    this.observadoresCat.apr_ger = observacionEditada.apr_ger;
+    this.observadoresCat.apr_oper = observacionEditada.apr_oper;
+    this.observadoresCat.apr_tec = observacionEditada.apr_tec;
+  } else {
+    // Si no se encuentra la observación, puedes manejar el caso según tu lógica (por ejemplo, mostrar un mensaje de error).
+    console.error('No se encontró la observación correspondiente a obs_id', obs_id);
+  }
 
   // Cambiar el estado de edición a verdadero
+  this.enEdicion = obs_id;
   this.isEditing = true;
   this.mostrarStepper = true;
   // Imprimir el nuevo estado para confirmar el cambio
   console.log('Estado actualizado de enEdicion después de la edición:', this.enEdicion);
-
 }
 
 

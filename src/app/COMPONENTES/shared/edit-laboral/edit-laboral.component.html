@@ -54,6 +54,47 @@
       </mat-card>
 
       <br>
+
+      <div class="contenedor-externo">
+        <h4 class="perfilr">Referencias Laborales</h4>
+        <div formArrayName="referenciasLaborales">
+          <div *ngFor="let ref of referenciasFormArray.controls; let i = index" [formGroupName]="i">
+            <mat-card class="referencia-individual">
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" formControlName="ref_lab_nom">
+              </mat-form-field>
+      
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Institución</mat-label>
+                <input matInput type="text" formControlName="ref_lab_emp">
+              </mat-form-field>
+      
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="ref_lab_email">
+              </mat-form-field>
+      
+              <mat-form-field appearance="fill" class="example-full-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput type="tel" formControlName="ref_lab_tel">
+              </mat-form-field>
+              <mat-card class="guardarycancelar mb-2" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <button mat-mini-fab color="warn" (click)="eliminarReferencia(i)" style="margin: auto;">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-card>
+              
+            </mat-card>
+          </div>
+        </div>
+        <mat-card class="guardarycancelar mb-2">
+        <button mat-raised-button type="button" class="botonprimario m-2" (click)="addReferencia()">+ Añadir Referencia</button>
+      </mat-card>
+      </div>
+
+
+      
       <mat-card class="guardarycancelar">
         <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Guardar</button>
         <button mat-raised-button class="botonprimario m-2" (click)="goBack()">Cancelar</button>

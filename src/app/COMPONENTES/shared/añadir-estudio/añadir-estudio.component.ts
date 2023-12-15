@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { Academica } from 'src/app/interface/academica.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -70,6 +70,7 @@ export class AñadirEstudioComponent implements OnInit {
       inf_acad_nom_esc: [academica ? academica.inf_acad_nom_esc : "", [Validators.required]],
       inf_acad_fec_ini: [academica ? academica.inf_acad_fec_ini : "", [Validators.required]],
       inf_acad_fec_fin: [academica ? academica.inf_acad_fec_fin : "", [Validators.required]],
+      referenciaAcademicas: this.formBuilder.array([])
     });
   }
   
@@ -139,7 +140,25 @@ obtenerAcademicasGuardados() {
   
 
 
+  get referenciaFormArray(){
+    return this.form.get('referenciaAcademicas') as FormArray;
+  }
+  addReferencia() {
+    const referenciaFormGroup = this.formBuilder.group({
+      ref_acad_nom: [''],
+      ref_acad_ins: [''],
+      ref_acad_email: [''],
+      ref_acad_tel: ['']
+    });
+    this.referenciaFormArray.push(referenciaFormGroup);
+  }
+
   
+  eliminarReferencia(index: number) {
+    this.referenciaFormArray.removeAt(index);
+  }
+
+
 
 
   submitForm(event: Event) {

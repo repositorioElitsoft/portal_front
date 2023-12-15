@@ -32,3 +32,20 @@
   box-shadow: none;
   width: 100%;
   }
+
+  .contenedor-externo {
+    width: 100%; /* Esto asegura que el div externo ocupe el 100% del ancho de su contenedor padre */
+  }
+  
+  .mat-card {
+    width: 100%; /* Esto asegura que las tarjetas de material ocupen el 100% del ancho del div */
+    box-sizing: border-box; /* Esto asegura que el padding y border estén incluidos en el ancho total */
+    margin-bottom: 16px; /* Espacio entre tarjetas si tienes múltiples */
+  }
+  
+  
+  .perfilr {
+    width: 100%; /* Si deseas que el título también ocupe todo el ancho */
+    text-align: center; /* Si deseas centrar el título */
+  }
+  
