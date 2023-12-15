@@ -31,10 +31,10 @@ export class LaboralService {
   obtenerListaLaboralPorUsuario(): Observable<Laboral[]> {
     return this.http.get<Laboral[]>(`${this.url}`);
   }
-  obtenerLaboralPorId(laboralId: number): Observable<Laboral[]> {
-    return this.http.get<Laboral[]>(`${this.url}obtener/${laboralId}`);
+  obtenerLaboralPorId(laboralId: number): Observable<Laboral> {
+    return this.http.get<Laboral>(`${this.url}obtener/${laboralId}`);
   }
-  
+
 
   obtenerNombreProducto(prdId: number): Observable<string> {
     return this.http.get<string>(`${this.url}obtener-nombre-producto/${prdId}`);

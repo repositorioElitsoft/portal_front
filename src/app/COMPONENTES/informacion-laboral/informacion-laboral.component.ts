@@ -68,7 +68,7 @@ export class InformacionLaboralComponent implements OnInit {
   }
 
   obtenerLaboralesGuardados(){
-    console.log('obteniendo datos, espere, estamos chambeando para ud')
+
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
       next: (data) =>{
         this.laborales = data;
@@ -270,6 +270,7 @@ export class InformacionLaboralComponent implements OnInit {
           herr_is_cert: false,
           herr_nvl: "",
           herr_usr_anos_exp: "",
+          herr_prd_otro:"",
           versionProducto: {
             vrs_id: 0,
             vrs_name: "",
@@ -316,7 +317,7 @@ export class InformacionLaboralComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`); 
+            console.log(`Dialog result: ${result}`);
             this.obtenerLaboralesGuardados();
           });
         },

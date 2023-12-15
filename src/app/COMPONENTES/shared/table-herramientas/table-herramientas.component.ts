@@ -162,12 +162,16 @@ export class TableHerramientasComponent implements OnInit {
             console.log('Error al obtener versiones:', error);
           }
         })
+        let valorDefectoProducto = String(herramienta.versionProducto.prd.prd_id)
 
+        if (herramienta.herr_prd_otro){
+          valorDefectoProducto = 'otro'
+        }
 
         const row = this.formBuilder.group({
           herr_usr_id:[herramienta.herr_usr_id],
           herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
-          herr_prd_name: [herramienta.versionProducto.prd.prd_id, Validators.required],
+          herr_prd_name: [valorDefectoProducto, Validators.required],
           herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
           herr_prd_otro:[herramienta.herr_prd_otro],
           versionProducto: this.formBuilder.group({
@@ -183,8 +187,6 @@ export class TableHerramientasComponent implements OnInit {
     });
 
       this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
-
-
 
     }
 

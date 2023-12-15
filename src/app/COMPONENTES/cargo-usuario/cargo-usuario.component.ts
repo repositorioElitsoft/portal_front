@@ -37,13 +37,13 @@ export class CargoUsuarioComponent implements OnInit {
   }
 
   constructor(
-    private usuarioService: UsuarioService, 
+    private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private cargosusuarioService:CargosUsuarioService,
-    private cargoselitsoftService:CargosElitsoftService, 
+    private cargoselitsoftService:CargosElitsoftService,
     private notification: NotificationService,
-    private router: Router, 
-    private route: ActivatedRoute ) { 
+    private router: Router,
+    private route: ActivatedRoute ) {
       this.buildForm();
     }
 
@@ -69,7 +69,7 @@ export class CargoUsuarioComponent implements OnInit {
     );
   }
 
-  
+
 
 
   getCargoUsuairo() {
@@ -83,7 +83,7 @@ export class CargoUsuarioComponent implements OnInit {
             crg_elit_id: data.cargoElitsoft?.crg_elit_id,
             disponibilidad:data.disponibilidad,
             tiempo_incorporacion:data.tiempo_incorporacion,
-            otro_tiempo_incorporacion: "",
+            otro_tiempo_incorporacion: data.otro_tiempo_incorporacion,
           }
         )
       }
@@ -92,10 +92,10 @@ export class CargoUsuarioComponent implements OnInit {
 
   successMessage() {
     const newCargo: CargoUsuario = this.form.value;
-    
+
     // Supongamos que usuarioId está disponible en tu newCargo
     const usuarioId = newCargo.usuarioId;
-  
+
     // Mostrar SweetAlert personalizado
     Swal.fire({
       icon: 'success',
@@ -108,7 +108,7 @@ export class CargoUsuarioComponent implements OnInit {
       }
     });
   }
-  
+
 
 
 
@@ -116,18 +116,20 @@ export class CargoUsuarioComponent implements OnInit {
 
   submitForm(event: Event){
     event.preventDefault();
-   
+
   const pretensionRentaFormatted = this.form.get('crg_usr_pret')?.value;
   const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
+
   this.form.get('crg_usr_pret')?.setValue(pretensionRentaWithoutFormat);
 
 
   const newCargo: CargoUsuario = this.form.value;
+
   if (newCargo.tiempo_incorporacion !== 'otro') {
 
-    newCargo.tiempo_incorporacion= newCargo.otro_tiempo_incorporacion;
-    
     newCargo.otro_tiempo_incorporacion = '';
+
+
   }
 
   newCargo.cargoElitsoft = {
@@ -136,7 +138,7 @@ export class CargoUsuarioComponent implements OnInit {
 
   console.log(newCargo)
 
-  
+
   this.cargosusuarioService.guardarCargo(newCargo).subscribe(
     (nuevoCargo: CargoUsuario) => {
       console.log('Cargo guardado exitosamente:', nuevoCargo);
