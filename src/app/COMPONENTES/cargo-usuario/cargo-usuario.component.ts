@@ -1,14 +1,12 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { Usuario } from 'src/app/interface/user.interface';
 import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/service/notification.service';
-import { Pipe, PipeTransform } from '@angular/core';
 import Swal from 'sweetalert2';
 
 
@@ -71,7 +69,6 @@ export class CargoUsuarioComponent implements OnInit {
 
 
 
-
   getCargoUsuairo() {
     this.cargosusuarioService.getCargosByUserId().subscribe(
       (data: CargoUsuario) => {
@@ -108,8 +105,6 @@ export class CargoUsuarioComponent implements OnInit {
       }
     });
   }
-
-
 
 
 

@@ -1,5 +1,4 @@
 /* Estilos para la franja naranja en pantallas más grandes (por defecto) */
-
 .div-inputs{
   width: 100%;
 }
@@ -9,8 +8,8 @@
   padding-top: 8px;
   padding-bottom: 8px;
   margin-bottom: 2vh;
- 
 }
+
 .cargo{
   font-size: medium;
   font-weight: 600;
@@ -26,18 +25,17 @@
 }
 
 
- .Titulos{
+.Titulos{
   font-size: 12px;
   font-family: 'Meera Inimai', sans-serif;
   font-weight: bold;
- }
+}
 
- .fechas2 {
+.fechas2 {
   font-size: 14px;
   font-family: 'Meera Inimai', sans-serif;
 
 }
-
 
 
 /* Animación de pulso */
@@ -52,8 +50,3 @@
     transform: scale(1);
   }
 }
-
-
-
-
-

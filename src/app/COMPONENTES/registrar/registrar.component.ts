@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { HttpClient } from '@angular/common/http'; // Importa el módulo HttpClient
-
-import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Register } from 'src/app/interface/register.interface';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { NotificationService } from 'src/app/service/notification.service';
@@ -23,7 +19,7 @@ export class RegistrarComponent {
       usr_email: new FormControl('', [Validators.required, Validators.email]),
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required])
-    }, { validators: this.passwordMatchValidator });  
+    }, { validators: this.passwordMatchValidator });
   }
 
   onSubmit() {

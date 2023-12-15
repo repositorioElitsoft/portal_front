@@ -113,5 +113,4 @@ export class ProfileAdminComponent implements OnInit {
     }
   }
 
-
-  }
+}

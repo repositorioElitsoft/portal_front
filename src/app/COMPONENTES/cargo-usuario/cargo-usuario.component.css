@@ -3,19 +3,14 @@
   font-size: 15px;
 }
 
-
-
 .form {
   width: fit-content;
 }
 
-
-
-
 .contenedorform{
- padding-left: 30%;
- padding-right: 30%;
- box-shadow: none;
+  padding-left: 30%;
+  padding-right: 30%;
+  box-shadow: none;
 }
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */
@@ -28,6 +23,4 @@
     padding-bottom: 5%;
     align-items: center;
   }
-
-
 }

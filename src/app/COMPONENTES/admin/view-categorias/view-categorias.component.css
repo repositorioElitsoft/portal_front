@@ -19,5 +19,6 @@ body {
   padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
 }
 
-.filter-container{margin-top: 10%;}
-
+.filter-container{
+  margin-top: 10%;
+}

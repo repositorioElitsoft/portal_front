@@ -41,5 +41,6 @@
   text-align: center;
 }
 
-
-.filter-container{margin-top: 10%;}
+.filter-container{
+  margin-top: 10%;
+}

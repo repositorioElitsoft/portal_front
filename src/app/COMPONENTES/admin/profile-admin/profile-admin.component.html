@@ -1,70 +1,39 @@
-
 <mat-card class="profile-container">
-
 <h4 class="perfilr">Detalles del perfil</h4>
-
     <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
-
     <div class="div-inputs"  *ngIf="isLoaded">
-
-
-
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
-
         <div class="row mb-3">
           <label for="inputNombres" class="col-sm-2 col-form-label" >Nombres:</label>
           <div class="col-sm-10">
-            <input type="nombres" class="form-control" id="inputNombres" formControlName="usr_nom" name="inputNombres"
-            [ngClass]="{'is-invalid': form.get('usr_nom')?.invalid && form.get('usr_nom')?.touched}" >
-            <div *ngIf="form.get('usr_nom')?.hasError('required') && form.get('usr_nom')?.touched" class="invalid-feedback">
-              Debe ingresar nombre
-            </div>
+            <input type="nombres" class="form-control" id="inputNombres" formControlName="usr_nom" name="inputNombres" [ngClass]="{'is-invalid': form.get('usr_nom')?.invalid && form.get('usr_nom')?.touched}" >
+            <div *ngIf="form.get('usr_nom')?.hasError('required') && form.get('usr_nom')?.touched" class="invalid-feedback">Debe ingresar nombre</div>
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputApellidop" class="col-sm-2 col-form-label">Apellido Paterno:</label>
           <div class="col-sm-10">
-            <input type="apellidop" class="form-control" id="inputApellidop" formControlName="usr_ap_pat" name="inputApellidop"
-            [ngClass]="{'is-invalid': form.get('usr_ap_pat')?.invalid && form.get('usr_ap_pat')?.touched}">
-            <div *ngIf="form.get('usr_ap_pat')?.hasError('required') && form.get('usr_ap_pat')?.touched" class="invalid-feedback">
-              Debe ingresar apellido
-            </div>
+            <input type="apellidop" class="form-control" id="inputApellidop" formControlName="usr_ap_pat" name="inputApellidop" [ngClass]="{'is-invalid': form.get('usr_ap_pat')?.invalid && form.get('usr_ap_pat')?.touched}">
+            <div *ngIf="form.get('usr_ap_pat')?.hasError('required') && form.get('usr_ap_pat')?.touched" class="invalid-feedback"> Debe ingresar apellido</div>
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputApellidom" class="col-sm-2 col-form-label">Apellido Materno:</label>
           <div class="col-sm-10">
-            <input type="apellidom" class="form-control" id="inputApellidom" formControlName="usr_ap_mat" name="inputApellidom"
-            [ngClass]="{'is-invalid': form.get('usr_ap_mat')?.invalid && form.get('usr_ap_mat')?.touched}">
-
-            <div *ngIf="form.get('usr_ap_mat')?.hasError('required') && form.get('usr_ap_mat')?.touched" class="invalid-feedback">
-              Debe ingresar apellido
-            </div>
+            <input type="apellidom" class="form-control" id="inputApellidom" formControlName="usr_ap_mat" name="inputApellidom" [ngClass]="{'is-invalid': form.get('usr_ap_mat')?.invalid && form.get('usr_ap_mat')?.touched}">
+            <div *ngIf="form.get('usr_ap_mat')?.hasError('required') && form.get('usr_ap_mat')?.touched" class="invalid-feedback">Debe ingresar apellido</div>
           </div>
         </div>
-
         <div class="row mb-3">
           <label for="email" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10">
             <input type="email" class="form-control no-mouse-action" id="email" formControlName="usr_email" name="email" readonly>
-
           </div>
         </div>
-
-        <button mat-raised-button type="button" class="botonprimario m-2"
-        (click)="toggleEditable()" *ngIf="!editable">
+        <button mat-raised-button type="button" class="botonprimario m-2" (click)="toggleEditable()" *ngIf="!editable">
         <mat-icon>edit</mat-icon>Editar
-      </button>
-
-
-        <button  mat-raised-button type="submit" class="botonprimario m-2" *ngIf="editable">Guardar</button>
-
-
-
+        </button>
+        <button mat-raised-button type="submit" class="botonprimario m-2" *ngIf="editable">Guardar</button>
       </form>
-
     </div>
-
-
   </mat-card>
-

@@ -33,7 +33,7 @@ export class InformacionAcademicaComponent implements OnInit {
     private academicaService: AcademicaService, private route: ActivatedRoute, private router: Router) {
       this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
-     }
+      }
 
   ngOnInit(): void {
     this.obtenerAcademicasGuardados();
@@ -99,11 +99,6 @@ export class InformacionAcademicaComponent implements OnInit {
   }
 
 
-
-
-
-
-
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
@@ -122,21 +117,13 @@ export class InformacionAcademicaComponent implements OnInit {
 
 
   editarAcademica(event: any) {
-    console.log('Evento recibido:', event); // Verificar el evento recibido
 
-    // Intentando obtener el ID del elemento padre del elemento que desencadenó el evento
     const inf_acad_id = event.target.parentElement.id;
-    console.log('inf_acad_id:', inf_acad_id); // Verificar el ID obtenido
 
     if (inf_acad_id) {
-      console.log('ID definido, solicitando datos...'); // Confirmar que el ID está definido
 
-      // Llamar al servicio para obtener los datos de Academica utilizando inf_acad_id
       this.academicaService.obtenerAcademica(inf_acad_id).subscribe({
         next: (data) => {
-          console.log('Data llegada:', data); // Inspeccionar los datos recibidos del servicio
-
-          // Aquí puedes continuar con el código para abrir el diálogo y pasar los datos
           const dialogRef = this.dialog.open(EditarAcademicaComponent, {
             width: '800px',
             height: '700px',
@@ -145,7 +132,6 @@ export class InformacionAcademicaComponent implements OnInit {
           });
 
           dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`); // Resultado después de cerrar el diálogo
             this.obtenerAcademicasGuardados();
           });
         },

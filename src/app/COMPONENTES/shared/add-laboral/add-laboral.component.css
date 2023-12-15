@@ -43,3 +43,9 @@ width: 100%;
   margin-bottom: 16px; /* Espacio entre tarjetas si tienes múltiples */
 }
 
+
+.perfilr {
+  width: 100%; /* Si deseas que el título también ocupe todo el ancho */
+  text-align: center; /* Si deseas centrar el título */
+
+}

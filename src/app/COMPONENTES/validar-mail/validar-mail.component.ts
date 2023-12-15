@@ -13,8 +13,7 @@ export class ValidarMailComponent {
 
 
   constructor(
-    private validarEmailService: ValidarMailService,
-    private route: ActivatedRoute
+    private validarEmailService: ValidarMailService
   ){}
 
   ngOnInit(){

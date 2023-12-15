@@ -114,7 +114,6 @@ export class DatosPersonalesComponent implements OnInit {
   onStateSelected(){
 
     const stateId = this.form.get("state")!.value;
-    console.log("I'm gonna call cities by state")
     this.cityService.getStateByCountry(stateId).subscribe({
       next: (data:City[]) => {
         this.cities = this.sortByName(data);
@@ -137,7 +136,6 @@ export class DatosPersonalesComponent implements OnInit {
         this.states = this.sortByName(data);
       },
       (error) => {
-        console.error('Error fetching states:', error);
       }
     );
   }
@@ -149,7 +147,6 @@ export class DatosPersonalesComponent implements OnInit {
 
       },
       (error) => {
-        console.error('Error fetching cities:', error);
       }
     );
   }
@@ -160,7 +157,7 @@ export class DatosPersonalesComponent implements OnInit {
 
 
   private sortByName(data: any): any[] {
-    console.log('Data received:', data);
+
 
     if (Array.isArray(data)) {
       // data es un array, puedes ordenarlo directamente
@@ -169,8 +166,6 @@ export class DatosPersonalesComponent implements OnInit {
       // data es un objeto con una propiedad states, puedes ordenar data.states
       return data.states.sort((a: any, b: any) => a.name.localeCompare(b.name));
     } else {
-      // Manejo de casos donde data no es un array o data.states no es un array
-      console.error('Error: Unable to sort data.');
       return [];
     }
   }
@@ -196,12 +191,10 @@ export class DatosPersonalesComponent implements OnInit {
       this.isUploadingFile = true
       this.usuarioService.actualizarCV(formData).subscribe({
         next: (response) => {
-          console.log("Subido con éxito:", inputNode.files[0].fileName, response);
           this.isUploadingFile = false;
           this.currentResumeName = inputNode.files[0].name;
         },
         error: (err) => {
-          console.log("Error al actualizar CV:", err);
           this.snackBar.open("Error al actualizar CV", "Ok", {
             duration: 3000,
           });

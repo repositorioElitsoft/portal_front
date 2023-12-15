@@ -10,7 +10,7 @@ import { HerramientasService } from 'src/app/service/herramientas.service';
 @Component({
   selector: 'app-add-laboral',
   templateUrl: './add-laboral.component.html',
-  styleUrls: ['add-estudio.component.css']
+  styleUrls: ['add-laboral.component.css']
 })
 export class AddLaboralComponent implements OnInit {
   [x: string]: any;
