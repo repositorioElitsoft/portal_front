@@ -1,41 +1,10 @@
-/* Estilo para el encabezado de la tarjeta */
-mat-card-header {
-  border-bottom: 1px solid #e0e0e0; /* Borde inferior para separar del contenido */
-  padding: 16px; /* Espaciado interno */
-  display: flex; /* Usa flexbox para alinear los elementos */
-  align-items: center; /* Alinea los elementos verticalmente al centro */
-  justify-content: center; /* Centra los elementos horizontalmente */
-  text-align: center; /* Asegura que el texto esté centrado */
-}
-
-  
-  /* Estilo para el título dentro del encabezado */
-  .perfilr {
-    margin: 0;
-
-    font-size: 24px; /* Tamaño del texto */
-  }
-  
-  /* Estilo general del formulario */
-  form {
-    padding: 20px; /* Espaciado interno */
-  }
-  
-  /* Estilo para los campos del formulario */
-  mat-form-field {
-    width: 100%; /* Ancho completo */
-    margin-bottom: 20px; /* Espaciado entre campos */
-  }
-  
-  /* Estilo para el área de texto */
-  textarea.mat-input-element {
-    min-height: 100px; /* Altura mínima */
-  }
-  
-  /* Estilo para el grupo de botones */
+/* Uso Exclusivo de este css  para el formulario en AddCategory*/
   .form-group {
     display: flex; /* Uso de Flexbox */
     justify-content: center; /* Centrar los botones */
     gap: 10px; /* Espacio entre botones */
   }
   
+  form {
+    padding: 20px; /* Espaciado interno */
+  }

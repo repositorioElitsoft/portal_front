@@ -1,17 +1,17 @@
-<mat-card-header>
-  <h2 class="perfilr">Agregar Nueva Categoría</h2>
+<mat-card-header class="header-categoria-component">
+  <h2 class="addCategorytitle">Agregar Nueva Categoría</h2>
 </mat-card-header>
 
 
   <form (ngSubmit)="formSubmit()" [formGroup]="form">
 
 
-    <mat-form-field>
+    <mat-form-field class ="categoryadd-field">
       <mat-label>Título</mat-label>
       <input matInput formControlName="titulo">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class ="categoryadd-field">
       <mat-label>Descripción</mat-label>
       <textarea matInput 
       formControlName="descripcion"></textarea>
