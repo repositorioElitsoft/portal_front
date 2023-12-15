@@ -4,7 +4,6 @@ import { AcademicaService } from 'src/app/service/academica.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Academica } from 'src/app/interface/academica.interface';
-import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
 import { ReferenciaAcademica } from 'src/app/interface/referencia-academica.interface';
 
 @Component({
@@ -41,10 +40,17 @@ export class EditarAcademicaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('esta es la data del hijo ', this.data)
+    console.log('esta es la data del hijo ', this.data);
     this.form.patchValue(this.data);
-   this.crearReferenciasForm(this.data.referenciaAcademicas);
-  }
+
+    // Asigna inf_acad_id con el valor proveniente de data, si existe
+    this.inf_acad_id = this.data && this.data.inf_acad_id ? this.data.inf_acad_id : null;
+
+    // Registro en la consola para verificar el valor de inf_acad_id
+    console.log('inf_acad_id asignado:', this.inf_acad_id);
+
+    this.crearReferenciasForm(this.data.referenciaAcademicas);
+}
 
   
 
@@ -68,6 +74,7 @@ export class EditarAcademicaComponent implements OnInit {
   crearReferenciasForm(data: ReferenciaAcademica[]) {
     const rowArray = data.map((academica, index) => {
       return this.formBuilder.group({
+        ref_acad_id: [academica.ref_acad_id], 
         ref_acad_nom: [academica.ref_acad_nom], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
         ref_acad_ins: [academica.ref_acad_ins], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
         ref_acad_email: [academica.ref_acad_email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
@@ -78,65 +85,71 @@ export class EditarAcademicaComponent implements OnInit {
   }
   
 
-
   submitForm(event: Event) {
     event.preventDefault();
-
-    if (this.form.valid) {
-      // Formatear las fechas antes de enviar al servidor
-      const fechaInicioFormateada = new Date(
-        this.form.value.inf_acad_fec_ini
-      ).toISOString().split('T')[0];
-      const fechaFinFormateada = new Date(
-        this.form.value.inf_acad_fec_fin
-      ).toISOString().split('T')[0];
-
+  
+    if (this.form.valid && this.inf_acad_id !== null) {
+      const fechaInicioFormateada = new Date(this.form.value.inf_acad_fec_ini).toISOString().split('T')[0];
+      const fechaFinFormateada = new Date(this.form.value.inf_acad_fec_fin).toISOString().split('T')[0];
+  
+      // Asegúrate de incluir los datos de las referencias en la actualización
+      const referenciasFormArray = this.form.get('referenciaAcademicas') as FormArray;
+      const referencias = referenciasFormArray.getRawValue(); // Obtiene los valores actuales del FormArray
+  
       const academicaNueva: Academica = {
         ...this.form.value,
         inf_acad_fec_ini: fechaInicioFormateada,
         inf_acad_fec_fin: fechaFinFormateada,
+        referenciaAcademicas: referencias // Incluye las referencias en el objeto a actualizar
       };
+      console.log('Enviando actualización con ID:', this.inf_acad_id);
+      console.log('Datos a actualizar:', academicaNueva);
 
+      
       this.academicaService
-        .guardarAcademica(academicaNueva, this.id)
-        .subscribe(
-          (academicaGuardada: Academica) => {
-            console.log('Información académica guardada:', academicaGuardada);
-            this.creationMode = false;
-            this.academicaService
-              .obtenerListaAcademicasPorUsuario()
-              .subscribe({
-                next: (data) => {
-                  this.academicas = data;
-                  // Cierra el diálogo después de guardar los cambios
-                  this.EditarAcademicaComponent.emit();
-                  this.dialog.closeAll();
-                },
-                error: (err) => {
-                  console.log(err);
-                },
-              });
-          },
-          (error) => {
-            console.error('Error al guardar información académica:', error);
-            console.log('Error detallado:', error);
-          }
-        );
+      .guardarAcademica(academicaNueva, this.inf_acad_id)
+      .subscribe(
+        (academicaGuardada: Academica) => {
+          console.log('Información académica guardada:', academicaGuardada);
+          this.creationMode = false;
+          this.academicaService
+            .obtenerListaAcademicasPorUsuario()
+            .subscribe({
+              next: (data) => {
+                this.academicas = data;
+                // Cierra el diálogo después de guardar los cambios
+                this.EditarAcademicaComponent.emit();
+                this.dialog.closeAll();
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
+        },
+        (error) => {
+          console.error('Error al actualizar información académica:', error);
+          console.log('Error detallado:', error);
+        }
+      );
     } else {
-      // Muestra un mensaje de error o realiza alguna otra acción si el formulario no está completo.
+      if (this.inf_acad_id === null) {
+        console.error('El ID es nulo o no está definido.');
+      }
       console.log('Por favor, complete todas las casillas del formulario.');
-
-      // Agregar un registro de los errores en el formulario
       console.log('Errores en el formulario:', this.form.errors);
-
-      // Agregar un registro del estado del formulario
       console.log('Estado del formulario:', this.form.value);
     }
   }
+  
+  
 
+
+  
   get referenciaFormArray(){
     return this.form.get('referenciaAcademicas') as FormArray;
   }
+
+
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
       ref_acad_nom: [''],

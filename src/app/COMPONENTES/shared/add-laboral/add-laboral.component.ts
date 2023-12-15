@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
@@ -48,6 +48,7 @@ export class AddLaboralComponent implements OnInit {
       inf_lab_act: ["", [Validators.required]],
       inf_lab_fec_ini: ["", [Validators.required]],
       inf_lab_fec_fin: ["", [Validators.required]],
+      referenciasLaborales: this.formBuilder.array([])
     });
 
     this.generateHerrForm();
@@ -245,6 +246,29 @@ export class AddLaboralComponent implements OnInit {
     }
   }
 
+
+
+  get referenciasFormArray() {
+    return this.form.get('referenciasLaborales') as FormArray;
+  }
+
+
+
+
+
+  addReferencia() {
+    const referenciaFormGroup = this.formBuilder.group({
+      ref_lab_nom: [''],
+      ref_lab_emp: [''],
+      ref_lab_email: [''],
+      ref_lab_tel: [''],
+    });
+    this.referenciasFormArray.push(referenciaFormGroup);
+  }
+
+  eliminarReferencia(index: number) {
+    this.referenciasFormArray.removeAt(index);
+  }
 
 
 

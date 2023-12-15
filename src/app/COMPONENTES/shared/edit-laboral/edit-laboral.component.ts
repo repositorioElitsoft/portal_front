@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HerramientasService } from 'src/app/service/herramientas.service';
+import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
 
 @Component({
   selector: 'app-edit-laboral',
@@ -24,7 +25,7 @@ export class  EditLaboralComponent implements OnInit {
   herramientasDisponibles!: HerramientaData[];
   herrIdList: number[] = [];
   navigateToRoute: any;
-
+  inf_lab_id: number | null | undefined = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,17 +42,18 @@ export class  EditLaboralComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.id = this.data.inf_lab_id;
-    if (this.id) {
-      this.obtenerLaboralesGuardados(this.id);
-    }
+    console.log('esta es la data del hijo ', this.data);
+    this.form.patchValue(this.data);
+
+    // Asigna inf_acad_id con el valor proveniente de data, si existe
+    this.inf_lab_id = this.data && this.data.inf_lab_id ? this.data.inf_lab_id : null;
+
+    // Registro en la consola para verificar el valor de inf_acad_id
+    console.log('inf_acad_id asignado:', this.inf_lab_id);
+
+    this.crearReferenciasForm(this.data.referenciasLaborales);
 
 
-  }
-
-  ngAfterViewInit() {
-    console.log("Ejecutando ngAfterViewInit con id:", this.id ?? 0);
-    this.obtenerLaboralesGuardados(this.id ?? 0);
   }
 
 
@@ -64,10 +66,26 @@ export class  EditLaboralComponent implements OnInit {
       inf_lab_act: ["", [Validators.required]],
       inf_lab_fec_ini: ["", [Validators.required]],
       inf_lab_fec_fin: ["", [Validators.required]],
+       referenciasLaborales: this.formBuilder.array([])
     });
 
     this.generateHerrForm();
   }
+
+
+  crearReferenciasForm(data: ReferenciaLaboral[]) {
+    const rowArray = data.map((laboral, index) => {
+      return this.formBuilder.group({
+        ref_lab_id: [laboral.ref_lab_id], 
+        ref_lab_nom: [laboral.ref_lab_nom], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
+        ref_lab_emp: [laboral.ref_lab_emp], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
+        ref_lab_email: [laboral.ref_lab_email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
+        ref_lab_tel: [laboral.ref_lab_tel] // Suponiendo que 'telefono' es una propiedad del objeto 'academica'
+      });
+    });
+    this.form.setControl('referenciasLaborales', this.formBuilder.array(rowArray))
+  }
+  
 
 
 
@@ -141,87 +159,104 @@ export class  EditLaboralComponent implements OnInit {
 
 
   submitForm(event: Event) {
-    // Prevenir el comportamiento por defecto del evento submit para evitar que la página se recargue
     event.preventDefault();
+  
+    if (this.form.valid && this.inf_lab_id !== null) {
+      const fechaInicioFormateada = new Date(this.form.value.inf_lab_fec_ini).toISOString().split('T')[0];
+      const fechaFinFormateada = new Date(this.form.value.inf_lab_fec_fin).toISOString().split('T')[0];
+  
+      // Asegúrate de incluir los datos de las referencias en la actualización
+      const referenciasFormArray = this.form.get('referenciasLaborales') as FormArray;
+      const referencias = referenciasFormArray.getRawValue(); // Obtiene los valores actuales del FormArray
+  
+      const laboralNueva: Laboral = {
+        ...this.form.value,
+        inf_lab_fec_ini: fechaInicioFormateada,
+        inf_lab_fec_fin: fechaFinFormateada,
+        referenciasLaborales: referencias // Incluye las referencias en el objeto a actualizar
+      };
+      console.log('Enviando actualización con ID:', this.inf_lab_id);
+      console.log('Datos a actualizar:', laboralNueva);
 
-    // Comprobar si el formulario es válido
-    if (this.form.valid) {
-      console.log("Formulario válido, guardando:", this.form.value);
-
-      // Extraer la información del formulario y preparar el objeto para enviar
-      const laboralNueva: Laboral = this.form.value;
-
-      // Preparar el arreglo de herramientas seleccionadas
-      let herramientasFinal: HerramientaData[] = [];
-      this.herrIdList.forEach(id => {
-        // Verificar si la herramienta fue seleccionada en el formulario
-        if (this.form.get(id.toString())?.value === true) {
-          // Crear el objeto HerramientaData
-          let herra: HerramientaData = {
-            herr_usr_id: id,
-            herr_is_cert: false,
-            herr_nvl: "",
-            herr_usr_anos_exp: "",
-            herr_prd_otro:"",
-            versionProducto: {
-              vrs_id: 0,
-              vrs_name: "",
-              prd: {
-                prd_id: 0,
-                prd_nom: "",
-                cat_prod_id: {
-                  cat_prod_id: 0,
-                  cat_prod_nom: ""
-                }
-              }
-            }
-          };
-          herramientasFinal.push(herra);
-        }
-      });
-
-      // Asignar el arreglo de herramientas al objeto laboral
-      laboralNueva.herramientas = herramientasFinal;
-
-      // Imprimir la información laboral completa que se enviará
-      console.log("Información laboral a guardar:", laboralNueva);
-
-      // Llamar al servicio para guardar la información laboral
-      this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
-        (laboralGuardada: Laboral) => {
-          // Si el guardado es exitoso, imprimir el resultado y realizar acciones adicionales si son necesarias
-          console.log('Información laboral guardada:', laboralGuardada);
-          this.creationMode = false; // Por ejemplo, cambiar el modo del formulario a no creación
-
-          // Actualizar la lista de experiencias laborales
-          this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
-            next:(data) => {
-              this.laborales = data;
+      
+      this.laboralService
+      .guardarLaboral(laboralNueva, this.inf_lab_id)
+      .subscribe(
+        (academicaGuardada: Laboral) => {
+          console.log('Información académica guardada:', academicaGuardada);
+          this.creationMode = false;
+          this.laboralService
+            .obtenerListaLaboralPorUsuario()
+            .subscribe({
+              next: (data) => {
+                this.laborales = data;
                 // Cierra el diálogo después de guardar los cambios
                 this.EditLaboralComponent.emit();
                 this.dialog.closeAll();
-            },
-            error:(err) => {
-              console.error('Error al obtener la lista de experiencias laborales:', err);
-            }
-          });
+              },
+              error: (err) => {
+                console.log(err);
+              },
+            });
         },
         (error) => {
-          // Si ocurre un error en el guardado, imprimir el error en la consola
-          console.error('Error al guardar la información laboral:', error);
+          console.error('Error al actualizar información académica:', error);
+          console.log('Error detallado:', error);
         }
       );
     } else {
-      // Si el formulario no es válido, imprimir los errores del formulario
-      console.log('Cancelado : No se guardó el formulario');
-      // Aquí puedes agregar la lógica para manejar un formulario inválido, como mostrar mensajes de error al usuario
+      if (this.inf_lab_id === null) {
+        console.error('El ID es nulo o no está definido.');
+      }
+      console.log('Por favor, complete todas las casillas del formulario.');
+      console.log('Errores en el formulario:', this.form.errors);
+      console.log('Estado del formulario:', this.form.value);
     }
+  }
+  
+  
+
+
+
+
+
+  get referenciasFormArray() {
+    return this.form.get('referenciasLaborales') as FormArray;
   }
 
 
 
 
 
+  addReferencia() {
+    const referenciaFormGroup = this.formBuilder.group({
+      ref_lab_nom: [''],
+      ref_lab_emp: [''],
+      ref_lab_email: [''],
+      ref_lab_tel: [''],
+    });
+    this.referenciasFormArray.push(referenciaFormGroup);
+  }
 
+  eliminarReferencia(index: number) {
+    this.referenciasFormArray.removeAt(index);
+  }
+
+  eliminarLaboral(id: number | undefined | null){
+    this.laboralService.eliminarLaboral(id).subscribe({
+      next:(res)=>{
+        console.log(res);
+        this.obtenerLaboralesGuardados(this.id ?? 0);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
+  }
+
+
+
+
+  
 
 }

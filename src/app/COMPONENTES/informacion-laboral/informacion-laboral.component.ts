@@ -312,7 +312,7 @@ export class InformacionLaboralComponent implements OnInit {
           const dialogRef = this.dialog.open(EditLaboralComponent, {
             width: '800px',
             height: '700px',
-            data: { inf_lab_id: inf_lab_id } // Pasar inf_lab_id como parte de los datos
+            data: data // Pasar inf_lab_id como parte de los datos
           });
 
           dialogRef.afterClosed().subscribe((result) => {

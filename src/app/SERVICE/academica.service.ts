@@ -13,9 +13,9 @@ export class AcademicaService {
 
   constructor(private http: HttpClient) { }
 
-  guardarAcademica(academica: Academica, usuarioId: number | undefined | null): Observable<Academica> {
-    if (usuarioId){
-      return this.http.put<Academica>(`${this.url}${usuarioId}`, academica);
+  guardarAcademica(academica: Academica, acadId: number | undefined | null): Observable<Academica> {
+    if (acadId){
+      return this.http.put<Academica>(`${this.url}${acadId}`, academica);
     }
     return this.http.post<Academica>(`${this.url}`, academica);
   }
