@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { CookieService } from 'ngx-cookie-service';
 import { LoginService } from 'src/app/service/login.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -20,7 +19,6 @@ export class IniciarSesionComponent implements OnInit {
   usr_pass = '';
   inicioSesionFallido = false;
   mensajeError = '';
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -35,20 +33,16 @@ export class IniciarSesionComponent implements OnInit {
         password: ['', Validators.required]
       });
     }
-
   ngOnInit() {
   }
-
   onSubmit() {
     this.loginService.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value).subscribe(
       (token) => {
         this.cookieService.set('token', token.Authorization);
         const tokenDecode = jwtDecode(this.authService.getToken());
         this.authService.currentUser = tokenDecode;
-
         const userRole = this.authService.currentUser.roles;
         console.log(`userRole: ${userRole}`);
-
         if ( userRole === 'ROLE_ADMIN' ) {
           this.router.navigate(['/admin/welcome-admin']);
         }

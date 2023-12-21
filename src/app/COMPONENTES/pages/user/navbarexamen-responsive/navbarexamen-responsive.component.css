@@ -7,30 +7,19 @@
   left: 0;
   right: 0;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  
-  
 }
-
-
-
 .example-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
   
 }
-
 h1.example-app-name {
   margin-left: 8px;
 }
-
-
-
 .custom-icon{
   margin-right: 4px;
 }
-
-
 .list-unstyled li a {
   display: block;
   padding: 10px 15px;
@@ -40,8 +29,6 @@ h1.example-app-name {
   display: flex;
   align-self: center;
 }
-
-
 .list-unstyled li a:hover {
   background-color: #555;
   color: #fff;
@@ -51,16 +38,10 @@ h1.example-app-name {
   background-color: #f39c12;
   color: #fff;
 }
-
-
 .custom-icon2 {
   color: #f39c12;/* Cambia el color del texto a gris */
 
 }
-
-
-
-
 /* Asegura que el navbar tenga margen superior */
 .navbar {
   margin-top: 10px; /* Ajusta el valor según sea necesario */
@@ -84,8 +65,6 @@ h1.example-app-name {
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); /* Elimina el recorte, revelando la imagen completa */
   }
 }
-
-
 .belowMenu{
   display: block;
   padding: 10px 15px;
@@ -95,8 +74,6 @@ h1.example-app-name {
   display: flex;
   align-self: center;
 }
-
-
 .belowMenu:hover{
   background-color: #555;
   color: #fff;
@@ -107,7 +84,6 @@ h1.example-app-name {
   .example-container{
     display: none;
     pointer-events: none;
-
   }
 
   .example-sidenav-container{

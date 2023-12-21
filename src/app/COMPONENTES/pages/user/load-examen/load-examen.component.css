@@ -20,11 +20,9 @@
 .example-header-image:before {
   top: 15px; /* Posición de la primera línea */
 }
-
 .example-header-image:after {
   top: 25px; /* Posición de la segunda línea */
 }
-
 .example-header-image span {
   position: absolute;
   top: 35px; /* Posición del texto simulado */

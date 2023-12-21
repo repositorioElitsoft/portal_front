@@ -23,17 +23,10 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
       public dialog: MatDialog,@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {
         const userId = data.userId;
         console.log('User ID en el componente hijo:', userId);}
-
-
-  
-   
-  
     openLink(event: MouseEvent): void {
       this._bottomSheetRef.dismiss();
       event.preventDefault();
     }
-
-
     downloadCv(): void {
       // Accede a userId directamente desde this.data.userId
       const userId = this.data.userId;
@@ -52,8 +45,6 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
         }
       );
     }
-    
-  
     openDialog(enterAnimationDuration: string, exitAnimationDuration: string, userId: string): void {
       console.log('User ID en openDialog:', userId);
     
@@ -64,7 +55,6 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
         data: { userId: userId }
       });
     }
-    
     openDialogVerArchivos(enterAnimationDuration: string, exitAnimationDuration: string, userId: string): void {
       console.log('User ID en openDialog:', userId);
     
@@ -75,8 +65,6 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
         data: { userId: userId }
       });
     }
-    
-    
   }
 
   

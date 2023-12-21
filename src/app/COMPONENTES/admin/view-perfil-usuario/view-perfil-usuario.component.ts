@@ -22,12 +22,10 @@ export class ViewPerfilUsuarioComponent implements OnInit {
     usr_url_link: '',
     //rol: '' // Agrega el campo del rol aquí
   };
-
   constructor(private route: ActivatedRoute, private usuarioService: UsuarioService, private router:Router) {
     this.email = ''; // Inicialización en el constructor
     this.rol = '';
    }
-
   ngOnInit(): void {
     this.email = this.route.snapshot.params['email'];
 
@@ -40,8 +38,6 @@ export class ViewPerfilUsuarioComponent implements OnInit {
       }
     );
     this.obtenerPerfilUsuario();
-
-    
   }
 
   obtenerPerfilUsuario(): void {
@@ -50,17 +46,12 @@ export class ViewPerfilUsuarioComponent implements OnInit {
         this.usuario = data;
         console.log('Usuario con rol:', this.usuario);
         console.log('Rol del usuario:', this.usuario.rol); // Acceder al campo "rol"
-        //
-
-        //
       },
       (error) => {
         console.error('Error al obtener el perfil del usuario:', error);
-        // Aquí podrías mostrar un mensaje de error en la interfaz de usuario si lo deseas.
       }
     );
   }
-
   regresar() {
     // Redireccionar a la lista de usuarios
     this.router.navigate(['/admin/view-usuarios']);

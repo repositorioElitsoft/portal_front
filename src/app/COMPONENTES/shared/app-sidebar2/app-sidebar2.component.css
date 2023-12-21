@@ -7,17 +7,12 @@
   left: 0;
   right: 0;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  
-  
 }
-
-
 
 .example-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
-  
 }
 
 h1.example-app-name {
@@ -66,7 +61,6 @@ h1.example-app-name {
   margin-top: 10px; /* Ajusta el valor según sea necesario */
   float: right;
 }
-
 .elitsoft img {
   max-width: 60%; /* Para que la imagen sea responsive */
   display: flex;
@@ -75,7 +69,6 @@ h1.example-app-name {
   clip-path: polygon(100% 100%, 0% 0%, 100% 100%, 0% 100%);
 
 }
-
 @keyframes reveal {
   0% {
       clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 0%); /* Establece un recorte completo inicial (imagen invisible) */
@@ -84,7 +77,6 @@ h1.example-app-name {
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); /* Elimina el recorte, revelando la imagen completa */
   }
 }
-
 
 .belowMenu{
   display: block;

@@ -60,31 +60,32 @@ background-size: cover;
 
   
 }
+
+.botonprimario{
+   
+  font-size: 1em !important;
+}
 .custom-btn3{
   background-color: #F57C27!important;
   color: white!important;
 }
-
 .custom-btn3:hover{
   background-color: #fff !important;
     color: #F57C27 !important;
     border: 1px solid #F57C27!important;
 
 }
-
 .botonprimario{
   background-color: #F57C27 !important;
   color: #fff !important;
  
 }
-
 .minifab{
   background-color: #F57C27 !important;
 }
 .minifab:hover {
   transform: scale(1.1); /* Escalar el botón un 10% más grande en hover */
 }
-
 .minifabdanger{
   background-color: 
   #f44336 !important;
@@ -106,30 +107,20 @@ background-size: cover;
 }
 /*----------------------------Admin---------------------------*/
 
-
 .admin-panel-text {
     color: #F57C27;
     font-weight: bold;
   }
 
-
 html, body { height: 100%; }
-
-
-
  .col-form-label{
   color: #333;   font-family: 'Meera Inimai', sans-serif !important;
   font-size: 14px!important;
 }
 
-
-
 .spinner-color{
   color: black;
 }
-
-
-
 .perfilr{
   padding-bottom: 5%;
   color:#F57C27;
@@ -138,7 +129,6 @@ html, body { height: 100%; }
   font-size: 1.5em!important;
 }
 
-
 .mat-mdc-dialog-container .mdc-dialog__surface{
 
   border-radius: 10px!important;
@@ -146,7 +136,6 @@ html, body { height: 100%; }
   border: 1px solid #F57C27!important;
   display: flex;
 }
-
 
 .bootstrap-wrapper {
   padding: 20px important;
@@ -171,17 +160,11 @@ html, body { height: 100%; }
   overflow: hidden; /* Asegura que el border-radius se aplique en los hijos */
   border: 2px solid #F57C27 !important;
 }
-
-
-
-
 .example-container {
   height: 100vh;
   border: none; /* Elimina el borde */
   box-shadow: none; /* Elimina la sombra */
 }
-
-
 
 /*---------------------------- Add-Category--------------------------------------*/
 .header-categoria-component {
@@ -212,13 +195,6 @@ html, body { height: 100%; }
     font-size: 24px; /* Tamaño del texto */
   }
  
-
-  .botonprimario{
-   
-    font-size: 1em !important;
-  }
-  
-  
 .bootstrap-wrapper {
   padding: 20px;
 
@@ -226,7 +202,6 @@ html, body { height: 100%; }
   padding-right: 2vh;
   display: flex;
 }
-
 
 
 /* Media Query para pantallas más pequeñas (resolución móvil) */

@@ -42,28 +42,17 @@
        <mat-form-field class="full-width">
         <mat-label>Rut</mat-label>
         <input matInput formControlName="usr_rut" required maxlength="30" >
-      
-
-        
       </mat-form-field>
-
       <!-- Telefono -->
       <mat-form-field class="full-width">
-   
-        
             <mat-label>Teléfono</mat-label>
             <input  type="tel" matInput placeholder="9-9550-1234" formControlName="usr_tel" required maxlength="30">
-         
-        
       </mat-form-field>
-
       <!-- Email -->
       <mat-form-field class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="usr_email" readonly>
-        
+        <input matInput formControlName="usr_email" readonly>  
       </mat-form-field>
-
   <!-- rol -->
   <mat-form-field class="full-width">
     <mat-label>Rol</mat-label>
@@ -74,7 +63,6 @@
       <mat-option value="GUEST">Usuario</mat-option>
     </mat-select>
   </mat-form-field>
-  
   <mat-form-field class="full-width">
     <mat-label>Password</mat-label>
     <input matInput [type]="hide ? 'password' : 'text'" formControlName="usr_pass">
@@ -82,8 +70,6 @@
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
-  
-
       <!-- Botones de acción -->
       <div class="form-group text-center d-flex">
         <button mat-raised-button class="botonprimario">Guardar</button>

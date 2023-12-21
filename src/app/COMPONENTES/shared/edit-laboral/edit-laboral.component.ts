@@ -39,26 +39,15 @@ export class  EditLaboralComponent implements OnInit {
     this.today = new Date().toISOString().split('T')[0];
     this.buildForm();
   }
-
-
-
   ngOnInit(): void {
     console.log('esta es la data del hijo ', this.data);
     this.form.patchValue(this.data);
-
     // Asigna inf_acad_id con el valor proveniente de data, si existe
     this.inf_lab_id = this.data && this.data.inf_lab_id ? this.data.inf_lab_id : null;
-
     // Registro en la consola para verificar el valor de inf_acad_id
     console.log('inf_acad_id asignado:', this.inf_lab_id);
-
     this.crearReferenciasForm(this.data.referenciasLaborales);
-
-
   }
-
-
-
 
   private buildForm() {
     this.form = this.formBuilder.group({
@@ -72,8 +61,6 @@ export class  EditLaboralComponent implements OnInit {
 
     this.generateHerrForm();
   }
-
-
   crearReferenciasForm(data: ReferenciaLaboral[]) {
     const rowArray = data.map((laboral, index) => {
       return this.formBuilder.group({
@@ -87,10 +74,6 @@ export class  EditLaboralComponent implements OnInit {
     this.form.setControl('referenciasLaborales', this.formBuilder.array(rowArray))
   }
   
-
-
-
-
   obtenerLaboralesGuardados(id: number) {
     this.laboralService.obtenerLaboralPorId(id).subscribe({
       next: (data:Laboral) => {
@@ -118,9 +101,6 @@ export class  EditLaboralComponent implements OnInit {
     // Cerrar todas las ventanas de diálogo abiertas
     this.dialog.closeAll();
   }
-
-
-
   generateHerrForm() {
     this.herramientaService.getHerramientasByUserId().subscribe({
       next: (data: HerramientaData[]) => {
@@ -149,23 +129,15 @@ export class  EditLaboralComponent implements OnInit {
       },
     });
   }
-
-
-
-
-
   redirectTo(){
     this.navigateToRoute('/user/cargo-usuario')
   }
-
-
   submitForm(event: Event) {
     event.preventDefault();
   
     if (this.form.valid && this.inf_lab_id !== null) {
       const fechaInicioFormateada = new Date(this.form.value.inf_lab_fec_ini).toISOString().split('T')[0];
       const fechaFinFormateada = new Date(this.form.value.inf_lab_fec_fin).toISOString().split('T')[0];
-  
       // Asegúrate de incluir los datos de las referencias en la actualización
       const referenciasFormArray = this.form.get('referenciasLaborales') as FormArray;
       const referencias = referenciasFormArray.getRawValue(); // Obtiene los valores actuales del FormArray
@@ -178,8 +150,6 @@ export class  EditLaboralComponent implements OnInit {
       };
       console.log('Enviando actualización con ID:', this.inf_lab_id);
       console.log('Datos a actualizar:', laboralNueva);
-
-      
       this.laboralService
       .guardarLaboral(laboralNueva, this.inf_lab_id)
       .subscribe(
@@ -214,20 +184,10 @@ export class  EditLaboralComponent implements OnInit {
       console.log('Estado del formulario:', this.form.value);
     }
   }
-  
-  
-
-
-
-
 
   get referenciasFormArray() {
     return this.form.get('referenciasLaborales') as FormArray;
   }
-
-
-
-
 
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({

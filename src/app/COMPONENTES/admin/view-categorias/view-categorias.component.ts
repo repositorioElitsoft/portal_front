@@ -11,10 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoriaExamen } from 'src/app/interface/categoria-examen.interface';
 import { AddCategoriaComponent } from '../add-categoria/add-categoria.component';
 
-
 const ELEMENT_DATA: CategoriaExamen[] = [];
-
-
 @Component({
   selector: 'app-view-categorias',
   templateUrl: './view-categorias.component.html',
@@ -26,11 +23,7 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: CategoriaExamen[] = [];
-
-
   selectedAniosExpRange: number[] = [1, 10];
-
-
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
 
@@ -44,13 +37,7 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
     private _snackBar: MatSnackBar
  
   ) {}
-
-
-
   openDialogEliminar(event: any) {
-
-
-
     const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -86,17 +73,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
 
   filterData() {
     let filteredArray = this.originalDataCopy;
-  
-    // Filtro por producto
-    /*
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
-      }
-    }*/
-  
-
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
   
@@ -105,12 +81,7 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
 
   filterInput() {
     let filteredArray = this.originalDataCopy;
-/*
-    if (this.filtro && this.filtro.trim() !== '') {
-      const filtroLowerCase = this.filtro.toLowerCase();
-      filteredArray = filteredArray.filter(element => element.toLowerCase().includes(filtroLowerCase));
-    }
-*/
+
     this.dataSource.data = filteredArray;
   }
   
@@ -121,8 +92,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
 
     return `${value}`;
   }
-
-
   getExamCategories(): void {
     this.categoriaExamenService.listarCategorias().subscribe({
       next:(data: CategoriaExamen[]) => {
@@ -136,7 +105,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
@@ -144,10 +112,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
- 
-
-
   editCategoria(event: any) {
     // Accede directamente al ID desde el botón que dispara el evento usando currentTarget
     const categoriaId = event.currentTarget.id;
@@ -177,9 +141,6 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
     }
   }
   
-
-
-
   addNewCategory(event: Event) {
     this.dialog.open(AddCategoriaComponent, {
       width: '800px', 

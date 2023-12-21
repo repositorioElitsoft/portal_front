@@ -1,17 +1,4 @@
 
-
-@media (max-width: 600px) {
-  .container-datos-personales {
-
-    border: 1px solid #F57C27;
-    border-radius: 10px;
-
-
-  }
-
-}
-
-
 .select-tel{
   width: 80px;
   background-color: #e8e8e8!important;
@@ -29,4 +16,13 @@
 }
 
 
+@media (max-width: 600px) {
+  .container-datos-personales {
 
+    border: 1px solid #F57C27;
+    border-radius: 10px;
+
+
+  }
+
+}

@@ -32,7 +32,6 @@ import { InformacionAcademicaComponent } from './COMPONENTES/informacion-academi
 import { CargoUsuarioComponent } from './COMPONENTES/cargo-usuario/cargo-usuario.component';
 import { AppNavbarComponent } from './COMPONENTES/shared/app-navbar/app-navbar.component';
 import { AppSidebarComponent } from './COMPONENTES/shared/app-sidebar/app-sidebar.component';
-import { AppFooterComponent } from './COMPONENTES/shared/app-footer/app-footer.component';
 import { SidebarUserComponent } from './COMPONENTES/shared/sidebar-user/sidebar-user.component';
 import { TableHerramientasComponent } from './COMPONENTES/shared/table-herramientas/table-herramientas.component';
 import { SidebarUserDeskComponent } from './COMPONENTES/shared/sidebar-userdesk/sidebar-userdesk.component';
@@ -130,7 +129,6 @@ import { EditPerfilUsuarioAdminComponent } from './COMPONENTES/admin/edit-perfil
     AppSidebarComponent,
     CerrarSesionComponent,
     AppSidebar2Component,
-    AppFooterComponent,
     SidebarUserDeskComponent,
     TableHerramientasComponent,
     ValidarMailComponent,

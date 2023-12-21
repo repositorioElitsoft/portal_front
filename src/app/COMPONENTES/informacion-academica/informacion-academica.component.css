@@ -20,11 +20,9 @@
   font-size: 15px;
 }
 
-
 .form {
   width: fit-content;
 }
-
 
  .Titulos{
   font-size: 12px;
@@ -37,8 +35,6 @@
   font-family: 'Meera Inimai', sans-serif;
 
 }
-
-
 
 /* Animación de pulso */
 @keyframes pulse {

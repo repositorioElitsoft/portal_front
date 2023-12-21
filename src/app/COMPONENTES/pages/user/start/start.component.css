@@ -6,70 +6,55 @@ ul {
   list-style: disc inside;
   color: #555;
 }
-
 mat-card {
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   margin-top: 20px;
 }
-
 h1 {
   font-size: 24px;
   font-weight: bold;
   color: #333;
 }
-
 mat-card-content {
   color: #333;
 }
-
 mat-divider {
   border-top: 2px solid #ddd;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
 .row {
   display: flex;
   flex-wrap: wrap;
 }
-
-
 input[type="radio"] {
   margin: 10px 0;
   color: #333;
 }
-
 .mat-mdc-progress-spinner{
   stroke:  #333;
 }
-
-
 .mat-card {
 background-color: #ffffff;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 max-width: 400px;
 text-align: center;
 }
-
 .mat-card-title {
 font-size: 24px;
 font-weight: bold;
 margin-bottom: 20px;
-
 }
-
 .mat-card-content {
 padding: 20px;
 }
-
 h1 {
 font-size: 18px;
 font-weight: bold;
 margin-bottom: 15px;
 }
-
 /* Estilo para los botones */
 mat-card-actions {
 display: flex;
@@ -77,8 +62,6 @@ justify-content: center;
 gap: 20px;
 margin-top: 20px;
 }
-
-
 .resultado{
   border-radius: 10px;
   border: 1px solid #F57C27!important;
@@ -100,10 +83,6 @@ margin-top: 20px;
     box-shadow: 0 0 10px rgba(255, 215, 0, 0);
   }
 }
-
-
-
-
 mat-card-header {
   display: flex;
   justify-content: center; /* Centra horizontalmente */
@@ -111,14 +90,11 @@ mat-card-header {
   text-align: center; /* Centra el texto */
  padding: 20px;
 }
-
 @media (max-width: 768px) {
   .temporizador {
     order: -1; /* Esto coloca el div al principio */
   }
 }
-
-
 @media (max-width: 768px) {
   .temporizador {
     order: -1; /* Esto coloca el div al principio */

@@ -126,8 +126,6 @@ export class ViewFilesComponent implements OnInit {
       }
     );
   }
-
-
   closeWindow(): void {
     this.dialogRef.close();
   }

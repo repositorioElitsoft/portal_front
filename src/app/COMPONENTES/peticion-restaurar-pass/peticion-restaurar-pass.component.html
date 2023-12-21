@@ -4,7 +4,6 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <button mat-button class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</button>
-            
           </li>
           <li class="nav-item">
             <button mat-button class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</button>
@@ -27,21 +26,12 @@
                   <label for="email">Correo electrónico:</label>
                   <input type="email" class="form-control" id="email" formControlName="email"
                    [(ngModel)]="email" name="email" required
-                   [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
-                
-                   >
+                   [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
                 </div>
                 <!-- Botón de inicio de sesión -->
                 <button mat-raised-button class="botonprimario mt-3" type="submit" >Enviar Correo</button>
                 <div *ngIf="error" class="error">{{ error }}</div>
-  
-         
-  
-               <!--  <button type="submit"  onclick="limpiarCampos()">Limpiar</button> -->
-              
               </form>
-         
-            
             </div>
           </div>
         </div>

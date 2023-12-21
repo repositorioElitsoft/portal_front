@@ -1,8 +1,7 @@
 <div class="space"></div>
 <p class="admin-panel-text">Panel de Administrador</p>
 <div class="container mt-4">
-    <h2>Agregar Examen</h2>
-  
+    <h2>Agregar Examen</h2> 
     <div class="card">
       <div class="card-body">
         <form (ngSubmit)="guardarCuestionario()">
@@ -10,9 +9,6 @@
             <label for="exam_titl" class="form-label">Título del Examen</label>
             <input type="text" class="form-control" id="exam_titl" [(ngModel)]="examenData.exam_titl" name="exam_titl" required>
           </div>
-
-
-
           <div class="mb-3">
             <label for="exam_desc" class="form-label">Descripción del Examen</label>
             <textarea class="form-control" id="exam_desc" [(ngModel)]="examenData.exam_desc" name="exam_desc" rows="3" required></textarea>
@@ -32,9 +28,6 @@
               <option *ngFor="let categoria of categorias" [value]="categoria.cat_exam_id">{{ categoria.cat_exam_titl }}</option>
             </select>
           </div>
-
-          
-
           <div class="form-check mb-3">
             <input type="checkbox" class="form-check-input" id="activo" [(ngModel)]="examenData.activo" name="activo">
             <label class="form-check-label" for="activo">Activo</label>

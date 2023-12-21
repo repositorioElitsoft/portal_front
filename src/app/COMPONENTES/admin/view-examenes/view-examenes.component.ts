@@ -66,16 +66,6 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   filterData() {
     let filteredArray = this.originalDataCopy;
-  
-    // Filtro por producto
-    /*
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
-      }
-    }*/
-  
 
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
@@ -85,12 +75,6 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   filterInput() {
     let filteredArray = this.originalDataCopy;
-/*
-    if (this.filtro && this.filtro.trim() !== '') {
-      const filtroLowerCase = this.filtro.toLowerCase();
-      filteredArray = filteredArray.filter(element => element.toLowerCase().includes(filtroLowerCase));
-    }
-*/
     this.dataSource.data = filteredArray;
   }
   

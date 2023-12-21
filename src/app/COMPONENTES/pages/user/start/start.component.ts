@@ -19,10 +19,8 @@ let vecesEnviado = 0;
   styleUrls: ['./start.component.css']
 })
 export class StartComponent implements OnInit {
-
   examenId :number=0;
   preguntas?:any;
- 
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
   preguntasTotales = 0;
@@ -35,14 +33,6 @@ export class StartComponent implements OnInit {
   enviosTotales = 0;
   resultadosExamenes: number[] = [];
   resultados: any[] = [];   
-  
-
-
-
-
-
-
-
   constructor(
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
@@ -64,20 +54,15 @@ export class StartComponent implements OnInit {
         console.log(this.examenId);
         this.cargarPreguntas();
         this.obtenerResultados();
-        
       },
       (error) => {
         console.error('Error al obtener el usuario guardado:', error);
       }
     );
-
   }
-
   ngAfterViewInit(): void {
     this.mostrarGrafico() ;
   }
-
-  
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
@@ -90,8 +75,6 @@ export class StartComponent implements OnInit {
       }
     );
   }
-  
-
   mostrarGrafico(): void {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
@@ -125,8 +108,6 @@ export class StartComponent implements OnInit {
         ultimosTresExamenes.forEach(resultado => {
           dataParaMostrar.push(resultado.resultadosExamen);
         });
-  
-       
         console.log("datos para mostrar:", dataParaMostrar);
         const labelsConPuntos = dataParaMostrar.map((valor: string) => valor + ' puntos');
         const puntuacionMaxima = examenesFiltrados[0]?.examen.puntuacionMaxima; 
@@ -215,16 +196,7 @@ export class StartComponent implements OnInit {
       }
     }, 1);
   }
-  
-  
-  
-
-
-
-
-
   cargarPreguntas(){
-
     this.examenService.obtenerExamen(this.examenId).subscribe({
       next: (data)=>{
         this.examen = data
@@ -234,8 +206,6 @@ export class StartComponent implements OnInit {
         console.log(err)
       }
     })
-
-
     this.preguntaService.listarPreguntasDelExamenParaLaPrueba(this.examenId).subscribe(
       (data:any) => {
         console.log(data);
@@ -256,7 +226,6 @@ export class StartComponent implements OnInit {
       }
     )
   }
-
   shuffleArray(array: any[]) {
     let currentIndex = array.length;
     let temporaryValue: any;
@@ -276,9 +245,6 @@ export class StartComponent implements OnInit {
 
     return array;
   }
-
-
-
   iniciarTemporizador(){
     let t = window.setInterval(() => {
       if(this.timer <= 0){
@@ -333,22 +299,13 @@ export class StartComponent implements OnInit {
 
           }
         })
-
         vecesEnviado++;
-
         this.vecesEnviado = vecesEnviado;
        // this.enviosTotales = this.vecesEnviado;
-
-
       }
     })
   }
-
   evaluarExamen(){
-
- 
- 
-
     this.esEnviado = true;
       
     console.log("preguntas", this.preguntas)
@@ -368,33 +325,24 @@ export class StartComponent implements OnInit {
         this.preguntasTotales ++;
 
       }
-      
-      
     });
     //const newLocal = this.enviosTotales = this.vecesEnviado;
     console.log("Respuestas correctas : " + this.respuestasCorrectas);
     console.log("Puntos conseguidos : " + this.puntosConseguidos);
     console.log("Intentos : " + this.preguntasTotales);
     console.log(this.preguntas);
- 
     this.mostrarGrafico()
     
- 
-   
-    
   }
-
   obtenerHoraFormateada(){
     let mm = Math.floor(this.timer/60);
     let ss = this.timer - mm*60;
     return `${mm} : min : ${ss} seg`;
   }
-
   imprimirPagina(){
     window.print();
   }
 }
-
 function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {
   throw new Error('Function not implemented.');
 }

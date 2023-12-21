@@ -8,28 +8,21 @@
   right: 0;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
   
-  
 }
-
-
 
 .example-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
-  
 }
 
 h1.example-app-name {
   margin-left: 8px;
 }
 
-
-
 .custom-icon{
   margin-right: 4px;
 }
-
 
 .list-unstyled li a {
   display: block;
@@ -40,26 +33,17 @@ h1.example-app-name {
   display: flex;
   align-self: center;
 }
-
-
 .list-unstyled li a:hover {
   background-color: #555;
   color: #fff;
 }
-
 .list-unstyled li a.active {
   background-color: #f39c12;
   color: #fff;
 }
-
-
 .custom-icon2 {
   color: #f39c12;/* Cambia el color del texto a gris */
-
 }
-
-
-
 
 /* Asegura que el navbar tenga margen superior */
 .navbar {

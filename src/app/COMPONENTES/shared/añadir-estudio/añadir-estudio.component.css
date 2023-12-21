@@ -7,12 +7,9 @@
   justify-content: center; /* Centra verticalmente */
 
 }
-
-
 .mat-form-field{
   width: 100%;
 }
-
 /* En tu archivo de estilos CSS (por ejemplo, styles.css) o en el archivo de estilo del componente */
 .ng-star-inserted {
 width: 100% !important;

@@ -5,25 +5,16 @@
   background-color: #fff; /* Cambia el color de fondo a blanco */
   border-right: 3px solid  #F57C27; /* Añade un contorno naranja */
   padding-top: 14vh;
-  /* Asegura que el sidebar esté detrás del contenido */
-
   z-index: 0;
-
 }
-
 .custom-icon{
   margin-right: 4px;
-  
 }
-
-
-
 .sidebar-header {
   text-align: center;
   padding-bottom: 20px;
   color: #6c757d; /* Cambia el color del texto a gris */
 }
-
 .list-unstyled li a {
   display: block;
   padding: 10px 15px;
@@ -33,50 +24,34 @@
   display: flex;
   align-self: center;
 }
-
-
 .list-unstyled li a:hover {
   background-color: #555;
   color: #fff;
 }
-
 .list-unstyled li a.active {
   background-color:#F57C27;
   color: #fff;
 }
-
-
 .custom-icon2 {
   color: #F57C27;/* Cambia el color del texto a gris */
-
 }
-
-
 /* Ajusta el z-index del sidebar */
 .app-sidebar-admin {
   z-index: 0;
 }
-
 /* Asegura que el navbar tenga margen superior */
 .navbar {
   margin-top: 10px; /* Ajusta el valor según sea necesario */
   float: right;
 }
-
 .categoriasdisponibles{
  
   font-size: 1em;
   padding: 5px;
 }
-
-
-
 @media (max-width: 1300px) {
-
   .sidebar{
     display: none;
     pointer-events: none;
-
   }
-
 }

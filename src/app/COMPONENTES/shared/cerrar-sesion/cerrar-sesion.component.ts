@@ -15,19 +15,12 @@ export class CerrarSesionComponent implements OnInit  {
     public dialog: MatDialog,
     private cookieService: CookieService
   ) {}
-
-  
   ngOnInit(): void {}
-
-
   accepted: Boolean=false
-
 cerrarSesion(): void {
   document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
     // Redirige al usuario a la página de inicio de sesión
     window.location.href = '/iniciar-sesion';
-
 }
 }
 

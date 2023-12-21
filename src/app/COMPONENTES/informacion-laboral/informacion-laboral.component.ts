@@ -136,36 +136,27 @@ export class InformacionLaboralComponent implements OnInit {
       });
       this.referenciasFormArray.push(referenciaFormGroup);
     });
-
     this.herrIdList.forEach(herrId =>{
       this.form.get(herrId.toString())?.patchValue(false);
     })
-
     laboralToEdit?.herramientas?.forEach(herr =>{
       if(this.herrIdList.find((herrID) => herrID === herr.herr_usr_id)){
         this.form.get(herr.herr_usr_id.toString())?.patchValue(true);
       }
     })
-
     this.creationMode = !this.creationMode;
   }
 
   generateHerrForm(){
     this.herramientaService.getHerramientasByUserId().subscribe({
       next:(data)=>{
-
         console.log("recieved data herramientas: ",data)
         this.herramientasDisponibles = data;
-
         this.herramientasDisponibles.forEach((herramienta)=>{
-
           let wasCheckedAlready = false
-
           const newControl = new FormControl(wasCheckedAlready);
           this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-
           this.herrIdList.push(herramienta.herr_usr_id)
-
         })
 
         this.checkboxFormCreated = true;
@@ -176,8 +167,6 @@ export class InformacionLaboralComponent implements OnInit {
     })
 
   }
-
-
   openaddExperienciaLaboral() {
     const dialogRef = this.dialog.open(AddLaboralComponent, {
       width: '600px',
@@ -191,8 +180,6 @@ export class InformacionLaboralComponent implements OnInit {
       this.obtenerLaboralesGuardados();
     });
   }
-
-
   addExperienceRow(){
     this.id = null;
     this.form.patchValue({
@@ -209,11 +196,9 @@ export class InformacionLaboralComponent implements OnInit {
 
     this.creationMode = !this.creationMode;
   }
-
   redirectTo(){
     this.navigateToRoute('/user/cargo-usuario')
   }
-
  addExperienciaLaboral(enterAnimationDuration: string, exitAnimationDuration: string): void {
     const dialogRef = this.dialog.open(AddLaboralComponent, {
       width: '600px',
@@ -223,15 +208,9 @@ export class InformacionLaboralComponent implements OnInit {
     });
 
   }
-
-
-
-
   submitForm(event: Event) {
-
     event.preventDefault();
     console.log("Form guardado:",this.form.value)
-
     const laboralNueva: Laboral = {
       ...this.form.value,
       herramientas: this.getHerramientasSeleccionadas(),
@@ -245,8 +224,6 @@ export class InformacionLaboralComponent implements OnInit {
         };
       })
     };
-
-
     console.log("Laboral final guardada", laboralNueva)
     this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
       (laboralGuardada: Laboral) => {
@@ -259,8 +236,6 @@ export class InformacionLaboralComponent implements OnInit {
       }
     );
   }
-
-
 // Método para obtener las herramientas seleccionadas del formulario
   private getHerramientasSeleccionadas(): HerramientaData[] {
     return this.herrIdList.map(id => {
@@ -288,12 +263,9 @@ export class InformacionLaboralComponent implements OnInit {
       return null;
     }).filter(herramienta => herramienta !== null) as HerramientaData[];
   }
-
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
-
-
   editLaboral(event: any) {
     console.log('Evento recibido:', event); // Verificar el evento recibido
 

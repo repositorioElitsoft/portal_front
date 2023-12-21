@@ -32,7 +32,6 @@ export class InstruccionesComponent implements OnInit {
       }
     )
   }
-
   empezarExamen(){
     Swal.fire({
         title: '¿Quieres comenzar el examen?',

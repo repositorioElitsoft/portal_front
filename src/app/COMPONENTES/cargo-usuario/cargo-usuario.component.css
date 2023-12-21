@@ -2,22 +2,14 @@
 .btn {
   font-size: 15px;
 }
-
-
-
 .form {
   width: fit-content;
 }
-
-
-
-
 .contenedorform{
  padding-left: 30%;
  padding-right: 30%;
  box-shadow: none;
 }
-
 /* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
   .container-datos-personales {

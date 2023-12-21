@@ -16,11 +16,6 @@ import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component'
 export class AppSidebar2Component implements OnInit  {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
- 
-  
-
-    
-
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private categoriaService: CategoriaService,
