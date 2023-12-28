@@ -1,10 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { LaboralService } from 'src/app/service/laboral.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { Usuario } from '../../interface/user.interface'
-import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
@@ -29,18 +26,17 @@ export class InformacionLaboralComponent implements OnInit {
   form!: FormGroup
   minFecha: string = '';
   checkboxFormCreated = false;
-
   herramientasDisponibles!: HerramientaData[];
   herrIdList: number[] = [];
   referenciasLaborales: [] = []
 
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
     private formBuilder: FormBuilder,
     public dialog : MatDialog,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
-    private route: ActivatedRoute, private router: Router) {
+    private router: Router) {
       this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
   }
@@ -59,7 +55,6 @@ export class InformacionLaboralComponent implements OnInit {
       inf_lab_fec_fin: ["",[Validators.required]],
       referenciasLaborales: this.formBuilder.array([])
     });
-
     this.generateHerrForm()
   }
 
@@ -68,7 +63,6 @@ export class InformacionLaboralComponent implements OnInit {
   }
 
   obtenerLaboralesGuardados(){
-
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
       next: (data) =>{
         this.laborales = data;
@@ -153,21 +147,13 @@ export class InformacionLaboralComponent implements OnInit {
   generateHerrForm(){
     this.herramientaService.getHerramientasByUserId().subscribe({
       next:(data)=>{
-
-        console.log("recieved data herramientas: ",data)
         this.herramientasDisponibles = data;
-
         this.herramientasDisponibles.forEach((herramienta)=>{
-
           let wasCheckedAlready = false
-
           const newControl = new FormControl(wasCheckedAlready);
           this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-
           this.herrIdList.push(herramienta.herr_usr_id)
-
         })
-
         this.checkboxFormCreated = true;
       },
       error:(err)=>{

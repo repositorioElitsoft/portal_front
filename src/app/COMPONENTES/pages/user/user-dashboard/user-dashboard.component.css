@@ -7,9 +7,6 @@
 }
 
 
-
-
-
 .content {
   padding: 20px;
   background-color: #F57C27;
@@ -18,9 +15,6 @@
   width: 100%; /* Asegúrate de que .content use el 100% del ancho de su contenedor */
   box-sizing: border-box; /* Incluye el padding en el cálculo del ancho para evitar desbordamientos */
 }
-
-
-
 
 /* Estilos de las tarjetas de exámenes */
 .exams {

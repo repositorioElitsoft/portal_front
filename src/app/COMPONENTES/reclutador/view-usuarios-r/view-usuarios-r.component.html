@@ -1,49 +1,35 @@
 <mat-card class="dashboard-panel"> <mat-toolbar>
-  <mat-toolbar-row>
-    <button mat-raised-button class="botonprimario m-2"  (click)="botonEstadistica($event)">
-      <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
-    </button>
-
-    <button mat-button (click)="clearFilters()" class="botonprimario m-2" >Limpiar Filtros
-      <mat-icon>delete</mat-icon></button>
-
-    <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
-      <mat-icon>get_app</mat-icon> Exportar a CSV
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar>
-
-
-<!-- Filtro por Nombre -->
-<div class="filter-container p-4">
-  <mat-form-field class="filter-input" appearance="fill">
-    <mat-label>Filtrar por nombre...</mat-label>
-    <input matInput (input)="filterInput()" [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
-  </mat-form-field>
-
-
-
-  <!-- Filtro por Cargo Ocupado -->
-  <div class="filter-row">
-    <mat-form-field class="filter-input">
-      <input matInput (input)="filterInputCargoOcupado()" placeholder="Filtrar por cargo ocupado" [(ngModel)]="filtroCargo" [disabled]="selectedCategoria !== 0">
+    <mat-toolbar-row>
+      <button mat-raised-button class="botonprimario m-2" (click)="botonEstadistica($event)">
+        <mat-icon>bar_chart</mat-icon> Ir a Estadísticas
+      </button>
+      <button mat-button (click)="clearFilters()" class="botonprimario m-2">Limpiar Filtros
+        <mat-icon>delete</mat-icon></button>
+      <button mat-raised-button class="botonprimario m-2" (click)="exportToCSV()">
+        <mat-icon>get_app</mat-icon> Exportar a CSV
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div class="filter-container p-4">
+    <mat-form-field class="filter-input" appearance="fill">
+      <mat-label>Filtrar por nombre...</mat-label>
+      <input matInput (input)="filterInput()" [(ngModel)]="filtro" [disabled]="selectedCategoria !== 0">
     </mat-form-field>
-  </div>
-
-
- <!-- Cargo a Postular -->
- <div class="filter-row">
-  <mat-form-field class="filter-select">
-    <mat-label>Cargo a postular</mat-label>
-    <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  </div>
-
-
-    <!-- Filtro por Estado Laboral-->
+    <div class="filter-row">
+      <mat-form-field class="filter-input">
+        <input matInput (input)="filterInputCargoOcupado()" placeholder="Filtrar por cargo ocupado"
+          [(ngModel)]="filtroCargo" [disabled]="selectedCategoria !== 0">
+      </mat-form-field>
+    </div>
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Cargo a postular</mat-label>
+        <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
+          <mat-option value="">Seleccione un opción</mat-option>
+          <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div class="filter-row">
       <mat-form-field class="filter-select">
         <mat-label>Estado laboral</mat-label>
@@ -54,210 +40,156 @@
           <mat-option value="contratado">Contratado</mat-option>
         </mat-select>
       </mat-form-field>
-      </div>
-
-
-             <!-- Filtro por Fecha de Postulación -->
-             <div class="filter-row">
-              <mat-form-field class="filter-datepicker">
-                <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <!-- Botón para limpiar la fecha -->
-              <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
-                <mat-icon>clear</mat-icon>
-              </button>
-              </mat-form-field>
-              </div>
-
-  <!-- Filtro por Categoria -->
-  <mat-form-field class="filter-select">
-    <mat-label>Categoria</mat-label>
-    <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
-      <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <!-- Filtro por Producto -->
-  <div class="filter-row">
-    <mat-form-field class="filter-select">
-      <mat-label>Producto</mat-label>
-      <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getNiveles(); filterProducto()">
-        <mat-option value="">Seleccione un opción</mat-option>
-        <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
-      </mat-select>
-    </mat-form-field>
     </div>
 
- <!-- Filtro por Nivel -->
+    <div class="filter-row">
+      <mat-form-field class="filter-datepicker">
+        <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion"
+          [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="filter-select">
+      <mat-label>Categoria</mat-label>
+      <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)"
+        [disabled]="filtro !== ''">
+        <mat-option value="">Seleccione un opción</mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom
+          }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Producto</mat-label>
+        <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto"
+          (selectionChange)="getNiveles(); filterProducto()">
+          <mat-option value="">Seleccione un opción</mat-option>
+          <mat-option *ngFor="let producto of productos" [value]="producto.prd_id">{{ producto.prd_nom }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div class="filter-row">
       <mat-form-field class="filter-select">
         <mat-label>Nivel de Examen</mat-label>
-        <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
+        <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"
+          (selectionChange)="getVersion(selectedProducto);filterNivel()">
           <mat-option value="">Seleccione un nivel</mat-option>
           <mat-option *ngFor="let nivel of niveles" [value]="nivel.nvl_id">{{ nivel.nvl }}</mat-option>
         </mat-select>
       </mat-form-field>
-      </div>
-
-
-      <!-- Filtro por Versión -->
-      <div class="filter-row">
-        <mat-form-field class="filter-select">
-          <mat-label>Versión</mat-label>
-          <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
-            <mat-option value="">Seleccione un opción</mat-option>
-            <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+    </div>
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Versión</mat-label>
+        <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
+          <mat-option value="">Seleccione un opción</mat-option>
+          <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Porcentaje de aprobación</mat-label>
+        <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion"
+          (selectionChange)="filterPorcentaje()">
+          <mat-option value="">Seleccione un opción</mat-option>
+          <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="filter-slider d-flex flex-column align-items-center">
+      <mat-label>Rango de Sueldos: </mat-label>
+      <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel">
+        <div class="custom-range">
+          {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} -
+          {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
         </div>
-
-
-
-
-           <!-- Filtro por Porcentaje Aprobación -->
-          <div class="filter-row">
-          <mat-form-field class="filter-select">
-            <mat-label>Porcentaje de aprobación</mat-label>
-            <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
-              <mat-option value="">Seleccione un opción</mat-option>
-              <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          </div>
-
-
-
-
-            <!-- Filtro por Rango de Sueldo-->
-
-            <div class="filter-slider d-flex flex-column align-items-center">
-              <mat-label>Rango de Sueldos: </mat-label>
-              <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel" >
-                <div class="custom-range" >
-                  {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} -
-                  {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
-                </div>
-                <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
-                <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
-              </mat-slider>
-            </div>
-
-
-
-               <!-- Filtro por Rango Años Experiencia -->
+        <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
+        <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
+      </mat-slider>
+    </div>
     <div class="filter-slider d-flex flex-column align-items-center m-2">
       <mat-label>Rango de años de Experiencia: </mat-label>
-      <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
+      <mat-slider min="1" max="10" (input)="filterAniosExp()" discrete [displayWith]="formatLabel"
+        [disabled]="!selectedVersion">
         <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
         <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
       </mat-slider>
-
-    <div class="d-flex">
+      <div class="d-flex">
         <div class="d-flex flex-column align-items-center mb-4 me-4">
           <mat-checkbox [(ngModel)]="isIrrelevant" (change)="onIrrelevanceChange()">Irrelevante</mat-checkbox>
         </div>
         <mat-form-field class="d-flex flex-column align-items-center">
           <mat-label>Años de experiencia reciente</mat-label>
           <section class="example-section">
-            <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"  min="1" max="10">
+            <input [disabled]="isIrrelevant || !selectedProducto" type="number" (change)="filterData()" matInput
+              [(ngModel)]="lastYears" min="1" max="10">
           </section>
         </mat-form-field>
+      </div>
     </div>
-
   </div>
-
-
-</div>
-
-
-
 </mat-card>
-
-
-  <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
-         class="mat-elevation-z8">
-
-
-
-    <ng-container matColumnDef="usr_nom">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-      <td mat-cell *matCellDef="let element"> {{element.usr_nom}} {{element.usr_ap_pat}}  {{element.usr_ap_mat}}  </td>
-
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="usr_tel">
-      <th mat-header-cell *matHeaderCellDef > Telefono </th>
-      <td mat-cell *matCellDef="let element"> {{element.usr_tel}} </td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="usr_email">
-      <th mat-header-cell *matHeaderCellDef> Correo </th>
-      <td mat-cell *matCellDef="let element"> {{element.usr_email}} </td>
-    </ng-container>
-
-
-
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
+  class="mat-elevation-z8">
+  <ng-container matColumnDef="usr_nom">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.usr_nom}} {{element.usr_ap_pat}} {{element.usr_ap_mat}} </td>
+  </ng-container>
+  <ng-container matColumnDef="usr_tel">
+    <th mat-header-cell *matHeaderCellDef> Telefono </th>
+    <td mat-cell *matCellDef="let element"> {{element.usr_tel}} </td>
+  </ng-container>
+  <ng-container matColumnDef="usr_email">
+    <th mat-header-cell *matHeaderCellDef> Correo </th>
+    <td mat-cell *matCellDef="let element"> {{element.usr_email}} </td>
+  </ng-container>
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" matTooltip="Ver perfil" (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
+      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" matTooltip="Ver perfil"
+        (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
         <mat-icon>menu</mat-icon>
       </button>
-      <!-- Nuevo botón de editar perfil -->
-      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" matTooltip="Editar perfil" (click)="openEditProfileDialog($event)" aria-label="Editar perfil">        <mat-icon>edit</mat-icon>
+      <button mat-mini-fab class="minifab m-1" id="{{element.usr_id}}" matTooltip="Editar perfil"
+        (click)="openEditProfileDialog($event)" aria-label="Editar perfil"> <mat-icon>edit</mat-icon>
       </button>
-
-
-      <button class="m-1" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Ver Más Opciones" id="{{element.usr_id}}" (click)="openBottomSheet($event)">
+      <button class="m-1" mat-mini-fab color="warn" aria-label="PDF" matTooltip="Ver Más Opciones"
+        id="{{element.usr_id}}" (click)="openBottomSheet($event)">
         <mat-icon>apps icon</mat-icon>
       </button>
     </td>
   </ng-container>
-
-       <!-- select Column -->
-       <ng-container matColumnDef="seleccionar">
-        <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
-        <form [formGroup]="selectedCheckbox">
-          <td mat-cell *matCellDef="let element">
-            <mat-checkbox class="example-margin" [formControlName]="element.usr_email" ></mat-checkbox>
-          </td>
-        </form>
-      </ng-container>
-
-
-
-    <ng-container matColumnDef="usr_herr">
-      <th mat-header-cell *matHeaderCellDef> Herramientas </th>
-      <td mat-cell *matCellDef="let element">{{element.usr_herr}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="herr_ver">
-      <th mat-header-cell *matHeaderCellDef> Versiones </th>
-      <td mat-cell *matCellDef="let element">{{element.herr_ver}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="herr_exp">
-      <th mat-header-cell *matHeaderCellDef> Años de experiencia </th>
-      <td mat-cell *matCellDef="let element">{{element.herr_exp}}</td>
-    </ng-container>
-
-
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
-  </mat-paginator>
-
-
-  <button class="send-email-button" (click)="onSendMailPressed()">
-    <mat-icon> email</mat-icon>
-  </button>
+  <ng-container matColumnDef="seleccionar">
+    <th mat-header-cell *matHeaderCellDef> Seleccionar </th>
+    <form [formGroup]="selectedCheckbox">
+      <td mat-cell *matCellDef="let element">
+        <mat-checkbox class="example-margin" [formControlName]="element.usr_email"></mat-checkbox>
+      </td>
+    </form>
+  </ng-container>
+  <ng-container matColumnDef="usr_herr">
+    <th mat-header-cell *matHeaderCellDef> Herramientas </th>
+    <td mat-cell *matCellDef="let element">{{element.usr_herr}}</td>
+  </ng-container>
+  <ng-container matColumnDef="herr_ver">
+    <th mat-header-cell *matHeaderCellDef> Versiones </th>
+    <td mat-cell *matCellDef="let element">{{element.herr_ver}}</td>
+  </ng-container>
+  <ng-container matColumnDef="herr_exp">
+    <th mat-header-cell *matHeaderCellDef> Años de experiencia </th>
+    <td mat-cell *matCellDef="let element">{{element.herr_exp}}</td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+</mat-paginator>
+<button class="send-email-button" (click)="onSendMailPressed()">
+  <mat-icon> email</mat-icon>
+</button>

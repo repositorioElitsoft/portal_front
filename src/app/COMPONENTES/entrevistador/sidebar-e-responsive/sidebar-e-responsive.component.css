@@ -12,7 +12,6 @@
 }
 
 
-
 .example-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
@@ -57,8 +56,6 @@ h1.example-app-name {
   color: #f39c12;/* Cambia el color del texto a gris */
 
 }
-
-
 
 
 /* Asegura que el navbar tenga margen superior */
@@ -115,10 +112,10 @@ h1.example-app-name {
     pointer-events: none;
   }
 
-  .contenido-test{display: none;
-    pointer-events: none;}
-
-
+  .contenido-test{
+    display: none;
+    pointer-events: none;
+  }
 
 }
 

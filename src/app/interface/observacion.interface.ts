@@ -9,8 +9,8 @@ export interface Observacion {
   apr_oper: string;
   apr_tec: string;
   apr_ger: string;
-  usuario: Usuario; // Asegúrate de tener la interfaz Usuario definida
+  usuario: Usuario;
   usr_id_obs: number;
   usr_id_obs_mod: number;
-  categoriaObservacion: CategoriaObservacion; // Asegúrate de tener la interfaz CategoriaObservacion definida
+  categoriaObservacion: CategoriaObservacion;
 }

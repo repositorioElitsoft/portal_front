@@ -6,7 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Observacion } from 'src/app/interface/observacion.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -42,7 +41,6 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
@@ -57,8 +55,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
   constructor(private usuarioService: UsuarioService,
     private _liveAnnouncer: LiveAnnouncer,
-    private router: Router,
-    public dialog: MatDialog, private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private observacionReclutadorService: ObservacionService,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
@@ -79,9 +76,6 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     obtenerUsuarios(): void {
       this.usuarioService.obtenerUsuarios().subscribe(
         (data: any[]) => {
-          console.log('data:', data);
-
-          // Filtrar usuarios por usr_rol igual a "GUEST"
           const usuarios = data
             .filter((usuario) => usuario.usr_rol === 'GUEST')
             .map((usuario) => ({
@@ -105,7 +99,6 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
               laborales: usuario.laborales,
               usr_id: usuario.usr_id,
               cvPath: usuario.cvPath,
-
             }));
 
           this.originalDataCopy = usuarios;
@@ -156,7 +149,6 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
             this.selectedProducto = 0;
             this.versiones = [];
             this.originalDataCopy = this.dataSource.data;
-
             this.selectedProductoNombre = this.productos.find((producto) => producto.prd_id === this.selectedProducto)?.prd_nom;
             this.getVersion(this.selectedProducto);
           },
@@ -193,34 +185,23 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
     openUserProfile(event: any) {
       const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-      console.log('User ID:', userId); // Imprime el ID del usuario en la consola
-
-      // Llamadas simultáneas a los servicios
       forkJoin({
         observadores: this.observacionReclutadorService.obtenerCatObservacionesPorUsuarioId(userId),
         usuario: this.usuarioService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {
-          // Extraemos los resultados
           const { observadores, usuario } = resultados;
 
-          // Lógica con los datos obtenidos
-          console.log('Observaciones del usuario:', observadores);
-          console.log('Perfil del usuario:', usuario);
-
-          // Configura el tamaño del diálogo
           const dialogRef = this.dialog.open(ViewPerfilUsuarioEComponent, {
             data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
-            height: '60vh', // Establece la altura del diálogo
+            height: '60vh',
           });
-
           dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
           });
         },
         error: (error) => {
           console.error('Error al obtener datos del usuario:', error);
-          // Manejo de errores aquí
         }
       });
     }
@@ -233,15 +214,5 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
         this._liveAnnouncer.announce('Sorting cleared');
       }
     }
-
-
-
-
-
-
-
-
-
-
 
 }

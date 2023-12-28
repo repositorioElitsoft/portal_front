@@ -11,14 +11,11 @@ import { Router } from '@angular/router';
 })
 export class SidebarEComponent {
 
-  
+
   constructor(
     public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
-
-  ) {
-   
-  }
+    private router: Router
+  ) {}
 
 
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {

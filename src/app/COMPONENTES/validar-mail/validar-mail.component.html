@@ -1,16 +1,10 @@
 <div class="alert alert-success" role="alert" *ngIf="verified">
-
-   <div class="alerta-custom">
-      Su email ha sido verificado con éxito
-      <a routerLink="/iniciar-sesion" routerLinkActive="active" class="menu__item">Volver al home</a>
-
-   </div>
- 
+  <div class="alerta-custom">
+    Su email ha sido verificado con éxito
+    <a routerLink="/iniciar-sesion" routerLinkActive="active" class="menu__item">Volver al home</a>
+  </div>
 </div>
-
 <div class="alert alert-danger" role="alert" *ngIf="verificationFailed">
-   Hubo un error al verificar su email, intente más tarde
-   <a routerLink="/iniciar-sesion" routerLinkActive="active" class="menu__item">Volver al home</a>
+  Hubo un error al verificar su email, intente más tarde
+  <a routerLink="/iniciar-sesion" routerLinkActive="active" class="menu__item">Volver al home</a>
 </div>
-  
-  

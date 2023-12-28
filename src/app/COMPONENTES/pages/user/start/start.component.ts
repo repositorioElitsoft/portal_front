@@ -1,16 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
 import { LocationStrategy } from '@angular/common';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { DatosPersonalesComponent } from 'src/app/COMPONENTES/datos-personales/datos-personales.component';
 
 
-//se declara fuera de la clase de forma global
 let vecesEnviado = 0;
 
 @Component({
@@ -22,7 +20,7 @@ export class StartComponent implements OnInit {
 
   examenId :number=0;
   preguntas?:any;
- 
+
   puntosConseguidos = 0;
   respuestasCorrectas = 0;
   preguntasTotales = 0;
@@ -34,13 +32,7 @@ export class StartComponent implements OnInit {
   vecesEnviado: number = 0;
   enviosTotales = 0;
   resultadosExamenes: number[] = [];
-  resultados: any[] = [];   
-  
-
-
-
-
-
+  resultados: any[] = [];
 
 
   constructor(
@@ -52,7 +44,7 @@ export class StartComponent implements OnInit {
       ) { }
 
   ngOnInit(): void {
-    
+
     this.usuarioService.obtenerUsuarioGuardado().subscribe(
       (usuarioGuardado ) => {
         if (usuarioGuardado) {
@@ -64,7 +56,7 @@ export class StartComponent implements OnInit {
         console.log(this.examenId);
         this.cargarPreguntas();
         this.obtenerResultados();
-        
+
       },
       (error) => {
         console.error('Error al obtener el usuario guardado:', error);
@@ -77,20 +69,20 @@ export class StartComponent implements OnInit {
     this.mostrarGrafico() ;
   }
 
-  
+
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
         this.resultados = data;
         console.log('Data:',data);
-        
+
       },
       (error) => {
         console.error(error);
       }
     );
   }
-  
+
 
   mostrarGrafico(): void {
     setTimeout(() => {
@@ -101,13 +93,13 @@ export class StartComponent implements OnInit {
         const ctx = canvas.getContext('2d');
         const dataParaMostrar: any = [];
         console.log("resultados:", this.resultados);
-  
+
         // Filtra los resultados del usuario y examen
         const resultadosFiltrados = this.resultados.filter(resultado => {
           console.log("resultados:", resultado.usuarioId);
           return resultado.usuarioId === this.idUser;
         });
-  
+
         // Filtra los resultados para el examen específico incluyendo el examen actual
         const examenesFiltrados = resultadosFiltrados.filter(resultado => {
           console.log("id examen:", this.examenId);
@@ -115,22 +107,20 @@ export class StartComponent implements OnInit {
           return String(resultado.examen.examenId) === String(this.examenId);
         });
         this.vecesEnviado = examenesFiltrados.length;
-  
+
         console.log("examenes filtrados:", examenesFiltrados);
         console.log("resultados filtrados:", resultadosFiltrados);
-  
+
         // Toma los últimos 3 exámenes, incluyendo el examen actual
         const ultimosTresExamenes = examenesFiltrados.slice(-3);
-  
+
         ultimosTresExamenes.forEach(resultado => {
           dataParaMostrar.push(resultado.resultadosExamen);
         });
-  
-       
-        console.log("datos para mostrar:", dataParaMostrar);
+
         const labelsConPuntos = dataParaMostrar.map((valor: string) => valor + ' puntos');
-        const puntuacionMaxima = examenesFiltrados[0]?.examen.puntuacionMaxima; 
-  
+        const puntuacionMaxima = examenesFiltrados[0]?.examen.puntuacionMaxima;
+
         if (ctx) {
           const myChart = new Chart(ctx, {
             type: 'bar',
@@ -215,35 +205,23 @@ export class StartComponent implements OnInit {
       }
     }, 1);
   }
-  
-  
-  
-
-
-
 
 
   cargarPreguntas(){
-
     this.examenService.obtenerExamen(this.examenId).subscribe({
       next: (data)=>{
         this.examen = data
-        console.log(this.examen)
       },
       error: (err) =>{
         console.log(err)
       }
     })
 
-
     this.preguntaService.listarPreguntasDelExamenParaLaPrueba(this.examenId).subscribe(
       (data:any) => {
         console.log(data);
-        //this.preguntas = data;
         this.preguntas = this.shuffleArray(data).slice(0, 5);
-
         this.timer = this.preguntas.length * 60;
-
         this.preguntas.forEach((p:any) => {
           p['respuestaDada'] = '';
         })
@@ -335,23 +313,13 @@ export class StartComponent implements OnInit {
         })
 
         vecesEnviado++;
-
         this.vecesEnviado = vecesEnviado;
-       // this.enviosTotales = this.vecesEnviado;
-
-
       }
     })
   }
 
   evaluarExamen(){
-
- 
- 
-
     this.esEnviado = true;
-      
-    console.log("preguntas", this.preguntas)
     this.preguntas.forEach((p:any) => {
       console.log("The p es", p)
 
@@ -366,22 +334,12 @@ export class StartComponent implements OnInit {
 
       if(p.respuestaDada.trim() != ''){
         this.preguntasTotales ++;
-
       }
-      
-      
+
     });
-    //const newLocal = this.enviosTotales = this.vecesEnviado;
-    console.log("Respuestas correctas : " + this.respuestasCorrectas);
-    console.log("Puntos conseguidos : " + this.puntosConseguidos);
-    console.log("Intentos : " + this.preguntasTotales);
-    console.log(this.preguntas);
- 
+
     this.mostrarGrafico()
-    
- 
-   
-    
+
   }
 
   obtenerHoraFormateada(){
@@ -394,10 +352,3 @@ export class StartComponent implements OnInit {
     window.print();
   }
 }
-
-function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {
-  throw new Error('Function not implemented.');
-}
-
-
-

@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef , MatDialog} from '@angular/material/dial
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewUsuariosRComponent } from '../view-usuarios-r/view-usuarios-r.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
 
@@ -17,7 +17,6 @@ import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
 
 export class EditPerfilUsuarioRComponent implements OnInit {
 
-//  @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
 
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
 
@@ -36,12 +35,10 @@ export class EditPerfilUsuarioRComponent implements OnInit {
 
   }
 
-   
   constructor( private usuarioService:UsuarioService,
     private router:Router,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
-    private route:ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ViewUsuariosRComponent>,
     private dialog: MatDialog,
@@ -59,17 +56,13 @@ export class EditPerfilUsuarioRComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Asegúrate de que this.data existe y tiene una propiedad usuarioId
     this.usrId = this.data ? this.data.usuarioId : null;
-  
+
     if (this.usrId) {
-      // Caso para editar un usuario existente
-      console.log('existo');
       this.usuarioService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
           this.userDataForm.patchValue(data);
           this.usuario.usr_id = data.usr_id;
-          console.log(data.usr_id, 'usuario enviado');
         },
         error: (err) => {
           console.log(err, 'error');
@@ -79,17 +72,11 @@ export class EditPerfilUsuarioRComponent implements OnInit {
         }
       });
     } else {
-      // Caso para agregar un nuevo usuario
-      // Aquí puedes inicializar el formulario para un nuevo usuario
-      // por ejemplo, con valores por defecto o vacíos
       this.userDataForm.reset();
-      // Otros ajustes para el caso de un nuevo usuario
     }
-
-
-
-    
   }
+
+
   guardarUsuario() {
     if (this.userDataForm.invalid) {
         console.log('Ventana Cerrada');
@@ -107,13 +94,9 @@ export class EditPerfilUsuarioRComponent implements OnInit {
                     duration: 1000
                 });
                 this.cancelar();
-                // Cierra el diálogo después de guardar los cambios
-                //this.EditPerfilUsuarioRComponent.emit();
-
-                
                 this.dialog.closeAll();
                 this.dialogClosed.emit();
-                
+
             },
             error: (error) => {
                 this._snackBar.open("Error al actualizar usuario", "Cerrar", {
@@ -124,7 +107,6 @@ export class EditPerfilUsuarioRComponent implements OnInit {
         return;
     }
 
-    
     this.usuarioService.updateUsuario(userData).subscribe({
         next: (data) => {
             console.log(data);
@@ -134,29 +116,21 @@ export class EditPerfilUsuarioRComponent implements OnInit {
                 'Usuario agregado con éxito'
             );
             this.limpiarCampos();
-          
-          
-
-          
         },
         error: (error) => {
             console.log(error);
         }
     });
+  }
 
-}
 
-
-private limpiarCampos() {
-  this.userDataForm.reset();
-  this.dialogRef.close();
-}
+  private limpiarCampos() {
+    this.userDataForm.reset();
+    this.dialogRef.close();
+  }
 
   cancelar() {
     this.dialogRef.close(); // Cierra solo el diálogo actual
   }
-  
-
-
 
 }

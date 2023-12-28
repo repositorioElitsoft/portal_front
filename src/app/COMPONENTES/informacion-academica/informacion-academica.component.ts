@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import {  Router } from '@angular/router';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReferenciaAcademica } from 'src/app/interface/referencia-academica.interface';
@@ -27,10 +26,10 @@ export class InformacionAcademicaComponent implements OnInit {
   today: string;
   referenciasAcademicas: [] = [];
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private academicaService: AcademicaService, private route: ActivatedRoute, private router: Router) {
+    private academicaService: AcademicaService, private router: Router) {
       this.today = new Date().toISOString().split('T')[0];
       this.buildForm();
       }
@@ -84,8 +83,6 @@ export class InformacionAcademicaComponent implements OnInit {
     });
   }
 
-
-
   eliminarAcademica(id: number | undefined | null){
     this.academicaService.eliminarAcademica(id).subscribe({
       next:(res)=>{
@@ -117,37 +114,30 @@ export class InformacionAcademicaComponent implements OnInit {
 
 
   editarAcademica(event: any) {
-
     const inf_acad_id = event.target.parentElement.id;
-
     if (inf_acad_id) {
-
       this.academicaService.obtenerAcademica(inf_acad_id).subscribe({
         next: (data) => {
           const dialogRef = this.dialog.open(EditarAcademicaComponent, {
             width: '800px',
             height: '700px',
             data:  data  // Pasar inf_acad_id como parte de los datos
-
           });
-
           dialogRef.afterClosed().subscribe((result) => {
             this.obtenerAcademicasGuardados();
           });
         },
         error: (error) => {
-          console.error('Error al obtener datos:', error); // Capturar y mostrar errores
+          console.error('Error al obtener datos:', error);
         }
       });
     } else {
-      console.error('inf_acad_id es undefined o null'); // Manejar el caso de que inf_acad_id no esté definido
+      console.error('inf_acad_id es undefined o null');
     }
   }
 
   submitForm(event: Event) {
-
     event.preventDefault();
-
     const academicaNueva: Academica = {
       ...this.form.value,
       referenciaAcademicas: this.referenciaFormArray.value.map( (ref: ReferenciaAcademica) => {
@@ -160,8 +150,6 @@ export class InformacionAcademicaComponent implements OnInit {
         };
       })
     };
-    console.log(academicaNueva)
-
     this.academicaService.guardarAcademica(academicaNueva, this.id).subscribe(
       (academicaGuardada: Academica) => {
         console.log('Información laboral guardada:', academicaGuardada);
@@ -184,7 +172,5 @@ export class InformacionAcademicaComponent implements OnInit {
   goBack(){
     this.creationMode = false;
   }
-
-
 
 }

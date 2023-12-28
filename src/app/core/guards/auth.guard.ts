@@ -22,7 +22,6 @@ export class AuthGuard implements CanActivate {
           return true;
         } else {
 
-         
           if(userRole === "ROLE_REC"){
             this.router.navigate(['/reclutador/welcome-reclutador']);
           }
@@ -30,13 +29,12 @@ export class AuthGuard implements CanActivate {
             this.router.navigate(['/admin/welcome-admin']);
           }
 
-          //
           return false;
         }
       }
       return true;
     }
-    
+
     this.router.navigate(['/iniciar-sesion']);
     return false;
   }

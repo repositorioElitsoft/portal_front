@@ -2,17 +2,17 @@
     display: flex;
     flex-direction: column;
   }
-  
+
   .profile-item {
     display: flex;
     margin-bottom: 10px;
   }
-  
+
   .profile-item label {
     font-weight: bold;
     margin-right: 5px;
   }
-  
+
   .profile-item p {
     margin: 0;
   }
@@ -26,7 +26,7 @@
 
   .chips{
     font-size: 12px; /* Adjust the font size as needed */
-    padding: 2px 4px; 
+    padding: 2px 4px;
     height: auto;
   }
 
@@ -38,16 +38,16 @@
     display: grid;
 
     grid-template-columns: repeat(2, minmax(0, 1fr));
- 
+
   }
   .card-title-custom{
-    align-self: baseline; 
+    align-self: baseline;
     grid-column: 1 / -1; /* Ocupar todas las columnas */
     justify-self: center;
     color: rgb(255, 255, 255);
     font-weight: bold;
-     font-size: 1.5em;
-     font-family: 'Meera Inimai', sans-serif;
+    font-size: 1.5em;
+    font-family: 'Meera Inimai', sans-serif;
 
   }
 
@@ -69,41 +69,40 @@
     margin-bottom: 10px; /* Margen inferior entre cajas de comentarios */
 
   }
-  
+
   .ancho-completo {
     width: 100%;
   }
-  
+
 
   .observacion-card {
     margin: 10px;
     border-left: 5px solid #F57C27; /* Barra lateral para destacar */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Sombra suave para profundidad */
   }
-  
+
   .fecha-info {
     display: flex;
     justify-content: start;
     gap: 10px;
     flex-wrap: wrap;
   }
-  
+
   mat-chip {
     margin: 2px;
     background-color: #F57C27; /* Fondo del chip */
     color: white; /* Texto del chip */
   }
-  
+
   /* Estilo para el chip de fecha de creación */
   .creado-chip {
     background-color: #F57C27;
   }
-  
+
   /* Estilo para el chip de fecha de modificación, si quieres una variante */
   .modificado-chip {
     background-color: #F57C27;
   }
-  
 
 
   /* Estilo general para la caja de comentarios */
@@ -204,8 +203,6 @@
 }
 
 
-
-
 .mat-card-header {
   align-items: center;
 }
@@ -219,4 +216,3 @@
   margin-left: 8px; /* Espacio al lado del avatar */
   font-size: 0.85em; /* Tamaño del subtítulo */
 }
-

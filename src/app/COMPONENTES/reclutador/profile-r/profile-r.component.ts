@@ -102,13 +102,11 @@ export class ProfileRComponent implements OnInit {
         "Datos actualizados correctamente"
       );
       if (isConfirmed) {
-        // Redirigir a la página anterior u otra acción
         this.toggleEditable(); // Vuelve a deshabilitar la edición
       }
     } catch (error) {
-      // Manejar errores
     }
   }
 
 
-  }
+}

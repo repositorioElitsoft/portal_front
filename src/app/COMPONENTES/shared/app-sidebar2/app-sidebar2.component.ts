@@ -4,8 +4,6 @@ import { CategoriaService } from 'src/app/service/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/service/login.service';
 import { MatDialog } from '@angular/material/dialog';  //
-import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component';
 
 @Component({
@@ -16,16 +14,12 @@ import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component'
 export class AppSidebar2Component implements OnInit  {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
- 
-  
 
-    
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private categoriaService: CategoriaService,
     public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
     private snack: MatSnackBar,
     public login: LoginService,
     media: MediaMatcher
@@ -34,8 +28,8 @@ export class AppSidebar2Component implements OnInit  {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
-
   categorias: any;
+
 
   ngOnInit(): void {
     this.categoriaService.listarCategorias().subscribe(
@@ -57,6 +51,7 @@ export class AppSidebar2Component implements OnInit  {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
+
   shouldRun = true;
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CerrarSesionComponent, {
@@ -65,6 +60,4 @@ export class AppSidebar2Component implements OnInit  {
       exitAnimationDuration,
     });
   }
-
-
 }

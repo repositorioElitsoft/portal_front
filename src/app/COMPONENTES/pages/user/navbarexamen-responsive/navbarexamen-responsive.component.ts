@@ -35,7 +35,6 @@ export class NavbarResponsiveExamenComponent implements OnInit  {
   mobileQuery: MediaQueryList;
 
 
-
   private _mobileQueryListener: () => void;
 
   constructor(changeDetectorRef: ChangeDetectorRef,
@@ -46,11 +45,10 @@ export class NavbarResponsiveExamenComponent implements OnInit  {
     this.mobileQuery = media.matchMedia('(max-width: 1300px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    
-  }
- 
-  categorias:any;
 
+  }
+
+  categorias:any;
 
 
   ngOnInit(): void {
@@ -80,20 +78,13 @@ export class NavbarResponsiveExamenComponent implements OnInit  {
     const confirmacion = window.confirm('¿Deseas cerrar la sesión?');
 
     if (confirmacion) {
-      // Realiza las acciones para cerrar la sesión aquí
-      // Por ejemplo, puedes eliminar la cookie de autenticación o realizar una solicitud HTTP al servidor para cerrar la sesión.
-
-      // Ejemplo: Elimina una cookie llamada 'token'
       document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-      // Redirige al usuario a la página de inicio de sesión
       window.location.href = '/iniciar-sesion';
     } else {
       console.log('Sesión no cerrada.');
     }
   }
 
-  
 }
 
 

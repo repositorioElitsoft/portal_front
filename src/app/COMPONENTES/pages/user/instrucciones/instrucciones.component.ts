@@ -1,5 +1,4 @@
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ExamenService } from 'src/app/service/examen.service';
@@ -50,6 +49,5 @@ export class InstruccionesComponent implements OnInit {
             this.router.navigate(['/start/' + this.examenId]);
         }
     })
-}
-
+  }
 }

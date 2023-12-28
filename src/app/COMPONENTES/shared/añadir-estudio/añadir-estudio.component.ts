@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,15 +25,12 @@ export class AñadirEstudioComponent implements OnInit {
   today: string;
   navigateToRoute: any;
 
-  
+
 
   constructor(
-    private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private academicaService: AcademicaService,
-    private route: ActivatedRoute,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any, // Datos pasados al diálogo
     ) {
       this.today = new Date().toISOString().split('T')[0];
@@ -49,10 +44,10 @@ export class AñadirEstudioComponent implements OnInit {
         this.creationMode = true;
       }
 
-    
+
     }
-    
-  
+
+
 
     ngAfterViewInit(): void {
       if (this.data && this.data.academica) {
@@ -73,7 +68,7 @@ export class AñadirEstudioComponent implements OnInit {
       referenciaAcademicas: this.formBuilder.array([])
     });
   }
-  
+
 
   redirectTo() {
     this.navigateToRoute('/user/informacion-laboral');
@@ -130,14 +125,14 @@ obtenerAcademicasGuardados() {
         inf_acad_fec_ini: academica.inf_acad_fec_ini,
         inf_acad_fec_fin: academica.inf_acad_fec_fin,
       });
-  
+
       this.creationMode = false;
     } else {
       this.creationMode = true;
       this.form.reset();
     }
   }
-  
+
 
 
   get referenciaFormArray(){
@@ -153,11 +148,10 @@ obtenerAcademicasGuardados() {
     this.referenciaFormArray.push(referenciaFormGroup);
   }
 
-  
+
   eliminarReferencia(index: number) {
     this.referenciaFormArray.removeAt(index);
   }
-
 
 
 

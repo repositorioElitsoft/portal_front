@@ -11,34 +11,23 @@ import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
-import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { forkJoin } from 'rxjs';
-import { LaboralService } from 'src/app/service/laboral.service';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
-import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
-import { Dialog } from '@angular/cdk/dialog';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef } from '@angular/core';
-import { NumberValueAccessor } from '@angular/forms';
-import { UserGuard } from 'src/app/core/guards/user.guard';
 import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
 import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
 import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
-import { MatSliderModule } from '@angular/material/slider';
-
 
 
 
@@ -107,14 +96,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
-    private laboralService: LaboralService,
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
-    private _snackBar: MatSnackBar,
-    private httpClient: HttpClient,
     private nivelService: NivelService,
     private cargosElitsoftService: CargosElitsoftService,
-
     private cargoService: CargosUsuarioService
 
   ) {
@@ -122,20 +107,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     });
   }
 
-
-
   ngOnInit(): void {
-
-
-
-
     this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
     this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
     this.getCargosElitsoft();
-
   }
 
   getCargosElitsoft() {
@@ -169,7 +147,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
 
-
   filterData() {
     let filteredArray = this.originalDataCopy;
 
@@ -177,7 +154,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
       return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
-        const sueldo = cargo.crg_usr_pret; // Asume que 'crg_usr_pret' es el sueldo pretendido por el usuario
+        const sueldo = cargo.crg_usr_pret;
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
@@ -190,14 +167,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
 
     //filtro por fecha postulacion
-
 if (this.selectedfechaPostulacion) {
   console.log("seleccioné fecha");
   // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
   const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
 
    // Filtrar los cargos por fecha de postulación
-   filteredArray = filteredArray.filter(usuario => {
+  filteredArray = filteredArray.filter(usuario => {
     const cargos = usuario.cargoUsuario
     console.log("cargos", cargos);
         // Check if cargos is defined and has at least one element
@@ -207,25 +183,21 @@ if (this.selectedfechaPostulacion) {
           const primerCargo = cargos[0];
           const fechaPostulacion = primerCargo.fechaPostulacion;
 
-           // Verificar si la propiedad fechaPostulacion existe y no es undefined
+      // Verificar si la propiedad fechaPostulacion existe y no es undefined
       if(!fechaPostulacion)return false;
       console.log("tipo de la fecha:",typeof fechaPostulacion );
       console.log("fecha obtenida:", fechaPostulacion );
       // Comparar solo la parte de la fecha
-       console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
-       console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
-       return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
+      console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
+      console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
+      return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
 
       }
 
       return false;
 
   });
-
-  // Imprimir el array de cargos filtrados
-  console.log("Cargos filtrados por fecha de postulación:", this.cargos);
 }
-
 
     // Filtro por estado
     if (this.selectedEstado && this.selectedEstado !== '') {
@@ -251,7 +223,6 @@ if (this.selectedfechaPostulacion) {
     }
 
 
-
 // Filtro por resultado del usuario
   if (this.resultados !== undefined) {
   this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
@@ -271,7 +242,6 @@ if (this.selectedfechaPostulacion) {
     }
   );
 }
-
 
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
@@ -295,7 +265,6 @@ if (this.selectedfechaPostulacion) {
       filteredArray = filteredArray.filter(usuario => {
         const resultadosDeUsuario= this.resultados.filter(resultado => {
           return resultado.usuarioId === usuario.usr_id;
-
         });
 
         const resultadoFinal = resultadosDeUsuario.find(resultado =>{
@@ -305,7 +274,6 @@ if (this.selectedfechaPostulacion) {
           const nivelDificultad = resultado.examen.nivelDificultad;
           const productos = resultado.examen.productos;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
-
 
           // Verifica si el usuario cumple con los filtros anteriores
           const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
@@ -331,15 +299,9 @@ if (this.selectedfechaPostulacion) {
 
         }
         return false;
-
         })
 
-
     }
-
-
-
-
 
     //Filtro
     if (this.lastYears) {
@@ -370,13 +332,11 @@ if (this.selectedfechaPostulacion) {
 
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
-
     this.dataSource.data = filteredArray;
   }
 
   filterByCargo() {
     let filteredArray = this.originalDataCopy;
-
     if (this.filterCargo) {
       const filtroCargoLowerCase = this.filterCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario =>
@@ -385,7 +345,6 @@ if (this.selectedfechaPostulacion) {
         )
       );
     }
-
     this.dataSource.data = filteredArray;
     console.log('Usuarios filtrados', filteredArray);
   }
@@ -395,18 +354,15 @@ if (this.selectedfechaPostulacion) {
     if (this.isIrrelevant) {
       this.lastYears = 0;
     }
-
     this.filterData();
   }
 
   onLast5YearsChange() {
-
     this.filterData();
   }
 
   filterInput() {
     let filteredArray = this.originalDataCopy;
-
     if (this.filtro) {
       const filtroLowerCase = this.filtro.toLowerCase();
       filteredArray = filteredArray.filter(element => {
@@ -416,13 +372,11 @@ if (this.selectedfechaPostulacion) {
         return false;
       });
     }
-
     this.dataSource.data = filteredArray;
   }
 
   filterInputCargoOcupado() {
     let filteredArray = this.originalDataCopy;
-
     if (this.filtroCargo) {
       const filtroLowerCase = this.filtroCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario => {
@@ -485,8 +439,6 @@ obtenerUsuarios(): void {
   this.usuarioService.obtenerUsuarios().subscribe(
     (data: any[]) => {
       console.log('data:', data);
-
-      // Filtrar usuarios por usr_rol igual a "GUEST"
       const usuarios = data
         .filter((usuario) => usuario.usr_rol === 'GUEST')
         .map((usuario) => ({
@@ -511,14 +463,12 @@ obtenerUsuarios(): void {
           usr_id: usuario.usr_id,
           cvPath: usuario.cvPath,
           cargoUsuario: usuario.cargoUsuario,
-
         }));
 
         const controlNames = Object.keys(this.selectedCheckbox.controls);
         controlNames.forEach(controlName => {
           this.selectedCheckbox.removeControl(controlName);
         });
-
 
         usuarios.forEach(usuario =>{
           this.selectedCheckbox.addControl(String(usuario.usr_email), this.fb.control(false))
@@ -537,7 +487,6 @@ obtenerUsuarios(): void {
 
   onSendMailPressed(){
     const values = this.selectedCheckbox.value
-
     const emails: any = []
 
     for (const key in values) {
@@ -558,11 +507,10 @@ obtenerUsuarios(): void {
   }
 
 
-
   clearDate() {
     this.selectedfechaPostulacion = null;
     this.filterData();
-  }
+  }
 
   exportToCSV() {
     const dataToExport = this.dataSource.data;
@@ -608,7 +556,6 @@ obtenerUsuarios(): void {
           return esIgual;
         });
 
-        // Mostrar los datos filtrados
         console.log('Datos después de aplicar el filtro:', this.dataSource.data);
       },
       (error) => {
@@ -617,9 +564,6 @@ obtenerUsuarios(): void {
     );
 
   }
-
-
-
 
 
   obtenerResultadosByUser() {
@@ -633,7 +577,6 @@ obtenerUsuarios(): void {
       }
     );
   }
-
 
 
   getProductos(categoriaId: number){
@@ -674,7 +617,6 @@ obtenerUsuarios(): void {
         this.productoService.getVersionByProduct(productoId).subscribe(
           (data: VersionProducto[]) => {
             this.versiones = data;
-            // this.filter(new Event('input'));
           },
           (error) => {
             console.log('Error al cargar version ', error);
@@ -684,11 +626,9 @@ obtenerUsuarios(): void {
     }
 
       getNiveles() {
-
         this.nivelService.listarNiveles().subscribe(
           (data: Niveles[]) => {
             this.niveles = data;
-
           },
           (error) => {
             console.log('Error al obtener niveles ', error);
@@ -696,8 +636,6 @@ obtenerUsuarios(): void {
         );
 
     }
-
-
 
 
   announceSortChange(sortState: Sort) {
@@ -722,7 +660,7 @@ obtenerUsuarios(): void {
 
     openUserProfile(event: any) {
       const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-      console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+      console.log('User ID:', userId);
 
       // Llamadas simultáneas a los servicios
       forkJoin({
@@ -745,12 +683,11 @@ obtenerUsuarios(): void {
 
           dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
-             this.obtenerUsuarios();
+            this.obtenerUsuarios();
           });
         },
         error: (error) => {
           console.error('Error al obtener datos del usuario:', error);
-          // Manejo de errores aquí
         }
       });
     }
@@ -797,10 +734,10 @@ openEditProfileDialog(event: any): void {
   } else {
     console.error('No se pudo obtener el ID del usuario');
   }
- }
+}
 
 
- clearFilters(): void {
+clearFilters(): void {
   this.filtro = '';
   this.filtroPuntaje = '';
   this.filtroCargo = '';
@@ -823,18 +760,7 @@ openEditProfileDialog(event: any): void {
   this.isSueldoSliderEnabled = true;
   this.selectedPorcentajeAprobacion = null;
   this.porcentajeAprobacion = 0;
-
-  // Vuelve a cargar o filtrar los datos según sea necesario
   this.filterData();
 }
 
-
-
-
-
- }
-
-
-function saveAs(blob: Blob, arg1: string) {
-  throw new Error('Function not implemented.');
 }

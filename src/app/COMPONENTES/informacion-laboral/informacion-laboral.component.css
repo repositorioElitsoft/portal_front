@@ -1,5 +1,3 @@
-
-
 .div-inputs{
   width: 100%;
 }
@@ -10,7 +8,6 @@
 .btn {
   font-size: 15px;
 }
-
 
 .form {
   width: fit-content;
@@ -37,7 +34,6 @@
 .fechas2 {
   font-size: 14px;
   font-family: 'Meera Inimai', sans-serif;
-
 }
 
 @keyframes pulse {
@@ -51,8 +47,6 @@
     transform: scale(1);
   }
 }
-
-
 
 .perfilr{
   font-weight: bold;

@@ -4,8 +4,6 @@ import { LaboralService } from 'src/app/service/laboral.service';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
 
@@ -31,7 +29,6 @@ export class  EditLaboralComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private route: ActivatedRoute, private router: Router,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
     @Inject(MAT_DIALOG_DATA) public data: any, // Datos pasados al diálogo
@@ -53,8 +50,6 @@ export class  EditLaboralComponent implements OnInit {
     console.log('inf_acad_id asignado:', this.inf_lab_id);
 
     this.crearReferenciasForm(this.data.referenciasLaborales);
-
-
   }
 
 
@@ -67,9 +62,8 @@ export class  EditLaboralComponent implements OnInit {
       inf_lab_act: ["", [Validators.required]],
       inf_lab_fec_ini: ["", [Validators.required]],
       inf_lab_fec_fin: ["", [Validators.required]],
-       referenciasLaborales: this.formBuilder.array([])
+      referenciasLaborales: this.formBuilder.array([])
     });
-
     this.generateHerrForm();
   }
 
@@ -77,17 +71,15 @@ export class  EditLaboralComponent implements OnInit {
   crearReferenciasForm(data: ReferenciaLaboral[]) {
     const rowArray = data.map((laboral, index) => {
       return this.formBuilder.group({
-        ref_lab_id: [laboral.ref_lab_id], 
-        ref_lab_nom: [laboral.ref_lab_nom], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
-        ref_lab_emp: [laboral.ref_lab_emp], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
-        ref_lab_email: [laboral.ref_lab_email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
-        ref_lab_tel: [laboral.ref_lab_tel] // Suponiendo que 'telefono' es una propiedad del objeto 'academica'
+        ref_lab_id: [laboral.ref_lab_id],
+        ref_lab_nom: [laboral.ref_lab_nom],
+        ref_lab_emp: [laboral.ref_lab_emp],
+        ref_lab_email: [laboral.ref_lab_email],
+        ref_lab_tel: [laboral.ref_lab_tel]
       });
     });
     this.form.setControl('referenciasLaborales', this.formBuilder.array(rowArray))
   }
-  
-
 
 
 
@@ -112,9 +104,7 @@ export class  EditLaboralComponent implements OnInit {
   }
 
   goBack() {
-    // Restablecer el formulario a su estado inicial
     this.form.reset();
-
     // Cerrar todas las ventanas de diálogo abiertas
     this.dialog.closeAll();
   }
@@ -126,11 +116,9 @@ export class  EditLaboralComponent implements OnInit {
       next: (data: HerramientaData[]) => {
         console.log("received data herramientas: ", data);
         this.herramientasDisponibles = data;
-
         this.herramientasDisponibles.forEach((herramienta) => {
           // Verificar si la herramienta estaba marcada previamente durante el guardado
           const wasCheckedAlready = this.herrIdList.includes(herramienta.herr_usr_id);
-
           const newControl = new FormControl(wasCheckedAlready);
 
           if (!herramienta.herr_prd_otro) {
@@ -138,10 +126,8 @@ export class  EditLaboralComponent implements OnInit {
           } else {
             this.form.addControl(herramienta.herr_prd_otro, newControl);
           }
-
           this.herrIdList.push(herramienta.herr_usr_id);
         });
-
         this.checkboxFormCreated = true;
       },
       error: (err: any) => {
@@ -151,9 +137,6 @@ export class  EditLaboralComponent implements OnInit {
   }
 
 
-
-
-
   redirectTo(){
     this.navigateToRoute('/user/cargo-usuario')
   }
@@ -161,15 +144,15 @@ export class  EditLaboralComponent implements OnInit {
 
   submitForm(event: Event) {
     event.preventDefault();
-  
+
     if (this.form.valid && this.inf_lab_id !== null) {
       const fechaInicioFormateada = new Date(this.form.value.inf_lab_fec_ini).toISOString().split('T')[0];
       const fechaFinFormateada = new Date(this.form.value.inf_lab_fec_fin).toISOString().split('T')[0];
-  
+
       // Asegúrate de incluir los datos de las referencias en la actualización
       const referenciasFormArray = this.form.get('referenciasLaborales') as FormArray;
       const referencias = referenciasFormArray.getRawValue(); // Obtiene los valores actuales del FormArray
-  
+
       const laboralNueva: Laboral = {
         ...this.form.value,
         inf_lab_fec_ini: fechaInicioFormateada,
@@ -179,7 +162,6 @@ export class  EditLaboralComponent implements OnInit {
       console.log('Enviando actualización con ID:', this.inf_lab_id);
       console.log('Datos a actualizar:', laboralNueva);
 
-      
       this.laboralService
       .guardarLaboral(laboralNueva, this.inf_lab_id)
       .subscribe(
@@ -214,18 +196,11 @@ export class  EditLaboralComponent implements OnInit {
       console.log('Estado del formulario:', this.form.value);
     }
   }
-  
-  
-
-
-
 
 
   get referenciasFormArray() {
     return this.form.get('referenciasLaborales') as FormArray;
   }
-
-
 
 
 
@@ -255,9 +230,5 @@ export class  EditLaboralComponent implements OnInit {
     });
   }
 
-
-
-
-  
 
 }

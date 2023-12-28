@@ -6,7 +6,6 @@
   border-right: 3px solid orange; /* Añade un contorno naranja */
   padding-top: 14vh;
   /* Asegura que el sidebar esté detrás del contenido */
-
   z-index: 0;
 
 }
@@ -43,7 +42,6 @@
 }
 
 
-
 /* Ajusta el z-index del sidebar */
 .app-sidebar-admin {
   z-index: 0;
@@ -60,7 +58,6 @@
   .sidebar{
     display: none;
     pointer-events: none;
-
   }
 
 }

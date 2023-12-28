@@ -17,16 +17,12 @@ export class SidebarRResponsiveComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
- 
-  
 
-    
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private categoriaService: CategoriaService,
     public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
     private snack: MatSnackBar,
     public login: LoginService,
     media: MediaMatcher
@@ -60,10 +56,6 @@ export class SidebarRResponsiveComponent implements OnInit {
 
   shouldRun = true;
 
- 
-
-
-  // Método para abrir un diálogo
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CerrarSesionComponent, {
       width: '250px',

@@ -14,21 +14,15 @@
     <div class="sidebar">
       <!-- Contenido de la barra lateral aquí -->
   </div>
-
   <mat-card class="container-datos-personales">
-
-
     <div class="div-inputs" *ngIf="!creationMode" >
       <h4 class="perfilr">Información académica</h4>
       <div *ngFor="let academica of academicas">
-
         <div class="row celda-laboral">
-
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Título / Profesion</h4>
               <p>{{ academica.titl}}</p>
           </div>
-
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Inicio</h4>
            <p class="fechas2 ">{{ academica.inf_acad_fec_ini}}</p>
@@ -38,37 +32,26 @@
            <p class="fechas2"> {{ academica.inf_acad_fec_fin}}</p>
           </div>
           <div class="col-2">
-
             <div class="flex">
               <h4 class="Titulos  mb-4">Acciones</h4>
               <button mat-mini-fab class="minifab m-1"  id="{{academica.inf_acad_id}}" (click)=" editarAcademica($event)">
                 <mat-icon>edit</mat-icon>
               </button>
-
-
-
-
            <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" >
           	<mat-icon>delete</mat-icon>
            </button>
-
             </div>
           </div>
         </div>
       </div>
-
       <div *ngIf="academicas.length === 0">
         No has definido ninguna experiencia académica
       </div>
-
       <button mat-raised-button class="botonprimario m-2"   (click)="openAddDialog('300ms', '150ms')">+ Añadir estudios</button>
-
       <button  mat-raised-button class="botonprimario m-2"  *ngIf="academicas.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
     <div class="div-inputs" *ngIf="creationMode">
-
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
-
         <div class="row mb-3">
           <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
           <div class="col-sm-10">
@@ -103,7 +86,6 @@
               <option value="Titulado">Titulado</option>
             </select>
         </div>
-
         <div>
           <h4 class="perfilr">Referencias Academicas</h4>
           <div formArrayName="referenciaAcademicas">
@@ -141,7 +123,6 @@
           </div>
           <button mat-raised-button type="button" (click)="addReferencia()">+ Añadir Referencia</button>
         </div>
-
         <div class="div-form d-grid justify-content-end">
           <div class="flex">
             <button button  mat-raised-button class="botonprimario m-2"  (click)="goBack()" >Cancelar</button>
@@ -151,4 +132,3 @@
       </form>
     </div>
   </mat-card>
-

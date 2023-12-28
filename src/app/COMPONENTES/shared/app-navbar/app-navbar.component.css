@@ -8,18 +8,18 @@
     width: 100%;
     font-size: small;
   }
-  
+
   /* Centrar el contenido en la barra de navegación */
   .navbar-nav {
     margin: 0 auto;
     text-align: center;
   }
-  
+
   /* Estilo para los elementos del menú */
   .nav-item {
     margin: 0 10px; /* Espacio entre elementos del menú */
   }
-  
+
   /* Cambiar el color del enlace en el hover a naranja */
 .nav-item a.nav-link:hover {
     color: orange;
@@ -59,26 +59,18 @@
 }
 
 
-  
-  @media (max-width: 1300px) {
 
+  @media (max-width: 1300px) {
     .navbar{
       display: none;
       pointer-events: none;
       margin-left: 0;
-  
     }
-  
-
-    
   }
-  
+
 
   @media (max-width: 1200px) {
-
     .navbar{
       margin-left: 0;
-  
     }
-  
   }

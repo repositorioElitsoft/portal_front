@@ -1,4 +1,3 @@
-import { City } from "./city.interface";
 import { Country } from "./country.interface";
 
 export interface State {

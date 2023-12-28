@@ -96,7 +96,6 @@ import { AddLaboralComponent } from './COMPONENTES/shared/add-laboral/add-labora
 import { EditLaboralComponent } from './COMPONENTES/shared/edit-laboral/edit-laboral.component';
 import { ViewFilesComponent } from './COMPONENTES/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './COMPONENTES/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
-import { CurrencyFormatPipe } from './COMPONENTES/cargo-usuario/currency-format.pipe';
 import {MatStepperModule} from '@angular/material/stepper';
 import { EditPerfilUsuarioRComponent } from './COMPONENTES/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 import { SendMailToUsersDialogueComponent } from './COMPONENTES/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
@@ -141,7 +140,6 @@ import { EditPerfilUsuarioAdminComponent } from './COMPONENTES/admin/edit-perfil
     ViewExamenesComponent,
     EditUserDialogComponent,
     EditPerfilUsuarioAdminComponent,
-    CurrencyFormatPipe,
     ViewExamenPreguntasComponent,
     CaracterOnlyDirective,
     AddPreguntaComponent,
@@ -156,7 +154,6 @@ import { EditPerfilUsuarioAdminComponent } from './COMPONENTES/admin/edit-perfil
     EstadisticasComponent,
     AdvertenciaEliminarComponent,
     CaracterOnlyDirective,
-    CurrencyFormatPipe,
     AñadirEstudioComponent,
     EditarAcademicaComponent,
     UploadFilesComponent,

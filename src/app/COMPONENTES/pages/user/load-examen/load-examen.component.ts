@@ -16,27 +16,18 @@ export class LoadExamenComponent implements OnInit {
   constructor(
     private route:ActivatedRoute,
     private examenService:ExamenService
-
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.catId = params['catId'];
-
-      console.log(this.catId + "this cat id");
       if(this.catId == 0){
-        console.log("Cargando todos los exámenes");
         this.examenService.obtenerExamenesActivos().subscribe(
           (data) => {
-        
-            console.log("data recibida de exámenes", data)
             this.examenes = data.filter((examen: any) =>{
               console.log("la cat:", examen.categoria)
               return examen.categoria !== null
             })
-
-           
-            console.log("examenes: ",this.examenes);
           },
           (error) => {
             console.log(error);
@@ -47,7 +38,6 @@ export class LoadExamenComponent implements OnInit {
         console.log("Cargando un examen en específico");
         this.examenService.obtenerExamenesActivos().subscribe(
           (data:any) => {
-          
             this.examenes = data.filter((obj: any) => obj.categoria.categoriaId === this.catId);
             console.log("this esamenes",data);
           },
@@ -56,9 +46,8 @@ export class LoadExamenComponent implements OnInit {
           }
         )
       }
-      
-    })
-}
 
+    })
+  }
 
 }

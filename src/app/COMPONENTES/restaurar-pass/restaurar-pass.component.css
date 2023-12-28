@@ -78,8 +78,8 @@
 .nav-link2 {
   color: #333; /* Color de texto por defecto */
     /* Otros estilos opcionales */
-text-decoration: none; /* Para quitar la subrayado del enlace */
-margin-top: 1vh;
+  text-decoration: none; /* Para quitar la subrayado del enlace */
+  margin-top: 1vh;
 
 
 }

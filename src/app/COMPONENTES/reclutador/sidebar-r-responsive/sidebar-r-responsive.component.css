@@ -7,23 +7,21 @@
   left: 0;
   right: 0;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  
-  
-}
 
+
+}
 
 
 .example-is-mobile .example-toolbar {
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
   z-index: 2;
-  
+
 }
 
 h1.example-app-name {
   margin-left: 8px;
 }
-
 
 
 .custom-icon{
@@ -57,9 +55,6 @@ h1.example-app-name {
   color: #f39c12;/* Cambia el color del texto a gris */
 
 }
-
-
-
 
 /* Asegura que el navbar tenga margen superior */
 .navbar {
@@ -115,11 +110,9 @@ h1.example-app-name {
     pointer-events: none;
   }
 
-  .contenido-test{display: none;
-    pointer-events: none;}
-    
-
+  .contenido-test{
+    display: none;
+    pointer-events: none;
+  }
 
 }
-
-

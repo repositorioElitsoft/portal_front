@@ -34,7 +34,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
   originalDataCopy: Examen[] = [];
   usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
-  
+
 
 
   selectedAniosExpRange: number[] = [1, 10];
@@ -48,10 +48,8 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   constructor(private examenService: ExamenService,
     private _liveAnnouncer: LiveAnnouncer,
-    private router: Router,
     public dialog: MatDialog,
-    private _snackBar: MatSnackBar,
-    private productoService: ProductoService,
+    private _snackBar: MatSnackBar
   ) {}
 
 
@@ -66,34 +64,14 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   filterData() {
     let filteredArray = this.originalDataCopy;
-  
-    // Filtro por producto
-    /*
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
-      }
-    }*/
-  
-
-    console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    console.log('Usuarios filtrados:', filteredArray);
-  
     this.dataSource.data = filteredArray;
   }
 
   filterInput() {
     let filteredArray = this.originalDataCopy;
-/*
-    if (this.filtro && this.filtro.trim() !== '') {
-      const filtroLowerCase = this.filtro.toLowerCase();
-      filteredArray = filteredArray.filter(element => element.toLowerCase().includes(filtroLowerCase));
-    }
-*/
     this.dataSource.data = filteredArray;
   }
-  
+
   formatLabel(value: number): string {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
@@ -101,7 +79,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
     return `${value}`;
   }
-  
+
   editExamen(event: any) {
     const examenId = event.target.parentElement.id;
     const examen: Examen | undefined = undefined;
@@ -110,9 +88,9 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       this.examenService.obtenerExamen(examenId).subscribe({
         next:(data) => {
           console.log('Data llegada:', data);
-          const examenes = data 
+          const examenes = data
           const dialogRef = this.dialog.open(ExamenModalComponent, {
-            width: '800px', 
+            width: '800px',
             height: '700px',
             data: data
           });
@@ -126,7 +104,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  
+
   getExams(): void {
     this.examenService.listarCuestionarios().subscribe({
       next:(data: Examen[]) => {
@@ -169,7 +147,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   saveExamen() {
     const dialogRef = this.dialog.open(ExamenModalComponent, {
-      width: '800px', 
+      width: '800px',
       height: '700px',
     });
 

@@ -1,4 +1,3 @@
-
 <form [formGroup]="form" (ngSubmit)="submitForm($event)">
   <mat-card class="formacademica">
     <h4 class="perfilr">Editar Información laboral</h4>
@@ -7,54 +6,40 @@
         <mat-label>Cargo:</mat-label>
         <input matInput formControlName="inf_lab_crg_emp" placeholder="Cargo">
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Nombre Empresa:</mat-label>
         <input matInput formControlName="inf_lab_emp" placeholder="Nombre Empresa">
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Actividades Realizadas:</mat-label>
         <input matInput formControlName="inf_lab_act" placeholder="Actividades Realizadas">
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Fecha Inicio:</mat-label>
         <input matInput formControlName="inf_lab_fec_ini" type="date" placeholder="Fecha Inicio">
       </mat-form-field>
-
       <mat-form-field>
         <mat-label>Fecha Fin:</mat-label>
         <input matInput formControlName="inf_lab_fec_fin" type="date" placeholder="Fecha Fin">
-
       </mat-form-field>
-
       <mat-card>
         <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
-
         <div *ngIf="herramientasDisponibles && checkboxFormCreated">
-
           <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
-
             <div *ngIf="!herramienta.herr_prd_otro">
               <mat-checkbox [formControlName]="herramienta.herr_usr_id">
                 {{ herramienta.versionProducto.prd.prd_nom }} ({{ herramienta.versionProducto.vrs_name }})
               </mat-checkbox>
             </div>
-
             <div *ngIf="herramienta.herr_prd_otro">
               <mat-checkbox [formControlName]="herramienta.herr_prd_otro">
                 {{ herramienta.herr_prd_otro }}
               </mat-checkbox>
             </div>
-
           </div>
         </div>
-
       </mat-card>
-
       <br>
-
       <div class="contenedor-externo">
         <h4 class="perfilr">Referencias Laborales</h4>
         <div formArrayName="referenciasLaborales">
@@ -64,37 +49,33 @@
                 <mat-label>Nombre</mat-label>
                 <input matInput type="text" formControlName="ref_lab_nom">
               </mat-form-field>
-      
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Institución</mat-label>
                 <input matInput type="text" formControlName="ref_lab_emp">
               </mat-form-field>
-      
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Email</mat-label>
                 <input matInput type="email" formControlName="ref_lab_email">
               </mat-form-field>
-      
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Teléfono</mat-label>
                 <input matInput type="tel" formControlName="ref_lab_tel">
               </mat-form-field>
-              <mat-card class="guardarycancelar mb-2" style="display: flex; justify-content: center; align-items: center; height: 100%;">
+              <mat-card class="guardarycancelar mb-2"
+                style="display: flex; justify-content: center; align-items: center; height: 100%;">
                 <button mat-mini-fab color="warn" (click)="eliminarReferencia(i)" style="margin: auto;">
                   <mat-icon>delete</mat-icon>
                 </button>
               </mat-card>
-              
+
             </mat-card>
           </div>
         </div>
         <mat-card class="guardarycancelar mb-2">
-        <button mat-raised-button type="button" class="botonprimario m-2" (click)="addReferencia()">+ Añadir Referencia</button>
-      </mat-card>
+          <button mat-raised-button type="button" class="botonprimario m-2" (click)="addReferencia()">+ Añadir
+            Referencia</button>
+        </mat-card>
       </div>
-
-
-      
       <mat-card class="guardarycancelar">
         <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Guardar</button>
         <button mat-raised-button class="botonprimario m-2" (click)="goBack()">Cancelar</button>
@@ -102,5 +83,3 @@
     </div>
   </mat-card>
 </form>
-
-

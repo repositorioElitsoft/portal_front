@@ -17,7 +17,6 @@ export class AppSidebarComponent implements OnInit  {
     private cookieService: CookieService){}
 
   ngOnInit(): void {
-
   }
 
   // Método para abrir un diálogo
@@ -30,4 +29,3 @@ export class AppSidebarComponent implements OnInit  {
   }
 
 }
-

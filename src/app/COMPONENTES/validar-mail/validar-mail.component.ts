@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ValidarMailService } from 'src/app/service/validar-mail.service';
 
 @Component({

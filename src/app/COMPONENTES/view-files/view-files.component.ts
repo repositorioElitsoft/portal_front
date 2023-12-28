@@ -4,7 +4,6 @@ import { HttpEventType } from '@angular/common/http';
 import { UploadFilesService } from 'src/app/service/upload-files.service';
 import { FileDescriptor } from 'src/app/interface/file-descriptor.interface';
 import { Usuario } from 'src/app/interface/user.interface';
-import { UsuarioService } from 'src/app/service/usuario.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -17,11 +16,11 @@ export class ViewFilesComponent implements OnInit {
   progressInfo: { value: number; fileName: string }[] = [];
   message = '';
   filename = '';
-  fileInfos!: Observable<FileDescriptor[]>; // Usa la interfaz aquí
+  fileInfos!: Observable<FileDescriptor[]>;
   isLoading = false;
 
   usuarioGuardado: Usuario = {
-    usr_id: 0,  // Asegúrate de tener un ID de usuario válido
+    usr_id: 0,
     usr_rut: '',
     usr_nom: '',
     usr_ap_pat: '',
@@ -30,20 +29,22 @@ export class ViewFilesComponent implements OnInit {
     usr_pass: '',
     usr_tel: '',
     usr_url_link: '',
-    
+
     usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
     laborales: [],
-    
-    
+
+
   };
 
-  constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA,) 
-  public data: any,
-  private dialogRef: MatDialogRef<ViewFilesComponent>
-     )  {     this.usuarioGuardado.usr_id = data.userId; }
+  constructor(private uploadService: UploadFilesService,
+    @Inject(MAT_DIALOG_DATA,)
+    public data: any,
+    private dialogRef: MatDialogRef<ViewFilesComponent>) {
+    this.usuarioGuardado.usr_id = data.userId;
+  }
 
   ngOnInit(): void {
     this.loadFiles();
@@ -68,7 +69,7 @@ export class ViewFilesComponent implements OnInit {
     this.uploadService.deleteFile(filename,this.usuarioGuardado.usr_id ?? 0).subscribe(
       () => {
         this.message = "Archivo eliminado con éxito.";
-        this.loadFiles();  // Recargar la lista de archivos después de eliminar uno
+        this.loadFiles();
       },
       err => {
         this.message = "Error al eliminar el archivo.";

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
-
-import { LoginService } from 'src/app/service/login.service';
+import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
@@ -23,8 +21,8 @@ export class PeticionRestaurarPassComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private notification: NotificationService,
-    private usuarioService: UsuarioService,) 
-    { 
+    private usuarioService: UsuarioService,)
+    {
       this.loginForm = this.formBuilder.group({
         email: ['', Validators.required],
       });
@@ -34,7 +32,6 @@ export class PeticionRestaurarPassComponent {
   }
 
   onSubmit() {
-   
     this.usuarioService.pedirReinicioPass(this.loginForm.get('email')?.value).subscribe(
       async (res) => {
         try{
@@ -44,21 +41,21 @@ export class PeticionRestaurarPassComponent {
           "Restauración de Contraseña",
           "Revisa tu bandeja de entrada, si el email existe recibirás un correo con instrucciones para restaurar tu constraseña."
         );
-  
+
         if (isConfirmed) {
           this.router.navigate(['/']);
         }
-      
+
       } catch (error) {
 
       }
-        
+
       },
       (e) => {
         console.log(`Error: ${e}`);
-        this.inicioSesionFallido= true 
+        this.inicioSesionFallido= true
       }
-      
+
     );
   }
 }

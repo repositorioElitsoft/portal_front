@@ -1,45 +1,39 @@
-
-  <mat-card class="card">
-    <button mat-icon-button class="close-button" (click)="closeWindow()">
-      <mat-icon>close</mat-icon>
-    </button>
-    <br>
-    <mat-card-title class="titulo">Cargar Archivo</mat-card-title>
-    <br>
-    <mat-card-content class="upload-container">
-      <div class="box1">
-        <div *ngFor="let progress of progressInfo" class="progress-info">
-          <div class="file-info">
-            <span class="file-name">{{progress.fileName}}</span>
-            <mat-progress-bar mode="buffer" [value]="progress.value"></mat-progress-bar>
-          </div>
+<mat-card class="card">
+  <button mat-icon-button class="close-button" (click)="closeWindow()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+  <mat-card-title class="titulo">Cargar Archivo</mat-card-title>
+  <br>
+  <mat-card-content class="upload-container">
+    <div class="box1">
+      <div *ngFor="let progress of progressInfo" class="progress-info">
+        <div class="file-info">
+          <span class="file-name">{{progress.fileName}}</span>
+          <mat-progress-bar mode="buffer" [value]="progress.value"></mat-progress-bar>
         </div>
       </div>
-<br>
-      <div class="box2">
-        <button mat-raised-button class="botonprimario" (click)="fileInput.click()">
-          Seleccione uno o más archivos
-        </button>
-        <input type="file" #fileInput hidden multiple (change)="selectFiles($event)" />
-        <div *ngIf="filename" class="selected-filename">{{filename}}</div>
-        <button mat-raised-button class="botonprimario" *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
-          Subir Archivos
-        </button>
-      </div>
-      <br>
-      <div class="box3">
-        <div class="message">{{message}}</div>
-      </div>
-      <br>
-
-    </mat-card-content>
-  </mat-card>
-
-
-
-
+    </div>
+    <br>
+    <div class="box2">
+      <button mat-raised-button class="botonprimario" (click)="fileInput.click()">
+        Seleccione uno o más archivos
+      </button>
+      <input type="file" #fileInput hidden multiple (change)="selectFiles($event)" />
+      <div *ngIf="filename" class="selected-filename">{{filename}}</div>
+      <button mat-raised-button class="botonprimario" *ngIf="selectedFiles" [disabled]="!selectedFiles"
+        (click)="uploadFiles()">
+        Subir Archivos
+      </button>
+    </div>
+    <br>
+    <div class="box3">
+      <div class="message">{{message}}</div>
+    </div>
+    <br>
+  </mat-card-content>
+</mat-card>
 <div class="screen-loading" *ngIf="isLoading">
   <span class="loading-text">Cargando...</span>
   <div class="loading-icon"></div>
 </div>
-

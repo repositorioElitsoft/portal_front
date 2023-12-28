@@ -204,8 +204,6 @@ border-radius: 50%;
 }
 
 
-
-
 .mat-card-header {
 align-items: center;
 }
@@ -219,7 +217,6 @@ font-weight: bold; /* Estilo del título */
 margin-left: 8px; /* Espacio al lado del avatar */
 font-size: 0.85em; /* Tamaño del subtítulo */
 }
-
 
 
 .observacion-comentario .mat-stepper-vertical, .observacion-comentario .mat-stepper-horizontal {

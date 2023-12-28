@@ -1,4 +1,3 @@
-
 <div class="card">
   <div class="card-header ">
     <div class="card-custom">
@@ -6,17 +5,12 @@
       aria-label="Example icon button with a menu icon">
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
-
     <h2 class="card-title-custom">Perfil de Usuario </h2>
     </div>
   </div>
   <div class="card-body">
     <div class="user-profile">
-
-      <!-- Agrega más campos del perfil según tu entidad Usuario -->
-
   <mat-tab-group>
-
     <mat-tab label="Datos Personales">
       <mat-list>
       <mat-list-item>
@@ -25,7 +19,6 @@
         <div matListItemIcon>
           <mat-icon>person</mat-icon>
         </div>
-
       </mat-list-item>
       <mat-list-item>
         <span matListItemTitle>{{ usuarioData.usr_rut }}</span>
@@ -52,7 +45,6 @@
         <span matListItemTitle *ngIf="usuarioData.usr_url_link">{{ usuarioData.usr_url_link}}</span>
         <span matListItemTitle *ngIf="!usuarioData.usr_url_link">No especificado</span>
         <span matListItemLine>LinkedIn</span>
-
         <div matListItemIcon>
           <mat-icon>public</mat-icon>
         </div>
@@ -65,63 +57,45 @@
           <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
           <span matListItemLine>Cargo a postular</span>
           <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
-
           <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
-
           <div matListItemIcon>
             <mat-icon>forward</mat-icon>
           </div>
         </mat-list-item>
-
         <div class="mb-3 mt-1"> Experiencia laboral:</div>
-
         <mat-list-item *ngFor="let laboral of usuarioData.laborales">
           <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
-
           <span matListItemLine>
             {{ laboral.inf_lab_emp }}
           </span>
-
-
-
             <div *ngFor="let h of laboral.herramientas; let i = index" matListItemLine>
               <mat-chip  class="chips" >
                 {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})  - (Exp:{{ h.herr_usr_anos_exp }} año/s)
               </mat-chip>
             </div>
-
           <div matListItemIcon>
             <mat-icon>work</mat-icon>
           </div>
-
           <span matListItemMeta> <div>Desde</div> {{ laboral.inf_lab_fec_ini }} </span>
           <span matListItemMeta> <div>Hasta</div> {{ laboral.inf_lab_fec_fin }} </span>
         </mat-list-item>
-
       </mat-list>
     </mat-tab>
     <mat-tab label="Información Académica">
       <mat-list>
       <mat-list-item *ngFor="let academica of usuarioData.academicas">
         <span matListItemTitle>{{ academica.titl }}</span>
-
         <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
-
         <span matListItemLine>{{academica.inf_acad_est }}</span>
-
         <div matListItemIcon>
           <mat-icon>school</mat-icon>
         </div>
         <span matListItemMeta> <div>Desde</div> {{ academica.inf_acad_fec_ini }} </span>
         <span matListItemMeta> <div>Hasta</div> {{ academica.inf_acad_fec_fin }} </span>
-
       </mat-list-item>
     </mat-list>
     </mat-tab>
-
-
     <mat-tab label="Observaciones">
-
       <mat-stepper *ngIf="mostrarStepper" headerPosition="bottom" #stepper id="miStepper" class="observacion-comentario">
               <mat-step>
           <ng-template matStepLabel>Categoría</ng-template>
@@ -149,8 +123,6 @@
         </mat-step>
         <mat-step>
           <ng-template matStepLabel>Aprobaciones</ng-template>
-
-          <!-- Gerencia -->
           <mat-card-title>Gerencia</mat-card-title>
           <mat-form-field>
             <mat-label>Aprobación</mat-label>
@@ -159,8 +131,6 @@
               <mat-option value="No">No</mat-option>
             </mat-select>
           </mat-form-field>
-
-          <!-- Operación -->
           <mat-card-title>Operación</mat-card-title>
           <mat-form-field>
             <mat-label>Aprobación</mat-label>
@@ -169,8 +139,6 @@
               <mat-option value="No">No</mat-option>
             </mat-select>
           </mat-form-field>
-
-          <!-- Técnica -->
           <mat-card-title>Técnica</mat-card-title>
           <mat-form-field>
             <mat-label>Aprobación</mat-label>
@@ -179,29 +147,20 @@
               <mat-option value="No">No</mat-option>
             </mat-select>
           </mat-form-field>
-
           <div>
             <button mat-button matStepperPrevious class="botonprimario m-1">Regresar</button>
             <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.usr_id)">Guardar</button>
-
           </div>
         </mat-step>
       </mat-stepper>
-
       <!-- Sección para mostrar observaciones existentes -->
-
-
-
       <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
-        <!-- Caja de comentario para cada observación con clase "comentario-box" -->
         <div *ngIf="enEdicion !== observadores.obs_id">
-
         <mat-card class="comentario-card">
           <mat-card>
             <mat-card-header>
               <div mat-card-avatar class="avatar">
               </div>
-
               <mat-card-title>Creador por: {{ observadores.usr_nom }}</mat-card-title>
               <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
             </mat-card-header>
@@ -209,12 +168,9 @@
           <br>
           <mat-card-content>
             <mat-accordion>
-              <mat-expansion-panel (opened)="panelOpenState = true"
-                                   (closed)="panelOpenState = false">
+              <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-                  <mat-panel-title>
-                   Aprobaciones:
-                  </mat-panel-title>
+                  <mat-panel-title> Aprobaciones: </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-card-subtitle>{{ observadores.cat_obs_desc }}</mat-card-subtitle>
                 <mat-card-subtitle>Aprobación: Gerencia</mat-card-subtitle>
@@ -234,10 +190,8 @@
             <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
             <div class="acciones-comentario">
               <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
-
             </div>
           </mat-card-content>
-
           <mat-card class="observacion-card">
             <mat-card-content>
               <div class="fecha-info">
@@ -255,17 +209,10 @@
         </mat-card>
       </div>
       </div>
-
-      <!-- Botón para guardar la nueva observación -->
       <button mat-raised-button class="botonprimario m-2" (click)="agregarNuevaObservacion()">Agregar Nueva Observación</button>
-
       <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
     </mat-tab>
     </mat-tab-group>
-
-
-
-
-   </div>
+  </div>
   </div>
 </div>

@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AppNavbarComponent implements OnInit  {
 
-  constructor(private router: Router, 
+  constructor(private router: Router,
     public dialog: MatDialog,
     private cookieService: CookieService){}
 
@@ -24,8 +24,6 @@ export class AppNavbarComponent implements OnInit  {
     this.router.navigate(['/iniciar-sesion']);
   }
 
-
-
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CerrarSesionComponent, {
       width: '250px',
@@ -33,6 +31,4 @@ export class AppNavbarComponent implements OnInit  {
       exitAnimationDuration,
     });
   }
-
-
 }

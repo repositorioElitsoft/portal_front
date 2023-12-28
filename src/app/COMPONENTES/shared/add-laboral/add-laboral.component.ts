@@ -56,14 +56,13 @@ export class AddLaboralComponent implements OnInit {
 
   obtenerLaboralesGuardados() {
     console.log('Obteniendo información laboral por ID...'); // Confirmación de que el método se ha llamado
-
     this.laboralService. obtenerListaLaboralPorUsuario().subscribe(
       (data) => {
         this.laborales = data; // Coloca el objeto único en un arreglo
-        console.log('Datos de laborales recibidos:', this.laborales); // Registro de datos recibidos
+        console.log('Datos de laborales recibidos:', this.laborales);
       },
       (error) => {
-        console.error('Error al obtener la información laboral:', error); // Registro de errores
+        console.error('Error al obtener la información laboral:', error);
       }
     );
   }
@@ -82,16 +81,12 @@ export class AddLaboralComponent implements OnInit {
   }
 
   goBack() {
-    // Restablecer el formulario a su estado inicial
     this.form.reset();
-
-    // Cerrar todas las ventanas de diálogo abiertas
     this.dialog.closeAll();
   }
 
   editarLaboral(id: number | undefined | null){
     this.id = id;
-
     const laboralToEdit = this.laborales.find(laboral => laboral.inf_lab_id === this.id);
     this.form.patchValue({
       inf_lab_crg_emp: laboralToEdit?.inf_lab_crg_emp,
@@ -99,7 +94,6 @@ export class AddLaboralComponent implements OnInit {
       inf_lab_act: laboralToEdit?.inf_lab_act,
       inf_lab_fec_ini: laboralToEdit?.inf_lab_fec_ini,
       inf_lab_fec_fin: laboralToEdit?.inf_lab_fec_fin,
-
     });
 
 
@@ -112,43 +106,27 @@ export class AddLaboralComponent implements OnInit {
         this.form.get(herr.herr_usr_id.toString())?.patchValue(true);
       }
     })
-
-
-
-
-
     this.creationMode = !this.creationMode;
   }
 
   generateHerrForm(){
-
-
     this.herramientaService.getHerramientasByUserId().subscribe({
       next:(data: HerramientaData[])=>{
 
         console.log("recieved data herramientas: ",data)
         this.herramientasDisponibles = data;
-
         this.herramientasDisponibles.forEach((herramienta)=>{
 
           let wasCheckedAlready = false
-
-
-
           const newControl = new FormControl(wasCheckedAlready);
 
           if (!herramienta.herr_prd_otro){
-
             this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-
           }
           else {
             this.form.addControl(herramienta.herr_prd_otro, newControl);
           }
-
           this.herrIdList.push(herramienta.herr_usr_id)
-
-
         })
 
         this.checkboxFormCreated = true;
@@ -235,14 +213,11 @@ export class AddLaboralComponent implements OnInit {
           });
         },
         (error) => {
-          // Si ocurre un error en el guardado, imprimir el error en la consola
           console.error('Error al guardar la información laboral:', error);
         }
       );
     } else {
-      // Si el formulario no es válido, imprimir los errores del formulario
       console.log('Cancelado : No se guardó el formulario');
-      // Aquí puedes agregar la lógica para manejar un formulario inválido, como mostrar mensajes de error al usuario
     }
   }
 
@@ -251,9 +226,6 @@ export class AddLaboralComponent implements OnInit {
   get referenciasFormArray() {
     return this.form.get('referenciasLaborales') as FormArray;
   }
-
-
-
 
 
   addReferencia() {
@@ -269,10 +241,5 @@ export class AddLaboralComponent implements OnInit {
   eliminarReferencia(index: number) {
     this.referenciasFormArray.removeAt(index);
   }
-
-
-
-
-
 
 }

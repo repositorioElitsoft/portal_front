@@ -8,17 +8,15 @@
     border-right: 3px solid orange; /* Añade un contorno naranja */
     padding-top: 14vh;
     /* Asegura que el sidebar esté detrás del contenido */
-
     z-index: 0;
-  
   }
-  
+
   .sidebar-header {
     text-align: center;
     padding-bottom: 20px;
     color: #6c757d; /* Cambia el color del texto a gris */
   }
-  
+
   .list-unstyled li a {
     display: block;
     padding: 10px 15px;
@@ -26,7 +24,7 @@
     text-decoration: none;
     transition: background-color 0.3s;
   }
-  
+
   .list-unstyled li a:hover {
     background-color: #555;
     color: #fff;
@@ -37,13 +35,11 @@
     color: #fff;
   }
 
-  
-
   /* Ajusta el z-index del sidebar */
 .app-sidebar-admin {
     z-index: 0;
 }
-  
+
 .navbar {
     margin-top: 10px;
     float: right;
@@ -55,7 +51,5 @@
   .sidebar{
     display: none;
     pointer-events: none;
-
   }
-
 }

@@ -89,8 +89,11 @@ mat-progress-bar {
 }
 
 
-.titulo{text-align: center; color:  #F57C27;
-font-size: 22px;}
+.titulo{
+  text-align: center;
+  color:  #F57C27;
+  font-size: 22px;
+}
 
 .loading-text {
   font-size: 1.5em;

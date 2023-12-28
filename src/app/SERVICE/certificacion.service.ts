@@ -10,7 +10,6 @@ import { environment } from 'src/environments/environment';
 })
 export class CertificacionService {
 
-
   readonly url = `${environment.URL_HOST}/certificados/`
 
   constructor(private http: HttpClient) { }

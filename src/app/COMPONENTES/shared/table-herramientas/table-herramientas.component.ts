@@ -1,7 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { ProductoService } from 'src/app/service/producto.service';
@@ -54,11 +53,8 @@ export class TableHerramientasComponent implements OnInit {
           console.log('respuesta: ', herramientas);
           this.herramientas = herramientas;
           this.createFormRows();
-
-
         } else {
           this.addRow();
-
         }
         this.isLoaded = true;
       },
@@ -76,7 +72,6 @@ export class TableHerramientasComponent implements OnInit {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
       (data: CategoriaProducto[]) => {
         this.categorias = data;
-
       },
       (error) => {
         console.log('Error al obtener categorías:', error);
@@ -100,7 +95,6 @@ export class TableHerramientasComponent implements OnInit {
       (data: Producto[]) => {
         this.productByRow[index] = data;
         console.log('Productos cargados para la fila ' + index + ':', this.productByRow[index]);
-
       },
       (error) => {
         console.log('Error al obtener productos:', error);
@@ -144,7 +138,6 @@ export class TableHerramientasComponent implements OnInit {
 
 
     createFormRows() {
-
       const rowsArray = this.herramientas.map((herramienta, index) => {
         this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
           next: (data: Producto[]) => {
@@ -185,9 +178,7 @@ export class TableHerramientasComponent implements OnInit {
         return row;
 
     });
-
       this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
-
     }
 
   async guardarDatos() {
@@ -199,9 +190,7 @@ export class TableHerramientasComponent implements OnInit {
       );
       return;
     }
-
     const herramientas = this.herramientasForm.value.rows.map((row: any) => {
-
       return row;
     });
 
@@ -228,8 +217,6 @@ export class TableHerramientasComponent implements OnInit {
   }
 
 
-
-
   addRow() {
     console.log('metodo AddRow')
     const newRow = this.formBuilder.group({
@@ -239,7 +226,6 @@ export class TableHerramientasComponent implements OnInit {
       versionProducto: this.formBuilder.group({
         vrs_id: [{ value: 0, disabled: true }, Validators.required],
         herr_otro_vrs_name: ['']
-
       }),
       herr_is_cert: [false],
       herr_nvl: [''],

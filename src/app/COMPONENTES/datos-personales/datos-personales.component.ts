@@ -1,12 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-
+import { Component, OnInit } from '@angular/core';
 import { Usuario } from 'src/app/interface/user.interface';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { State } from 'src/app/interface/state.interface';
@@ -62,8 +59,7 @@ export class DatosPersonalesComponent implements OnInit {
     private stateService: StateService,
     private cityService: CityService,
     private snackBar: MatSnackBar,
-    private notification: NotificationService,
-    private route: ActivatedRoute
+    private notification: NotificationService
   ) {
     this.buildForm();
   }
@@ -112,7 +108,6 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   onStateSelected(){
-
     const stateId = this.form.get("state")!.value;
     this.cityService.getStateByCountry(stateId).subscribe({
       next: (data:City[]) => {
@@ -124,13 +119,12 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
 
-
   ngOnInit(): void {
     this.ObtenerUsuarioGuardado();
 
   }
 
-   obtenerEstadosporCountry(countryId: number) {
+  obtenerEstadosporCountry(countryId: number) {
     this.stateService.obtenerEstadosporCountry(countryId).subscribe(
       (data: State[]) => {
         this.states = this.sortByName(data);

@@ -10,18 +10,14 @@ import { environment } from 'src/environments/environment';
 export class CargosUsuarioService {
 
   readonly url = `${environment.URL_HOST}/cargos/`
-  
+
 
   constructor(private http: HttpClient) {}
 
   guardarCargo(cargo: CargoUsuario): Observable<CargoUsuario> {
-    
-    cargo.fechaPostulacion = new Date(); 
-    return this.http.post<CargoUsuario>(this.url, cargo);
-  }
 
-  obtenerCargosPorUsuario(usuarioId: number): Observable<CargoUsuario[]> {
-    return this.http.get<CargoUsuario[]>(`${this.url}por-usuario/${usuarioId}`);
+    cargo.fechaPostulacion = new Date();
+    return this.http.post<CargoUsuario>(this.url, cargo);
   }
 
   listarCargos(): Observable<CargoUsuario[]> {
@@ -30,8 +26,6 @@ export class CargosUsuarioService {
 
   getCargosByUserId(){
     return this.http.get<CargoUsuario>(`${this.url}`);
-    
   }
 
-  
 }

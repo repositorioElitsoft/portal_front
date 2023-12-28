@@ -21,7 +21,7 @@ export class AcademicaService {
   }
 
   actualizarAcademica(academicaId: number, academica: Academica, jwt: string): Observable<Academica> {
-    const url = `${this.url}${academicaId}`; // Asegúrate de que la URL y la ruta sean correctas
+    const url = `${this.url}${academicaId}`;
     const headers = new HttpHeaders({
       'Authorization': jwt
     });

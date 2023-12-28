@@ -21,8 +21,6 @@ export class RestaurarPassComponent {
 
   onSubmit() {
     if (this.registroForm.valid) {
-
-
       this.usuarioService.cambiarPassword(this.registroForm.get('usr_pass')?.value).subscribe(
         async (res) => {
           try{
@@ -36,9 +34,7 @@ export class RestaurarPassComponent {
             if (isConfirmed) {
               this.router.navigate(['/']);
             }
-
           } catch (error) {
-
           }
 
         },

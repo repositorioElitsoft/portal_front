@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,7 +22,7 @@ export class EditarAcademicaComponent implements OnInit {
   inf_acad_id: number | null | undefined = null;
   academicas: Academica[] = [];
   navigateToRoute: any;
-  
+
   redirectTo() {
     this.navigateToRoute('/user/informacion-laboral');
   }
@@ -32,8 +31,6 @@ export class EditarAcademicaComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private academicaService: AcademicaService,
-    private route: ActivatedRoute,
-    private router: Router,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.buildForm();
@@ -42,17 +39,14 @@ export class EditarAcademicaComponent implements OnInit {
   ngOnInit(): void {
     console.log('esta es la data del hijo ', this.data);
     this.form.patchValue(this.data);
-
     // Asigna inf_acad_id con el valor proveniente de data, si existe
     this.inf_acad_id = this.data && this.data.inf_acad_id ? this.data.inf_acad_id : null;
-
     // Registro en la consola para verificar el valor de inf_acad_id
     console.log('inf_acad_id asignado:', this.inf_acad_id);
-
     this.crearReferenciasForm(this.data.referenciaAcademicas);
 }
 
-  
+
 
   private buildForm() {
     this.form = this.formBuilder.group({
@@ -65,7 +59,6 @@ export class EditarAcademicaComponent implements OnInit {
     });
   }
 
- 
 
   goBack() {
     this.dialog.closeAll();
@@ -74,7 +67,7 @@ export class EditarAcademicaComponent implements OnInit {
   crearReferenciasForm(data: ReferenciaAcademica[]) {
     const rowArray = data.map((academica, index) => {
       return this.formBuilder.group({
-        ref_acad_id: [academica.ref_acad_id], 
+        ref_acad_id: [academica.ref_acad_id],
         ref_acad_nom: [academica.ref_acad_nom], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
         ref_acad_ins: [academica.ref_acad_ins], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
         ref_acad_email: [academica.ref_acad_email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
@@ -83,29 +76,25 @@ export class EditarAcademicaComponent implements OnInit {
     });
     this.form.setControl('referenciaAcademicas', this.formBuilder.array(rowArray))
   }
-  
+
 
   submitForm(event: Event) {
     event.preventDefault();
-  
+
     if (this.form.valid && this.inf_acad_id !== null) {
       const fechaInicioFormateada = new Date(this.form.value.inf_acad_fec_ini).toISOString().split('T')[0];
       const fechaFinFormateada = new Date(this.form.value.inf_acad_fec_fin).toISOString().split('T')[0];
-  
+
       // Asegúrate de incluir los datos de las referencias en la actualización
       const referenciasFormArray = this.form.get('referenciaAcademicas') as FormArray;
       const referencias = referenciasFormArray.getRawValue(); // Obtiene los valores actuales del FormArray
-  
       const academicaNueva: Academica = {
         ...this.form.value,
         inf_acad_fec_ini: fechaInicioFormateada,
         inf_acad_fec_fin: fechaFinFormateada,
         referenciaAcademicas: referencias // Incluye las referencias en el objeto a actualizar
       };
-      console.log('Enviando actualización con ID:', this.inf_acad_id);
-      console.log('Datos a actualizar:', academicaNueva);
 
-      
       this.academicaService
       .guardarAcademica(academicaNueva, this.inf_acad_id)
       .subscribe(
@@ -117,7 +106,6 @@ export class EditarAcademicaComponent implements OnInit {
             .subscribe({
               next: (data) => {
                 this.academicas = data;
-                // Cierra el diálogo después de guardar los cambios
                 this.EditarAcademicaComponent.emit();
                 this.dialog.closeAll();
               },
@@ -140,11 +128,8 @@ export class EditarAcademicaComponent implements OnInit {
       console.log('Estado del formulario:', this.form.value);
     }
   }
-  
-  
 
 
-  
   get referenciaFormArray(){
     return this.form.get('referenciaAcademicas') as FormArray;
   }
@@ -160,12 +145,9 @@ export class EditarAcademicaComponent implements OnInit {
     this.referenciaFormArray.push(referenciaFormGroup);
   }
 
-  
+
   eliminarReferencia(index: number) {
     this.referenciaFormArray.removeAt(index);
   }
-
-
-
 
 }

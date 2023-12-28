@@ -3,9 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/service/login.service';
-import { MatDialog } from '@angular/material/dialog';  // Importar correctamente MatDialog
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component';
 
 
@@ -13,21 +11,18 @@ import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component'
   selector: 'app-sidebar-user',
   templateUrl: './sidebar-user.component.html',
   styleUrls: ['./sidebar-user.component.css'],
-  
+
 })
 export class SidebarUserComponent implements OnInit {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
- 
-  
 
-    
+
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private categoriaService: CategoriaService,
     public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
     private snack: MatSnackBar,
     public login: LoginService,
     media: MediaMatcher
@@ -61,8 +56,6 @@ export class SidebarUserComponent implements OnInit {
 
   shouldRun = true;
 
-
-  // Método para abrir un diálogo
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CerrarSesionComponent, {
       width: '250px',
@@ -70,7 +63,5 @@ export class SidebarUserComponent implements OnInit {
       exitAnimationDuration,
     });
   }
-
-
 
 }
