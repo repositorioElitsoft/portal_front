@@ -4,7 +4,6 @@
     justify-content: center; /* Centrar los botones */
     gap: 10px; /* Espacio entre botones */
   }
-  
   form {
     padding: 20px; /* Espaciado interno */
   }

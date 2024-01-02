@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,16 +6,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserEditarDTO} from 'src/app/interface/user.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component';
-
-
-
+// Componente necesario para que el administrador pueda crear nuevos perfiles. (modulo view-usuarios)
 @Component({
   selector: 'app-add-usuarios',
   templateUrl: './add-usuarios.component.html',
   styleUrls: ['./add-usuarios.component.css']
 })
 export class AddUsuariosComponent implements OnInit {
-
   userDataForm: FormGroup;
   usrId:number | null = null
   usuario: UserEditarDTO = {
@@ -27,18 +23,11 @@ export class AddUsuariosComponent implements OnInit {
     usr_direcc:'',
     usr_pass:'',
     usr_rol:'',
-
-
   }
-
-  hide = true; // Controla la visibilidad de la contraseña
-
-
+  hide = true;
   constructor( private usuarioService:UsuarioService,
-    private router:Router,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
-    private route:ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ViewUsuariosComponent>,
     private _snackBar: MatSnackBar) {
@@ -52,13 +41,9 @@ export class AddUsuariosComponent implements OnInit {
       usr_rol: ['', Validators.required],
     });
   }
-
   ngOnInit(): void {
-    // Asegúrate de que this.data existe y tiene una propiedad usuarioId
     this.usrId = this.data ? this.data.usuarioId : null;
-  
     if (this.usrId) {
-      // Caso para editar un usuario existente
       console.log('existo');
       this.usuarioService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
@@ -74,27 +59,17 @@ export class AddUsuariosComponent implements OnInit {
         }
       });
     } else {
-      // Caso para agregar un nuevo usuario
-      // Aquí puedes inicializar el formulario para un nuevo usuario
-      // por ejemplo, con valores por defecto o vacíos
       this.userDataForm.reset();
-      // Otros ajustes para el caso de un nuevo usuario
     }
   }
-  
-
-
   guardarUsuario() 
   {
     if (this.userDataForm.invalid) {
       console.log('Ventana Cerrada');
       return;
     }
-
     const userData = this.userDataForm.value;
-
     if(this.usrId){
-
       this.usuario=this.userDataForm.value;
       console.log(this.usuario, 'usuario para act')
       this.usuarioService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
@@ -105,7 +80,6 @@ export class AddUsuariosComponent implements OnInit {
           this.cancelar();
         },
         error:(error) => {
-
           this._snackBar.open("Error al actualizar usuario","Cerrar",{
             duration:3000
           })
@@ -144,17 +118,11 @@ export class AddUsuariosComponent implements OnInit {
     }
 
 }
-
 private limpiarCampos() {
   this.userDataForm.reset();
   this.dialogRef.close();
 }
-
   cancelar() {
-    this.dialogRef.close(); // Cierra solo el diálogo actual
+    this.dialogRef.close();
   }
-  
-
-
-
 }

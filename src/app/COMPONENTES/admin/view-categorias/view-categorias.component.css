@@ -1,23 +1,19 @@
-/* Estilos generales */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5; /* Color de fondo gris claro */
+  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
 }
-
-/* Estilos para el contenedor de categorías */
 .categorias-container {
   display: flex;
-  flex-direction: column; /* Cambiamos a dirección de columna para que los elementos estén uno encima del otro */
-  justify-content: center; /* Centrar verticalmente */
-  align-items: center; /* Centrar horizontalmente */
-  min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  min-height: 80vh;
   border: 2px solid #F57C27;
-  background-color: #f5f5f5; /* Color de fondo gris claro */
-  text-align: center; /* Centrar el texto dentro del contenedor */
-  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
+  background-color: #f5f5f5;
+  text-align: center;
+  padding: 20px;
 }
-
 .filter-container{margin-top: 10%;}
 

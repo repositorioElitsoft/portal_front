@@ -81,8 +81,7 @@
                   id="prg_resp"
                   name="prg_resp"
                   [(ngModel)]="pregunta.prg_resp"
-                  required
-                >
+                  required>
                   <option *ngIf="pregunta.prg_opc1" [value]="pregunta.prg_opc1">{{ pregunta.prg_opc1 }}</option>
                   <option *ngIf="pregunta.prg_opc2" [value]="pregunta.prg_opc2">{{ pregunta.prg_opc2 }}</option>
                   <option *ngIf="pregunta.prg_opc3" [value]="pregunta.prg_opc3">{{ pregunta.prg_opc3 }}</option>
@@ -97,8 +96,7 @@
                   id="prg_ptje_prg"
                   name="prg_ptje_prg"
                   [(ngModel)]="pregunta.prg_ptje_prg"
-                  required
-                />
+                  required/>
               </div>
               <div class="container text-center">
                 <button type="submit" class="btn btn-primary">Guardar</button>

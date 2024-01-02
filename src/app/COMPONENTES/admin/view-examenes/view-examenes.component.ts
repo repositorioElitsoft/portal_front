@@ -1,45 +1,31 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Component, OnInit, AfterViewInit,ViewChild, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, AfterViewInit,ViewChild} from '@angular/core';
+import { MatDialog} from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Examen } from 'src/app/interface/examen.interface';
-import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
-import { Producto } from 'src/app/interface/producto.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { ExamenService } from 'src/app/service/examen.service';
-import { ProductoService } from 'src/app/service/producto.service';
-
-
 import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
 import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
 
 const ELEMENT_DATA: Examen[] = [];
-
-
 @Component({
   selector: 'app-view-examenes',
   templateUrl: './view-examenes.component.html',
   styleUrls: ['./view-examenes.component.css']
 })
 export class ViewExamenesComponent implements OnInit, AfterViewInit {
-
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Examen[] = [];
   usuarios: Usuario[] = [];
   categorias: CategoriaProducto[] = [];
-  
-
-
   selectedAniosExpRange: number[] = [1, 10];
-
-
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
 
@@ -48,12 +34,9 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   constructor(private examenService: ExamenService,
     private _liveAnnouncer: LiveAnnouncer,
-    private router: Router,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar,
-    private productoService: ProductoService,
   ) {}
-
 
   ngOnInit(): void {
     this.getExams();
@@ -66,10 +49,6 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
   filterData() {
     let filteredArray = this.originalDataCopy;
-
-    console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    console.log('Usuarios filtrados:', filteredArray);
-  
     this.dataSource.data = filteredArray;
   }
 
@@ -85,23 +64,18 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
     return `${value}`;
   }
-  
+
   editExamen(event: any) {
     const examenId = event.target.parentElement.id;
-    const examen: Examen | undefined = undefined;
-
     if (examenId) {
       this.examenService.obtenerExamen(examenId).subscribe({
         next:(data) => {
-          console.log('Data llegada:', data);
-          const examenes = data 
           const dialogRef = this.dialog.open(ExamenModalComponent, {
             width: '800px', 
             height: '700px',
             data: data
           });
           dialogRef.afterClosed().subscribe((result) => {
-            console.log(`Dialog result: ${result}`);
           });
         },
         error:(error) => {
@@ -110,11 +84,9 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       });
     }
   }
-  
   getExams(): void {
     this.examenService.listarCuestionarios().subscribe({
       next:(data: Examen[]) => {
-        console.log('Data llegada:', data);
         const examenes = data
 
         this.originalDataCopy = examenes;
@@ -125,14 +97,10 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
   openDialogEliminar(event: any) {
     const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-
       if(result){
-        //#endregionconsole.log()
         this.examenService.eliminarExamen(event.target.parentElement.id).subscribe({
           next:()=>{
             this._snackBar.open("Examen eliminado","Cerrar",{
@@ -150,7 +118,6 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
   saveExamen() {
     const dialogRef = this.dialog.open(ExamenModalComponent, {
       width: '800px', 
@@ -160,13 +127,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
     dialogRef.componentInstance?.examenActualizado.subscribe(() => {
       this.getExams();
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(`Dialog result: ${result}`);
-    });
   }
-
-
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);

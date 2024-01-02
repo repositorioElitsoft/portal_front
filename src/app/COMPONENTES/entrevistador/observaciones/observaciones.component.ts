@@ -6,7 +6,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Observacion } from 'src/app/interface/observacion.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -28,7 +27,6 @@ const ELEMENT_DATA: Usuario[] = [];
   styleUrls: ['./observaciones.component.css']
 })
 export class ObservacionesComponent implements OnInit, AfterViewInit {
-
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
@@ -42,7 +40,6 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   versiones: VersionProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
-
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
   selectedVersion: number = 0;
@@ -50,7 +47,6 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
   lastYears: number = 0;
-
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -69,19 +65,13 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       this.getCategories();
       this.obtenerResultadosByUser();
     }
-
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
-
-
     obtenerUsuarios(): void {
       this.usuarioService.obtenerUsuarios().subscribe(
         (data: any[]) => {
-          console.log('data:', data);
-
-          // Filtrar usuarios por usr_rol igual a "GUEST"
           const usuarios = data
             .filter((usuario) => usuario.usr_rol === 'GUEST')
             .map((usuario) => ({
@@ -105,9 +95,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
               laborales: usuario.laborales,
               usr_id: usuario.usr_id,
               cvPath: usuario.cvPath,
-
             }));
-
           this.originalDataCopy = usuarios;
           this.dataSource.data = usuarios;
         },
@@ -132,19 +120,13 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
         (data: any) => {
           this.resultados = data;
-          console.log('Resultados obtenidos:', this.resultados);
         },
         (error) => {
           console.error('Error al obtener resultados:', error);
         }
       );
     }
-
-
-
     getProductos(categoriaId: number){
-      console.log('categoria id:', categoriaId)
-
       this.selectedProducto = 0;
       this.selectedVersion = 0;
       this.selectedProductoNombre = '';
@@ -173,14 +155,11 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
       }
     }
-
-
     getVersion(productoId: number) {
         if (productoId) {
           this.productoService.getVersionByProduct(productoId).subscribe(
             (data: VersionProducto[]) => {
               this.versiones = data;
-              // this.filter(new Event('input'));
             },
             (error) => {
               console.log('Error al cargar version ', error);
@@ -188,44 +167,28 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
           );
         }
     }
-
-
-
     openUserProfile(event: any) {
-      const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-      console.log('User ID:', userId); // Imprime el ID del usuario en la consola
-
-      // Llamadas simultáneas a los servicios
+      const userId = event.currentTarget.id;
+      console.log('User ID:', userId);
       forkJoin({
         observadores: this.observacionReclutadorService.obtenerCatObservacionesPorUsuarioId(userId),
         usuario: this.usuarioService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {
-          // Extraemos los resultados
           const { observadores, usuario } = resultados;
-
-          // Lógica con los datos obtenidos
-          console.log('Observaciones del usuario:', observadores);
-          console.log('Perfil del usuario:', usuario);
-
-          // Configura el tamaño del diálogo
           const dialogRef = this.dialog.open(ViewPerfilUsuarioEComponent, {
-            data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
-            height: '60vh', // Establece la altura del diálogo
+            data: { userId, observadores, usuario }, 
+            height: '60vh',
           });
-
           dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
           });
         },
         error: (error) => {
           console.error('Error al obtener datos del usuario:', error);
-          // Manejo de errores aquí
         }
       });
     }
-
-
     announceSortChange(sortState: Sort) {
       if (sortState.direction) {
         this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);

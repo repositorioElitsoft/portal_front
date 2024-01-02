@@ -4,9 +4,9 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReferenciaAcademica } from 'src/app/interface/referencia-academica.interface';
-import { AñadirEstudioComponent } from '../shared/añadir-estudio/añadir-estudio.component';
+import { AñadirEstudioComponent } from '../añadir-estudio/añadir-estudio.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditarAcademicaComponent } from '../shared/editar-academica/editar-academica.component';
+import { EditarAcademicaComponent } from '../editar-academica/editar-academica.component';
 import { AcademicaService } from 'src/app/service/academica.service';
 
 @Component({

@@ -3,14 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { Usuario } from '../../interface/user.interface'
+import { Usuario } from '../../../interface/user.interface'
 import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { AddLaboralComponent } from '../shared/add-laboral/add-laboral.component';
-import { EditLaboralComponent } from '../shared/edit-laboral/edit-laboral.component';
+import { AddLaboralComponent } from '../add-laboral/add-laboral.component';
+import { EditLaboralComponent } from '../edit-laboral/edit-laboral.component';
 import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
 
 

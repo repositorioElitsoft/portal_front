@@ -7,7 +7,7 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { DatosPersonalesComponent } from 'src/app/COMPONENTES/datos-personales/datos-personales.component';
+import { DatosPersonalesComponent } from 'src/app/COMPONENTES/user/datos-personales/datos-personales.component';
 
 
 //se declara fuera de la clase de forma global

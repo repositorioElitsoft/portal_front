@@ -1,7 +1,7 @@
 import { Router } from "@angular/router";
 import { UsuarioService } from "src/app/service/usuario.service";
 import { MatDialog } from "@angular/material/dialog";
-import { EditUserDialogComponent } from "./edit-user-dialog/edit-user-dialog.component";
+import { EditUserDialogComponent } from "../edit-user-dialog/edit-user-dialog.component";
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';

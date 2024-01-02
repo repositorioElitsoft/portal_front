@@ -1,0 +1,93 @@
+
+.navbar {
+  background-color: #F57C27; 
+  color: #fff;
+}
+.nav-link {
+  color: #fff !important; 
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.card-header {
+  background-color: #F57C27; 
+  color: #fff; 
+}
+
+.form-group label {
+  color: #333; 
+}
+.form-control {
+  border: 1px solid #ccc; 
+}
+.btn-primary {
+  background-color:#F57C27; 
+  border-color: #F57C27;
+  width: 100%; 
+}
+.btn-primary:hover {
+  background-color: #ffffff;
+  border-color: #F57C27;
+  color: #F57C27;
+
+}
+
+.alert-success {
+  background-color: #D4EDDA; 
+  color: #155724; 
+}
+.alert-danger {
+  background-color: #F8D7DA; 
+  color: #721C24;
+}
+.elitsoft {
+  text-align: center; 
+  margin-top: 20px; 
+}
+
+.elitsoft img {
+  max-width: 100%; 
+  display: block; 
+  margin: 0 auto; 
+  animation: fadeIn 2s ease-in-out; 
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.nav-link2 {
+  color: #333; 
+    text-decoration: none; 
+   margin-top: 1vh;
+ 
+}
+
+.nav-link2:hover {
+  color: orange; /* Color naranja al hacer hover */
+}
+
+
+.botonprimario{
+  width: 100%;
+}
+
+  
+@media (max-width: 1200px)  {
+  /* Consulta de medios para dispositivos con un ancho de pantalla entre 768px y 1000px */
+  .nav-link2 {
+      padding-left: 10%; /* Establecer el padding-left al 15% para tablets y pantallas de tamaño similar */
+  }
+
+  .container-bg {
+
+    padding-top: 0;
+    padding-bottom: 10vh;
+  
+  }
+}

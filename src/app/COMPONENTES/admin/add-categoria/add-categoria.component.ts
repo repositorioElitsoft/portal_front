@@ -2,10 +2,9 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CategoriaExamen, CategoriaExamenCreateDTO } from 'src/app/interface/categoria-examen.interface';
+import {CategoriaExamenCreateDTO } from 'src/app/interface/categoria-examen.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-
 import Swal from 'sweetalert2';
 import { ViewCategoriasComponent } from '../view-categorias/view-categorias.component';
 
@@ -14,19 +13,14 @@ import { ViewCategoriasComponent } from '../view-categorias/view-categorias.comp
   templateUrl: './add-categoria.component.html',
   styleUrls: ['./add-categoria.component.css']
 })
+// Este componente agrega nuevas categorías al componente view-categoria en el perfil administrador
 export class AddCategoriaComponent implements OnInit {
-
-
   form!: FormGroup
   categoriaId:number | null = null
-
   categoria: CategoriaExamenCreateDTO = {
-    titulo : '',  //titulo
-    descripcion : ''   //descripción
-    
+    titulo : '',
+    descripcion : ''
   }
-
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,13 +33,11 @@ export class AddCategoriaComponent implements OnInit {
     private dialogRef: MatDialogRef<ViewCategoriasComponent>
   ) {
     this.buildForm();
-  
     // Asignar el categoriaId a partir de los datos del diálogo
     if (this.data && this.data.categoriaId) {
       this.categoriaId = this.data.categoriaId;
     }
   }
-  
   ngOnInit(): void {
     // Utilizar el categoriaId para cargar la categoría si existe
     if (this.categoriaId) {
@@ -61,10 +53,6 @@ export class AddCategoriaComponent implements OnInit {
       });
     }
   }
-  
-
-
-
   buildForm(){
     this.form = this.formBuilder.group({
       titulo: ["",[Validators.required]],
@@ -76,7 +64,6 @@ export class AddCategoriaComponent implements OnInit {
     this.categoria = this.form.value;
   
     if (this.categoria.titulo.trim() === '' || this.categoria.titulo == null) {
-      console.log('Se ha cerrado la ventana');
       return;
     }
   
@@ -101,7 +88,7 @@ export class AddCategoriaComponent implements OnInit {
       next: (dato: any) => {
         Swal.fire('Categoría agregada', 'La categoría ha sido agregada con éxito', 'success');
         this.form.reset();
-        this.cancelar(); // Cierra el diálogo después de agregar
+        this.cancelar();
       },
       error: (error) => {
         console.log(error);
@@ -109,11 +96,8 @@ export class AddCategoriaComponent implements OnInit {
       }
     });
   }
-  
   cancelar() {
-    this.dialogRef.close(); // Cierra solo el diálogo actual
+    this.dialogRef.close();
   }
-  
-
 }
   

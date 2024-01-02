@@ -18,7 +18,6 @@ const ELEMENT_DATA: CategoriaExamen[] = [];
   styleUrls: ['./view-categorias.component.css']
 })
 export class ViewCategoriasComponent implements OnInit, AfterViewInit {
-
   displayedColumns: any[] = ['title', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
@@ -26,24 +25,19 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
   selectedAniosExpRange: number[] = [1, 10];
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor(private categoriaExamenService: CategoriaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     public dialog: MatDialog,
     private _snackBar: MatSnackBar
- 
   ) {}
   openDialogEliminar(event: any) {
     const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-
       if(result){
-        //#endregionconsole.log()
         this.categoriaExamenService.eliminarCategoria(event.target.parentElement.id).subscribe({
           next:()=>{
             this._snackBar.open("Categoría eliminada","Cerrar",{
@@ -60,17 +54,13 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-
   ngOnInit(): void {
     this.getExamCategories();
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
   filterData() {
     let filteredArray = this.originalDataCopy;
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
@@ -78,18 +68,15 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
   
     this.dataSource.data = filteredArray;
   }
-
   filterInput() {
     let filteredArray = this.originalDataCopy;
 
     this.dataSource.data = filteredArray;
   }
-  
   formatLabel(value: number): string {
     if (value >= 1000) {
       return Math.round(value / 1000) + 'k';
     }
-
     return `${value}`;
   }
   getExamCategories(): void {
@@ -113,40 +100,33 @@ export class ViewCategoriasComponent implements OnInit, AfterViewInit {
     }
   }
   editCategoria(event: any) {
-    // Accede directamente al ID desde el botón que dispara el evento usando currentTarget
     const categoriaId = event.currentTarget.id;
-  
     if (categoriaId) {
       this.categoriaExamenService.getCategoria(categoriaId).subscribe({
         next: (data) => {
           console.log('Data llegada:', data);
-          // Abrir el diálogo con los datos obtenidos
+          
           const dialogRef = this.dialog.open(AddCategoriaComponent, {
             width: '800px', 
             height: '400px',
-            data: data // Pasar los datos obtenidos al diálogo
+            data: data 
           });
-  
           dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
             this.getExamCategories();          });
         },
         error: (error) => {
           console.log(error);
-          // Manejar el error aquí, por ejemplo, mostrar un mensaje al usuario
         }
       });
     } else {
       console.error('No se pudo obtener el ID de la categoría');
     }
   }
-  
   addNewCategory(event: Event) {
     this.dialog.open(AddCategoriaComponent, {
       width: '800px', 
       height: '400px'
     });
   }
-  
-
 }

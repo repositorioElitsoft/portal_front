@@ -6,9 +6,9 @@ import {
 } from '@angular/material/bottom-sheet';
 import {MatListModule} from '@angular/material/list';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { UploadFilesComponent } from '../../upload-files/upload-files.component';
+import { UploadFilesComponent } from '../upload-files/upload-files.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ViewFilesComponent } from '../../view-files/view-files.component';
+import { ViewFilesComponent } from '../view-files/view-files.component';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 
 @Component({

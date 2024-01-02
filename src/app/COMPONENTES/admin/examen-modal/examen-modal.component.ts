@@ -3,14 +3,13 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Categoria } from 'src/app/interface/categoria.interface';
-import { Examen } from 'src/app/interface/examen.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import Swal from 'sweetalert2';
-
+// Este componente agrega los examenes en el  el módulo : view-examenes
 @Component({
   selector: 'app-examen-modal',
   templateUrl: './examen-modal.component.html',
@@ -32,9 +31,6 @@ export class ExamenModalComponent implements OnInit {
     private preguntaService: PreguntaService,
     private productoService: ProductoService
   ) {
-
-    
-    
     this.examenForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -46,15 +42,9 @@ export class ExamenModalComponent implements OnInit {
       preguntas: this.formBuilder.array([]),
       productos: this.formBuilder.array([]),
       nivelDificultad: ['', Validators.required],
-    
     });
-
-
-
     this.productos.push(this.formBuilder.group({
       prd_id: ['',Validators.required]}));
-    
-    
     if (examen) {
       this.examenForm.patchValue(examen)
       examen.preguntas.forEach((pregunta: any) => {
@@ -70,21 +60,16 @@ export class ExamenModalComponent implements OnInit {
         this.preguntas.push(preguntasForm);
       });
     }
-
     this.preguntas.valueChanges.subscribe((preguntas) => {
       this.examenForm.get('numeroDePreguntas')?.setValue(preguntas.length, { emitEvent: false });
     });
-
     this.examenForm.valueChanges.subscribe(a=>{
       console.log("form value:", this.examenForm.value)
     })
-
     this.getCategories();
     this.getProductos();
   }
-
   ngOnInit(): void {}
-
   saveExamen(){
     if (this.examenForm.valid) {
       if (this.examen) {
@@ -121,7 +106,6 @@ export class ExamenModalComponent implements OnInit {
       console.log('Formulario invalido');
     }
   }
-
   deletePregunta(index: number) {
     const preguntaId = this.preguntas.value[index].preguntaId;
     if (preguntaId) {
@@ -138,11 +122,9 @@ export class ExamenModalComponent implements OnInit {
       this.preguntas.removeAt(index);
     }
   }
-
   closeModal() {
     this.dialogRef.close();
   }
-
   getCategories() {
     this.categoriaService.listarCategorias().subscribe(
       (data: Categoria[]) => {
@@ -153,20 +135,22 @@ export class ExamenModalComponent implements OnInit {
       }
     );
   }
-  getProductos(){
+  // Solucionar esta linea //
+  getProductos() {
     this.productoService.obtenerTodosLosProductos().subscribe({
-      next: (data?)=>{
-        this.productosDisponibles = data?.slice().sort((a, b) => {
-          // Use the localeCompare method to compare strings alphabetically
-          return a.prd_nom.localeCompare(b.prd_nom);
-        });
+      next: (data?) => {
+        if (data) {
+          this.productosDisponibles = data.slice().sort((a, b) => {
+            return a.prd_nom.localeCompare(b.prd_nom);
+          });
+        } else {
+        }
       },
-      error: (err)=>{
-        console.log("Error al obtener productos",err)
+      error: (err) => {
+        console.log("Error al obtener productos", err)
       }
     })
   }
-
   addPregunta() {
     const pregunta = this.formBuilder.group({
       contenido: ['', Validators.required],
@@ -176,15 +160,11 @@ export class ExamenModalComponent implements OnInit {
       opcion4: ['', Validators.required],
       respuesta: ['', Validators.required],
     });
-
     this.preguntas.push(pregunta);
   }
-
-  
   get productos() {
     return this.examenForm.get('productos') as FormArray;
   }
-
   get preguntas() {
     return this.examenForm.get('preguntas') as FormArray;
   }

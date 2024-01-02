@@ -7,20 +7,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import {  UserEditarDTO, UserEditarDTO2 } from 'src/app/interface/user.interface';
 import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component';
-
+// Componente de edición de los datos del perfil del administrador. 
 @Component({
   selector: 'app-edit-perfil-usuario-admin',
   templateUrl: './edit-perfil-usuario-admin.component.html',
   styleUrls: ['./edit-perfil-usuario-admin.component.css'],
 })
-
-
 export class EditPerfilUsuarioAdminComponent implements OnInit {
-
-//  @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
-
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
-
   userDataForm: FormGroup;
   usrId:number | null = null
   hide = true;
@@ -34,11 +28,8 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     usr_pass:'',
     usr_rol:'',
     usr_direcc: ''
-
   }
-  hidePassword: boolean = true; // Inicialmente, ocultar la contraseña
-
-   
+  hidePassword: boolean = true;
   constructor( private usuarioService:UsuarioService,
     private router:Router,
     private formBuilder: FormBuilder,
@@ -48,7 +39,6 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     private dialogRef: MatDialogRef<ViewUsuariosComponent>,
     private dialog: MatDialog,
     private _snackBar: MatSnackBar) {
-
     this.userDataForm = this.formBuilder.group({
       usr_nom: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
       usr_ap_pat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
@@ -60,13 +50,9 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
       usr_rol: ['', Validators.required],
     });
   }
-
   ngOnInit(): void {
-    // Asegúrate de que this.data existe y tiene una propiedad usuarioId
     this.usrId = this.data ? this.data.usuarioId : null;
-  
     if (this.usrId) {
-      // Caso para editar un usuario existente
       console.log('existo');
       this.usuarioService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
@@ -82,25 +68,15 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
         }
       });
     } else {
-      // Caso para agregar un nuevo usuario
-      // Aquí puedes inicializar el formulario para un nuevo usuario
-      // por ejemplo, con valores por defecto o vacíos
       this.userDataForm.reset();
-      // Otros ajustes para el caso de un nuevo usuario
     }
-
-
-
-    
   }
   guardarUsuario() {
     if (this.userDataForm.invalid) {
         console.log('Ventana Cerrada');
         return;
     }
-
     const userData = this.userDataForm.value;
-
     if (this.usrId) {
         this.usuario = this.userDataForm.value;
         console.log(this.usuario, 'usuario para act')
@@ -110,13 +86,8 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
                     duration: 1000
                 });
                 this.cancelar();
-                // Cierra el diálogo después de guardar los cambios
-                //this.EditPerfilUsuarioRComponent.emit();
-
-                
                 this.dialog.closeAll();
                 this.dialogClosed.emit();
-                
             },
             error: (error) => {
                 this._snackBar.open("Error al actualizar usuario", "Cerrar", {
@@ -126,8 +97,6 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
         });
         return;
     }
-
-    
     this.usuarioService.updateUsuario(userData).subscribe({
         next: (data) => {
             console.log(data);
@@ -137,34 +106,20 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
                 'Usuario agregado con éxito'
             );
             this.limpiarCampos();
-          
-          
-
-          
         },
         error: (error) => {
             console.log(error);
         }
     });
-
 }
-
-
 togglePasswordVisibility(): void {
-  this.hidePassword = !this.hidePassword; // Cambiar entre mostrar y ocultar la contraseña
+  this.hidePassword = !this.hidePassword;
 }
-
-
 private limpiarCampos() {
   this.userDataForm.reset();
   this.dialogRef.close();
 }
-
   cancelar() {
-    this.dialogRef.close(); // Cierra solo el diálogo actual
+    this.dialogRef.close();
   }
-  
-
-
-
 }

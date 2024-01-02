@@ -3,8 +3,6 @@
 .admin-panel-text{
   padding-top: 16vh;
 }
-
-/* Estilos para el contenedor del perfil */
 .profile-container {
   animation: fadeInUp 1s ease-out;
   margin-top: 10vh;
@@ -12,57 +10,49 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
-  background-color: #f5f5f5; /* Color de fondo gris claro */
+  min-height: 80vh;
+  background-color: #f5f5f5;
   border: 1px solid #F57C27;
-  background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+  background-color: #f5f5f5;
   padding: 5%;
   font-family: 'Meera Inimai', sans-serif;
 }
-
 .profile-details {
-  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  width: 80%; /* Ajustar el ancho según sea necesario */
-  background-color: #fff; /* Color de fondo blanco */
-  color: #333; /* Color de texto principal */
+  padding: 20px; 
+  border-radius: 20px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  width: 80%; 
+  background-color: #fff; 
+  color: #333; 
   border: 1px solid #F57C27;
-  background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+  background-color: #f5f5f5; 
 }
 
-/* Estilos para el título de bienvenida */
 .profile-details h2 {
   font-size: 24px;
   font-weight: bold;
-  color: #F76805; /* Color naranja */
+  color: #F57C27;
 }
-
-/* Estilos para el contenido del perfil */
 .profile-content {
   margin-top: 20px;
   font-size: 16px;
   line-height: 1.5;
 }
-
-/* Estilos para la lista de funciones */
 .profile-details ul {
   list-style-type: disc;
   margin-left: 20px;
   margin-top: 10px;
 }
 
-/* Estilos para los elementos de la lista */
 .profile-details li {
   margin-bottom: 5px;
 }
 
-/* Estilos para el enlace de acción */
 .action-link {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #F76805; /* Color naranja */
-  color: #fff; /* Color de texto blanco */
+  background-color: #F57C27;
+  color: #fff;
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -72,37 +62,27 @@
 }
 
 .action-link:hover {
-  background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+  background-color: #F57C27;
 }
-
 .no-mouse-action {
   pointer-events: none;
 }
-
-
-
 .perfilr{
   font-size: 2em;
   padding-bottom: 5%;
   color:#F57C27;
   font-weight: bold;
-
-
 } 
-
 .admin-icon-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
 .admin-icon-container .material-icons {
-  margin-right: 10px; /* Espaciado entre el icono y el texto */
-  font-size: 24px; /* Tamaño del icono */
-  color: #F76805; /* Color del icono, puedes cambiarlo según tu preferencia */
+  margin-right: 10px;
+  font-size: 24px; 
+  color: #F57C27;
 }
-
-
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -113,9 +93,6 @@
     transform: translateY(0);
   }
 }
-
-
-
 
 @media (max-width: 600px) {
   .container-datos-personales {

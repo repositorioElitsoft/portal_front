@@ -9,7 +9,6 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
   styleUrls: ['./add-pregunta.component.css']
 })
 export class AddPreguntaComponent implements OnInit {
-
   exam_id:any;
   exam_titl:any;
   pregunta:any = {
@@ -22,7 +21,6 @@ export class AddPreguntaComponent implements OnInit {
     prg_resp: '',
     prg_ptje_prg: '',
   }
-
   constructor(
     private route:ActivatedRoute,
     private preguntaService:PreguntaService) { }
@@ -55,7 +53,6 @@ export class AddPreguntaComponent implements OnInit {
     if(this.pregunta.prg_ptje_prg.trim() == '' || this.pregunta.prg_ptje_prg == null){
       return;
     }
-
     this.preguntaService.guardarPregunta(this.pregunta).subscribe(
       (data) => {
         Swal.fire('Pregunta guardada','La pregunta ha sido agregada con éxito','success');
