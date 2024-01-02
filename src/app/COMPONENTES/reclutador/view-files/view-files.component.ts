@@ -6,7 +6,6 @@ import { FileDescriptor } from 'src/app/interface/file-descriptor.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-view-files',
   templateUrl: './view-files.component.html',
@@ -17,11 +16,10 @@ export class ViewFilesComponent implements OnInit {
   progressInfo: { value: number; fileName: string }[] = [];
   message = '';
   filename = '';
-  fileInfos!: Observable<FileDescriptor[]>; // Usa la interfaz aquí
+  fileInfos!: Observable<FileDescriptor[]>;
   isLoading = false;
-
   usuarioGuardado: Usuario = {
-    usr_id: 0,  // Asegúrate de tener un ID de usuario válido
+    usr_id: 0,  
     usr_rut: '',
     usr_nom: '',
     usr_ap_pat: '',
@@ -29,17 +27,13 @@ export class ViewFilesComponent implements OnInit {
     usr_email: '',
     usr_pass: '',
     usr_tel: '',
-    usr_url_link: '',
-    
+    usr_url_link: '', 
     usr_direcc:'',
     usr_herr: '',
     herr_ver: '',
     herr_exp: '',
     laborales: [],
-    
-    
   };
-
   constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA,) 
   public data: any,
   private dialogRef: MatDialogRef<ViewFilesComponent>
@@ -48,34 +42,29 @@ export class ViewFilesComponent implements OnInit {
   ngOnInit(): void {
     this.loadFiles();
   }
-
   selectFiles(event: any): void {
     this.progressInfo = [];
     this.message = '';
     this.selectedFiles = event.target.files;
-
     if (this.selectedFiles.length > 10) {
       this.message = "Solo se permiten subir hasta 10 archivos.";
       return;
     }
-
     this.filename = this.selectedFiles.length > 1
       ? `${this.selectedFiles.length} archivos seleccionados`
       : this.selectedFiles[0].name;
   }
-
   deleteFile(filename: string): void {
     this.uploadService.deleteFile(filename,this.usuarioGuardado.usr_id ?? 0).subscribe(
       () => {
         this.message = "Archivo eliminado con éxito.";
-        this.loadFiles();  // Recargar la lista de archivos después de eliminar uno
+        this.loadFiles();  
       },
       err => {
         this.message = "Error al eliminar el archivo.";
       }
     );
   }
-
   private loadFiles(): void {
     this.fileInfos = this.uploadService.getFiles(this.usuarioGuardado.usr_id ?? 0).pipe(
       map(files => files.sort((a: { uploadDate: string | number | Date; }, b: { uploadDate: string | number | Date; }) => {
@@ -83,29 +72,23 @@ export class ViewFilesComponent implements OnInit {
       }).slice(0, 20))
     );
   }
-
   uploadFiles(): void {
     if (!this.selectedFiles) {
       return;
     }
-
     this.isLoading = true;
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.upload(i, this.selectedFiles[i]);
     }
   }
-
   upload(index: number, file: File): void {
     if (!this.usuarioGuardado || this.usuarioGuardado.usr_id === null || this.usuarioGuardado.usr_id === undefined) {
       this.message = "El usuario no tiene un ID válido.";
       return;
     }
-
     this.progressInfo[index] = { value: 0, fileName: file.name };
-
     const formData = new FormData();
     formData.append('files', file);
-
     this.uploadService.upload(formData, this.usuarioGuardado.usr_id).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress && event.total) {

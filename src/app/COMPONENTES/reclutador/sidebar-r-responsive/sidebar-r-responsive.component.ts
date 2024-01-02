@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';  //
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CerrarSesionComponent } from '../../shared/cerrar-sesion/cerrar-sesion.component';
-
 @Component({
   selector: 'app-sidebar-r-responsive',
   templateUrl: './sidebar-r-responsive.component.html',
@@ -17,11 +16,6 @@ export class SidebarRResponsiveComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
- 
-  
-
-    
-
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     private categoriaService: CategoriaService,
@@ -35,13 +29,10 @@ export class SidebarRResponsiveComponent implements OnInit {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
-
   categorias: any;
-
   ngOnInit(): void {
     this.categoriaService.listarCategorias().subscribe(
       (data: any) => {
-        console.log(data);
         this.categorias = data;
       },
       (error) => {
@@ -53,17 +44,10 @@ export class SidebarRResponsiveComponent implements OnInit {
       }
     );
   }
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
   shouldRun = true;
-
- 
-
-
-  // Método para abrir un diálogo
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CerrarSesionComponent, {
       width: '250px',
@@ -71,5 +55,4 @@ export class SidebarRResponsiveComponent implements OnInit {
       exitAnimationDuration,
     });
   }
-
 }

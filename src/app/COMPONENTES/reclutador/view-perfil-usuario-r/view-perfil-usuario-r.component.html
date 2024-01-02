@@ -6,17 +6,12 @@
               aria-label="Example icon button with a menu icon">
               <mat-icon>keyboard_arrow_left</mat-icon>
             </button>
-
             <h2 class="card-title-custom">Perfil de Usuario </h2>
             </div>
           </div>
           <div class="card-body">
             <div class="user-profile">
-
-              <!-- Agrega más campos del perfil según tu entidad Usuario -->
-
           <mat-tab-group>
-
             <mat-tab label="Datos Personales">
               <mat-list>
               <mat-list-item>
@@ -25,7 +20,6 @@
                 <div matListItemIcon>
                   <mat-icon>person</mat-icon>
                 </div>
-
               </mat-list-item>
               <mat-list-item>
                 <span matListItemTitle>{{ usuarioData.usr_rut }}</span>
@@ -52,7 +46,6 @@
                 <span matListItemTitle *ngIf="usuarioData.usr_url_link">{{ usuarioData.usr_url_link}}</span>
                 <span matListItemTitle *ngIf="!usuarioData.usr_url_link">No especificado</span>
                 <span matListItemLine>LinkedIn</span>
-
                 <div matListItemIcon>
                   <mat-icon>public</mat-icon>
                 </div>
@@ -67,64 +60,45 @@
                   <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
                   <span matListItemLine>Fecha de postulación: {{ cargo.fechaPostulacion | date: 'dd/MM/yyyy' }}</span>
                   <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
-
                   <div matListItemIcon>
                     <mat-icon>forward</mat-icon>
                   </div>
                 </mat-list-item>
-
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
-
                 <mat-list-item *ngFor="let laboral of usuarioData.laborales">
                   <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
-
                   <span matListItemLine>
                     {{ laboral.inf_lab_emp }}
                   </span>
-
-
-
                     <div *ngFor="let h of laboral.herramientas; let i = index" matListItemLine>
                       <mat-chip  class="chips" >
                         {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})  - (Exp:{{ h.herr_usr_anos_exp }} año/s)
                       </mat-chip>
                     </div>
-
                   <div matListItemIcon>
                     <mat-icon>work</mat-icon>
                   </div>
-
                   <span matListItemMeta> <div>Desde</div> {{ laboral.inf_lab_fec_ini }} </span>
                   <span matListItemMeta> <div>Hasta</div> {{ laboral.inf_lab_fec_fin }} </span>
                 </mat-list-item>
-
               </mat-list>
             </mat-tab>
             <mat-tab label="Información Académica">
               <mat-list>
               <mat-list-item *ngFor="let academica of usuarioData.academicas">
                 <span matListItemTitle>{{ academica.titl }}</span>
-
                 <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
-
                 <span matListItemLine>{{academica.inf_acad_est }}</span>
-
                 <div matListItemIcon>
                   <mat-icon>school</mat-icon>
                 </div>
                 <span matListItemMeta> <div>Desde</div> {{ academica.inf_acad_fec_ini }} </span>
                 <span matListItemMeta> <div>Hasta</div> {{ academica.inf_acad_fec_fin }} </span>
-
               </mat-list-item>
             </mat-list>
             </mat-tab>
-
-
             <mat-tab label="Observaciones">
-              <!-- Sección para mostrar observaciones existentes -->
               <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
-                <!-- Caja de comentario para cada observación con clase "comentario-box" -->
-
                 <mat-card class="comentario-card">
                   <mat-card>
                     <mat-card-header>
@@ -153,7 +127,6 @@
                   </mat-accordion>
                   <br>
                   <mat-card-content>
-                    <!-- Campo editable para la observación -->
                     <div *ngIf="enEdicion === observadores.obs_id">
                       <mat-form-field class="ancho-completo">
                         <textarea matInput [(ngModel)]="observadores.obs_desc"></textarea>
@@ -163,10 +136,8 @@
                     <div class="acciones-comentario">
                       <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
                       <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
-                      <!-- <button mat-button color="warn" (click)="eliminarObservacion(observacion.obsrec_id)">Eliminar</button> -->
                     </div>
                   </mat-card-content>
-
                   <mat-card class="observacion-card">
                     <mat-card-content>
                       <div class="fecha-info">
@@ -182,32 +153,17 @@
                     </mat-card-content>
                   </mat-card>
                 </mat-card>
-
-
               </div>
-
-              <!-- Caja de comentario para la nueva observación con clase "comentario-box" -->
               <div class="comentario-box mt-2">
                 <mat-form-field appearance="outline" class="ancho-completo">
                   <mat-label>Escribe una observación...</mat-label>
                   <textarea matInput [(ngModel)]="nuevaObservacion" class="nueva-observacion"></textarea>
                 </mat-form-field>
               </div>
-
-              <!-- Botón para guardar la nueva observación -->
-
               <button mat-raised-button class="botonprimario  m-2" (click)="guardarObservacion()" aria-label="Añadir una Nueva Observación">Guardar Nueva Observación</button>
               <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
-
             </mat-tab>
-
-
-
-
           </mat-tab-group>
-
-
-
            </div>
           </div>
         </div>

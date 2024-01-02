@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CerrarSesionComponent } from '../../shared/cerrar-sesion/cerrar-sesion.component';
 import { MatDialog } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-sidebar-r',
   templateUrl: './sidebar-r.component.html',
@@ -14,12 +13,8 @@ export class SidebarRComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private cookieService: CookieService){}
-
   ngOnInit(): void {
-
   }
-
-  
     openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
       this.dialog.open(CerrarSesionComponent, {
         width: '250px',
@@ -27,6 +22,5 @@ export class SidebarRComponent implements OnInit {
         exitAnimationDuration,
       });
     }
-  
   }
    

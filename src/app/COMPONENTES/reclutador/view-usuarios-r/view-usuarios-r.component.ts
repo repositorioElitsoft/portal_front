@@ -12,7 +12,6 @@ import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
@@ -24,33 +23,20 @@ import { forkJoin } from 'rxjs';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
-import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
-import { Dialog } from '@angular/cdk/dialog';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef } from '@angular/core';
-import { NumberValueAccessor } from '@angular/forms';
-import { UserGuard } from 'src/app/core/guards/user.guard';
 import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
 import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
 import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
-import { MatSliderModule } from '@angular/material/slider';
-
-
-
-
 const ELEMENT_DATA: Usuario[] = [];
-
-
 @Component({
   selector: 'app-view-usuarios-r',
   templateUrl: './view-usuarios-r.component.html',
   styleUrls: ['./view-usuarios-r.component.css'],
 })
-
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -93,11 +79,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     { value: [40, 69], label: '40% - 69%' }
   ];
   selectedPorcentajeAprobacion: any;
-
-
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
@@ -107,37 +90,23 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
-    private laboralService: LaboralService,
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
-    private _snackBar: MatSnackBar,
-    private httpClient: HttpClient,
     private nivelService: NivelService,
     private cargosElitsoftService: CargosElitsoftService,
-
     private cargoService: CargosUsuarioService
-
   ) {
     this.selectedCheckbox = this.fb.group({
     });
   }
-
-
-
   ngOnInit(): void {
-
-
-
-
     this.obtenerResultados();
     this.obtenerUsuarios();
     this.getCategories();
     this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
     this.getCargosElitsoft();
-
   }
-
   getCargosElitsoft() {
     this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
       (data: CargosElitsoft[]) => {
@@ -148,13 +117,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   toggleSueldoSlider() {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
-
-
   obtenerResultados() {
     this.usuarioService.obtenerResultados().subscribe(
       (data) => {
         this.resultados = data;
-        console.log('Data:',data);
         this.filterData();
       },
       (error) => {
@@ -162,35 +128,24 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       }
     );
   }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
-
-
   filterData() {
     let filteredArray = this.originalDataCopy;
-
-    // Filtro por rango de sueldos
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
       return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
-        const sueldo = cargo.crg_usr_pret; // Asume que 'crg_usr_pret' es el sueldo pretendido por el usuario
+        const sueldo = cargo.crg_usr_pret; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
-
-    // Filtro por cargo
     if (this.selectedCargo > 0) {
       filteredArray = filteredArray.filter(usuario => {
         return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
       });
     }
-
-    //filtro por fecha postulacion
-
 if (this.selectedfechaPostulacion) {
   console.log("seleccioné fecha");
   // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
