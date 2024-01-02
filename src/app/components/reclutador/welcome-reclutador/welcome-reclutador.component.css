@@ -1,32 +1,27 @@
-/* Estilos generales */
 body {
-  background-color: #f5f5f5; /* Color de fondo gris claro */
+  background-color: #f5f5f5;
   margin: 0;
   padding: 0;
 }
-
-/* Estilos para el contenedor del perfil */
 .profile-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh; /* Ocupa el 100% del alto de la pantalla */
-  background-color: #f5f5f5; /* Color de fondo gris claro */
+  min-height: 80vh; 
+  background-color: #f5f5f5;
   border: 1px solid #F57C27;
   border-radius: 10px;
 }
-
 .profile-box {
-  padding: 20px; /* Incrementamos el espacio de relleno para una mejor presentación */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  width: 80%; /* Ajustar el ancho según sea necesario */
-  background-color: #fff; /* Color de fondo blanco */
-  color: #333; /* Color de texto principal */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 80%; 
+  background-color: #fff;
+  color: #333; 
   border: 1px solid #F57C27;
-  background-color: #f5f5f5; /* Cambiar el color de fondo si es necesario */
+  background-color: #f5f5f5;
   animation: fadeInUp 1s ease-out;
-
 }
 
 @keyframes fadeInUp {

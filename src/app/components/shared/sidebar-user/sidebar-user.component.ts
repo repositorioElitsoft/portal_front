@@ -6,7 +6,7 @@ import { LoginService } from 'src/app/service/login.service';
 import { MatDialog } from '@angular/material/dialog';  // Importar correctamente MatDialog
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component';
+import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
 
 
 @Component({

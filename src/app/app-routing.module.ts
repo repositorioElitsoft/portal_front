@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { RegistrarComponent } from './components/shared/registrar/registrar.component';
-import { IniciarSesionComponent } from './components/shared/iniciar-sesion/iniciar-sesion.component';
+import { RegistrarComponent } from './components/register/registrar/registrar.component';
+import { IniciarSesionComponent } from './components/login/iniciar-sesion/iniciar-sesion.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { WelcomeAdminComponent } from './components/admin/welcome-admin/welcome-admin.component';
 import { ProfileAdminComponent } from './components/admin/profile-admin/profile-admin.component';
@@ -26,9 +26,9 @@ import { InformacionAcademicaComponent } from './components/user/informacion-aca
 import { InformacionLaboralComponent } from './components/user/informacion-laboral/informacion-laboral.component';
 import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usuario.component';
 import { AuthGuard } from './core/guards/auth.guard';
-import { ValidarMailComponent } from './components/shared/validar-mail/validar-mail.component';
-import { PeticionRestaurarPassComponent } from './components/shared/peticion-restaurar-pass/peticion-restaurar-pass.component';
-import { RestaurarPassComponent } from './components/shared/restaurar-pass/restaurar-pass.component';
+import { ValidarMailComponent } from './components/register/validar-mail/validar-mail.component';
+import { PeticionRestaurarPassComponent } from './components/register/peticion-restaurar-pass/peticion-restaurar-pass.component';
+import { RestaurarPassComponent } from './components/register/restaurar-pass/restaurar-pass.component';
 import { UserDashboardComponent } from './components/user/user-dashboard/user-dashboard.component';
 import { LoadExamenComponent } from './components/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './components/user/instrucciones/instrucciones.component';

@@ -170,11 +170,8 @@ if (this.selectedfechaPostulacion) {
        console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
        console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
        return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
-
       }
-
       return false;
-
   });
 
   // Imprimir el array de cargos filtrados
@@ -226,8 +223,6 @@ if (this.selectedfechaPostulacion) {
     }
   );
 }
-
-
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
       filteredArray = filteredArray.filter(resultados => {
@@ -243,8 +238,6 @@ if (this.selectedfechaPostulacion) {
         });
       });
     }
-
-
     // Filtro por porcentaje de aprobación
     if (this.selectedPorcentajeAprobacion) {
       filteredArray = filteredArray.filter(usuario => {
@@ -252,19 +245,14 @@ if (this.selectedfechaPostulacion) {
           return resultado.usuarioId === usuario.usr_id;
 
         });
-
         const resultadoFinal = resultadosDeUsuario.find(resultado =>{
-
           const resultadoExamen = resultado.resultadosExamen;
           const puntosMaximos = resultado.examen.puntosMaximos;
           const nivelDificultad = resultado.examen.nivelDificultad;
           const productos = resultado.examen.productos;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
-
-
           // Verifica si el usuario cumple con los filtros anteriores
           const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
-
           // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
           if (cumpleFiltrosAnteriores) {
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
@@ -283,19 +271,10 @@ if (this.selectedfechaPostulacion) {
         console.log("resultado final",resultadoFinal);
         if (resultadoFinal){
           return true;
-
         }
         return false;
-
         })
-
-
     }
-
-
-
-
-
     //Filtro
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
@@ -313,8 +292,6 @@ if (this.selectedfechaPostulacion) {
         });
       });
     }
-
-    // Filtro por rango de años de experiencia solo si se ha seleccionado una versión
     if (this.selectedVersion > 0) {
       const [min, max] = this.selectedAniosExpRange;
       filteredArray = filteredArray.filter(element => {
@@ -322,13 +299,11 @@ if (this.selectedfechaPostulacion) {
         return anosExp.some(anos => anos >= min && anos <= max);
       });
     }
-
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
 
     this.dataSource.data = filteredArray;
   }
-
   filterByCargo() {
     let filteredArray = this.originalDataCopy;
 
@@ -340,22 +315,16 @@ if (this.selectedfechaPostulacion) {
         )
       );
     }
-
     this.dataSource.data = filteredArray;
     console.log('Usuarios filtrados', filteredArray);
   }
-
-
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
       this.lastYears = 0;
     }
-
     this.filterData();
   }
-
   onLast5YearsChange() {
-
     this.filterData();
   }
 

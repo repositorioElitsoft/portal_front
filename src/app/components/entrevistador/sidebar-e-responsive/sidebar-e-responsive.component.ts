@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/service/login.service';
-import { CerrarSesionComponent } from '../../shared/cerrar-sesion/cerrar-sesion.component';
+import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
 
 @Component({
   selector: 'app-sidebar-e-responsive',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { CerrarSesionComponent } from '../../shared/cerrar-sesion/cerrar-sesion.component';
+import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-sidebar-r',

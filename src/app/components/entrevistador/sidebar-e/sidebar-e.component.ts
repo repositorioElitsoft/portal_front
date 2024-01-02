@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CerrarSesionComponent } from '../../shared/cerrar-sesion/cerrar-sesion.component';
+import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';

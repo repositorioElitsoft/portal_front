@@ -7,56 +7,44 @@
   border-radius: 10px;
   border: 1px solid #F57C27!important;
 }
-
 .dashboard-panel:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-
 mat-toolbar {
   margin-bottom: 20px;
   background-color: transparent;
 }
-
-
 .filter-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: space-between;
 }
-
 .filter-input, .filter-select, .filter-slider {
-  flex: 1 1 200px; /* Cada filtro tomará un mínimo de 200px y crecerá igualmente */
+  flex: 1 1 200px;
   display: flex;
   flex-direction: column;
 }
-
 .filter-slider {
-  align-items: center; /* Centrar slider horizontalmente */
+  align-items: center;
 }
-
 .filter-slider mat-slider {
-  width: 100%; /* Asegurarse de que el slider ocupa todo el espacio disponible */
+  width: 100%; 
 }
-
-/* Ajustes para checkboxes y campos de número */
 .filter-checkbox, .filter-number {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Estilos para los botones */
 button.mat-raised-button {
   font-size: 0.9rem;
   font-weight: 500;
 }
 
-/* Estilos para los iconos dentro de los botones */
 button.mat-raised-button mat-icon {
   margin-right: 8px;
 }
-
 .send-email-button{
   position: fixed;
   top: 90%;
@@ -72,7 +60,7 @@ button.mat-raised-button mat-icon {
 }
 .custom-range {
   position: absolute;
-  top: -10px; /* Ajusta la posición vertical según tus necesidades */
+  top: -10px;
   left: 0;
   right: 50;
   margin: auto;

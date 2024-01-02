@@ -6,7 +6,7 @@ import { LoginService } from 'src/app/service/login.service';
 import { MatDialog } from '@angular/material/dialog';  //
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { CerrarSesionComponent } from '../cerrar-sesion/cerrar-sesion.component';
+import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
 
 @Component({
   selector: 'app-app-sidebar2',
