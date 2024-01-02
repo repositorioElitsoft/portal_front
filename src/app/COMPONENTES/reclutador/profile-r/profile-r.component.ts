@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-
 @Component({
   selector: 'app-profile-r',
   templateUrl: './profile-r.component.html',
@@ -27,7 +26,6 @@ export class ProfileRComponent implements OnInit {
     cargoUsuario: [],
   };
   router: any;
-
   constructor(
     private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
@@ -35,7 +33,6 @@ export class ProfileRComponent implements OnInit {
   ) {
     this.buildForm();
   }
-
   private buildForm() {
     this.form = this.formBuilder.group({
       usr_nom: ["", [Validators.required]],
@@ -44,14 +41,10 @@ export class ProfileRComponent implements OnInit {
       usr_email: [""],
     });
   }
-
   ngOnInit(): void {
     this.ObtenerUsuarioGuardado();
-    console.log('el usuario guardado xD')
-    console.log(this.ObtenerUsuarioGuardado());
     this.form.disable();
   }
-
   ObtenerUsuarioGuardado() {
     this.usuarioService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
@@ -78,7 +71,6 @@ export class ProfileRComponent implements OnInit {
       }
     });
   }
-
   toggleEditable() {
     this.editable = !this.editable;
     if (this.editable) {
@@ -87,13 +79,9 @@ export class ProfileRComponent implements OnInit {
       this.form.disable();
     }
   }
-
-
-
   async submitForm(event: Event) {
     event.preventDefault();
     const user: Usuario = this.form.value;
-    // Guardar los cambios en el servicio
     try {
       await this.usuarioService.updateUsuario(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
@@ -102,13 +90,9 @@ export class ProfileRComponent implements OnInit {
         "Datos actualizados correctamente"
       );
       if (isConfirmed) {
-        // Redirigir a la página anterior u otra acción
-        this.toggleEditable(); // Vuelve a deshabilitar la edición
+        this.toggleEditable(); 
       }
     } catch (error) {
-      // Manejar errores
     }
   }
-
-
   }
