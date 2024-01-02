@@ -16,11 +16,7 @@ import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
 
 
 export class EditPerfilUsuarioRComponent implements OnInit {
-
-//  @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
-
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
-
   userDataForm: FormGroup;
   usrId:number | null = null
   usuario: UserEditarDTO2 = {
@@ -33,10 +29,7 @@ export class EditPerfilUsuarioRComponent implements OnInit {
     usr_pass:'',
     usr_rol:'',
     usr_direcc: ''
-
   }
-
-   
   constructor( private usuarioService:UsuarioService,
     private router:Router,
     private formBuilder: FormBuilder,
@@ -46,7 +39,6 @@ export class EditPerfilUsuarioRComponent implements OnInit {
     private dialogRef: MatDialogRef<ViewUsuariosRComponent>,
     private dialog: MatDialog,
     private _snackBar: MatSnackBar) {
-
     this.userDataForm = this.formBuilder.group({
       usr_nom: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
       usr_ap_pat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
@@ -59,11 +51,9 @@ export class EditPerfilUsuarioRComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Asegúrate de que this.data existe y tiene una propiedad usuarioId
     this.usrId = this.data ? this.data.usuarioId : null;
   
     if (this.usrId) {
-      // Caso para editar un usuario existente
       console.log('existo');
       this.usuarioService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
@@ -79,16 +69,9 @@ export class EditPerfilUsuarioRComponent implements OnInit {
         }
       });
     } else {
-      // Caso para agregar un nuevo usuario
-      // Aquí puedes inicializar el formulario para un nuevo usuario
-      // por ejemplo, con valores por defecto o vacíos
+
       this.userDataForm.reset();
-      // Otros ajustes para el caso de un nuevo usuario
-    }
-
-
-
-    
+    }    
   }
   guardarUsuario() {
     if (this.userDataForm.invalid) {
