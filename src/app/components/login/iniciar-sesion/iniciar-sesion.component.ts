@@ -39,10 +39,7 @@ export class IniciarSesionComponent implements OnInit {
         this.cookieService.set('token', token.Authorization);
         const tokenDecode = jwtDecode(this.authService.getToken());
         this.authService.currentUser = tokenDecode;
-        const userRole = this.authService.currentUser.roles;
-
-        //Token viene como string literal "[2,3,4]"", aquí se convierte a array
-        const userRoles = this.removeFirstAndLastCharacter(token.roles).replace(/\s/g, "").split(",");
+        const userRoles = this.authService.currentUser.authorities;
 
         console.log("User roles: ", userRoles)
 
