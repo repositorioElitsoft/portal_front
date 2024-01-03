@@ -3,17 +3,12 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, map, of, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ValidarMailService {
-
   readonly url = `${environment.URL_HOST}/usuarios/verificar/`
-
   constructor(private http: HttpClient,private route: ActivatedRoute,) {  }
-
-
   verificarEmail(): Observable<any> {
     return this.route.queryParamMap.pipe(
       map(params => params.get("code")),
@@ -21,7 +16,6 @@ export class ValidarMailService {
         if (cod) {
           return this.http.post(this.url, { code: cod });
         } else {
-          // Handle the case where 'code' is not available, e.g., return an error or a default value.
           return of('Code not available');
         }
       })

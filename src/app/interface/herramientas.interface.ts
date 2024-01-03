@@ -1,5 +1,4 @@
 import { Producto } from "../interface/producto.interface";
-
 export interface Herramientas {
     herr_usr_id?: number;
     herr_usr_anos_exp: string;

@@ -3,5 +3,4 @@ export interface CategoriaExamen{
     titulo:string,
     descripcion:string
 }
-
 export type CategoriaExamenCreateDTO = Omit<CategoriaExamen, 'categoriaId'>;
