@@ -1,5 +1,4 @@
 import { ReferenciaAcademica } from "./referencia-academica.interface";
-
 export interface Academica {
 id: number;
     inf_acad_id?:number,

@@ -1,17 +1,11 @@
 #main-header {
-  /*background: #FF5F6D;  /* fallback for old browsers */
-  /*background: -webkit-linear-gradient(to right, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
-  /*background: linear-gradient(to right, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   height: 70px;
-  width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-  left: 0; /* Posicionamos la cabecera al lado izquierdo */
+  width: 100%;
+  left: 0; 
   top: 0;
-  font-family:  'Anek Devanagari', sans-serif;/* Posicionamos la cabecera pegada arriba */
-  position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-
-
+  font-family:  'Anek Devanagari', sans-serif;
+  position: fixed;
 }
-
 .content {
   visibility: hidden;
 }

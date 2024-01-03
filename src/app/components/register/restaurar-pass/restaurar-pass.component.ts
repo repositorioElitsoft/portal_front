@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Register } from 'src/app/interface/register.interface';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
@@ -13,7 +12,6 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 })
 export class RestaurarPassComponent {
   registroForm: FormGroup;
-
   constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
       usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -23,8 +21,6 @@ export class RestaurarPassComponent {
 
   onSubmit() {
     if (this.registroForm.valid) {
-
-
       this.usuarioService.cambiarPassword(this.registroForm.get('usr_pass')?.value).subscribe(
         async (res) => {
           try{
@@ -42,7 +38,6 @@ export class RestaurarPassComponent {
           } catch (error) {
     
           }
-      
         },
         () => this.notification.showNotification(
           'error',

@@ -9,10 +9,8 @@ import { ViewCategoriasComponent } from './components/admin/view-categorias/view
 import { AddCategoriaComponent } from './components/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './components/admin/view-examenes/view-examenes.component';
 import { AddExamenComponent } from './components/admin/add-examen/add-examen.component';
-
 import { ViewExamenPreguntasComponent } from './components/admin/view-examen-preguntas/view-examen-preguntas.component';
 import { AddPreguntaComponent } from './components/admin/add-pregunta/add-pregunta.component';
-
 import { ViewUsuariosComponent } from './components/admin/view-usuarios/view-usuarios.component';
 import { ViewPerfilUsuarioComponent } from './components/admin/view-perfil-usuario/view-perfil-usuario.component';
 import { DashboardRComponent } from './components/reclutador/dashboard-r/dashboard-r.component';
@@ -34,7 +32,6 @@ import { LoadExamenComponent } from './components/user/load-examen/load-examen.c
 import { InstruccionesComponent } from './components/user/instrucciones/instrucciones.component';
 import { StartComponent } from './components/user/start/start.component';
 import { AddUsuariosComponent } from './components/admin/add-usuarios/add-usuarios.component';
-
 import { EstadisticasComponent } from './components/reclutador/estadisticas/estadisticas.component';
 import { DashboardEComponent } from './components/entrevistador/dashboard-e/dashboard-e.component';
 import { WelcomeEntrevistadorComponent } from './components/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
