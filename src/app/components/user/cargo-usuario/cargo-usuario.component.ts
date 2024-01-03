@@ -16,10 +16,7 @@ import Swal from 'sweetalert2';
 export class CargoUsuarioComponent implements OnInit {
   form!: FormGroup;
   cargosElitsoft: CargosElitsoft[] = [];
-
   selectedCargoElitsoft:number | undefined;
-
-
   private buildForm(){
     this.form = this.formBuilder.group({
       crg_usr_pret: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
@@ -30,7 +27,6 @@ export class CargoUsuarioComponent implements OnInit {
       otro_tiempo_incorporacion: [""],
     });
   }
-
   constructor(
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
@@ -41,22 +37,17 @@ export class CargoUsuarioComponent implements OnInit {
     private route: ActivatedRoute ) {
       this.buildForm();
     }
-
   ngOnInit(): void {
     this.getCargoUsuairo();
     this.obtenerCargosElitsoft();
   }
-
   navigateToRoute(route: string) {
-    // Navegamos a la ruta proporcionada
     this.router.navigate([route]);
   }
-
   obtenerCargosElitsoft() {
     this.cargoselitsoftService.obtenerListaCargosElitsoft().subscribe(
       (data: CargosElitsoft[]) => {
         this.cargosElitsoft = data;
-        console.log('Cargos cargados:', this.cargosElitsoft);
       },
       (error) => {
         console.log('Error al obtener niveles:', error);
@@ -66,7 +57,6 @@ export class CargoUsuarioComponent implements OnInit {
   getCargoUsuairo() {
     this.cargosusuarioService.getCargosByUserId().subscribe(
       (data: CargoUsuario) => {
-
         this.form.patchValue(
           {
             crg_usr_pret: data.crg_usr_pret,
@@ -80,14 +70,9 @@ export class CargoUsuarioComponent implements OnInit {
       }
     );
   }
-
   successMessage() {
     const newCargo: CargoUsuario = this.form.value;
-
-    // Supongamos que usuarioId está disponible en tu newCargo
     const usuarioId = newCargo.usuarioId;
-
-    // Mostrar SweetAlert personalizado
     Swal.fire({
       icon: 'success',
       title: 'Datos enviados exitosamente',
@@ -95,51 +80,30 @@ export class CargoUsuarioComponent implements OnInit {
       cancelButtonColor: '#515151',
       confirmButtonColor: '#F57C27',
       customClass: {
-        popup: 'custom-border' // Aplica la clase al cuadro de diálogo
+        popup: 'custom-border' 
       }
     });
   }
-
-
-
-
-
-
   submitForm(event: Event){
     event.preventDefault();
-
   const pretensionRentaFormatted = this.form.get('crg_usr_pret')?.value;
   const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
-
   this.form.get('crg_usr_pret')?.setValue(pretensionRentaWithoutFormat);
-
-
   const newCargo: CargoUsuario = this.form.value;
-
   if (newCargo.tiempo_incorporacion !== 'otro') {
-
     newCargo.otro_tiempo_incorporacion = '';
-
-
   }
-
   newCargo.cargoElitsoft = {
     crg_elit_id: this.form.value.crg_elit_id,
   }
-
-  console.log(newCargo)
-
-
   this.cargosusuarioService.guardarCargo(newCargo).subscribe(
     (nuevoCargo: CargoUsuario) => {
-      console.log('Cargo guardado exitosamente:', nuevoCargo);
     },
     (error) => {
       console.log('Error al guardar herramienta:', error);
     }
   );
   }
-
   formatCurrency() {
     const control = this.form.get('crg_usr_pret');
     if (control && control.value) {
