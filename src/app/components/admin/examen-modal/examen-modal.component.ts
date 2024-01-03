@@ -44,7 +44,7 @@ export class ExamenModalComponent implements OnInit {
       nivelDificultad: ['', Validators.required],
     });
     this.productos.push(this.formBuilder.group({
-      prd_id: ['',Validators.required]}));
+      id: ['',Validators.required]}));
     if (examen) {
       this.examenForm.patchValue(examen)
       examen.preguntas.forEach((pregunta: any) => {
@@ -141,7 +141,7 @@ export class ExamenModalComponent implements OnInit {
       next: (data?) => {
         if (data) {
           this.productosDisponibles = data.slice().sort((a, b) => {
-            return a.prd_nom.localeCompare(b.prd_nom);
+            return a.name.localeCompare(b.name);
           });
         } else {
         }

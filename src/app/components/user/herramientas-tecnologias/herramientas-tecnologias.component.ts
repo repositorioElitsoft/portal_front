@@ -6,7 +6,7 @@ import { HerramientasService } from 'src/app/service/herramientas.service';
 import { NivelService } from 'src/app/service/nivel.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { Certificacion } from 'src/app/interface/certificacion.interface';
 import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Niveles } from 'src/app/interface/niveles.interface';
@@ -26,7 +26,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
   selectedProductoId: number | undefined;
   selectedCertificadoId: number | undefined;
   selectedNivelId: number | undefined;
-  categorias: CategoriaProducto[] = [];
+  categorias: ProductCategory[] = [];
   productos: Producto[] = [];
   certificados: Certificacion[] = [];
   niveles: Niveles[] = [];
@@ -56,7 +56,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
     }
     obtenerCategorias() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-        (data: CategoriaProducto[]) => {
+        (data: ProductCategory[]) => {
           this.categorias = data;
         },
         (error) => {
@@ -79,6 +79,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
         }
       );
     }
+
     obtenerCertificaciones() {
       this.certificacionService.obtenerTodosLosCertificados().subscribe(
         (data: Certificacion[]) => {
@@ -131,7 +132,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
       return;
     }
     this.herramienta.cat_prod_id = this.selectedCategoriaId;
-    this.herramienta.prd_id = this.selectedProductoId;
+    this.herramienta.id = this.selectedProductoId;
     this.herramienta.cert_id = this.selectedCertificadoId;
     this.herramienta.nvl_id = this.selectedNivelId;
   }

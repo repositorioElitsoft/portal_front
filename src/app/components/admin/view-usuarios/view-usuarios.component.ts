@@ -8,7 +8,7 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { Usuario } from 'src/app/interface/user.interface';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
 import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/advertencia-eliminar.component";
@@ -29,7 +29,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Usuario[] = [];
-  categorias: CategoriaProducto[] = [];
+  categorias: ProductCategory[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
 

@@ -7,7 +7,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort} from '@angular/material/sort';
 import { Usuario} from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
@@ -45,7 +45,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filtroCargo: string = '';
   originalDataCopy: Usuario[] = [];
   usuarios: any[] = [];
-  categorias: CategoriaProducto[] = [];
+  categorias: ProductCategory[] = [];
   productos: Producto[] = [];
   niveles : Niveles []=[];
   versiones: VersionProducto[] = [];
@@ -113,6 +113,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         this.cargos = data;
       }
     )
+    
   }
   toggleSueldoSlider() {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
@@ -188,9 +189,9 @@ if (this.selectedfechaPostulacion) {
 
     // Filtro por producto
     if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
+      const selectedProduct = this.productos.find(producto => producto.id === this.selectedProducto);
       if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
+        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.name));
       }
     }
 
@@ -234,7 +235,7 @@ if (this.selectedfechaPostulacion) {
           console.log('nivel seleccionado:', this.selectedNivel);
           console.log('Productos:', productos);
           console.log('Producto seleccionado:', this.selectedProducto);
-          return productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+          return productos.length > 0 && productos[0].id === this.selectedProducto && nivelDificultad === this.selectedNivel;
         });
       });
     }
@@ -252,7 +253,7 @@ if (this.selectedfechaPostulacion) {
           const productos = resultado.examen.productos;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
           // Verifica si el usuario cumple con los filtros anteriores
-          const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+          const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].id === this.selectedProducto && nivelDificultad === this.selectedNivel;
           // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
           if (cumpleFiltrosAnteriores) {
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
@@ -280,7 +281,7 @@ if (this.selectedfechaPostulacion) {
       filteredArray = filteredArray.filter((usuario) => {
         return usuario.laborales?.some((experiencia) => {
           return experiencia.herramientas?.some((herramienta: any) => {
-            const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
+            const herramientaExperiencia = herramienta.versionProducto?.prd?.id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
               const fechaFin = new Date(experiencia.inf_lab_fec_fin);
               const currentYear = new Date().getFullYear();
@@ -421,7 +422,7 @@ obtenerUsuarios(): void {
           usr_direcc: usuario.usr_direcc || '',
           usr_herr: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+            .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.name)
             .join(', '),
           herr_ver: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
@@ -506,7 +507,7 @@ obtenerUsuarios(): void {
 
   getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-      (data: CategoriaProducto[]) => {
+      (data: ProductCategory[]) => {
         this.categorias = data;
       },
       () => {
@@ -575,7 +576,7 @@ obtenerUsuarios(): void {
           this.versiones = [];
           this.originalDataCopy = this.dataSource.data;
           this.filterProducto();
-          this.selectedProductoNombre = this.productos.find((producto) => producto.prd_id === this.selectedProducto)?.prd_nom;
+          this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
           this.getVersion(this.selectedProducto);
         },
         (error) => {

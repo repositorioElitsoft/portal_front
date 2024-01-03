@@ -7,14 +7,14 @@
                     <label class="form-label" for="categoria">Categoría</label>
                     <select class="form-control" id="categoria" formControlName="herr_cat_name" (change)="getProducts(i)" name="categoria">
                         <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</option>
+                        <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.name}}</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="producto">Producto</label>
                     <select class="form-control" id="producto" formControlName="herr_prd_name" name="producto" (change)="getVersion(i)">
                         <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let producto of productByRow[i]" [value]="producto.prd_id">{{ producto.prd_nom }}</option>
+                        <option *ngFor="let producto of productByRow[i]" [value]="producto.id">{{ producto.name }}</option>
                         <option value="otro">Otro</option>
                     </select>
                     <input type="text" *ngIf="row.get('herr_prd_name')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="herr_prd_otro">

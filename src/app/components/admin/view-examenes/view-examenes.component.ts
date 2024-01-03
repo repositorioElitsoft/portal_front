@@ -5,7 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { Examen } from 'src/app/interface/examen.interface';
 import { Usuario } from 'src/app/interface/user.interface';
 import { ExamenService } from 'src/app/service/examen.service';
@@ -24,7 +24,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
   filtro: string = '';
   originalDataCopy: Examen[] = [];
   usuarios: Usuario[] = [];
-  categorias: CategoriaProducto[] = [];
+  categorias: ProductCategory[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   selectedProductoNombre: string | undefined = "";
   inputContent: boolean = false;

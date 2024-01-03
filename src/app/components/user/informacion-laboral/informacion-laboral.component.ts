@@ -212,11 +212,11 @@ export class InformacionLaboralComponent implements OnInit {
             vrs_id: 0,
             vrs_name: "",
             prd: {
-              prd_id:0,
-              prd_nom:"",
-              cat_prod_id:{
-                cat_prod_id: 0,
-                cat_prod_nom: ""
+              id:0,
+              name:"",
+              productCategory:{
+                id: 0,
+                name: ""
               }
             }
           }
