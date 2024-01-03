@@ -13,6 +13,7 @@ export class AuthService {
   isAuthenticatedUser() {
     if (this.getToken()) {
       const token = jwtDecode(this.getToken());
+      console.log("current user from token:", token)
       this.currentUser = token;
       return true
     }

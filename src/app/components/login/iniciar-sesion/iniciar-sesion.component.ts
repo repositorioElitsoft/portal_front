@@ -39,17 +39,21 @@ export class IniciarSesionComponent implements OnInit {
         this.cookieService.set('token', token.Authorization);
         const tokenDecode = jwtDecode(this.authService.getToken());
         this.authService.currentUser = tokenDecode;
-        const userRole = this.authService.currentUser.roles;
-        if ( userRole === 'ROLE_ADMIN' ) {
+        const userRoles = this.authService.currentUser.authorities;
+
+        console.log("User roles: ", userRoles)
+
+        if ( userRoles.includes('ROLE_ADMIN')) {
           this.router.navigate(['/admin/welcome-admin']);
         }
-        else if ( userRole === 'ROLE_REC' ) {
+        else if ( userRoles.includes('ROLE_REC'))  {
           this.router.navigate(['/reclutador/welcome-reclutador']);
         }
-        else if ( userRole === 'ROLE_ENTR' ) {
+        else if ( userRoles.includes('ROLE_ENTR'))  {
           this.router.navigate(['/entrevistador/welcome-entrevistador']);
         }
-        else {
+        else if ( userRoles.includes('ROLE_GUEST'))  {
+          console.log("it's included")
           this.router.navigate(['/user/datos_personales']);
         }
       },
@@ -59,4 +63,11 @@ export class IniciarSesionComponent implements OnInit {
       }
     );
   }
+
+  removeFirstAndLastCharacter(token: String) {
+    if (typeof token !== 'string' || token.length < 2) {
+        return token;
+    }
+    return token.substring(1, token.length - 1);
+}
 }
