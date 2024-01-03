@@ -1,4 +1,3 @@
-
 <mat-card class="container-bg">
   <mat-card class="navbar navbar-expand" style="border-radius: 0;">
     <div class="container">
@@ -14,42 +13,31 @@
     </div>
   </mat-card>
 <div class="container mt-5">
-    <!-- Aquí sigue el formulario de inicio de sesión -->
     <div class="row justify-content-center">
       <div class="col-md-6">
         <mat-card class="card">
-          <div class="card-header">
-            
+          <div class="card-header">           
             <h3>Iniciar Sesión</h3>
           </div>
           <div class="card-body">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-              <!-- Campos del formulario -->
               <div class="form-group">
                 <label for="email">Correo electrónico:</label>
                 <input type="email" class="form-control" id="email" formControlName="email"
-                 [(ngModel)]="email" name="email" required
-                 [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
-                 
-                 >
+                [(ngModel)]="email" name="email" required
+                [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}"
+                >
               </div>
               <div class="form-group">
                 <label for="password">Contraseña:</label>
                 <input type="password" class="form-control" id="usr_pass"
-                 [(ngModel)]="usr_pass" name="usr_pass" formControlName="password" required
-                 [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
-                 >
+                [(ngModel)]="usr_pass" name="usr_pass" formControlName="password" required
+                [ngClass]="{'is-invalid': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}"
+                >
               </div>
-              <!-- Botón de inicio de sesión -->
               <button mat-raised-button class="botonprimario mt-3"  type="submit">Iniciar Sesión</button>
-              <div *ngIf="error" class="error">{{ error }}</div>
-
-       
-
-		     <!--  <button type="submit"  onclick="limpiarCampos()">Limpiar</button> -->
-            
+              <div *ngIf="error" class="error">{{ error }}</div>           
             </form>
-            <!-- Mostrar mensaje de error si el inicio de sesión falló -->
             <div *ngIf="inicioSesionFallido" class="alert alert-danger mt-3">
               Usuario o contraseña incorrectos. Por favor, inténtalo de nuevo.
             </div>
@@ -59,7 +47,7 @@
                     document.getElementById("usr_email").value = "";
                 }
             </script>
-           <div class="d-flex justify-content-center align-items-center">
+          <div class="d-flex justify-content-center align-items-center">
             <a class="nav-link2 " routerLink="/registrar" routerLinkActive="active">Si tiene una cuenta, registrese aquí</a>     
             <br>  
           </div>

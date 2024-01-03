@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { LoginService } from 'src/app/service/login.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
-import { AuthService } from 'src/app/service/auth.service';
 import jwtDecode from 'jwt-decode';
+import { LoginService } from 'src/app/service/login.service';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -23,7 +22,6 @@ export class IniciarSesionComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService,
-    private usuarioService: UsuarioService,
     private cookieService: CookieService,
     private authService: AuthService
     )
@@ -42,7 +40,6 @@ export class IniciarSesionComponent implements OnInit {
         const tokenDecode = jwtDecode(this.authService.getToken());
         this.authService.currentUser = tokenDecode;
         const userRole = this.authService.currentUser.roles;
-        console.log(`userRole: ${userRole}`);
         if ( userRole === 'ROLE_ADMIN' ) {
           this.router.navigate(['/admin/welcome-admin']);
         }
@@ -60,7 +57,6 @@ export class IniciarSesionComponent implements OnInit {
         console.log(`Error: ${e}`);
         this.inicioSesionFallido = true
       }
-
     );
   }
 }
