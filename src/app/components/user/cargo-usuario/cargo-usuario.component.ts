@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
+import { JobPositionService } from 'src/app/service/jobposition.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/service/notification.service';
@@ -15,8 +15,8 @@ import Swal from 'sweetalert2';
 })
 export class CargoUsuarioComponent implements OnInit {
   form!: FormGroup;
-  cargosElitsoft: CargosElitsoft[] = [];
-  selectedCargoElitsoft:number | undefined;
+  JobPosition: JobPosition[] = [];
+  selectedjobPosition:number | undefined;
   private buildForm(){
     this.form = this.formBuilder.group({
       crg_usr_pret: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
@@ -31,7 +31,7 @@ export class CargoUsuarioComponent implements OnInit {
     private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private cargosusuarioService:CargosUsuarioService,
-    private cargoselitsoftService:CargosElitsoftService,
+    private JobPositionService:JobPositionService,
     private notification: NotificationService,
     private router: Router,
     private route: ActivatedRoute ) {
@@ -39,15 +39,15 @@ export class CargoUsuarioComponent implements OnInit {
     }
   ngOnInit(): void {
     this.getCargoUsuairo();
-    this.obtenerCargosElitsoft();
+    this.obtenerJobPosition();
   }
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
-  obtenerCargosElitsoft() {
-    this.cargoselitsoftService.obtenerListaCargosElitsoft().subscribe(
-      (data: CargosElitsoft[]) => {
-        this.cargosElitsoft = data;
+  obtenerJobPosition() {
+    this.JobPositionService.obtenerListaJobPosition().subscribe(
+      (data: JobPosition[]) => {
+        this.JobPosition = data;
       },
       (error) => {
         console.log('Error al obtener niveles:', error);
@@ -61,7 +61,7 @@ export class CargoUsuarioComponent implements OnInit {
           {
             crg_usr_pret: data.crg_usr_pret,
             crg_prf: data.crg_prf,
-            crg_elit_id: data.cargoElitsoft?.crg_elit_id,
+            crg_elit_id: data.jobPosition?.id,
             disponibilidad:data.disponibilidad,
             tiempo_incorporacion:data.tiempo_incorporacion,
             otro_tiempo_incorporacion: data.otro_tiempo_incorporacion,
@@ -93,8 +93,8 @@ export class CargoUsuarioComponent implements OnInit {
   if (newCargo.tiempo_incorporacion !== 'otro') {
     newCargo.otro_tiempo_incorporacion = '';
   }
-  newCargo.cargoElitsoft = {
-    crg_elit_id: this.form.value.crg_elit_id,
+  newCargo.jobPosition = {
+    id: this.form.value.crg_elit_id,
   }
   this.cargosusuarioService.guardarCargo(newCargo).subscribe(
     (nuevoCargo: CargoUsuario) => {

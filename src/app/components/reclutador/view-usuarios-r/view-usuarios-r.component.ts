@@ -29,8 +29,8 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import { HttpClient } from '@angular/common/http';
 import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
-import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
-import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { JobPositionService } from 'src/app/service/jobposition.service';
+import { JobPosition } from 'src/app/interface/jobposition.interface';
 const ELEMENT_DATA: Usuario[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -64,7 +64,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   inputContent: boolean = false;
   lastYears: number = 0;
   resultadosExam: any[]=[];
-  cargos: CargosElitsoft[] = [];
+  cargos: JobPosition[] = [];
   idUser:number = 0;
   filterCargo: string = '';
   resultados: any[] = [];
@@ -93,7 +93,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
-    private cargosElitsoftService: CargosElitsoftService,
+    private JobPositionService: JobPositionService,
     private cargoService: CargosUsuarioService
   ) {
     this.selectedCheckbox = this.fb.group({
@@ -105,11 +105,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.getCategories();
     this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
-    this.getCargosElitsoft();
+    this.getJobPosition();
   }
-  getCargosElitsoft() {
-    this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
-      (data: CargosElitsoft[]) => {
+  getJobPosition() {
+    this.JobPositionService.obtenerListaJobPosition().subscribe(
+      (data: JobPosition[]) => {
         this.cargos = data;
       }
     )
@@ -143,7 +143,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     });
     if (this.selectedCargo > 0) {
       filteredArray = filteredArray.filter(usuario => {
-        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.jobPosition && cargo.jobPosition.id === this.selectedCargo);
       });
     }
 if (this.selectedfechaPostulacion) {
