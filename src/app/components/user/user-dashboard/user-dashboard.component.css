@@ -1,23 +1,20 @@
-
 .bootstrap-wrapper {
   padding: 0;
   margin: 0;
-  width: 100%; /* Usa el 100% del ancho de la ventana */
-  box-sizing: border-box; /* Incluye el padding y border en el cálculo del ancho */
+  width: 100%;
+  box-sizing: border-box; 
 }
 .content {
   padding: 20px;
   background-color: #F57C27;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: 100%; /* Asegúrate de que .content use el 100% del ancho de su contenedor */
-  box-sizing: border-box; /* Incluye el padding en el cálculo del ancho para evitar desbordamientos */
+  width: 100%; 
+  box-sizing: border-box; 
 }
-/* Estilos de las tarjetas de exámenes */
 .exams {
   margin-top: 20px;
 }
-
 .exam-card {
   background-color: #fff;
   border-radius: 5px;
@@ -25,25 +22,20 @@
   padding: 20px;
   margin-bottom: 20px;
 }
-
 .exam-title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-
 .exam-description {
   font-size: 16px;
   margin-bottom: 15px;
 }
-
-/* Estilos de la lista de temas */
 .topic-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .topic-item {
   display: inline-block;
   background-color: #F57C27;
@@ -54,19 +46,16 @@
   margin-bottom: 5px;
   font-size: 14px;
 }
-/* Consulta de medios para dispositivos móviles */
 @media (max-width: 768px) {
   .container {
       flex-direction: column;
       align-items: center;
-      padding-top:  5%; ; /* Ajusta el espacio entre elementos en dispositivos móviles */
+      padding-top:  5%; ; 
   }
-
   .sidebar {
-      display: none /* Muestra la barra lateral en dispositivos móviles */
+      display: none;
   }
-
   .content {
-      margin-top: 10%; /* Añade margen superior en dispositivos móviles */
+      margin-top: 10%; 
   }
 }

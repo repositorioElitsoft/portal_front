@@ -2,8 +2,8 @@
   height: 100%;
   width: 250px;
   position: fixed;
-  background-color: #fff; /* Cambia el color de fondo a blanco */
-  border-right: 3px solid  #F57C27; /* Añade un contorno naranja */
+  background-color: #fff; 
+  border-right: 3px solid  #F57C27;
   padding-top: 14vh;
   z-index: 0;
 }
@@ -13,12 +13,12 @@
 .sidebar-header {
   text-align: center;
   padding-bottom: 20px;
-  color: #6c757d; /* Cambia el color del texto a gris */
+  color: #6c757d; 
 }
 .list-unstyled li a {
   display: block;
   padding: 10px 15px;
-  color: #6c757d; /* Cambia el color del texto a gris */
+  color: #6c757d; 
   text-decoration: none;
   transition: background-color 0.3s;
   display: flex;
@@ -33,19 +33,16 @@
   color: #fff;
 }
 .custom-icon2 {
-  color: #F57C27;/* Cambia el color del texto a gris */
+  color: #F57C27;
 }
-/* Ajusta el z-index del sidebar */
 .app-sidebar-admin {
   z-index: 0;
 }
-/* Asegura que el navbar tenga margen superior */
 .navbar {
-  margin-top: 10px; /* Ajusta el valor según sea necesario */
+  margin-top: 10px; 
   float: right;
 }
 .categoriasdisponibles{
- 
   font-size: 1em;
   padding: 5px;
 }

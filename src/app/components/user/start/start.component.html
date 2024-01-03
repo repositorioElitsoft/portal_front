@@ -23,7 +23,6 @@
               En curso <b>{{ examen?.titulo }}</b>
             </h1>
           </ng-container>
-
           <mat-card *ngFor = "let p of preguntas;let i = index">
             <mat-card-content>
               <p><b>{{ i+1 }} </b> <span [innerHTML] = "p.contenido"></span></p>
@@ -44,7 +43,6 @@
               </div>
             </mat-card-content>
           </mat-card>
-
           <div class="container text-center mt-4 mb-4">
             <button (click) = "enviarCuestionario()" mat-raised-button class="botonprimario">Enviar cuestionario</button>
           </div>
@@ -70,7 +68,6 @@
     </div>
   </div>
 </div>
-
 <br>
 <div class="bootstrap-wrapper puntaje" *ngIf="esEnviado">
   <div class="container mt20">
@@ -85,7 +82,6 @@
                   <h1>Has conseguido un total de {{ puntosConseguidos }} puntos de {{ examen.puntosMaximos }}</h1>
                   <h1>Respuestas correctas: {{ respuestasCorrectas }}</h1>
                   <h1>Has realizado el examen {{ vecesEnviado }} veces</h1>
-
                   <!-- Contenedor para el gráfico de barras -->
                   <br>
                   <div>
@@ -100,5 +96,3 @@
       </div>
   </div>
 </div>
-
-

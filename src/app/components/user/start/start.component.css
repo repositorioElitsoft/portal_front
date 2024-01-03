@@ -1,7 +1,6 @@
 h3 {
   color: #333;
 }
-
 ul {
   list-style: disc inside;
   color: #555;
@@ -55,7 +54,6 @@ font-size: 18px;
 font-weight: bold;
 margin-bottom: 15px;
 }
-/* Estilo para los botones */
 mat-card-actions {
 display: flex;
 justify-content: center;
@@ -85,18 +83,18 @@ margin-top: 20px;
 }
 mat-card-header {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center; /* Centra verticalmente */
-  text-align: center; /* Centra el texto */
+  justify-content: center;
+  align-items: center;
+  text-align: center; 
  padding: 20px;
 }
 @media (max-width: 768px) {
   .temporizador {
-    order: -1; /* Esto coloca el div al principio */
+    order: -1;
   }
 }
 @media (max-width: 768px) {
   .temporizador {
-    order: -1; /* Esto coloca el div al principio */
+    order: -1; 
   }
 }

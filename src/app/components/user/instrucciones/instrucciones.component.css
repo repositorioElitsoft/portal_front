@@ -1,29 +1,25 @@
 .mat-card-title {
   display: flex;
   align-items: center;
-  gap: 10px; /* Añade espacio entre el ícono y el texto */
+  gap: 10px; 
 }
-
 .mat-card-header {
-  margin-bottom: 16px; /* Añade margen al fondo en lugar de usar <br> */
+  margin-bottom: 16px; 
 }
-
 .mat-card-content {
   margin-left: 30px;
-  margin-right: 30px; /* Asegúrate de que el margen derecho sea el mismo que el izquierdo */
+  margin-right: 30px; 
 }
-
-
 ul {
-  list-style: none; /* Elimina los estilos de lista predeterminados */
-  padding-left: 0; /* Elimina el padding izquierdo */
+  list-style: none; 
+  padding-left: 0; 
 }
 li {
   display: flex;
   align-items: center;
-  gap: 10px; /* Añade espacio entre el ícono y el texto */
-  margin-bottom: 8px; /* Añade un margen inferior para separar los ítems */
+  gap: 10px; 
+  margin-bottom: 8px; 
 }
 .material-icons {
-  font-size: 24px; /* Ajusta el tamaño de los íconos */
+  font-size: 24px; 
 }
