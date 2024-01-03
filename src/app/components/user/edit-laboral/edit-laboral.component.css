@@ -3,48 +3,36 @@
   margin-top: 10%;
   margin-bottom: 10%;
   flex-direction: column;
-  align-items: center; /* Centra horizontalmente */
-  justify-content: center; /* Centra verticalmente */
-
+  align-items: center; 
+  justify-content: center;
 }
-
-
 .mat-form-field{
   width: 100%;
 }
-
-/* En tu archivo de estilos CSS (por ejemplo, styles.css) o en el archivo de estilo del componente */
 .ng-star-inserted {
 width: 100% !important;
 padding-left: 2%;
 padding-right: 2%;
 }
-
-
 button.example-custom-date-class {
   background: orange!important;
   border-radius: 100%;
 }
-
 .guardarycancelar
 {
 background-color: none;
 box-shadow: none;
 width: 100%;
 }
-
 .contenedor-externo {
-  width: 100%; /* Esto asegura que el div externo ocupe el 100% del ancho de su contenedor padre */
+  width: 100%; 
 }
-
 .mat-card {
-  width: 100%; /* Esto asegura que las tarjetas de material ocupen el 100% del ancho del div */
-  box-sizing: border-box; /* Esto asegura que el padding y border estén incluidos en el ancho total */
-  margin-bottom: 16px; /* Espacio entre tarjetas si tienes múltiples */
+  width: 100%; 
+  box-sizing: border-box; 
+  margin-bottom: 16px; 
 }
-
-
 .perfilr {
-  width: 100%; /* Si deseas que el título también ocupe todo el ancho */
-  text-align: center; /* Si deseas centrar el título */
+  width: 100%; 
+  text-align: center; 
 }

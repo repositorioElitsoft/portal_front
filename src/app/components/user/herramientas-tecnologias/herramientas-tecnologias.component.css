@@ -1,19 +1,17 @@
 
-/* Estilos para el formulario */
 .form-container {
   margin-top: 4vh;
   padding: 20px;
   border: 1px solid #F57C27;
   border-radius: 10px;
-  display: flex; /* Establece el contenedor como un flexbox */
-  flex-wrap: wrap; /* Permite que los elementos se ajusten a la línea siguiente si no caben en una sola línea */
-  gap: 40px; /* Espacio entre los elementos */
- 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 40px; 
 }
 .combobox {
-  display: flex; /* Los elementos dentro de combobox se colocarán en una sola línea */
-  flex-direction: column; /* Los elementos dentro de combobox estarán en forma de columna */
-  flex:1 /* Permitirá que los elementos se ajusten al ancho disponible */
+  display: flex; 
+  flex-direction: column; 
+  flex:1;
 }
 .combobox label {
   font-size: 13px;
@@ -24,7 +22,7 @@
 .form-select {
   font-size: 14px;
   width: 300%;
-  max-width: 100px; /* Ancho máximo para que no se vean muy ancho*/
+  max-width: 100px; 
 }
 @media screen and (max-width: 768px) {
   .container {

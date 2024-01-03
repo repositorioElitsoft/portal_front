@@ -1,5 +1,4 @@
 import { VersionProducto } from "./version.interface";
-
 export interface HerramientaData {
     herr_usr_id: number;
     herr_usr_anos_exp: string;

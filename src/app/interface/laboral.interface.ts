@@ -1,9 +1,6 @@
 
 import { HerramientaData } from "./herramienta-data.interface";
-
-import { Herramientas } from "./herramientas.interface";
 import { ReferenciaLaboral } from "./referenciaLaboral.interface";
-
 export interface Laboral{
     inf_lab_id?:number,
     inf_lab_crg_emp:string,

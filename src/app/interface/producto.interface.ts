@@ -1,5 +1,4 @@
 import { CategoriaProducto } from "./categoria-prod.interface";
-
 export interface Producto {
     prd_id: number;
     prd_nom: string;
