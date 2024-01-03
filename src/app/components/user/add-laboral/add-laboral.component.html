@@ -1,21 +1,17 @@
-<!-- Formulario para crear un nuevo archivo -->
 <form [formGroup]="form" (ngSubmit)="submitForm($event)" class="formacademica">
   <h4 class="perfilr">Información laboral</h4>
   <mat-form-field>
     <mat-label>Cargo:</mat-label>
     <input matInput type="text" id="inputCargo" formControlName="inf_lab_crg_emp" name="inputCargo">
   </mat-form-field>
-
   <mat-form-field>
     <mat-label>Nombre Empresa:</mat-label>
     <input matInput type="text" id="inputNomEmp" formControlName="inf_lab_emp" name="inputNomEmp">
   </mat-form-field>
-
   <mat-form-field>
     <mat-label>Actividades Realizadas:</mat-label>
     <input matInput type="text" id="inputActRe" formControlName="inf_lab_act" name="inputActRe">
   </mat-form-field>
-
   <mat-form-field class="example-form-field">
     <mat-label>Fecha Inicio - Fecha Fin</mat-label>
     <mat-date-range-input [rangePicker]="rangePicker">
@@ -30,12 +26,10 @@
       </mat-date-range-picker-actions>
     </mat-date-range-picker>
   </mat-form-field>
-
 <mat-card>
     <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
     <div *ngIf="herramientasDisponibles && checkboxFormCreated">
       <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
-
         <div *ngIf="!herramienta.herr_prd_otro">
           <mat-checkbox [formControlName]="herramienta.herr_usr_id">
             {{ herramienta.versionProducto.prd.prd_nom }} ({{ herramienta.versionProducto.vrs_name }})
@@ -46,11 +40,9 @@
             {{ herramienta.herr_prd_otro }}
           </mat-checkbox>
         </div>
-
       </div>
     </div>
   </mat-card>
-
   <div class="contenedor-externo">
     <h4 class="perfilr">Referencias Laboral</h4>
     <div formArrayName="referenciasLaborales">
@@ -60,17 +52,14 @@
             <mat-label>Nombre</mat-label>
             <input matInput type="text" formControlName="ref_lab_nom">
           </mat-form-field>
-
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Institución</mat-label>
             <input matInput type="text" formControlName="ref_lab_emp">
           </mat-form-field>
-
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Email</mat-label>
             <input matInput type="email" formControlName="ref_lab_email">
           </mat-form-field>
-
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Teléfono</mat-label>
             <input matInput type="tel" formControlName="ref_lab_tel">
@@ -80,7 +69,6 @@
               <mat-icon>delete</mat-icon>
             </button>
           </mat-card>
-
         </mat-card>
       </div>
     </div>
@@ -88,8 +76,6 @@
     <button mat-raised-button type="button" class="botonprimario m-2" (click)="addReferencia()">+ Añadir Referencia</button>
   </mat-card>
   </div>
-
-
   <br>
   <mat-card class="guardarycancelar">
     <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Guardar</button>

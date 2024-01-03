@@ -12,9 +12,7 @@
   <app-sidebar-userdesk></app-sidebar-userdesk>
 <div class="container">
   <div class="sidebar">
-    <!-- Contenido de la barra lateral aquí -->
 </div>
-
   <mat-card class="container-datos-personales">
     <h4 class="perfilr">Cargo a Postular</h4>
     <mat-card class="contenedorform">
@@ -46,7 +44,6 @@
             </div>
           </div>
         </div>
-
         <div class="row mb-3">
           <label for="inputPretension" class="col-m-2 col-form-label">Cargo preferente:</label>
           <div class="col-sm-15">
@@ -58,12 +55,9 @@
               [ngClass]="{'is-invalid': form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched}"
             >
             <div *ngIf="form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched" class="invalid-feedback">
-
             </div>
           </div>
-
         </div>
-        <!-- Nuevos campos para disponibilidad laboral -->
         <div class="row mb-3">
           <label for="inputDisponibilidad" class="col-m-2 col-form-label">Disponibilidad laboral:</label>
           <div class="col-sm-15">
@@ -89,17 +83,9 @@
             <input type="text" class="form-control" id="inputOtroTiempoIncorporacion" formControlName="otro_tiempo_incorporacion" name="inputOtroTiempoIncorporacion">
           </div>
         </div>
-        <!-- Resto del formulario... -->
-
         <div class="div-form d-grid my-2">
-
           <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit" (click)="successMessage()">Finalizar</button>
-
-
-
         </div>
-
-
       </form>
     </div>
   </mat-card>

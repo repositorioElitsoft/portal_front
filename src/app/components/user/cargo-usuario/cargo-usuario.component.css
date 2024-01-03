@@ -10,16 +10,13 @@
  padding-right: 30%;
  box-shadow: none;
 }
-/* Media Query para pantallas más pequeñas (resolución móvil) */
 @media (max-width: 768px) {
   .container-datos-personales {
-    margin-right: 5%; /* Cambia el margen derecho para adaptarse al espacio disponible */
+    margin-right: 5%; 
     margin-left: 5%;
     padding-right: 100px;
     padding-top: 5%;
     padding-bottom: 5%;
     align-items: center;
   }
-
-
 }

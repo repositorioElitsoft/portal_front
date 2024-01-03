@@ -6,23 +6,15 @@
   font-size: 17px;
   font-weight: 200!important;
 }
-
 .select-tel-input{
   width: 180px;
 }
-
 .bg-green{
   color: green;
 }
-
-
 @media (max-width: 600px) {
   .container-datos-personales {
-
     border: 1px solid #F57C27;
     border-radius: 10px;
-
-
   }
-
 }
