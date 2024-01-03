@@ -1,91 +1,50 @@
-
-
-
-  
   .combobox {
-    display: flex; /* Los elementos dentro de combobox se colocarán en una sola línea */
-    flex-direction: column; /* Los elementos dentro de combobox estarán en forma de columna */
-    flex:1 /* Permitirá que los elementos se ajusten al ancho disponible */
-  }
-  
+    display: flex;
+    flex-direction: column;
+    flex:1 
+  } 
   .combobox label {
     font-size: 13px;
     font-weight: bold;
     width: 50px;
-  }
-  
+  } 
   .form-control,
   .form-select {
     font-size: 14px;
     width: 300%;
-    max-width: 130px; /* Ancho máximo para que no se vean muy anchos */
+    max-width: 130px;
   }
-  
-
-  
-  
-
-  
 .botonprimario{
   font-size: 1em !important;
 }
-
   .container-datos-personales {
-  
     border: 1px solid #F57C27;
-    border-radius: 10px;
-  
-    
-  }
-  
+    border-radius: 10px;     
+  } 
   @media (max-width: 600px) {
-    .container-datos-personales {
-    
+    .container-datos-personales {    
       border: 1px solid #F57C27;
-      border-radius: 10px;
-   
-      
-    }
-  
+      border-radius: 10px;       
+    }  
   }
-  
-
-
-
-  .container-datos-personales {
-    
+  .container-datos-personales {   
     border: 1px solid #F57C27;
-    border-radius: 10px;
- 
-    
+    border-radius: 10px;   
   }
   .herramientasytecnologiash2{ margin-left: 150px;}
-
   .combobox {
-    flex-basis: calc(35% - 30px); /* 25% de ancho para 4 elementos por fila */
+    flex-basis: calc(35% - 30px);
   }
-
-  .container-datos-personales {
-    
+  .container-datos-personales {   
     border: 1px solid #F57C27;
-    border-radius: 10px;
- 
-    
+    border-radius: 10px; 
   }
-
-
-  
   @media screen and (max-width: 1200px) {
     .combobox {
-      flex-basis: calc(50% - 20px); /* 50% de ancho para 2 elementos por fila */
+      flex-basis: calc(50% - 20px);
     }
-
     .container-datos-personales {
-    
       border: 1px solid #F57C27;
-      border-radius: 10px;
-   
-      
+      border-radius: 10px;  
     }
-
   }

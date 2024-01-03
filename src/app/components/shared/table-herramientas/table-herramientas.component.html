@@ -1,6 +1,4 @@
-
     <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
-
     <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
         <h4 class="perfilr">Herramientas y Tecnologías</h4>
         <div formArrayName="rows">
@@ -29,7 +27,6 @@
                         <option *ngFor="let version of versionByRow[i]" [value]="version.vrs_id">{{ version.vrs_name }}</option>
                     </select>
                 </div>
-
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="certificado">Certificado</label>
                     <select class="form-control" id="certificado" formControlName="herr_is_cert" name="certificado">
@@ -69,13 +66,11 @@
                     </button>
                     <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete</mat-icon></button>
                 </div>
-
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-2 offset-md-5">
                 <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>
-
             </div>
         </div>
     </form>

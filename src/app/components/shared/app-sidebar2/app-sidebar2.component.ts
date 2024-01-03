@@ -7,7 +7,6 @@ import { MatDialog } from '@angular/material/dialog';  //
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
-
 @Component({
   selector: 'app-app-sidebar2',
   templateUrl: './app-sidebar2.component.html',
@@ -29,9 +28,7 @@ export class AppSidebar2Component implements OnInit  {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
-
   categorias: any;
-
   ngOnInit(): void {
     this.categoriaService.listarCategorias().subscribe(
       (data: any) => {
@@ -47,11 +44,9 @@ export class AppSidebar2Component implements OnInit  {
       }
     );
   }
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
-
   shouldRun = true;
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(CerrarSesionComponent, {
@@ -60,6 +55,4 @@ export class AppSidebar2Component implements OnInit  {
       exitAnimationDuration,
     });
   }
-
-
 }

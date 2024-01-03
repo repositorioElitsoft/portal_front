@@ -1,84 +1,57 @@
-/* Estilo personalizado para la barra de navegación */
 .navbar {
-    background-color: white; /* Fondo blanco */
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2); /* Sombreado oscuro en la parte inferior */
-    padding: 0px 0; /* Aumentar el espacio vertical (ajusta según tus necesidades) */
+    background-color: white; 
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 0px 0;
     position: fixed;
     z-index: 10;
     width: 100%;
     font-size: small;
   }
-  
-  /* Centrar el contenido en la barra de navegación */
   .navbar-nav {
     margin: 0 auto;
     text-align: center;
   }
-  
-  /* Estilo para los elementos del menú */
   .nav-item {
-    margin: 0 10px; /* Espacio entre elementos del menú */
+    margin: 0 10px; 
   }
-  
-  /* Cambiar el color del enlace en el hover a naranja */
 .nav-item a.nav-link:hover {
     color: orange;
   }
-
-  /* Cambiar el color de fondo del ítem activo a naranja */
 .nav-item.active a.nav-link {
     background-color: orange;
-    color: white; /* Cambiar el color del texto a blanco para que sea legible */
+    color: white; 
   }
-
   .elitsoft {
-    text-align: center; /* Centrar horizontalmente el contenido */
-
+    text-align: center; 
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Centrar verticalmente y alinear a la derecha horizontalmente */
-    justify-content: flex-end; /* Situar el contenido en la parte inferior (derecha en este caso) */
+    align-items: flex-end; 
+    justify-content: flex-end; 
 }
-
 .elitsoft img {
-    max-width: 60%; /* Para que la imagen sea responsive */
-    display: block; /* Elimina el espacio debajo de la imagen */
-    position: relative; /* Necesario para la animación */
-    animation: reveal 2s ease-in-out forwards; /* Animación de revelación (1 vez) */
+    max-width: 60%; 
+    display: block;
+    position: relative;
+    animation: reveal 2s ease-in-out forwards; 
     clip-path: polygon(100% 100%, 0% 0%, 100% 100%, 0% 100%);
-
 }
-
 @keyframes reveal {
     0% {
-        clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 0%); /* Establece un recorte completo inicial (imagen invisible) */
+        clip-path: polygon(100% 0%, 100% 100%, 100% 100%, 100% 0%); 
     }
     100% {
-        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%); /* Elimina el recorte, revelando la imagen completa */
+        clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
     }
 }
-
-
-  
   @media (max-width: 1300px) {
-
     .navbar{
       display: none;
       pointer-events: none;
       margin-left: 0;
-  
     }
-  
-
-    
   }
-  
-
   @media (max-width: 1200px) {
-
     .navbar{
-      margin-left: 0;
-  
+      margin-left: 0; 
     }
-  
   }
