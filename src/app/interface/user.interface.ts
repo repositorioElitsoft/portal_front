@@ -4,7 +4,8 @@ import { City } from "./city.interface"
 import { Gender } from "./gender.interface"
 import { HerramientaData } from "./herramienta-data.interface"
 import { Laboral } from "./laboral.interface"
-import { Observacion } from "./observacion.interface"
+import { UserCV } from "./user-cv.interface"
+import { UserPreferredJob } from "./user-preferred-job-interface"
 
 export interface User {
     id?:number
@@ -22,8 +23,8 @@ export interface User {
     jobs?: Laboral[]
     academicalList?: Academica[]
     userJob?: CargoUsuario[]
-    preferredJob?: string
-    cv?: string
+    userPrefferedJob?: UserPreferredJob
+    cv?: UserCV
 
 }
 
