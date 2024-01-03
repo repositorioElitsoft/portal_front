@@ -4,7 +4,6 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <button mat-button class="nav-link"[routerLink]="'/iniciar-sesion'" routerLinkActive="active">Iniciar sesión</button>
-          
         </li>
         <li class="nav-item">
           <button mat-button class="nav-link" routerLink="/registrar" routerLinkActive="active">Registrar</button>
@@ -13,7 +12,6 @@
     </div>
   </mat-card>
   <div class="container mt-5">
-    <!-- Aquí sigue el formulario de registro -->
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card">
@@ -22,7 +20,6 @@
           </div>
           <div class="card-body">
             <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
-              <!-- Campos del formulario -->
               <div class="form-group">
                 <label for="email">Correo electrónico:</label>
                 <input type="email" class="form-control" id="email" formControlName="usr_email" required [ngClass]="{'is-invalid': registroForm.get('email')?.invalid && registroForm.get('email')?.touched}">
@@ -44,9 +41,7 @@
                   Las contraseñas no coinciden.
                 </div>
               </div>
-              <!-- Botón de registro -->
               <button mat-raised-button class="botonprimario mt-3" type="submit">Registrar</button>
-              
             </form>
             <br>  
             <div class="d-flex justify-content-center align-items-center">

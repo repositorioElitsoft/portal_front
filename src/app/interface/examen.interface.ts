@@ -1,5 +1,4 @@
 import { Pregunta } from "./pregunta.interface";
-
 export interface Examen{
     examen_id: number;
     descripcion: string;

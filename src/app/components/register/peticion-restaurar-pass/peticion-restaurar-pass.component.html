@@ -12,7 +12,6 @@
       </div>
     </mat-card>
   <div class="container mt-5">
-      <!-- Aquí sigue el formulario de inicio de sesión -->
       <div class="row justify-content-center">
         <div class="col-md-6">
           <div class="card">
@@ -21,14 +20,12 @@
             </div>
             <div class="card-body">
               <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <!-- Campos del formulario -->
                 <div class="form-group">
                   <label for="email">Correo electrónico:</label>
                   <input type="email" class="form-control" id="email" formControlName="email"
                    [(ngModel)]="email" name="email" required
                    [ngClass]="{'is-invalid': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
                 </div>
-                <!-- Botón de inicio de sesión -->
                 <button mat-raised-button class="botonprimario mt-3" type="submit" >Enviar Correo</button>
                 <div *ngIf="error" class="error">{{ error }}</div>
               </form>

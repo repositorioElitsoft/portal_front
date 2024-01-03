@@ -1,5 +1,4 @@
 import { CargosElitsoft } from "./cargos-elitsoft.interface";
-
 export interface CargoUsuario{
     fecha: string | number | Date;
     usuarioId: any;

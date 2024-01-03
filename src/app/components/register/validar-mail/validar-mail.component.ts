@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { ValidarMailService } from 'src/app/service/validar-mail.service';
 
 @Component({
@@ -10,16 +9,10 @@ import { ValidarMailService } from 'src/app/service/validar-mail.service';
 export class ValidarMailComponent {
   verified: boolean = false
   verificationFailed: boolean = false
-
-
   constructor(
-    private validarEmailService: ValidarMailService,
-    private route: ActivatedRoute
-  ){}
+    private validarEmailService: ValidarMailService  ){}
 
   ngOnInit(){
-
-
     this.validarEmailService.verificarEmail().subscribe({
       next:(res)=>{
         console.log(res.status)
@@ -29,7 +22,6 @@ export class ValidarMailComponent {
         }
         this.verificationFailed = true;
         return
-
       },
       error:(err)=>{
         console.log(err.status)
