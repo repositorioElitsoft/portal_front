@@ -38,9 +38,7 @@ export class UserService {
   getCurrentUser() {
     return this.HttpClient.get<User>(`${this.url}/users/`);
   }
-  updateUser(user: User){
-    return this.HttpClient.put<User>(`${this.url}/users/`,user);
-  }
+
   updateUserById(id: number, user: User): Observable<User>{
     return this.HttpClient.put<User>(`${this.url}/users/actualizar/${id}`, user);
   }
@@ -125,8 +123,8 @@ export class UserService {
   obtenerUsuarioGuardado() {
     return this.HttpClient.get<User>(`${this.url}/usuarios/`);
   }
-  updateUsuario(user: User){
-    return this.HttpClient.put<User>(`${this.url}/usuarios/`,user);
+  updateUser(user: User){
+    return this.HttpClient.put<User>(`${this.url}/users/`,user);
   }
   updateUsuarioById(id: number, user: User): Observable<User>{
     return this.HttpClient.put<User>(`${this.url}/usuarios/actualizar/${id}`, user);

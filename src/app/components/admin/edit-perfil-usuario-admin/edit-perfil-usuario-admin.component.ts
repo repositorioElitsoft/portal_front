@@ -97,7 +97,7 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
         });
         return;
     }
-    this.userService.updateUsuario(userData).subscribe({
+    this.userService.updateUser(userData).subscribe({
         next: (data) => {
             console.log(data);
             this.notification.showNotification(
