@@ -1,4 +1,4 @@
-export interface ReferenciaAcademica {
+export interface AcademicalReference {
     ref_acad_id?: number;
     ref_acad_nom: string;
     ref_acad_ins: string;

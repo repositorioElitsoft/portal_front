@@ -1,4 +1,4 @@
-import { ReferenciaAcademica } from "./referencia-academica.interface";
+import { AcademicalReference } from "./referencia-academica.interface";
 export interface Academical {
 
     id?:number,
@@ -8,5 +8,5 @@ export interface Academical {
     endDate:Date,
     status:string,
     user?:number,
-    academicalReference? : ReferenciaAcademica []
+    academicalReference? :AcademicalReference []
 }
