@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LaboralService } from 'src/app/service/laboral.service';
-import { Laboral } from 'src/app/interface/laboral.interface';
+import { Employment } from 'src/app/interface/employment.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
+import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
 @Component({
   selector: 'app-edit-laboral',
   templateUrl: './edit-laboral.component.html',
@@ -17,7 +17,7 @@ export class  EditLaboralComponent implements OnInit {
   [x: string]: any;
   @Output()  EditLaboralComponent: EventEmitter<void> = new EventEmitter<void>();
   creationMode: boolean = false;
-  laborales: Laboral[] = [];
+  laborales: Employment[] = [];
   id: number | null | undefined = null;
   today;
   form!: FormGroup;
@@ -40,34 +40,34 @@ export class  EditLaboralComponent implements OnInit {
   ngOnInit(): void {
     this.form.patchValue(this.data);
     this.inf_lab_id = this.data && this.data.inf_lab_id ? this.data.inf_lab_id : null;
-    this.crearReferenciasForm(this.data.referenciasLaborales);
+    this.crearReferenciasForm(this.data.employmentReferences);
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      inf_lab_crg_emp: ["", [Validators.required]],
-      inf_lab_emp: ["", [Validators.required]],
-      inf_lab_act: ["", [Validators.required]],
-      inf_lab_fec_ini: ["", [Validators.required]],
-      inf_lab_fec_fin: ["", [Validators.required]],
-       referenciasLaborales: this.formBuilder.array([])
+      position: ["", [Validators.required]],
+      company: ["", [Validators.required]],
+      activities: ["", [Validators.required]],
+      startDate: ["", [Validators.required]],
+      endDate: ["", [Validators.required]],
+       employmentReferences: this.formBuilder.array([])
     });
     this.generateHerrForm();
   }
-  crearReferenciasForm(data: ReferenciaLaboral[]) {
-    const rowArray = data.map((laboral, index) => {
+  crearReferenciasForm(data: EmploymentReferences[]) {
+    const rowArray = data.map((employment, index) => {
       return this.formBuilder.group({
-        ref_lab_id: [laboral.ref_lab_id], 
-        ref_lab_nom: [laboral.ref_lab_nom], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
-        ref_lab_emp: [laboral.ref_lab_emp], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
-        ref_lab_email: [laboral.ref_lab_email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
-        ref_lab_tel: [laboral.ref_lab_tel] // Suponiendo que 'telefono' es una propiedad del objeto 'academica'
+        id: [employment.id], 
+        name: [employment.name], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
+        company: [employment.company], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
+        email: [employment.email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
+        phone: [employment.phone] // Suponiendo que 'telefono' es una propiedad del objeto 'academica'
       });
     });
     this.form.setControl('referenciasLaborales', this.formBuilder.array(rowArray))
   }
   obtenerLaboralesGuardados(id: number) {
     this.laboralService.obtenerLaboralPorId(id).subscribe({
-      next: (data:Laboral) => {
+      next: (data:Employment) => {
         this.form.patchValue(data);
         console.log('Esta es la data del metodo', data)
         this.checkBoxMarcado(data);
@@ -75,9 +75,9 @@ export class  EditLaboralComponent implements OnInit {
       error: (err) => console.log(err)
     });
   }
-  checkBoxMarcado(laboral : Laboral){
-    console.log(laboral, 'esta es la laboral')
-    laboral.herramientas?.forEach(h => {
+  checkBoxMarcado(employment : Employment){
+    console.log(employment, 'esta es la laboral')
+    employment.herramientas?.forEach(h => {
       this.form.get(h.herr_usr_id.toString())?.patchValue(true)
       if(h.herr_prd_otro)
         this.form.get(h.herr_prd_otro.toString())?.patchValue(true)
@@ -114,20 +114,20 @@ export class  EditLaboralComponent implements OnInit {
   submitForm(event: Event) {
     event.preventDefault();
     if (this.form.valid && this.inf_lab_id !== null) {
-      const fechaInicioFormateada = new Date(this.form.value.inf_lab_fec_ini).toISOString().split('T')[0];
-      const fechaFinFormateada = new Date(this.form.value.inf_lab_fec_fin).toISOString().split('T')[0];
+      const fechaInicioFormateada = new Date(this.form.value.startDate).toISOString().split('T')[0];
+      const fechaFinFormateada = new Date(this.form.value.endDate).toISOString().split('T')[0];
       const referenciasFormArray = this.form.get('referenciasLaborales') as FormArray;
       const referencias = referenciasFormArray.getRawValue();
-      const laboralNueva: Laboral = {
+      const laboralNueva: Employment = {
         ...this.form.value,
-        inf_lab_fec_ini: fechaInicioFormateada,
-        inf_lab_fec_fin: fechaFinFormateada,
+        startDate: fechaInicioFormateada,
+        endDate: fechaFinFormateada,
         referenciasLaborales: referencias // Incluye las referencias en el objeto a actualizar
       };
       this.laboralService
       .guardarLaboral(laboralNueva, this.inf_lab_id)
       .subscribe(
-        (academicaGuardada: Laboral) => {
+        (academicaGuardada: Employment) => {
           this.creationMode = false;
           this.laboralService
             .obtenerListaLaboralPorUsuario()
@@ -157,10 +157,10 @@ export class  EditLaboralComponent implements OnInit {
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
-      ref_lab_nom: [''],
-      ref_lab_emp: [''],
-      ref_lab_email: [''],
-      ref_lab_tel: [''],
+      name: [''],
+      company: [''],
+      email: [''],
+      phone: [''],
     });
     this.referenciasFormArray.push(referenciaFormGroup);
   }

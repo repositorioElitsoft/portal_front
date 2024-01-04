@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LaboralService } from 'src/app/service/laboral.service';
-import { Laboral } from 'src/app/interface/laboral.interface';
+import { Employment } from 'src/app/interface/employment.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,7 @@ export class AddLaboralComponent implements OnInit {
   [x: string]: any;
   @Output() AddLaboralComponent: EventEmitter<void> = new EventEmitter<void>();
   creationMode: boolean = false;
-  laborales: Laboral[] = [];
+  laborales: Employment[] = [];
   id: number | null | undefined = null;
   today;
   form!: FormGroup;
@@ -39,12 +39,12 @@ export class AddLaboralComponent implements OnInit {
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      inf_lab_crg_emp: ["", [Validators.required]],
-      inf_lab_emp: ["", [Validators.required]],
-      inf_lab_act: ["", [Validators.required]],
-      inf_lab_fec_ini: ["", [Validators.required]],
-      inf_lab_fec_fin: ["", [Validators.required]],
-      referenciasLaborales: this.formBuilder.array([])
+      position: ["", [Validators.required]],
+      company: ["", [Validators.required]],
+      activities: ["", [Validators.required]],
+      startDate: ["", [Validators.required]],
+      endDate: ["", [Validators.required]],
+      employmentReferences: this.formBuilder.array([])
     });
     this.generateHerrForm();
   }
@@ -74,13 +74,13 @@ export class AddLaboralComponent implements OnInit {
   }
   editarLaboral(id: number | undefined | null){
     this.id = id;
-    const laboralToEdit = this.laborales.find(laboral => laboral.inf_lab_id === this.id);
+    const laboralToEdit = this.laborales.find(employment => employment.id === this.id);
     this.form.patchValue({
-      inf_lab_crg_emp: laboralToEdit?.inf_lab_crg_emp,
-      inf_lab_emp: laboralToEdit?.inf_lab_emp,
-      inf_lab_act: laboralToEdit?.inf_lab_act,
-      inf_lab_fec_ini: laboralToEdit?.inf_lab_fec_ini,
-      inf_lab_fec_fin: laboralToEdit?.inf_lab_fec_fin,
+      position: laboralToEdit?.position,
+      company: laboralToEdit?.company,
+      activities: laboralToEdit?.activities,
+      startDate: laboralToEdit?.startDate,
+      endDate: laboralToEdit?.endDate,
     });
     this.herrIdList.forEach(herrId =>{
       this.form.get(herrId.toString())?.patchValue(false);
@@ -120,7 +120,7 @@ export class AddLaboralComponent implements OnInit {
   submitForm(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
-      const laboralNueva: Laboral = this.form.value;
+      const laboralNueva: Employment = this.form.value;
       let herramientasFinal: HerramientaData[] = [];
       this.herrIdList.forEach(id => {
         if (this.form.get(id.toString())?.value === true) {
@@ -138,7 +138,7 @@ export class AddLaboralComponent implements OnInit {
                 prd_nom: "",
                 cat_prod_id: {
                   cat_prod_id: 0,
-                  cat_prod_nom: ""
+                name: ""
                 }
               }
             }
@@ -148,7 +148,7 @@ export class AddLaboralComponent implements OnInit {
       });
       laboralNueva.herramientas = herramientasFinal;
       this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
-        (laboralGuardada: Laboral) => {
+        (laboralGuardada: Employment) => {
           this.creationMode = false; 
           this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
             next:(data) => {
@@ -173,10 +173,10 @@ export class AddLaboralComponent implements OnInit {
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
-      ref_lab_nom: [''],
-      ref_lab_emp: [''],
-      ref_lab_email: [''],
-      ref_lab_tel: [''],
+      name: [''],
+      company: [''],
+      email: [''],
+      phone: [''],
     });
     this.referenciasFormArray.push(referenciaFormGroup);
   }

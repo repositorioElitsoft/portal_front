@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CatObservacionDTO} from 'src/app/interface/observacionreclutador.interface';
 import { UserSesionDTO } from 'src/app/interface/user.interface';
-import { CategoriaobservacionService } from 'src/app/service/categoriaobservacion.service';
+import { observationCategoryService } from 'src/app/service/observationcategory';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -44,22 +44,21 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
     usr2_nom: '',
     usr2_id: 0,
 
-    cat_obs_id:0,
-    cat_obs_desc:'',
+    id:0,
+    cat_description:'',
     obs_id:0,
 
    apr_ger:'',
-   apr_oper: '',
-   apr_tec:'',
-   obs_desc:'',
-   obs_fec_cre: new Date (),
-   obs_fec_mod: new Date (),
+   operationalApproval: '',
+   technicalApproval:'',
+   description:'',
+   creationDate: new Date (),
+   modificationDate: new Date (),
    usr1_id: 0,
    usr_id_obs:0,   // ID del User que hizo la observación
    usr_id_obs_mod: 0,   // ID del User que modificó la observación
 
    // Campos de la entidad User
-   id: 0,
    name:'',
    firstLastname:'',
    email:'',
@@ -74,7 +73,7 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
   secondFormGroup: FormGroup;
   
   constructor(
-    private categoriaObservacion: CategoriaobservacionService,
+    private observationCategory: observationCategoryService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
@@ -129,7 +128,7 @@ onCategorySelectionChange() {
     console.log('Categoría seleccionada:', this.selectedCategory);
     
     // Por ejemplo, buscar información relacionada con la categoría seleccionada
-    const categoriaSeleccionada = this.categorias.find(categoria => categoria.cat_obs_id === this.selectedCategory);
+    const categoriaSeleccionada = this.categorias.find(categoria => categoria.id === this.selectedCategory);
     
     if (categoriaSeleccionada) {
       console.log('Información de la categoría seleccionada:', categoriaSeleccionada);
@@ -139,7 +138,7 @@ onCategorySelectionChange() {
 }
 
   obtenerCategorias() {
-    this.categoriaObservacion.getCategorias().subscribe(
+    this.observationCategory.getCategorias().subscribe(
       (data: any[]) => {
         this.categorias = data; // Asigna los datos obtenidos a la propiedad 'categorias'
         console.log('Categorías obtenidas:', this.categorias); // Agrega este console.log para mostrar los datos en la consola
@@ -176,12 +175,12 @@ editarObservacion(obs_id: number) {
   const observacionEditada = this.observaciones.find(observacion => observacion.obs_id === obs_id);
 
   if (observacionEditada) {
-    // Si se encuentra la observación, establecer selectedCategory en el cat_obs_id de esa observación
-    this.selectedCategory = observacionEditada.cat_obs_id;
+    // Si se encuentra la observación, establecer selectedCategory en el id de esa observación
+    this.selectedCategory = observacionEditada.id;
     // Establecer los valores preexistentes en los otros campos
     this.observadoresCat.apr_ger = observacionEditada.apr_ger;
-    this.observadoresCat.apr_oper = observacionEditada.apr_oper;
-    this.observadoresCat.apr_tec = observacionEditada.apr_tec;
+    this.observadoresCat.operationalApproval = observacionEditada.operationalApproval;
+    this.observadoresCat.technicalApproval = observacionEditada.technicalApproval;
   } else {
     // Si no se encuentra la observación, puedes manejar el caso según tu lógica (por ejemplo, mostrar un mensaje de error).
     console.error('No se encontró la observación correspondiente a obs_id', obs_id);
@@ -233,8 +232,8 @@ editarObservacion(obs_id: number) {
     }
   
     // Asignar la observación y la categoría seleccionada a observadoresCat
-    this.observadoresCat.obs_desc = this.nuevaObservacion;
-    this.observadoresCat.cat_obs_id = this.selectedCategory;
+    this.observadoresCat.description = this.nuevaObservacion;
+    this.observadoresCat.id = this.selectedCategory;
   
     // Usar los valores de usr_id_obs y usr_id_obs_mod del usuarioGuardado
     this.observadoresCat.usr_id_obs = this.usuarioGuardado.id ?? 0;
@@ -247,7 +246,7 @@ editarObservacion(obs_id: number) {
     this.observacionService.guardarObservacionCat(
       this.observadoresCat,
       usuarioId, // Usar el valor de usuarioId pasado como parámetro
-      this.observadoresCat.cat_obs_id,
+      this.observadoresCat.id,
       this.observadoresCat.usr_id_obs,
       this.observadoresCat.usr_id_obs_mod
     ).subscribe(
@@ -265,7 +264,7 @@ editarObservacion(obs_id: number) {
     );}
 
     else{ 
-      this.observacionService.actualizarObservacionCat(this.selectedObservacionId, this.observadoresCat.cat_obs_id,this.observadoresCat.usr_id_obs_mod, this.observadoresCat).subscribe({
+      this.observacionService.actualizarObservacionCat(this.selectedObservacionId, this.observadoresCat.id,this.observadoresCat.usr_id_obs_mod, this.observadoresCat).subscribe({
       next: (data) => {
         console.log('Observación actualizada con éxito', data);
         this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas

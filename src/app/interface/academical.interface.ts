@@ -8,5 +8,5 @@ export interface Academical {
     endDate:Date,
     status:string,
     user?:number,
-    academicalReference? : AcademicalReference[]
+    academicalReference? :AcademicalReference []
 }

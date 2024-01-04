@@ -7,7 +7,7 @@
                     <label class="form-label" for="categoria">Categoría</label>
                     <select class="form-control" id="categoria" formControlName="herr_cat_name" (change)="getProducts(i)" name="categoria">
                         <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</option>
+                        <option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.name }}</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">

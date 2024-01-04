@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaobservacionService {
+export class observationCategoryService {
   readonly url = `${environment.URL_HOST}/catobs/`
   constructor(private http: HttpClient) { }
   getCategoriaPorId(catObsId: number): Observable<any> {
