@@ -7,7 +7,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interface/user.interface';
-import { ObservacionService } from 'src/app/service/observacionreclutador.service';
+import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
@@ -55,7 +55,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     public dialog: MatDialog, private _snackBar: MatSnackBar,
-    private observacionReclutadorService: ObservacionService,
+    private observationService: ObservacionService,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
     private preguntaService: PreguntaService ){}
@@ -171,7 +171,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       const userId = event.currentTarget.id;
       console.log('User ID:', userId);
       forkJoin({
-        observadores: this.observacionReclutadorService.obtenerCatObservacionesPorUsuarioId(userId),
+        observadores: this.observationService.obtenerCatObservacionesPorUsuarioId(userId),
         usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {

@@ -18,7 +18,7 @@ import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfi
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
-import { ObservacionService } from 'src/app/service/observacionreclutador.service';
+import { ObservacionService } from 'src/app/service/observation.service';
 import { forkJoin } from 'rxjs';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
@@ -85,7 +85,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private observacionReclutadorService: ObservacionService,
+    private observationService: ObservacionService,
     private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
@@ -661,7 +661,7 @@ obtenerUsuarios(): void {
 
       // Llamadas simultáneas a los servicios
       forkJoin({
-        observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
+        observadores: this.observationService.obtenerObservacionesPorUsuarioId(userId),
         usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {
