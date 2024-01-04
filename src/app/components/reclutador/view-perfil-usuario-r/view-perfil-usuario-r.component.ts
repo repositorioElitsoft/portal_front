@@ -1,9 +1,7 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observacion, ObservacionDTO } from 'src/app/interface/observacionreclutador.interface';
+import { ObservacionDTO } from 'src/app/interface/observacionreclutador.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
-import { interval, Subscription } from 'rxjs';
 import { UserService } from 'src/app/service/user.service';
 import { UserSesionDTO, User } from 'src/app/interface/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -36,11 +34,11 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     usr2_id: 0,
     obs_id: 0,
    apr_ger:'',
-   apr_tec:'',
-   apr_oper:'',
-   obs_desc:'',
-   obs_fec_cre: new Date(),
-   obs_fec_mod:new Date(),
+   technicalApproval:'',
+   operationalApproval:'',
+   description:'',
+   creationDate: new Date(),
+   modificationDate:new Date(),
    usr1_id: 0,
    usr_id_obs:0,    
    usr_id_obs_mod: 0,   
@@ -91,11 +89,11 @@ guardarObservacion() {
         name: '',
         email: '',
         firstLastname: '',
-        obs_desc: this.nuevaObservacion,
-        obs_fec_cre: new Date(),
-        obs_fec_mod: new Date(),
-        apr_tec: '',
-        apr_oper: '',
+        description: this.nuevaObservacion,
+        creationDate: new Date(),
+        modificationDate: new Date(),
+        technicalApproval: '',
+        operationalApproval: '',
         apr_ger: '',
         usr_id_obs: this.usuarioGuardado.id ?? 0,
         usr_id_obs_mod: this.usuarioGuardado.id ?? 0,
@@ -128,7 +126,7 @@ guardarObservacion() {
     this.enEdicion = obs_id;
 }
 actualizarObservacion(observadores: ObservacionDTO) {
-  if (!observadores.obs_desc.trim()) {
+  if (!observadores.description.trim()) {
     console.error('La descripción de la observación no puede estar vacía.');
     this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
     return;

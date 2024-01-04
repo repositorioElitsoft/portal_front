@@ -120,19 +120,19 @@
                       <mat-card-subtitle>Aprobación: Gerencia</mat-card-subtitle>
                       <mat-label>{{ observadores.apr_ger }}</mat-label>
                       <mat-card-subtitle>Aprobación: Operaciones</mat-card-subtitle>
-                      <mat-label>{{ observadores.apr_oper }}</mat-label>
+                      <mat-label>{{ observadores.operationalApproval }}</mat-label>
                       <mat-card-subtitle>Aprobación: Técnica</mat-card-subtitle>
-                      <mat-label>{{ observadores.apr_tec }}</mat-label>
+                      <mat-label>{{ observadores.technicalApproval }}</mat-label>
                     </mat-expansion-panel>
                   </mat-accordion>
                   <br>
                   <mat-card-content>
                     <div *ngIf="enEdicion === observadores.obs_id">
                       <mat-form-field class="ancho-completo">
-                        <textarea matInput [(ngModel)]="observadores.obs_desc"></textarea>
+                        <textarea matInput [(ngModel)]="observadores.description"></textarea>
                       </mat-form-field>
                     </div>
-                    <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.obs_desc }}</p>
+                    <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.description }}</p>
                     <div class="acciones-comentario">
                       <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
                       <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
@@ -143,10 +143,10 @@
                       <div class="fecha-info">
                         <mat-chip-list>
                           <mat-chip color="primary" selected>
-                            Creado: {{observadores.obs_fec_cre | date:'medium' }}
+                            Creado: {{observadores.creationDate | date:'medium' }}
                           </mat-chip>
-                          <mat-chip *ngIf="observadores.obs_fec_mod" color="accent" selected>
-                            Modificado: {{ observadores.obs_fec_mod | date:'medium' }}
+                          <mat-chip *ngIf="observadores.modificationDate" color="accent" selected>
+                            Modificado: {{ observadores.modificationDate | date:'medium' }}
                           </mat-chip>
                         </mat-chip-list>
                       </div>

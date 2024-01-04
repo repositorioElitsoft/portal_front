@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CatObservacionDTO} from 'src/app/interface/observacionreclutador.interface';
 import { UserSesionDTO } from 'src/app/interface/user.interface';
-import { CategoriaobservacionService } from 'src/app/service/observationcategory';
+import { observationCategoryService } from 'src/app/service/observationcategory';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -45,15 +45,15 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
     usr2_id: 0,
 
     id:0,
-    cat_obs_desc:'',
+    cat_description:'',
     obs_id:0,
 
    apr_ger:'',
-   apr_oper: '',
-   apr_tec:'',
-   obs_desc:'',
-   obs_fec_cre: new Date (),
-   obs_fec_mod: new Date (),
+   operationalApproval: '',
+   technicalApproval:'',
+   description:'',
+   creationDate: new Date (),
+   modificationDate: new Date (),
    usr1_id: 0,
    usr_id_obs:0,   // ID del User que hizo la observación
    usr_id_obs_mod: 0,   // ID del User que modificó la observación
@@ -73,7 +73,7 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
   secondFormGroup: FormGroup;
   
   constructor(
-    private categoriaObservacion: CategoriaobservacionService,
+    private observationCategory: observationCategoryService,
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
@@ -138,7 +138,7 @@ onCategorySelectionChange() {
 }
 
   obtenerCategorias() {
-    this.categoriaObservacion.getCategorias().subscribe(
+    this.observationCategory.getCategorias().subscribe(
       (data: any[]) => {
         this.categorias = data; // Asigna los datos obtenidos a la propiedad 'categorias'
         console.log('Categorías obtenidas:', this.categorias); // Agrega este console.log para mostrar los datos en la consola
@@ -179,8 +179,8 @@ editarObservacion(obs_id: number) {
     this.selectedCategory = observacionEditada.id;
     // Establecer los valores preexistentes en los otros campos
     this.observadoresCat.apr_ger = observacionEditada.apr_ger;
-    this.observadoresCat.apr_oper = observacionEditada.apr_oper;
-    this.observadoresCat.apr_tec = observacionEditada.apr_tec;
+    this.observadoresCat.operationalApproval = observacionEditada.operationalApproval;
+    this.observadoresCat.technicalApproval = observacionEditada.technicalApproval;
   } else {
     // Si no se encuentra la observación, puedes manejar el caso según tu lógica (por ejemplo, mostrar un mensaje de error).
     console.error('No se encontró la observación correspondiente a obs_id', obs_id);
@@ -232,7 +232,7 @@ editarObservacion(obs_id: number) {
     }
   
     // Asignar la observación y la categoría seleccionada a observadoresCat
-    this.observadoresCat.obs_desc = this.nuevaObservacion;
+    this.observadoresCat.description = this.nuevaObservacion;
     this.observadoresCat.id = this.selectedCategory;
   
     // Usar los valores de usr_id_obs y usr_id_obs_mod del usuarioGuardado

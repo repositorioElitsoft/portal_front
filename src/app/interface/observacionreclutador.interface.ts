@@ -1,11 +1,11 @@
-export interface Observacion {
+export interface Observation {
   obs_id: number;
-  obs_desc: string;
-  obs_fec_cre: Date;
-  obs_fec_mod: Date;
-  apr_oper: string;
-  apr_tec: string;
-  apr_ger: string;
+  description: string;
+  creationDate: Date;
+  modificationDate: Date;
+  operationalApproval: string;
+  technicalApproval: string;
+  managementApproval: string;
   usr_id_obs: number;
   usr_id_obs_mod: number;
   }
@@ -16,11 +16,11 @@ export interface Observacion {
      usr2_id: number;
      obs_id: number;
     apr_ger:String;
-    apr_oper: String;
-    apr_tec:String;
-    obs_desc:String;
-    obs_fec_cre:Date;
-    obs_fec_mod:Date;
+    operationalApproval: String;
+    technicalApproval:String;
+    description:String;
+    creationDate:Date;
+    modificationDate:Date;
     usr1_id: number;
     usr_id_obs:number;
     usr_id_obs_mod: number;
@@ -35,14 +35,14 @@ export interface Observacion {
      usr2_nom: String ;
      usr2_id: number;
      id:number;
-     cat_obs_desc:string;
+     cat_description:string;
      obs_id: number;
     apr_ger:String;
-    apr_oper: String;
-    apr_tec:String;
-    obs_desc:String;
-    obs_fec_cre:Date;
-    obs_fec_mod:Date;
+    operationalApproval: String;
+    technicalApproval:String;
+    description:String;
+    creationDate:Date;
+    modificationDate:Date;
     usr1_id: number;
     usr_id_obs:number; 
     usr_id_obs_mod: number ;
