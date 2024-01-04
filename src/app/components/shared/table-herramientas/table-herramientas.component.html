@@ -24,7 +24,7 @@
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
                     <select class="form-control" id="version" formControlName="vrs_id" name="version" [hidden]="row.get('herr_prd_name')?.value === 'otro'">
                         <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let version of versionByRow[i]" [value]="version.vrs_id">{{ version.vrs_name }}</option>
+                        <option *ngFor="let version of versionByRow[i]" [value]="version.id">{{ version.name }}</option>
                     </select>
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">

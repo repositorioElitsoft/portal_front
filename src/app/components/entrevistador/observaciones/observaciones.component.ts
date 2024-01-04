@@ -13,8 +13,8 @@ import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { forkJoin } from 'rxjs';
 import { ProductCategory} from 'src/app/interface/categoria-prod.interface';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
+import { Product} from 'src/app/interface/producto.interface';
+import { ProductVersion} from 'src/app/interface/version-producto';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
@@ -36,8 +36,8 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   originalDataCopy: Usuario[] = [];
   usuarios: Usuario[] = [];
   categorias: ProductCategory[] = [];
-  productos: Producto[] = [];
-  versiones: VersionProducto[] = [];
+  productos: Product[] = [];
+  versiones: ProductVersion[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
   selectedCategoria: number = 0;
@@ -133,7 +133,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
       if (categoriaId) {
         this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
-          (productos: Producto[]) => {
+          (productos: Product[]) => {
             this.productos = productos;
             this.selectedProducto = 0;
             this.versiones = [];
@@ -158,7 +158,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     getVersion(productoId: number) {
         if (productoId) {
           this.productoService.getVersionByProduct(productoId).subscribe(
-            (data: VersionProducto[]) => {
+            (data: ProductVersion[]) => {
               this.versiones = data;
             },
             (error) => {

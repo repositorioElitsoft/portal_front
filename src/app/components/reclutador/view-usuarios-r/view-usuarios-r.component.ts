@@ -9,9 +9,9 @@ import { Usuario} from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
-import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
+import { Product} from 'src/app/interface/producto.interface';
+import { ProductVersion } from 'src/app/interface/version-producto';
+import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
@@ -46,9 +46,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   originalDataCopy: Usuario[] = [];
   usuarios: any[] = [];
   categorias: ProductCategory[] = [];
-  productos: Producto[] = [];
+  productos: Product[] = [];
   niveles : Niveles []=[];
-  versiones: VersionProducto[] = [];
+  versiones: ProductVersion[] = [];
   selectedfechaPostulacion: Date | null = null;
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
@@ -57,7 +57,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
-  selectedVersion: number = 0;
+  selectedVersion?: number = 0;
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
   selectedEstado: string = '';
@@ -195,13 +195,13 @@ if (this.selectedfechaPostulacion) {
       }
     }
 
-    // Filtro por versión
-    if (this.selectedVersion > 0) {
-      const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
-      if (selectedVersion) {
-        filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
-      }
-    }
+    // // Filtro por versión
+    // if (this.selectedVersion > 0) {
+    //   const selectedVersion = this.versiones.find(version => version.id === this.selectedVersion);
+    //   if (selectedVersion) {
+    //     filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.name));
+    //   }
+    // }
 
 
 
@@ -293,13 +293,13 @@ if (this.selectedfechaPostulacion) {
         });
       });
     }
-    if (this.selectedVersion > 0) {
-      const [min, max] = this.selectedAniosExpRange;
-      filteredArray = filteredArray.filter(element => {
-        const anosExp = element.herr_exp.split(', ').map(Number);
-        return anosExp.some(anos => anos >= min && anos <= max);
-      });
-    }
+    // if (this.selectedVersion > 0) {
+    //   const [min, max] = this.selectedAniosExpRange;
+    //   filteredArray = filteredArray.filter(element => {
+    //     const anosExp = element.herr_exp.split(', ').map(Number);
+    //     return anosExp.some(anos => anos >= min && anos <= max);
+    //   });
+    // }
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
 
@@ -570,7 +570,7 @@ obtenerUsuarios(): void {
     this.filterInput();
     if (categoriaId) {
       this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
-        (productos: Producto[]) => {
+        (productos: Product[]) => {
           this.productos = productos;
           this.selectedProducto = 0;
           this.versiones = [];
@@ -597,7 +597,7 @@ obtenerUsuarios(): void {
     getVersion(productoId: number) {
       if (productoId) {
         this.productoService.getVersionByProduct(productoId).subscribe(
-          (data: VersionProducto[]) => {
+          (data: ProductVersion[]) => {
             this.versiones = data;
             // this.filter(new Event('input'));
           },

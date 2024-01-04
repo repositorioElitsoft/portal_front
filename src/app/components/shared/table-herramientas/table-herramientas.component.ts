@@ -5,8 +5,8 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
+import { Product} from 'src/app/interface/producto.interface';
+import {ProductVersion } from 'src/app/interface/version-producto';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { NotificationService } from 'src/app/service/notification.service';
 @Component({
@@ -19,8 +19,8 @@ export class TableHerramientasComponent implements OnInit {
   herramientas: HerramientaData[] = []
   categorias: ProductCategory[] = [];
   rows: any[] = [];
-  productByRow: Producto[][] = [];
-  versionByRow: VersionProducto[][] = [];
+  productByRow: Product[][] = [];
+  versionByRow: ProductVersion[][] = [];
   selectedCategoriaId: any;
   otroProductoValues: any[] = [];
   isLoaded: boolean = false;
@@ -78,7 +78,7 @@ export class TableHerramientasComponent implements OnInit {
       return;
     }
     this.productoService.obtenerProductosPorCategoria(selectedCategoriaIdValue).subscribe(
-      (data: Producto[]) => {
+      (data: Product[]) => {
         this.productByRow[index] = data;
       },
       (error) => {
@@ -103,7 +103,7 @@ export class TableHerramientasComponent implements OnInit {
     }
 
     this.productoService.getVersionByProduct(selectedProductoIdValue).subscribe(
-      (data: VersionProducto[] | undefined) => {
+      (data: ProductVersion[] | undefined) => {
         this.versionByRow[index] = data || [];
       },
       (error) => {
@@ -114,7 +114,7 @@ export class TableHerramientasComponent implements OnInit {
     createFormRows() {
       const rowsArray = this.herramientas.map((herramienta, index) => {
         this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.id).subscribe({
-          next: (data: Producto[]) => {
+          next: (data: Product[]) => {
             this.productByRow[index] = data;
           },
           error: (error) => {
@@ -122,7 +122,7 @@ export class TableHerramientasComponent implements OnInit {
           }
         });
         this.productoService.getVersionByProduct(herramienta.versionProducto.prd.id).subscribe({
-          next: (data: VersionProducto[]) => {
+          next: (data: ProductVersion[]) => {
             this.versionByRow[index] = data;
           },
           error: (error) => {

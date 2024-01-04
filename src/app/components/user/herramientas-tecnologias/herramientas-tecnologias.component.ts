@@ -10,24 +10,20 @@ import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { Certificacion } from 'src/app/interface/certificacion.interface';
 import { Herramientas } from 'src/app/interface/herramientas.interface';
 import { Niveles } from 'src/app/interface/niveles.interface';
-import { Producto } from 'src/app/interface/producto.interface';
+import { Product } from 'src/app/interface/producto.interface';
 @Component({
   selector: 'app-herramientas-tecnologias',
   templateUrl: './herramientas-tecnologias.component.html',
   styleUrls: ['./herramientas-tecnologias.component.css']
 })
 export class HerramientasTecnologiasComponent implements OnInit {
-  herramienta: Herramientas = {
-    herr_usr_anos_exp: '',
-    herr_usr_vrs: '',
-    usr_id: -1
-  };
+  herramienta!: Herramientas;
   selectedCategoriaId: number | undefined;
   selectedProductoId: number | undefined;
   selectedCertificadoId: number | undefined;
   selectedNivelId: number | undefined;
   categorias: ProductCategory[] = [];
-  productos: Producto[] = [];
+  productos: Product[] = [];
   certificados: Certificacion[] = [];
   niveles: Niveles[] = [];
   @ViewChild('btnradio1', { static: true }) btnradio1!: ElementRef<HTMLInputElement>;
@@ -46,7 +42,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         const usr_id = params['usr_id'];
         if (usr_id) {
-          this.herramienta.usr_id = usr_id;
+          this.herramienta.user = usr_id;
         }
         this.obtenerCategorias();
         this.obtenerProductos();
@@ -70,7 +66,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
         return;
       }
       this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
-        (data: Producto[]) => {
+        (data: Product[]) => {
           console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
         },
@@ -131,9 +127,9 @@ export class HerramientasTecnologiasComponent implements OnInit {
     if (!this.selectedNivelId) {
       return;
     }
-    this.herramienta.cat_prod_id = this.selectedCategoriaId;
+    this.herramienta.productVersion.product.id= this.selectedCategoriaId;
     this.herramienta.id = this.selectedProductoId;
-    this.herramienta.cert_id = this.selectedCertificadoId;
-    this.herramienta.nvl_id = this.selectedNivelId;
+    this.herramienta.certification= this.selectedCertificadoId;
+    this.herramienta.level = this.selectedNivelId;
   }
 }

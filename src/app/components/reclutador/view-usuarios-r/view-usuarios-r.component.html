@@ -92,7 +92,7 @@
           <mat-label>Versión</mat-label>
           <mat-select [disabled]="!selectedNivel" [(value)]="selectedVersion" (selectionChange)="filterVersion()">
             <mat-option value="">Seleccione un opción</mat-option>
-            <mat-option *ngFor="let version of versiones" [value]="version.vrs_id">{{ version.vrs_name }}</mat-option>
+            <mat-option *ngFor="let version of versiones" [value]="version.id">{{ version.name }}</mat-option>
           </mat-select>
         </mat-form-field>
         </div>
