@@ -1,6 +1,6 @@
-import { CategoriaObservacion } from "./categoriaobservacion.interface";
+import { ObservationCategory } from "./observationcategory.interface";
 import { User } from "./user.interface";
-export interface Observacion {
+export interface Observation {
   obs_id: number;
   obs_desc: string;
   obs_fec_cre: Date;
@@ -11,5 +11,5 @@ export interface Observacion {
   usuario: User;
   usr_id_obs: number;
   usr_id_obs_mod: number;
-  categoriaObservacion: CategoriaObservacion;
+  categoriaObservacion: ObservationCategory;
 }

@@ -63,7 +63,7 @@
     <mat-label>Categoria</mat-label>
     <mat-select [(value)]="selectedCategoria" (selectionChange)="getProductos(selectedCategoria)" [disabled]="filtro !== ''">
       <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.cat_prod_nom }}</mat-option>
+      <mat-option *ngFor="let categoria of categorias" [value]="categoria.cat_prod_id">{{ categoria.name }}</mat-option>
     </mat-select>
   </mat-form-field>
   <!-- Filtro por Producto -->
