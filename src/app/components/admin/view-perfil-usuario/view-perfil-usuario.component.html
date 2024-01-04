@@ -4,21 +4,21 @@
       <div class="col-md-6 offset-md-3">
         <div class="card">
           <div class="card-header">
-            <h4>Perfil de Usuario</h4>
+            <h4>Perfil de User</h4>
           </div>
           <div class="card-body">
             <div class="user-profile">
               <div class="profile-item">
                 <label>Nombre:</label>
-                <p>{{ usuario.usr_nom }}</p>
+                <p>{{ usuario.name }}</p>
               </div>
               <div class="profile-item">
                 <label>Apellidos:</label>
-                <p>{{ usuario.usr_ap_pat }} {{ usuario.usr_ap_mat }}</p>
+                <p>{{ usuario.firstLastname }} {{ usuario.secondLastname }}</p>
               </div>
               <div class="profile-item">
                 <label>RUT:</label>
-                <p>{{ usuario.usr_rut }}</p>
+                <p>{{ usuario.rut }}</p>
               </div>
               <div class="profile-item">
                 <label>Correo Electrónico:</label>
@@ -26,11 +26,11 @@
               </div>
               <div class="profile-item">
                 <label>Teléfono:</label>
-                <p>{{ usuario.usr_tel }}</p>
+                <p>{{ usuario.phone }}</p>
               </div>
               <div class="profile-item">
                 <label>URL de LinkedIn:</label>
-                <p>{{ usuario.usr_url_link }}</p>
+                <p>{{ usuario.linkedin }}</p>
               </div>
               <div class="profile-item">
                 <label>Rol:</label>

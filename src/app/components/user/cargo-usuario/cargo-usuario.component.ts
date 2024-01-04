@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -28,7 +28,7 @@ export class CargoUsuarioComponent implements OnInit {
     });
   }
   constructor(
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     private cargosusuarioService:CargosUsuarioService,
     private JobPositionService:JobPositionService,

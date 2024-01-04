@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/service/notification.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserEditarDTO} from 'src/app/interface/user.interface';
@@ -16,16 +16,16 @@ export class AddUsuariosComponent implements OnInit {
   userDataForm: FormGroup;
   usrId:number | null = null
   usuario: UserEditarDTO = {
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat:'',
-    usr_email:'',
-    usr_direcc:'',
-    usr_pass:'',
-    usr_rol:'',
+    name: '',
+    firstLastname: '',
+    secondLastname:'',
+    email:'',
+    address:'',
+    password:'',
+    roles:'',
   }
   hide = true;
-  constructor( private usuarioService:UsuarioService,
+  constructor( private userService:UserService,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -33,23 +33,23 @@ export class AddUsuariosComponent implements OnInit {
     private _snackBar: MatSnackBar) {
 
     this.userDataForm = this.formBuilder.group({
-      usr_nom: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
-      usr_ap_pat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
-      usr_ap_mat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
-      usr_email: ['', [Validators.required, Validators.email, Validators.maxLength(30), Validators.minLength(3)]],
-      usr_pass: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(3)]],
-      usr_rol: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
+      firstLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
+      secondLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(30), Validators.minLength(3)]],
+      password: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(3)]],
+      roles: ['', Validators.required],
     });
   }
   ngOnInit(): void {
     this.usrId = this.data ? this.data.usuarioId : null;
     if (this.usrId) {
       console.log('existo');
-      this.usuarioService.getUsuarioId(this.usrId).subscribe({
+      this.userService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
           this.userDataForm.patchValue(data);
-          this.usuario.usr_id = data.usr_id;
-          console.log(data.usr_id, 'usuario enviado');
+          this.usuario.id = data.id;
+          console.log(data.id, 'usuario enviado');
         },
         error: (err) => {
           console.log(err, 'error');
@@ -72,9 +72,9 @@ export class AddUsuariosComponent implements OnInit {
     if(this.usrId){
       this.usuario=this.userDataForm.value;
       console.log(this.usuario, 'usuario para act')
-      this.usuarioService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
+      this.userService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
         next:(dato:any) => {
-          this._snackBar.open("Usuario actualizado con éxito","Cerrar",{
+          this._snackBar.open("User actualizado con éxito","Cerrar",{
             duration:1000
           })
           this.cancelar();
@@ -87,8 +87,8 @@ export class AddUsuariosComponent implements OnInit {
       })
       return
     }
-    if (userData.usr_rol === 'ADMIN') {
-      this.usuarioService.guardarAdmin(userData).subscribe(
+    if (userData.roles === 'ADMIN') {
+      this.userService.guardarAdmin(userData).subscribe(
         (data) => {
           console.log(data);
           this.notification.showNotification(
@@ -101,8 +101,8 @@ export class AddUsuariosComponent implements OnInit {
           console.log(error);
         }
       );
-    } else if (userData.usr_rol === 'REC') {
-      this.usuarioService.guardarRec(userData).subscribe(
+    } else if (userData.roles === 'REC') {
+      this.userService.guardarRec(userData).subscribe(
         (data) => {
           console.log(data);
           this.notification.showNotification(

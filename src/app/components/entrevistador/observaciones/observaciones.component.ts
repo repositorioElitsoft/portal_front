@@ -6,9 +6,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { forkJoin } from 'rxjs';
@@ -19,7 +19,7 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { ProductoService } from 'src/app/service/producto.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 
-const ELEMENT_DATA: Usuario[] = [];
+const ELEMENT_DATA: any[] = [];
 
 @Component({
   selector: 'app-observaciones',
@@ -27,14 +27,14 @@ const ELEMENT_DATA: Usuario[] = [];
   styleUrls: ['./observaciones.component.css']
 })
 export class ObservacionesComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['name', 'phone', 'email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
   idUser: string = '';
   filtro: string = '';
   filtroPuntaje: string = '';
-  originalDataCopy: Usuario[] = [];
-  usuarios: Usuario[] = [];
+  originalDataCopy: any[] = [];
+  usuarios: any[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
@@ -51,7 +51,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(private userService: UserService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     public dialog: MatDialog, private _snackBar: MatSnackBar,
@@ -70,17 +70,17 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       this.dataSource.sort = this.sort;
     }
     obtenerUsuarios(): void {
-      this.usuarioService.obtenerUsuarios().subscribe(
+      this.userService.obtenerUsuarios().subscribe(
         (data: any[]) => {
           const usuarios = data
-            .filter((usuario) => usuario.usr_rol === 'GUEST')
+            .filter((usuario) => usuario.roles === 'GUEST')
             .map((usuario) => ({
-              usr_nom: usuario.usr_nom + " " + usuario.usr_ap_pat + " " + usuario.usr_ap_mat || '',
-              usr_tel: usuario.usr_tel || '',
-              usr_email: usuario.usr_email || '',
-              usr_rol: usuario.usr_rol || '',
-              usr_direcc:usuario.usr_direcc || '',
-              usr_herr: usuario.herramientas
+              name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
+              phone: usuario.phone || '',
+              email: usuario.email || '',
+              roles: usuario.roles || '',
+              address:usuario.address || '',
+              tools: usuario.herramientas
                 .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
                 .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
                 .join(', '),
@@ -93,7 +93,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
                 .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
                 .join(', '),
               laborales: usuario.laborales,
-              usr_id: usuario.usr_id,
+              id: usuario.id,
               cvPath: usuario.cvPath,
             }));
           this.originalDataCopy = usuarios;
@@ -172,7 +172,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       console.log('User ID:', userId);
       forkJoin({
         observadores: this.observacionReclutadorService.obtenerCatObservacionesPorUsuarioId(userId),
-        usuario: this.usuarioService.getUsuarioId(userId)
+        usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {
           const { observadores, usuario } = resultados;

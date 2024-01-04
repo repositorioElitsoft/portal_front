@@ -3,8 +3,8 @@ import { Observable, map } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { UploadFilesService } from 'src/app/service/upload-files.service';
 import { FileDescriptor } from 'src/app/interface/file-descriptor.interface';
-import { Usuario } from 'src/app/interface/user.interface';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { User } from 'src/app/interface/user.interface';
+import { UserService } from 'src/app/service/user.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-view-files',
@@ -18,26 +18,11 @@ export class ViewFilesComponent implements OnInit {
   filename = '';
   fileInfos!: Observable<FileDescriptor[]>;
   isLoading = false;
-  usuarioGuardado: Usuario = {
-    usr_id: 0,  
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_pass: '',
-    usr_tel: '',
-    usr_url_link: '', 
-    usr_direcc:'',
-    usr_herr: '',
-    herr_ver: '',
-    herr_exp: '',
-    laborales: [],
-  };
+  usuarioGuardado!: User;
   constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA,) 
   public data: any,
   private dialogRef: MatDialogRef<ViewFilesComponent>
-     )  {     this.usuarioGuardado.usr_id = data.userId; }
+     )  {     this.usuarioGuardado.id = data.userId; }
 
   ngOnInit(): void {
     this.loadFiles();
@@ -55,7 +40,7 @@ export class ViewFilesComponent implements OnInit {
       : this.selectedFiles[0].name;
   }
   deleteFile(filename: string): void {
-    this.uploadService.deleteFile(filename,this.usuarioGuardado.usr_id ?? 0).subscribe(
+    this.uploadService.deleteFile(filename,this.usuarioGuardado.id ?? 0).subscribe(
       () => {
         this.message = "Archivo eliminado con éxito.";
         this.loadFiles();  
@@ -66,7 +51,7 @@ export class ViewFilesComponent implements OnInit {
     );
   }
   private loadFiles(): void {
-    this.fileInfos = this.uploadService.getFiles(this.usuarioGuardado.usr_id ?? 0).pipe(
+    this.fileInfos = this.uploadService.getFiles(this.usuarioGuardado.id ?? 0).pipe(
       map(files => files.sort((a: { uploadDate: string | number | Date; }, b: { uploadDate: string | number | Date; }) => {
         return new Date(b.uploadDate).getTime() - new Date(a.uploadDate).getTime();
       }).slice(0, 20))
@@ -82,14 +67,14 @@ export class ViewFilesComponent implements OnInit {
     }
   }
   upload(index: number, file: File): void {
-    if (!this.usuarioGuardado || this.usuarioGuardado.usr_id === null || this.usuarioGuardado.usr_id === undefined) {
+    if (!this.usuarioGuardado || this.usuarioGuardado.id === null || this.usuarioGuardado.id === undefined) {
       this.message = "El usuario no tiene un ID válido.";
       return;
     }
     this.progressInfo[index] = { value: 0, fileName: file.name };
     const formData = new FormData();
     formData.append('files', file);
-    this.uploadService.upload(formData, this.usuarioGuardado.usr_id).subscribe(
+    this.uploadService.upload(formData, this.usuarioGuardado.id).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress && event.total) {
           this.progressInfo[index].value = Math.round(100 * (event.loaded / event.total));

@@ -1,13 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
-import { Usuario } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
 
-import { UsuarioService } from 'src/app/service/usuario.service';
+
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { State } from 'src/app/interface/state.interface';
 import { City } from 'src/app/interface/city.interface';
@@ -15,6 +15,7 @@ import { CityService } from 'src/app/service/city.service';
 import { CountryService } from 'src/app/service/country.service';
 import { StateService } from 'src/app/service/state.service';
 import { Country } from 'src/app/interface/country.interface';
+import { UserService } from 'src/app/service/user.service';
 @Component({
   selector: 'app-datos-personales',
   templateUrl: './datos-personales.component.html',
@@ -28,32 +29,12 @@ export class DatosPersonalesComponent implements OnInit {
   cities: City[] = []; 
   isLoaded: boolean = true
   isUploadingFile: boolean = false
-  usuarioGuardado: Usuario = {
-    usr_id:0,
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_pass: '',
-    usr_tel: '',
-    usr_gen:'',
-    usr_gen_otro:'',
-    usr_url_link: '',
-    city: {
-      id: undefined,
-    },
-    usr_direcc:'',
-    usr_herr: '',
-    herr_ver: '',
-    herr_exp: '',
-    laborales: [],
-    cargoUsuario: []
-  };
+  usuarioGuardado!: User
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private countryService: CountryService,
     private stateService: StateService,
     private cityService: CityService,
@@ -65,18 +46,18 @@ export class DatosPersonalesComponent implements OnInit {
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      usr_rut: ["",[Validators.required, rutValido]],
-      usr_nom: ["",[Validators.required]],
-      usr_ap_pat: ["",[Validators.required]],
-      usr_ap_mat: ["",[Validators.required]],
+      rut: ["",[Validators.required, rutValido]],
+      name: ["",[Validators.required]],
+      firstLastname: ["",[Validators.required]],
+      secondLastname: ["",[Validators.required]],
       country: ["1", [Validators.required]],
       state: ["", [Validators.required]],
       city: this.formBuilder.group({
         id:['', Validators.required]
       }),
-      usr_direcc:["", Validators.required],
-      usr_url_link: ["",[]],
-      usr_tel: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
+      address:["", Validators.required],
+      linkedin: ["",[]],
+      phone: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
       usr_gen:["Masculino", [Validators.required]],
       usr_gen_otro: ["", [Validators.required]]
     });
@@ -162,7 +143,7 @@ export class DatosPersonalesComponent implements OnInit {
       const formData: FormData = new FormData();
       formData.append('file', inputNode.files[0]);
       this.isUploadingFile = true
-      this.usuarioService.actualizarCV(formData).subscribe({
+      this.userService.actualizarCV(formData).subscribe({
         next: (response) => {
           this.isUploadingFile = false;
           this.currentResumeName = inputNode.files[0].name;
@@ -178,25 +159,18 @@ export class DatosPersonalesComponent implements OnInit {
     }
   }
    ObtenerUsuarioGuardado() {
-    this.usuarioService.obtenerUsuarioGuardado().subscribe({
-      next: (data) => {
+    this.userService.getCurrentUser().subscribe({
+      next: (data: any) => {
         this.usuarioGuardado = data;
         this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
-        this.form.patchValue({
-          usr_rut: this.usuarioGuardado.usr_rut,
-          usr_nom: this.usuarioGuardado.usr_nom,
-          usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
-          usr_ap_mat: this.usuarioGuardado.usr_ap_mat,
-          usr_direcc: this.usuarioGuardado.usr_direcc,
-          city:this.usuarioGuardado.city,
-          usr_url_link: this.usuarioGuardado.usr_url_link,
-          usr_tel: this.usuarioGuardado.usr_tel,
-          usr_gen_otro:this.usuarioGuardado.usr_gen_otro,
-        });
+        this.form.patchValue(data);
+        /*
         this.form.get('usr_gen')?.setValue(this.usuarioGuardado.usr_gen)
-      if (this.usuarioGuardado.usr_gen === 'Otro') {
-        this.form.get('usr_gen')?.setValue('Otro');
-      }
+
+        if (this.usuarioGuardado.usr_gen === 'Otro') {
+          this.form.get('usr_gen')?.setValue('Otro');
+        }*/
+
         this.isLoaded= true;
         const inputElement = document.getElementById("inputTelefono");
         if (inputElement) {
@@ -235,19 +209,18 @@ export class DatosPersonalesComponent implements OnInit {
           }
         });
       },
-      error: (err) => {
+      error: (err: any) => {
         console.log(err);
       }
     });
   }
   async submitForm(event: Event) {
     event.preventDefault();
-    const user: Usuario = this.form.value;
-  if (user.usr_gen === 'Otro') {
-    user.usr_gen = user.usr_gen_otro;
-    }
+    const user: User = this.form.value;
+
     try {
-      await this.usuarioService.updateUsuario(user).toPromise();
+      /*
+      await this.userService.updateUsuario(user).toPromise();*/
       const isConfirmed = await this.notification.showNotification(
         "success",
         "Datos guardados",
@@ -261,12 +234,12 @@ export class DatosPersonalesComponent implements OnInit {
     }
   }
   borrarCV() {
-    if (this.usuarioGuardado?.usr_id){
-    this.usuarioService.borrarCV(this.usuarioGuardado.usr_id).subscribe({
+    if (this.usuarioGuardado?.id){
+    this.userService.borrarCV(this.usuarioGuardado.id).subscribe({
       next: () => {
         this.currentResumeName = undefined;
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error al eliminar CV:', err);
       },
     });

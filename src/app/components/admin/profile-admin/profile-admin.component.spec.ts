@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileAdminComponent } from './profile-admin.component';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, convertToParamMap, ParamMap } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
@@ -21,7 +21,7 @@ describe('ProfileAdminComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ProfileAdminComponent],
       imports: [HttpClientModule],
-      providers: [UsuarioService, { provide: ActivatedRoute, useValue: activatedRoute }],
+      providers: [UserService, { provide: ActivatedRoute, useValue: activatedRoute }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileAdminComponent);

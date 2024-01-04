@@ -5,31 +5,31 @@
   <br>
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
          class="mat-elevation-z8">
-    <ng-container matColumnDef="usr_nom">
+    <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-      <td mat-cell *matCellDef="let element"> {{element.usr_nom}} {{element.usr_ap_pat}}  {{element.usr_ap_mat}}  </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}} {{element.firstLastname}}  {{element.secondLastname}}  </td>
     </ng-container>
     <!-- Name Column -->
-    <ng-container matColumnDef="usr_tel">
+    <ng-container matColumnDef="phone">
       <th mat-header-cell *matHeaderCellDef > Telefono </th>
-      <td mat-cell *matCellDef="let element"> {{element.usr_tel}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
     </ng-container>
     <!-- Weight Column -->
-    <ng-container matColumnDef="usr_email">
+    <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef> Correo </th>
-      <td mat-cell *matCellDef="let element"> {{element.usr_email}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
     </ng-container>
     <ng-container matColumnDef="acciones">
       <th mat-header-cell *matHeaderCellDef> Acciones </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-mini-fab class="minifab" id="{{element.usr_id}}" matTooltip="Ver perfil" (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
+        <button mat-mini-fab class="minifab" id="{{element.id}}" matTooltip="Ver perfil" (click)="openUserProfile($event)" aria-label="Example icon button with a menu icon">
           <mat-icon>menu</mat-icon>
         </button>
       </td>
     </ng-container>
-    <ng-container matColumnDef="usr_herr">
+    <ng-container matColumnDef="tools">
       <th mat-header-cell *matHeaderCellDef> Herramientas </th>
-      <td mat-cell *matCellDef="let element">{{element.usr_herr}}</td>
+      <td mat-cell *matCellDef="let element">{{element.tools}}</td>
     </ng-container>
     <ng-container matColumnDef="herr_ver">
       <th mat-header-cell *matHeaderCellDef> Versiones </th>

@@ -9,17 +9,17 @@
 <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
        class="mat-elevation-z8">
   <!-- Position Column -->
-  <ng-container matColumnDef="usr_nom">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Título </th>
     <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
   </ng-container>
   <!-- Name Column -->
-  <ng-container matColumnDef="usr_tel">
+  <ng-container matColumnDef="phone">
     <th mat-header-cell *matHeaderCellDef > N° Preguntas </th>
     <td mat-cell *matCellDef="let element"> {{element.numeroDePreguntas}} </td>
   </ng-container>
   <!-- Weight Column -->
-  <ng-container matColumnDef="usr_email">
+  <ng-container matColumnDef="email">
     <th mat-header-cell *matHeaderCellDef> Categoría </th>
     <td mat-cell *matCellDef="let element"> 
       <div *ngIf="element.categoria">{{element.categoria.titulo}} </div>
