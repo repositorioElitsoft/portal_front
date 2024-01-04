@@ -31,6 +31,7 @@ import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
+import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 const ELEMENT_DATA: Usuario[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -136,14 +137,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     let filteredArray = this.originalDataCopy;
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
-      return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
+      return usuario.cargoUsuario && usuario.cargoUsuario.some((cargo: CargoUsuario) => {
         const sueldo = cargo.crg_usr_pret; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
     if (this.selectedCargo > 0) {
       filteredArray = filteredArray.filter(usuario => {
-        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.jobPosition && cargo.jobPosition.id === this.selectedCargo);
+        return usuario.cargoUsuario && usuario.cargoUsuario.some((cargo: CargoUsuario) => cargo.jobPosition && cargo.jobPosition.id === this.selectedCargo);
       });
     }
 if (this.selectedfechaPostulacion) {
@@ -182,7 +183,7 @@ if (this.selectedfechaPostulacion) {
     // Filtro por estado
     if (this.selectedEstado && this.selectedEstado !== '') {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.cargoUsuario && usuario.cargoUsuario.some((estado) => estado.disponibilidad === this.selectedEstado);
+        return usuario.cargoUsuario && usuario.cargoUsuario.some((estado: any) => estado.disponibilidad === this.selectedEstado);
       });
     }
 
@@ -278,7 +279,7 @@ if (this.selectedfechaPostulacion) {
     //Filtro
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.laborales?.some((experiencia) => {
+        return usuario.laborales?.some((experiencia : any) => {
           return experiencia.herramientas?.some((herramienta: any) => {
             const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
@@ -296,7 +297,7 @@ if (this.selectedfechaPostulacion) {
       const [min, max] = this.selectedAniosExpRange;
       filteredArray = filteredArray.filter(element => {
         const anosExp = element.herr_exp.split(', ').map(Number);
-        return anosExp.some(anos => anos >= min && anos <= max);
+        return anosExp.some((anos: any) => anos >= min && anos <= max);
       });
     }
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
@@ -310,7 +311,7 @@ if (this.selectedfechaPostulacion) {
     if (this.filterCargo) {
       const filtroCargoLowerCase = this.filterCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario =>
-        usuario.cargoUsuario?.some(cargo =>
+        usuario.cargoUsuario?.some((cargo: CargoUsuario) =>
           cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
         )
       );
