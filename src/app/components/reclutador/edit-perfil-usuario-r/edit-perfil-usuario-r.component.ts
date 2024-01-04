@@ -89,7 +89,7 @@ export class EditPerfilUsuarioRComponent implements OnInit {
         });
         return;
     }
-    this.userService.updateUsuario(userData).subscribe({
+    this.userService.updateUser(userData).subscribe({
         next: (data) => {
             this.notification.showNotification(
                 'success',

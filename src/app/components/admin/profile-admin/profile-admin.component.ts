@@ -73,7 +73,7 @@ export class ProfileAdminComponent implements OnInit {
     const user: User = this.form.value;
     console.log(user)
     try {
-      await this.userService.updateUsuario(user).toPromise();
+      await this.userService.updateUser(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
         "success",
         "Datos guardados",
