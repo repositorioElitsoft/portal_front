@@ -14,12 +14,12 @@
   <div class="sidebar">
 </div>
   <mat-card class="container-datos-personales">
-    <h4 class="perfilr">Cargo a Postular</h4>
+    <h4 class="perfilr">Cargos activos en Elitsoft</h4>
     <mat-card class="contenedorform">
     <div class="div-inputs">
       <form [formGroup]="form" (ngSubmit)="submitForm($event)">
         <div class="row mb-3">
-          <label for="cargosE"  class="col-m-2 col-form-label">Cargos Elitsoft:</label>
+          <label for="cargosE"  class="col-m-2 col-form-label">Cargo a Postular:</label>
           <div class="combobox col-sm-15">
             <select class="form-control" id="cargosE" formControlName="crg_elit_id" name="cargosE">
               <option *ngFor="let cargo of JobPosition" [value]="cargo.id">{{ cargo.name}}</option>
