@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { Academical } from 'src/app/interface/academical.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,7 +22,7 @@ export class AñadirEstudioComponent implements OnInit {
   today: string;
   navigateToRoute: any;
   constructor(
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private academicaService: AcademicaService,
@@ -115,10 +115,10 @@ obtenerAcademicasGuardados() {
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
-      ref_acad_nom: [''],
-      ref_acad_ins: [''],
-      ref_acad_email: [''],
-      ref_acad_tel: ['']
+      name: [''],
+      institution: [''],
+      email: [''],
+      phone: ['']
     });
     this.referenciaFormArray.push(referenciaFormGroup);
   }

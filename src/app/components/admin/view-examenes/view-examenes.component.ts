@@ -7,7 +7,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Examen } from 'src/app/interface/examen.interface';
-import { Usuario } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 import { ExamenService } from 'src/app/service/examen.service';
 import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/advertencia-eliminar.component';
 import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
@@ -19,11 +19,11 @@ const ELEMENT_DATA: Examen[] = [];
   styleUrls: ['./view-examenes.component.css']
 })
 export class ViewExamenesComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones'];
+  displayedColumns: any[] = ['name', 'phone', 'email', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: Examen[] = [];
-  usuarios: Usuario[] = [];
+  usuarios: User[] = [];
   categorias: CategoriaProducto[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   selectedProductoNombre: string | undefined = "";

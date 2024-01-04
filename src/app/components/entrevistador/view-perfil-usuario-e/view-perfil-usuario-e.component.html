@@ -7,20 +7,20 @@
       <mat-icon>keyboard_arrow_left</mat-icon>
     </button>
 
-    <h2 class="card-title-custom">Perfil de Usuario </h2>
+    <h2 class="card-title-custom">Perfil de User </h2>
     </div>
   </div>
   <div class="card-body">
     <div class="user-profile">
 
-      <!-- Agrega más campos del perfil según tu entidad Usuario -->
+      <!-- Agrega más campos del perfil según tu entidad User -->
 
   <mat-tab-group>
 
     <mat-tab label="Datos Personales">
       <mat-list>
       <mat-list-item>
-        <span matListItemTitle>{{ usuarioData.usr_nom }} {{ usuarioData.usr_ap_pat }} {{ usuarioData.usr_ap_mat }}</span>
+        <span matListItemTitle>{{ usuarioData.name }} {{ usuarioData.firstLastname }} {{ usuarioData.secondLastname }}</span>
         <span matListItemLine>Nombre</span>
         <div matListItemIcon>
           <mat-icon>person</mat-icon>
@@ -28,29 +28,29 @@
 
       </mat-list-item>
       <mat-list-item>
-        <span matListItemTitle>{{ usuarioData.usr_rut }}</span>
+        <span matListItemTitle>{{ usuarioData.rut }}</span>
         <span matListItemLine>Rut</span>
         <div matListItemIcon>
           <mat-icon>credit_card</mat-icon>
         </div>
       </mat-list-item>
       <mat-list-item>
-        <span matListItemTitle>{{ usuarioData.usr_email}}</span>
+        <span matListItemTitle>{{ usuarioData.email}}</span>
         <span matListItemLine>Correo Electrónico</span>
         <div matListItemIcon>
           <mat-icon>email</mat-icon>
         </div>
       </mat-list-item>
       <mat-list-item>
-        <span matListItemTitle>{{ usuarioData.usr_tel}}</span>
+        <span matListItemTitle>{{ usuarioData.phone}}</span>
         <span matListItemLine>Teléfono</span>
         <div matListItemIcon>
           <mat-icon>phone</mat-icon>
         </div>
       </mat-list-item>
       <mat-list-item>
-        <span matListItemTitle *ngIf="usuarioData.usr_url_link">{{ usuarioData.usr_url_link}}</span>
-        <span matListItemTitle *ngIf="!usuarioData.usr_url_link">No especificado</span>
+        <span matListItemTitle *ngIf="usuarioData.linkedin">{{ usuarioData.linkedin}}</span>
+        <span matListItemTitle *ngIf="!usuarioData.linkedin">No especificado</span>
         <span matListItemLine>LinkedIn</span>
 
         <div matListItemIcon>
@@ -60,9 +60,9 @@
       </mat-list>
     </mat-tab>
     <mat-tab label="Información Laboral">
-      <mat-list>
-        <mat-list-item *ngFor="let cargo of usuarioData.cargoUsuario">
-          <span matListItemTitle>{{ cargo.jobPosition.crg_elit_nom }}</span>
+        <mat-list> 
+        <mat-list-item *ngFor="let cargo of usuarioData.userJob">
+          <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
           <span matListItemLine>Cargo a postular</span>
           <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
 
@@ -182,7 +182,7 @@
 
           <div>
             <button mat-button matStepperPrevious class="botonprimario m-1">Regresar</button>
-            <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.usr_id)">Guardar</button>
+            <button mat-button  class="botonprimario m-1" (click)="guardarObservacionCat(this.usuarioData.id)">Guardar</button>
 
           </div>
         </mat-step>
@@ -202,7 +202,7 @@
               <div mat-card-avatar class="avatar">
               </div>
 
-              <mat-card-title>Creador por: {{ observadores.usr_nom }}</mat-card-title>
+              <mat-card-title>Creador por: {{ observadores.name }}</mat-card-title>
               <mat-card-subtitle>Modificado por: {{ observadores.usr2_nom }}</mat-card-subtitle>
             </mat-card-header>
           </mat-card>

@@ -1,16 +1,16 @@
   
-  <mat-card-header><h2 class="perfilr">Agregar Usuario</h2></mat-card-header>
+  <mat-card-header><h2 class="perfilr">Agregar User</h2></mat-card-header>
   <mat-card-content>
     <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
 
       <!-- Nombre -->
       <mat-form-field class="full-width">
         <mat-label>Nombre</mat-label>
-        <input matInput formControlName="usr_nom" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_nom')?.hasError('required')">
+        <input matInput formControlName="name" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('name')?.hasError('required')">
           *Nombre es requerido.
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_nom')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('name')?.hasError('maxlength')">
           *Nombre no debe exceder 30 caracteres
         </mat-error>
       </mat-form-field>
@@ -18,11 +18,11 @@
       <!-- Apellido Paterno -->
       <mat-form-field class="full-width">
         <mat-label>Apellido Paterno</mat-label>
-        <input matInput formControlName="usr_ap_pat" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_ap_pat')?.hasError('required')">
+        <input matInput formControlName="firstLastname" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('required')">
           *Apellido Paterno es requerido
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_ap_pat')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('maxlength')">
           *Apellido Paterno no debe exceder 30 caracteres
         </mat-error>
       </mat-form-field>
@@ -30,11 +30,11 @@
       <!-- Apellido Materno -->
       <mat-form-field class="full-width">
         <mat-label>Apellido Materno</mat-label>
-        <input matInput formControlName="usr_ap_mat" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_ap_mat')?.hasError('required')">
+        <input matInput formControlName="secondLastname" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('required')">
           *Apellido Materno es requerido
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_ap_mat')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('maxlength')">
           *Apellido Materno no debe exceder 30 caracteres
         </mat-error>
       </mat-form-field>
@@ -42,14 +42,14 @@
       <!-- Email -->
       <mat-form-field class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="usr_email" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_email')?.hasError('required')">
+        <input matInput formControlName="email" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('email')?.hasError('required')">
           *Email es requerido
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_email')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('email')?.hasError('maxlength')">
           *Email no debe exceder 30 caracteres
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_email')?.hasError('email')">
+        <mat-error *ngIf="userDataForm.get('email')?.hasError('email')">
           *Email no es válido
         </mat-error>
       </mat-form-field>
@@ -58,28 +58,28 @@
  <!-- Contraseña -->
 <mat-form-field class="full-width">
   <mat-label>Contraseña</mat-label>
-  <input matInput [type]="hide ? 'password' : 'text'" formControlName="usr_pass" required maxlength="8">
+  <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required maxlength="8">
   
   <button mat-icon-button matSuffix (click)="$event.preventDefault(); hide = !hide" [attr.aria-label]="'Toggle password visibility'" [attr.aria-pressed]="hide">
     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
   </button>
 
-  <mat-error *ngIf="userDataForm.get('usr_pass')?.hasError('required')">
+  <mat-error *ngIf="userDataForm.get('password')?.hasError('required')">
     *Contraseña es requerida
   </mat-error>
-  <mat-error *ngIf="userDataForm.get('usr_pass')?.hasError('maxlength')">
+  <mat-error *ngIf="userDataForm.get('password')?.hasError('maxlength')">
     *Contraseña no debe exceder 8 caracteres
   </mat-error>
 </mat-form-field>
       <!-- Selector de Rol -->
       <mat-form-field class="full-width">
         <mat-label>Rol</mat-label>
-        <mat-select formControlName="usr_rol">
+        <mat-select formControlName="roles">
           <mat-option value="" disabled>Seleccione un Rol</mat-option>
           <mat-option value="ADMIN">Administrador</mat-option>
           <mat-option value="REC">Reclutador</mat-option>
         </mat-select>
-        <mat-error *ngIf="userDataForm.get('usr_rol')?.hasError('required')">
+        <mat-error *ngIf="userDataForm.get('roles')?.hasError('required')">
           *Rol es requerido
         </mat-error>
       </mat-form-field>

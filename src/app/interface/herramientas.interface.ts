@@ -7,7 +7,7 @@ export interface Herramientas {
     prd_id?: number;
     cert_id?: number;
     nvl_id?: number;
-    usr_id?: number;
+    id?: number;
     prd_nom?: string;
     producto?: Producto;
 }

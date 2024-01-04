@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observacion, ObservacionDTO } from 'src/app/interface/observacionreclutador.interface';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
 import { interval, Subscription } from 'rxjs';
-import { UsuarioService } from 'src/app/service/usuario.service';
-import { UserSesionDTO, Usuario } from 'src/app/interface/user.interface';
+import { UserService } from 'src/app/service/user.service';
+import { UserSesionDTO, User } from 'src/app/interface/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-view-perfil-usuario-r',
@@ -20,13 +20,13 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   enEdicion: any;
   nombresUsuarios: Object[] = []; 
   usuarioGuardado: UserSesionDTO = {
-    usr_id:0,
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_tel: '',
+    id:0,
+    rut: '',
+    name: '',
+    firstLastname: '',
+    secondLastname: '',
+    email: '',
+    phone: '',
   };
   panelOpenState = false;
   observadores: ObservacionDTO ={
@@ -44,13 +44,13 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
    usr1_id: 0,
    usr_id_obs:0,    
    usr_id_obs_mod: 0,   
-   usr_id: 0,   
-   usr_nom:'',
-   usr_ap_pat:'',
-   usr_email:'',
+   id: 0,   
+   name:'',
+   firstLastname:'',
+   email:'',
   }
   constructor(
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     public dialogRef: MatDialogRef<ViewPerfilUsuarioRComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private observacionService: ObservacionService,
@@ -64,7 +64,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     this.cargarObservaciones();
   }
 cargarObservaciones() {
-  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.usr_id).subscribe(
+  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
     (observadores) => {
       this.observaciones = observadores;
     },
@@ -78,7 +78,7 @@ guardarObservacion() {
     this.openSnackBar('La observación no puede estar vacía', 'Cerrar');
     return;
   }
-  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.usr_id).subscribe(
+  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
     (observaciones) => {
       if (observaciones.length >= 10) {
         console.error('Se ha alcanzado el límite máximo de observaciones.');
@@ -87,25 +87,25 @@ guardarObservacion() {
       }
       const nuevaObservacion: ObservacionDTO = {
         obs_id: 0,
-        usr_id: 0,
-        usr_nom: '',
-        usr_email: '',
-        usr_ap_pat: '',
+        id: 0,
+        name: '',
+        email: '',
+        firstLastname: '',
         obs_desc: this.nuevaObservacion,
         obs_fec_cre: new Date(),
         obs_fec_mod: new Date(),
         apr_tec: '',
         apr_oper: '',
         apr_ger: '',
-        usr_id_obs: this.usuarioGuardado.usr_id ?? 0,
-        usr_id_obs_mod: this.usuarioGuardado.usr_id ?? 0,
+        usr_id_obs: this.usuarioGuardado.id ?? 0,
+        usr_id_obs_mod: this.usuarioGuardado.id ?? 0,
         usr1_id: 0,
         usr2_email: '',
         usr2_ap_pat: '',
         usr2_nom: '',
         usr2_id: 0,
       };
-      this.observacionService.guardarObservacionRec(nuevaObservacion, this.usuarioData.usr_id, nuevaObservacion.usr_id_obs,
+      this.observacionService.guardarObservacionRec(nuevaObservacion, this.usuarioData.id, nuevaObservacion.usr_id_obs,
           nuevaObservacion.usr_id_obs_mod).subscribe(
         (resultado) => {
           this.cargarObservaciones(); 
@@ -133,8 +133,8 @@ actualizarObservacion(observadores: ObservacionDTO) {
     this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
     return;
   }
-  observadores.usr_id_obs_mod = this.usuarioGuardado?.usr_id ?? 0;
-  this.observacionService.actualizarObservacionRec(observadores.usr_id, observadores, observadores.usr_id_obs_mod).subscribe(
+  observadores.usr_id_obs_mod = this.usuarioGuardado?.id ?? 0;
+  this.observacionService.actualizarObservacionRec(observadores.id, observadores, observadores.usr_id_obs_mod).subscribe(
     (resultado) => {
       this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
       this.enEdicion = null; 
@@ -150,7 +150,7 @@ actualizarObservacion(observadores: ObservacionDTO) {
     this.dialogRef.close();
   }
   ObtenerUsuarioGuardado() {
-    this.usuarioService.obtenerUsuarioGuardado().subscribe({
+    this.userService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
       },

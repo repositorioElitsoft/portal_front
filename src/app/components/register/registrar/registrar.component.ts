@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Register } from 'src/app/interface/register.interface';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { NotificationService } from 'src/app/service/notification.service';
 
 @Component({
@@ -13,20 +13,20 @@ import { NotificationService } from 'src/app/service/notification.service';
 export class RegistrarComponent {
   registroForm: FormGroup;
 
-  constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
+  constructor(private userService: UserService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
-      usr_email: new FormControl('', [Validators.required, Validators.email]),
-      usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator });  
   }
   onSubmit() {
     if (this.registroForm.valid) {
       const registerData: Register = {
-        usr_email: this.registroForm.get('usr_email')?.value,
-        usr_pass: this.registroForm.get('usr_pass')?.value
+        email: this.registroForm.get('email')?.value,
+        password: this.registroForm.get('password')?.value
       }
-      this.usuarioService.registrarUsuario(registerData).subscribe(
+      this.userService.registrarUsuario(registerData).subscribe(
         () => {
           this.notification.showNotification(
             'success',
@@ -48,7 +48,7 @@ export class RegistrarComponent {
     }
   }
   private passwordMatchValidator (control: AbstractControl): ValidationErrors | null {
-    const pass = control.get('usr_pass')?.value;
+    const pass = control.get('password')?.value;
     const confirmPass = control.get('confirmPassword')?.value;
     const isMismatch = pass !== confirmPass;
     console.log('Contraseña:', pass);

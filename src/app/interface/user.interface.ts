@@ -15,6 +15,7 @@ export interface User {
     secondLastname?:string
     gender?:Gender
     email:string
+    password?:string
     phone?:string
     linkedin?:string
     city?: City
@@ -29,7 +30,7 @@ export interface User {
 }
 
 
-export type UserEditarDTO = Omit<User, 'usr_tel' |'usr_url_link'| 'city' | 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
-export type UserEditarDTO2 = Omit<User, 'usr_url_link'| 'city' | 'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'> & { usr_rol: string };
+export type UserEditarDTO = Omit<User, 'phone' |'linkedin'| 'city' | 'herramientas'| 'tools'> & { roles: string };
+export type UserEditarDTO2 = Omit<User, 'linkedin'| 'city' | 'herramientas'| 'tools'  > & { roles: string };
 
-export type UserSesionDTO = Omit<User, 'usr_pass' |'usr_url_link'|'pais_nom'| 'pais'|'usr_direcc' |'herramientas'| 'usr_herr'| 'herr_ver'| 'herr_exp'>;
+export type UserSesionDTO = Omit<User, 'password' |'linkedin'|'pais_nom'| 'pais'|'address' |'herramientas'| 'tools'>;

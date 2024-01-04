@@ -9,20 +9,20 @@ import { FileDescriptor } from '../interface/file-descriptor.interface';
 export class UploadFilesService {
   private baseUrl = environment.baseUrl;
   constructor(private http: HttpClient) {}
-  upload(file: FormData, usr_id: number): Observable<HttpEvent<any>> {
-    const url = `${this.baseUrl}/upload/${usr_id}`;
+  upload(file: FormData, id: number): Observable<HttpEvent<any>> {
+    const url = `${this.baseUrl}/upload/${id}`;
     const req = new HttpRequest("POST", url, file, {
       reportProgress: true,
       responseType: 'json'
     });
     return this.http.request(req);
   }
-  getFiles(usr_id: number): Observable<FileDescriptor[]> {
-    const url = `${this.baseUrl}/files/${usr_id}`;
+  getFiles(id: number): Observable<FileDescriptor[]> {
+    const url = `${this.baseUrl}/files/${id}`;
     return this.http.get<FileDescriptor[]>(url);
   }
-  deleteFile(filename: string, usr_id: number): Observable<void> {
-    const url = `${this.baseUrl}/delete/${usr_id}/${filename}`;
+  deleteFile(filename: string, id: number): Observable<void> {
+    const url = `${this.baseUrl}/delete/${id}/${filename}`;
     return this.http.delete<void>(url);
   }
 }

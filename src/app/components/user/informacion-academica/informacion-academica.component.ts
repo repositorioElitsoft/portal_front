@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { Academical } from 'src/app/interface/academical.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AcademicalReference } from 'src/app/interface/referencia-academica.interface';
@@ -112,7 +112,7 @@ export class InformacionAcademicaComponent implements OnInit {
         }
       });
     } else {
-      console.error('inf_acad_id es undefined o null');
+      console.error('id es undefined o null');
     }
   }
   submitForm(event: Event) {

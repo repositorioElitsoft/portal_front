@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewUsuariosRComponent } from './view-usuarios-r.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -34,7 +34,7 @@ describe('ViewUsuariosRComponent', () => {
         ReactiveFormsModule
       ],
       providers: [
-        UsuarioService,
+        UserService,
         LiveAnnouncer,
         { provide: ActivatedRoute, useValue: { snapshot: { paramMap: of({}) } } },
         { provide: Router, useClass: Router } // Provide Router as a class

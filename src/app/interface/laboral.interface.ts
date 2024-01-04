@@ -8,7 +8,7 @@ export interface Laboral{
     inf_lab_act:string,
     inf_lab_fec_ini:Date,
     inf_lab_fec_fin:Date,
-    usr_id?:number,
+    id?:number,
     herr_usr_id?:number
     herramientas?: HerramientaData[];
     referenciasLaborales?: ReferenciaLaboral[];

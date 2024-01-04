@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ViewPerfilUsuarioComponent } from './view-perfil-usuario.component';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -17,7 +17,7 @@ describe('ViewPerfilUsuarioComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ ViewPerfilUsuarioComponent ],
       imports:[HttpClientTestingModule, RouterTestingModule,RouterModule,RouterTestingModule.withRoutes([])],
-      providers:[HttpClient, UsuarioService, Router, { provide: ActivatedRoute, useValue: { snapshot: { params: { email: 'email' } } } }],
+      providers:[HttpClient, UserService, Router, { provide: ActivatedRoute, useValue: { snapshot: { params: { email: 'email' } } } }],
     })
     .compileComponents();
 
