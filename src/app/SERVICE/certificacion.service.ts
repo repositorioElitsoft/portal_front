@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Certificacion } from '../interface/certificacion.interface';
+import { Certification } from '../interface/certificacion.interface';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -9,11 +9,11 @@ import { environment } from 'src/environments/environment';
 export class CertificacionService {
   readonly url = `${environment.URL_HOST}/certificados/`
   constructor(private http: HttpClient) { }
-  obtenerTodosLosCertificados(): Observable<Certificacion[]> {
-    return this.http.get<Certificacion[]>(this.url);
+  obtenerTodosLosCertificados(): Observable<Certification[]> {
+    return this.http.get<Certification[]>(this.url);
   }
-  obtenerCertificadosPorNombre(nombre: string): Observable<Certificacion[]> {
+  obtenerCertificadosPorNombre(nombre: string): Observable<Certification[]> {
     const url = `${this.url}${nombre}`;
-    return this.http.get<Certificacion[]>(url);
+    return this.http.get<Certification[]>(url);
   }
 }

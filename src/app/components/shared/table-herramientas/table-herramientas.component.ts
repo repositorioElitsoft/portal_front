@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { ProductoService } from 'src/app/service/producto.service';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
+import { Product } from 'src/app/interface/producto.interface';
+import { ProductVersion } from 'src/app/interface/version-producto';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { NotificationService } from 'src/app/service/notification.service';
 @Component({
@@ -17,10 +17,10 @@ import { NotificationService } from 'src/app/service/notification.service';
 export class TableHerramientasComponent implements OnInit {
   herramientasForm!: FormGroup;
   herramientas: HerramientaData[] = []
-  categorias: CategoriaProducto[] = [];
+  categorias: ProductCategory[] = [];
   rows: any[] = [];
-  productByRow: Producto[][] = [];
-  versionByRow: VersionProducto[][] = [];
+  productByRow: Product[][] = [];
+  versionByRow:ProductVersion[][] = [];
   selectedCategoriaId: any;
   otroProductoValues: any[] = [];
   isLoaded: boolean = false;
@@ -61,7 +61,7 @@ export class TableHerramientasComponent implements OnInit {
   }
   getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-      (data: CategoriaProducto[]) => {
+      (data: ProductCategory[]) => {
         this.categorias = data;
       },
       (error) => {
@@ -78,7 +78,7 @@ export class TableHerramientasComponent implements OnInit {
       return;
     }
     this.productoService.obtenerProductosPorCategoria(selectedCategoriaIdValue).subscribe(
-      (data: Producto[]) => {
+      (data: Product[]) => {
         this.productByRow[index] = data;
       },
       (error) => {
@@ -103,7 +103,7 @@ export class TableHerramientasComponent implements OnInit {
     }
 
     this.productoService.getVersionByProduct(selectedProductoIdValue).subscribe(
-      (data: VersionProducto[] | undefined) => {
+      (data: ProductVersion[] | undefined) => {
         this.versionByRow[index] = data || [];
       },
       (error) => {
@@ -113,35 +113,35 @@ export class TableHerramientasComponent implements OnInit {
   }
     createFormRows() {
       const rowsArray = this.herramientas.map((herramienta, index) => {
-        this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.prd.cat_prod_id.cat_prod_id).subscribe({
-          next: (data: Producto[]) => {
+        this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.product.productCategory.id).subscribe({
+          next: (data: Product[]) => {
             this.productByRow[index] = data;
           },
           error: (error) => {
             console.log('Error al obtener productos:', error);
           }
         });
-        this.productoService.getVersionByProduct(herramienta.versionProducto.prd.prd_id).subscribe({
-          next: (data: VersionProducto[]) => {
+        this.productoService.getVersionByProduct(herramienta.versionProducto.product.id).subscribe({
+          next: (data: ProductVersion[]) => {
             this.versionByRow[index] = data;
           },
           error: (error) => {
             console.log('Error al obtener versiones:', error);
           }
         })
-        let valorDefectoProducto = String(herramienta.versionProducto.prd.prd_id)
+        let valorDefectoProducto = String(herramienta.versionProducto.product.id)
         if (herramienta.herr_prd_otro){
           valorDefectoProducto = 'otro'
         }
         const row = this.formBuilder.group({
           herr_usr_id:[herramienta.herr_usr_id],
-          herr_cat_name: [herramienta.versionProducto.prd.cat_prod_id.cat_prod_id, Validators.required],
+          herr_cat_name: [herramienta.versionProducto.product.productCategory.id, Validators.required],
           herr_prd_name: [valorDefectoProducto, Validators.required],
           herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
           herr_prd_otro:[herramienta.herr_prd_otro],
           versionProducto: this.formBuilder.group({
-            vrs_id: [herramienta.versionProducto.vrs_id, Validators.required],
-            vrs_name: [herramienta.versionProducto.vrs_name],
+            vrs_id: [herramienta.versionProducto.id, Validators.required],
+            vrs_name: [herramienta.versionProducto.name],
           }),
           herr_is_cert: [herramienta.herr_is_cert],
           herr_nvl: [herramienta.herr_nvl]

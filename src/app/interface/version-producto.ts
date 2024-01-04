@@ -1,6 +1,6 @@
-import { Producto } from "./producto.interface";
-export interface HerramientaData {
-    vrs_id: number;
-    vrs_name: number;
-    prd: Producto;
+import {Product} from "./producto.interface";
+export interface ProductVersion {
+    id: number;
+    name: string;
+    product: Product;
 }

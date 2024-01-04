@@ -1,4 +1,4 @@
-export interface Niveles {
-    nvl_id?:number
-    nvl:string
+export interface Level {
+    id?:number
+    description:string
 }

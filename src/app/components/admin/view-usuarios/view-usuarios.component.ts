@@ -8,9 +8,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { User } from 'src/app/interface/user.interface';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
+import { Product } from 'src/app/interface/producto.interface';
+import { ProductVersion } from 'src/app/interface/version-producto';
 import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/advertencia-eliminar.component";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AddUsuariosComponent } from "../add-usuarios/add-usuarios.component";
@@ -29,9 +29,9 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: any[] = [];
-  categorias: CategoriaProducto[] = [];
-  productos: Producto[] = [];
-  versiones: VersionProducto[] = [];
+  categorias: ProductCategory[] = [];
+  productos: Product[] = [];
+  versiones: ProductVersion[] = [];
 
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
