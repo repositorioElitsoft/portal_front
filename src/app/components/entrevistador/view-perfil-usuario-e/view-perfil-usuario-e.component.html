@@ -103,17 +103,17 @@
     <mat-tab label="Información Académica">
       <mat-list>
       <mat-list-item *ngFor="let academica of usuarioData.academicas">
-        <span matListItemTitle>{{ academica.titl }}</span>
+        <span matListItemTitle>{{ academica.degree }}</span>
 
-        <span matListItemLine>{{academica.inf_acad_nom_esc }}</span>
+        <span matListItemLine>{{academica.university }}</span>
 
-        <span matListItemLine>{{academica.inf_acad_est }}</span>
+        <span matListItemLine>{{academica.status }}</span>
 
         <div matListItemIcon>
           <mat-icon>school</mat-icon>
         </div>
-        <span matListItemMeta> <div>Desde</div> {{ academica.inf_acad_fec_ini }} </span>
-        <span matListItemMeta> <div>Hasta</div> {{ academica.inf_acad_fec_fin }} </span>
+        <span matListItemMeta> <div>Desde</div> {{ academica.startDate }} </span>
+        <span matListItemMeta> <div>Hasta</div> {{ academica.endDate }} </span>
 
       </mat-list-item>
     </mat-list>
