@@ -18,24 +18,24 @@
         <div class="row celda-laboral">
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Cargo</h4>
-              <p>{{ labor.inf_lab_crg_emp}}</p>
+              <p>{{ labor.position}}</p>
           </div>
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Inicio</h4>
-            <p class="fechas2">{{ labor.inf_lab_fec_ini}}</p>
+            <p class="fechas2">{{ labor.startDate}}</p>
           </div>
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Fin</h4>
             <p class="fechas2">
-            {{ labor.inf_lab_fec_fin}}</p>
+            {{ labor.endDate}}</p>
           </div>
           <div class="col-2">
           <div class="flex">
             <h4 class="Titulos  mb-4">Acciones</h4>
-           <button mat-mini-fab  class="minifab m-1"  id="{{labor.inf_lab_id}}" (click)="editLaboral($event)">
+           <button mat-mini-fab  class="minifab m-1"  id="{{labor.id}}" (click)="editLaboral($event)">
             <mat-icon>edit</mat-icon>
            </button>
-           <button mat-mini-fab  class="minifabdanger m-1" (click)="eliminarLaboral(labor.inf_lab_id)">
+           <button mat-mini-fab  class="minifabdanger m-1" (click)="eliminarLaboral(labor.id)">
             <mat-icon>delete</mat-icon>
            </button>
           </div>
@@ -53,31 +53,31 @@
         <div class="row mb-3">
           <label for="inputCargo" class="col-sm-2 col-form-label">Cargo:</label>
           <div class="col-sm-10">
-            <input type="inputCargo" class="form-control" id="inputCargo" formControlName="inf_lab_crg_emp">
+            <input type="inputCargo" class="form-control" id="inputCargo" formControlName="position">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputNomEmp" class="col-sm-2 col-form-label">Nombre Empresa:</label>
           <div class="col-sm-10">
-            <input type="inputNomEmp" class="form-control" id="inputNomEmp" formControlName="inf_lab_emp">
+            <input type="inputNomEmp" class="form-control" id="inputNomEmp" formControlName="company">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputActRea" class="col-sm-2 col-form-label">Actividades Realizadas:</label>
           <div class="col-sm-10">
-            <input type="inputActRea" class="form-control" id="inputActRea" formControlName="inf_lab_act">
+            <input type="inputActRea" class="form-control" id="inputActRea" formControlName="activities">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="inf_lab_fec_ini" [max]="today">
+            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="startDate" [max]="today">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="inf_lab_fec_fin" [max]="today">
+            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="endDate" [max]="today">
           </div>
         </div>
         <div class="row mb-3">
@@ -93,31 +93,31 @@
         </div>
         <div>
           <h4 class="perfilr">Referencias Laborales</h4>
-          <div formArrayName="referenciasLaborales">
+          <div formArrayName="employmentReferences">
             <div *ngFor="let ref of referenciasFormArray.controls; let i = index" [formGroupName]="i">
               <div class="referencia-individual">
                 <div class="row mb-3">
                   <label for="inputNombreRef{{i}}" class="col-sm-2 col-form-label">Nombre:</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNombreRef{{i}}" formControlName="ref_lab_nom">
+                    <input type="text" class="form-control" id="inputNombreRef{{i}}" formControlName="name">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputEmpresaRef{{i}}" class="col-sm-2 col-form-label">Empresa:</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmpresaRef{{i}}" formControlName="ref_lab_emp">
+                    <input type="text" class="form-control" id="inputEmpresaRef{{i}}" formControlName="company">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputEmailRef{{i}}" class="col-sm-2 col-form-label">Email:</label>
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmailRef{{i}}" formControlName="ref_lab_email">
+                    <input type="email" class="form-control" id="inputEmailRef{{i}}" formControlName="email">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputTelefonoRef{{i}}" class="col-sm-2 col-form-label">Teléfono:</label>
                   <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="inputTelefonoRef{{i}}" formControlName="ref_lab_tel">
+                    <input type="tel" class="form-control" id="inputTelefonoRef{{i}}" formControlName="phone">
                   </div>
                 </div>
                 <button mat-mini-fab class="minifabdanger m-1" (click)="eliminarReferencia(i)">

@@ -291,7 +291,7 @@ if (this.selectedfechaPostulacion) {
           return experiencia.herramientas?.some((herramienta: any) => {
             const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
-              const fechaFin = new Date(experiencia.inf_lab_fec_fin);
+              const fechaFin = new Date(experiencia.endDate);
               const currentYear = new Date().getFullYear();
               return fechaFin.getFullYear() >= currentYear - this.lastYears;
             }
@@ -364,7 +364,7 @@ if (this.selectedfechaPostulacion) {
         const cargo=usuario.jobs;
         if(cargo && cargo.length >0){
           const primerCargo = cargo[0];
-          const cargoOcupado= primerCargo.inf_lab_crg_emp;
+          const cargoOcupado= primerCargo.position;
           if (cargoOcupado) {
             return cargoOcupado.toLowerCase().includes(filtroLowerCase);
           }
