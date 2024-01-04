@@ -34,7 +34,7 @@ export interface Observacion {
      usr2_ap_pat: String
      usr2_nom: String ;
      usr2_id: number;
-     cat_obs_id:number;
+     id:number;
      cat_obs_desc:string;
      obs_id: number;
     apr_ger:String;
