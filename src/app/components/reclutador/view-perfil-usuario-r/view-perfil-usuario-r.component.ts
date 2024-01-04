@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ObservacionDTO } from 'src/app/interface/observacionreclutador.interface';
-import { ObservacionService } from 'src/app/service/observacionreclutador.service';
+import { ObservacionDTO } from 'src/app/interface/observation.interface';
+import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
 import { UserSesionDTO, User } from 'src/app/interface/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';

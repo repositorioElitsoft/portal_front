@@ -4,10 +4,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CatObservacionDTO} from 'src/app/interface/observacionreclutador.interface';
+import { CatObservacionDTO} from 'src/app/interface/observation.interface';
 import { UserSesionDTO } from 'src/app/interface/user.interface';
 import { observationCategoryService } from 'src/app/service/observationcategory';
-import { ObservacionService } from 'src/app/service/observacionreclutador.service';
+import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
