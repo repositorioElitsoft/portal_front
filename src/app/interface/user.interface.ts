@@ -1,4 +1,4 @@
-import { Academica } from "./academica.interface"
+import { Academical } from "./academical.interface"
 import { CargoUsuario } from "./cargos-usuario.interface"
 import { City } from "./city.interface"
 import { Gender } from "./gender.interface"
@@ -21,7 +21,7 @@ export interface User {
     address:string
     tools?: HerramientaData[]
     jobs?: Laboral[]
-    academicalList?: Academica[]
+    academicalList?: Academical[]
     userJob?: CargoUsuario[]
     userPrefferedJob?: UserPreferredJob
     cv?: UserCV

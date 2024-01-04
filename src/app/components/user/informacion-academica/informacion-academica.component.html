@@ -20,23 +20,23 @@
         <div class="row celda-laboral">
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Título / Profesion</h4>
-              <p>{{ academica.titl}}</p>
+              <p>{{ academica.degree}}</p>
           </div>
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Inicio</h4>
-           <p class="fechas2 ">{{ academica.inf_acad_fec_ini}}</p>
+           <p class="fechas2 ">{{ academica.startDate}}</p>
           </div>
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Fin</h4>
-           <p class="fechas2"> {{ academica.inf_acad_fec_fin}}</p>
+           <p class="fechas2"> {{ academica.endDate}}</p>
           </div>
           <div class="col-2">
             <div class="flex">
               <h4 class="Titulos  mb-4">Acciones</h4>
-              <button mat-mini-fab class="minifab m-1"  id="{{academica.inf_acad_id}}" (click)=" editarAcademica($event)">
+              <button mat-mini-fab class="minifab m-1"  id="{{academica.id}}" (click)=" editarAcademica($event)">
                 <mat-icon>edit</mat-icon>
               </button>
-           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.inf_acad_id)" >
+           <button  mat-mini-fab  class="minifabdanger m-1"  (click)="eliminarAcademica(academica.id)" >
           	<mat-icon>delete</mat-icon>
            </button>
             </div>
@@ -54,30 +54,30 @@
         <div class="row mb-3">
           <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
           <div class="col-sm-10">
-            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="titl" name="inputTitulo" >
+            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="degree" name="inputTitulo" >
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputEducacion" class="col-sm-2 col-form-label">Institución Educativa:</label>
           <div class="col-sm-10">
-            <input type="inputEducacion" class="form-control" id="inputEducacion" formControlName="inf_acad_nom_esc" name="inputEducacion">
+            <input type="inputEducacion" class="form-control" id="inputEducacion" formControlName="university" name="inputEducacion">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechain" formControlName="inf_acad_fec_ini" [min]="minFecha" [max]="today" name="inputFechaini">
+            <input type="date" class="form-control" id="inputFechain" formControlName="startDate" [min]="minFecha" [max]="today" name="inputFechaini">
           </div>
         </div>
         <div class="row mb-3">
           <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
           <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" formControlName="inf_acad_fec_fin" [min]="minFecha" [max]="today" name="inputFechafin">
+            <input type="date" class="form-control" id="inputFechafin" formControlName="endDate" [min]="minFecha" [max]="today" name="inputFechafin">
           </div>
         </div>
         <div class="row mb-3">
           <label for="selectEstadoAcademico" class="col-sm-2 col-form-label">Estado Academico:</label>
-            <select class="form-select" id="selectEstadoAcademico" formControlName="inf_acad_est" name="estadoAcademico">
+            <select class="form-select" id="selectEstadoAcademico" formControlName="status" name="estadoAcademico">
               <option selected disabled >Selecciona una opción...</option>
               <option value="En curso">En curso</option>
               <option value="En práctica">En práctica</option>
@@ -87,31 +87,31 @@
         </div>
         <div>
           <h4 class="perfilr">Referencias Academicas</h4>
-          <div formArrayName="referenciaAcademicas">
+          <div formArrayName="academicalReference">
             <div *ngFor="let ref of referenciaFormArray.controls; let i = index" [formGroupName]="i">
               <div class="referencia-individual">
                 <div class="row mb-3">
                   <label for="inputNombreRef{{i}}" class="col-sm-2 col-form-label">Nombre:</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNombreRef{{i}}" formControlName="ref_acad_nom">
+                    <input type="text" class="form-control" id="inputNombreRef{{i}}" formControlName="name">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputInstitucionRef{{i}}" class="col-sm-2 col-form-label">Institución:</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputInstitucionRef{{i}}" formControlName="ref_acad_ins">
+                    <input type="text" class="form-control" id="inputInstitucionRef{{i}}" formControlName="institution">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputEmailRef{{i}}" class="col-sm-2 col-form-label">Email:</label>
                   <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmailRef{{i}}" formControlName="ref_acad_email">
+                    <input type="email" class="form-control" id="inputEmailRef{{i}}" formControlName="email">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="inputTelefonoRef{{i}}" class="col-sm-2 col-form-label">Teléfono:</label>
                   <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="inputTelefonoRef{{i}}" formControlName="ref_acad_tel">
+                    <input type="tel" class="form-control" id="inputTelefonoRef{{i}}" formControlName="phone">
                   </div>
                 </div>
                 <button mat-mini-fab class="minifabdanger m-1" (click)="eliminarReferencia(i)">
