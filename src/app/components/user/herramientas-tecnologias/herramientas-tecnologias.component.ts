@@ -6,30 +6,26 @@ import { HerramientasService } from 'src/app/service/herramientas.service';
 import { NivelService } from 'src/app/service/nivel.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { UserService } from 'src/app/service/user.service';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { Certificacion } from 'src/app/interface/certificacion.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
+import { Certification } from 'src/app/interface/certificacion.interface';
 import { Herramientas } from 'src/app/interface/herramientas.interface';
-import { Niveles } from 'src/app/interface/niveles.interface';
-import { Producto } from 'src/app/interface/producto.interface';
+import { Level } from 'src/app/interface/niveles.interface';
+import { Product } from 'src/app/interface/producto.interface';
 @Component({
   selector: 'app-herramientas-tecnologias',
   templateUrl: './herramientas-tecnologias.component.html',
   styleUrls: ['./herramientas-tecnologias.component.css']
 })
 export class HerramientasTecnologiasComponent implements OnInit {
-  herramienta: Herramientas = {
-    herr_usr_anos_exp: '',
-    herr_usr_vrs: '',
-    id: -1
-  };
+  herramienta!: Herramientas;
   selectedCategoriaId: number | undefined;
   selectedProductoId: number | undefined;
-  selectedCertificadoId: number | undefined;
+  selectedCertificadoId?: number;
   selectedNivelId: number | undefined;
-  categorias: CategoriaProducto[] = [];
-  productos: Producto[] = [];
-  certificados: Certificacion[] = [];
-  niveles: Niveles[] = [];
+  categorias: ProductCategory[] = [];
+  productos: Product[] = [];
+  certificados: Certification[] = [];
+  niveles: Level[] = [];
   @ViewChild('btnradio1', { static: true }) btnradio1!: ElementRef<HTMLInputElement>;
   @ViewChild('btnradio2', { static: true }) btnradio2!: ElementRef<HTMLInputElement>;
   @ViewChild('btnradio3', { static: true }) btnradio3!: ElementRef<HTMLInputElement>;
@@ -56,7 +52,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
     }
     obtenerCategorias() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-        (data: CategoriaProducto[]) => {
+        (data: ProductCategory[]) => {
           this.categorias = data;
         },
         (error) => {
@@ -70,7 +66,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
         return;
       }
       this.productoService.obtenerProductosPorCategoria(this.selectedCategoriaId).subscribe(
-        (data: Producto[]) => {
+        (data: Product[]) => {
           console.log('idCategoria', this.selectedCategoriaId)
           this.productos = data;
         },
@@ -81,7 +77,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
     }
     obtenerCertificaciones() {
       this.certificacionService.obtenerTodosLosCertificados().subscribe(
-        (data: Certificacion[]) => {
+        (data: Certification[]) => {
           this.certificados = data;
         },
         (error) => {
@@ -91,7 +87,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
     }
     obtenerNiveles() {
       this.nivelService.listarNiveles().subscribe(
-        (data: Niveles[]) => {
+        (data: Level[]) => {
           this.niveles = data;
         },
         (error) => {
@@ -130,9 +126,13 @@ export class HerramientasTecnologiasComponent implements OnInit {
     if (!this.selectedNivelId) {
       return;
     }
-    this.herramienta.cat_prod_id = this.selectedCategoriaId;
-    this.herramienta.prd_id = this.selectedProductoId;
-    this.herramienta.cert_id = this.selectedCertificadoId;
-    this.herramienta.nvl_id = this.selectedNivelId;
+    this.herramienta.productVersion.product.id = this.selectedCategoriaId;
+    this.herramienta.id = this.selectedProductoId;
+    if (this.selectedCertificadoId !== undefined) {
+      this.herramienta.certification = { id: this.selectedCertificadoId, url: '' };
+    }
+    if (this.selectedNivelId !== undefined) {
+      this.herramienta.level= { id: this.selectedCertificadoId, description: '' };
+    }
   }
 }

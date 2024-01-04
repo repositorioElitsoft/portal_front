@@ -1,13 +1,16 @@
-import { Producto } from "../interface/producto.interface";
+import { Certification } from "./certificacion.interface";
+import { Employment } from "./employment.interface";
+import { Level } from "./niveles.interface";
+import { User } from "./user.interface";
+import { ProductVersion } from "./version-producto";
+
 export interface Herramientas {
-    herr_usr_id?: number;
-    herr_usr_anos_exp: string;
-    herr_usr_vrs: string;
-    cat_prod_id?: number;
-    prd_id?: number;
-    cert_id?: number;
-    nvl_id?: number;
     id?: number;
-    prd_nom?: string;
-    producto?: Producto;
+    yearsOfExperience: number;
+    productVersion: ProductVersion;
+    user: User;
+    certification?: Certification;
+    level?: Level;
+    employments: Employment;
 }
+    

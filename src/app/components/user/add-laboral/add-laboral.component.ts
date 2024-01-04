@@ -131,14 +131,14 @@ export class AddLaboralComponent implements OnInit {
             herr_usr_anos_exp: "",
             herr_prd_otro:"",
             versionProducto: {
-              vrs_id: 0,
-              vrs_name: "",
-              prd: {
-                prd_id: 0,
-                prd_nom: "",
-                cat_prod_id: {
-                  cat_prod_id: 0,
-                name: ""
+              id: 0,
+              name: "",
+              product: {
+                id: 0,
+                name: "",
+                productCategory: {
+                  id:0,
+                  name: ""
                 }
               }
             }

@@ -200,30 +200,7 @@ export class InformacionLaboralComponent implements OnInit {
     );
   }
   private getHerramientasSeleccionadas(): HerramientaData[] {
-    return this.herrIdList.map(id => {
-      if (this.form.get(id.toString())?.value) {
-        return {
-          herr_usr_id: id,
-          herr_is_cert: false,
-          herr_nvl: "",
-          herr_usr_anos_exp: "",
-          herr_prd_otro:"",
-          versionProducto: {
-            vrs_id: 0,
-            vrs_name: "",
-            prd: {
-              prd_id:0,
-              prd_nom:"",
-              cat_prod_id:{
-                cat_prod_id: 0,
-                  name: ""
-              }
-            }
-          }
-        } as HerramientaData;
-      }
-      return null;
-    }).filter(herramienta => herramienta !== null) as HerramientaData[];
+  return [];
   }
   navigateToRoute(route: string) {
     this.router.navigate([route]);

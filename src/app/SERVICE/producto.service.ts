@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Producto } from '../interface/producto.interface';
-import { VersionProducto } from '../interface/version.interface';
+import { Product } from '../interface/producto.interface';
+import {ProductVersion} from '../interface/version-producto';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,13 @@ import { environment } from 'src/environments/environment';
 export class ProductoService {
   readonly url = `${environment.URL_HOST}`
   constructor(private http: HttpClient) { }
-  obtenerTodosLosProductos(): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.url}/productos/`);
+  obtenerTodosLosProductos(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.url}/productos/`);
   }
-  obtenerProductosPorCategoria(categoriaId: number): Observable<Producto[]> {
-    return this.http.get<Producto[]>(`${this.url}/productos/producto-por-categoria/${categoriaId}`);
+  obtenerProductosPorCategoria(categoriaId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.url}/productos/producto-por-categoria/${categoriaId}`);
   }
-  getVersionByProduct(productId: number): Observable<VersionProducto[]> {
-    return this.http.get<VersionProducto[]>(`${this.url}/versiones-producto/por-producto/${productId}`);
+  getVersionByProduct(productId: number): Observable<ProductVersion[]> {
+    return this.http.get<ProductVersion[]>(`${this.url}/versiones-producto/por-producto/${productId}`);
   }
 }

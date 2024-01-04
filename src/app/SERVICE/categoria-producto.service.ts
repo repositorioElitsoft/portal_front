@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Producto } from '../interface/producto.interface';
+import { Product } from '../interface/producto.interface';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class CategoriaProductoService {
   {
     return this.http.get(this.url);
   }
-  getProductosPorCategoria(categoriaId: number): Observable<Producto[]> {
+  getProductosPorCategoria(categoriaId: number): Observable<Product[]> {
     const url = `${this.url}${categoriaId}productos`;
-    return this.http.get<Producto[]>(url);
+    return this.http.get<Product[]>(url);
   }
 }

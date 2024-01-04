@@ -12,12 +12,12 @@ import { UserService } from 'src/app/service/user.service';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ViewPerfilUsuarioEComponent } from '../view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { forkJoin } from 'rxjs';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
+import { ProductVersion } from 'src/app/interface/version-producto';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
+import { Product } from 'src/app/interface/producto.interface';
 
 const ELEMENT_DATA: any[] = [];
 
@@ -35,9 +35,9 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   filtroPuntaje: string = '';
   originalDataCopy: any[] = [];
   usuarios: any[] = [];
-  categorias: CategoriaProducto[] = [];
-  productos: Producto[] = [];
-  versiones: VersionProducto[] = [];
+  categorias: ProductCategory[] = [];
+  productos: Product[] = [];
+  versiones: ProductVersion[] = [];
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
   selectedCategoria: number = 0;
@@ -81,15 +81,15 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
               roles: usuario.roles || '',
               address:usuario.address || '',
               tools: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-                .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
+                .map((herramienta: HerramientaData) => herramienta.versionProducto.product.name)
                 .join(', '),
               herr_ver: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
-                .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
+                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.name)
+                .map((herramienta: HerramientaData) => herramienta.versionProducto.name)
                 .join(', '),
               herr_exp: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
                 .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
                 .join(', '),
               laborales: usuario.laborales,
@@ -107,7 +107,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
     getCategories() {
       this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-        (data: CategoriaProducto[]) => {
+        (data: ProductCategory[]) => {
           this.categorias = data;
         },
         () => {
@@ -133,13 +133,13 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
       if (categoriaId) {
         this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
-          (productos: Producto[]) => {
+          (productos: Product[]) => {
             this.productos = productos;
             this.selectedProducto = 0;
             this.versiones = [];
             this.originalDataCopy = this.dataSource.data;
 
-            this.selectedProductoNombre = this.productos.find((producto) => producto.prd_id === this.selectedProducto)?.prd_nom;
+            this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
             this.getVersion(this.selectedProducto);
           },
           (error) => {
@@ -158,7 +158,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     getVersion(productoId: number) {
         if (productoId) {
           this.productoService.getVersionByProduct(productoId).subscribe(
-            (data: VersionProducto[]) => {
+            (data:ProductVersion[]) => {
               this.versiones = data;
             },
             (error) => {
@@ -196,15 +196,4 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
         this._liveAnnouncer.announce('Sorting cleared');
       }
     }
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -7,10 +7,10 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort} from '@angular/material/sort';
 import { User} from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
-import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
+import { ProductCategory} from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
-import { Producto } from 'src/app/interface/producto.interface';
-import { VersionProducto } from 'src/app/interface/version.interface';
+import { Product } from 'src/app/interface/producto.interface';
+import { ProductVersion } from 'src/app/interface/version-producto';
 import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -28,7 +28,7 @@ import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { HttpClient } from '@angular/common/http';
 import { NivelService } from 'src/app/service/nivel.service';
-import { Niveles } from 'src/app/interface/niveles.interface';
+import {Level } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
@@ -46,10 +46,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filtroCargo: string = '';
   originalDataCopy: User[] = [];
   usuarios: any[] = [];
-  categorias: CategoriaProducto[] = [];
-  productos: Producto[] = [];
-  niveles : Niveles []=[];
-  versiones: VersionProducto[] = [];
+  categorias: ProductCategory[] = [];
+  productos: Product[] = [];
+  niveles : Level []=[];
+  versiones: ProductVersion[] = [];
   selectedfechaPostulacion: Date | null = null;
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
@@ -431,15 +431,15 @@ obtenerUsuarios(): void {
           roles: usuario.roles || '',
           address: usuario.address || '',
           tools: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
+            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
+            .map((herramienta: HerramientaData) => herramienta.versionProducto.product.name)
             .join(', '),
           herr_ver: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.vrs_name)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.vrs_name)
+            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.name)
+            .map((herramienta: HerramientaData) => herramienta.versionProducto.name)
             .join(', '),
           herr_exp: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
+            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
             .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
             .join(', '),
           laborales: usuario.laborales,
@@ -517,7 +517,7 @@ obtenerUsuarios(): void {
 
   getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
-      (data: CategoriaProducto[]) => {
+      (data: ProductCategory[]) => {
         this.categorias = data;
       },
       () => {
@@ -580,13 +580,13 @@ obtenerUsuarios(): void {
     this.filterInput();
     if (categoriaId) {
       this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
-        (productos: Producto[]) => {
+        (productos: Product[]) => {
           this.productos = productos;
           this.selectedProducto = 0;
           this.versiones = [];
           this.originalDataCopy = this.dataSource.data;
           this.filterProducto();
-          this.selectedProductoNombre = this.productos.find((producto) => producto.prd_id === this.selectedProducto)?.prd_nom;
+          this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
           this.getVersion(this.selectedProducto);
         },
         (error) => {
@@ -607,7 +607,7 @@ obtenerUsuarios(): void {
     getVersion(productoId: number) {
       if (productoId) {
         this.productoService.getVersionByProduct(productoId).subscribe(
-          (data: VersionProducto[]) => {
+          (data: ProductVersion[]) => {
             this.versiones = data;
             // this.filter(new Event('input'));
           },
@@ -621,7 +621,7 @@ obtenerUsuarios(): void {
       getNiveles() {
 
         this.nivelService.listarNiveles().subscribe(
-          (data: Niveles[]) => {
+          (data: Level[]) => {
             this.niveles = data;
 
           },

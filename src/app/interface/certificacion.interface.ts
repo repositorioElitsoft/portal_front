@@ -1,4 +1,4 @@
-export interface Certificacion{
-    cert_id?:number,
-    cert:string
+export interface Certification{
+    id?:number,
+    url:string
 }
