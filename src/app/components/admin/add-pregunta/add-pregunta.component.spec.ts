@@ -16,7 +16,7 @@ describe('AddPreguntaComponent', () => {
     
     snapshot: {
       params:{
-        exam_id: 'mi-examen-id', exam_titl: 'mi-examen-titl'
+        exam_id: 'mi-examen-id', exam_titl: 'mi-examen-degree'
       }
     }
   };

@@ -2,17 +2,17 @@
   <h4 class="perfilr">{{ creationMode ? 'Información académica' : 'Editar información académica' }}</h4>
   <mat-form-field>
     <mat-label>Institución Educativa:</mat-label>
-    <input matInput type="text" id="inputEducacion" formControlName="inf_acad_nom_esc" name="inputEducacion">
+    <input matInput type="text" id="inputEducacion" formControlName="institution" name="inputEducacion">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Título:</mat-label>
-    <input matInput type="text" id="inputTitulo" formControlName="titl" name="inputTitulo">
+    <input matInput type="text" id="inputTitulo" formControlName="degree" name="inputTitulo">
   </mat-form-field>
   <mat-form-field class="example-form-field">
     <mat-label>Fecha Inicio - Fecha Fin</mat-label>
     <mat-date-range-input [rangePicker]="rangePicker">
-      <input matStartDate placeholder="Fecha Inicio" id="inputFechain" formControlName="inf_acad_fec_ini" name="inputFechaini">
-      <input matEndDate placeholder="Fecha Fin" id="inputFechafin" formControlName="inf_acad_fec_fin" name="inputFechafin">
+      <input matStartDate placeholder="Fecha Inicio" id="inputFechain" formControlName="startDate" name="inputFechaini">
+      <input matEndDate placeholder="Fecha Fin" id="inputFechafin" formControlName="endDate" name="inputFechafin">
     </mat-date-range-input>
     <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
     <mat-date-range-picker #rangePicker>
@@ -24,7 +24,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Estado Académico:</mat-label>
-    <mat-select id="selectEstadoAcademico" formControlName="inf_acad_est" name="estadoAcademico">
+    <mat-select id="selectEstadoAcademico" formControlName="status" name="estadoAcademico">
       <mat-option value="Selecciona una opción">Selecciona una opción...</mat-option>
       <mat-option value="En curso">En curso</mat-option>
       <mat-option value="En práctica">En práctica</mat-option>
@@ -35,7 +35,7 @@
   </mat-form-field>
   <div class="contenedor-externo">
     <h4 class="perfilr">Referencias Académicas</h4>
-    <div formArrayName="referenciaAcademicas">
+    <div formArrayName="academicalReference">
       <div *ngFor="let ref of referenciaFormArray.controls; let i = index" [formGroupName]="i">
         <mat-card class="referencia-individual">
           <mat-form-field appearance="fill" class="example-full-width">

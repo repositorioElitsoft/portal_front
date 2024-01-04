@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { Academica } from 'src/app/interface/academica.interface';
+import { Academical } from 'src/app/interface/academical.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -15,7 +15,7 @@ export class AñadirEstudioComponent implements OnInit {
 [x: string]: any;
   @Output() AñadirEstudioComponent: EventEmitter<void> = new EventEmitter<void>();
   creationMode: boolean = false;
-  academicas: Academica[] = [];
+  academicas: Academical[] = [];
   id: number | null | undefined = null;
   form!: FormGroup;
   minFecha: string = '';
@@ -47,14 +47,14 @@ export class AñadirEstudioComponent implements OnInit {
       }
     }
   startDate = new Date(2020, 0, 1);
-  private buildForm(academica: Academica | null = null) {
+  private buildForm(academica: Academical | null = null) {
     this.form = this.formBuilder.group({
-      inf_acad_est: [academica ? academica.inf_acad_est : "", [Validators.required]],
-      titl: [academica ? academica.titl : "", [Validators.required]],
-      inf_acad_nom_esc: [academica ? academica.inf_acad_nom_esc : "", [Validators.required]],
-      inf_acad_fec_ini: [academica ? academica.inf_acad_fec_ini : "", [Validators.required]],
-      inf_acad_fec_fin: [academica ? academica.inf_acad_fec_fin : "", [Validators.required]],
-      referenciaAcademicas: this.formBuilder.array([])
+      status: [academica ? academica.status : "", [Validators.required]],
+      degree: [academica ? academica.degree : "", [Validators.required]],
+      university: [academica ? academica.university : "", [Validators.required]],
+      startDate: [academica ? academica.startDate : "", [Validators.required]],
+      endDate: [academica ? academica.endDate : "", [Validators.required]],
+      academicalReference: this.formBuilder.array([])
     });
   }
   redirectTo() {
@@ -94,15 +94,15 @@ obtenerAcademicasGuardados() {
   goBack() {
     this.dialog.closeAll();
   }
-  editarAcademica(academica: Academica) {
-    if (academica && academica.inf_acad_id) {
-      this.id = academica.inf_acad_id;
+  editarAcademica(academica: Academical) {
+    if (academica && academica.id) {
+      this.id = academica.id;
       this.form.patchValue({
-        inf_acad_est: academica.inf_acad_est,
-        inf_acad_nom_esc: academica.inf_acad_nom_esc,
-        titl: academica.titl,
-        inf_acad_fec_ini: academica.inf_acad_fec_ini,
-        inf_acad_fec_fin: academica.inf_acad_fec_fin,
+        status: academica.status,
+        university: academica.university,
+        degree: academica.degree,
+        startDate: academica.startDate,
+        endDate: academica.endDate,
       });
       this.creationMode = false;
     } else {
@@ -111,7 +111,7 @@ obtenerAcademicasGuardados() {
     }
   }
   get referenciaFormArray(){
-    return this.form.get('referenciaAcademicas') as FormArray;
+    return this.form.get('academicalReference') as FormArray;
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
@@ -129,20 +129,20 @@ obtenerAcademicasGuardados() {
     event.preventDefault();
     if (this.form.valid) {
       const fechaInicioFormateada = new Date(
-        this.form.value.inf_acad_fec_ini
+        this.form.value.startDate
       ).toISOString().split('T')[0];
       const fechaFinFormateada = new Date(
-        this.form.value.inf_acad_fec_fin
+        this.form.value.endDate
       ).toISOString().split('T')[0];
-      const academicaNueva: Academica = {
+      const academicaNueva: Academical = {
         ...this.form.value,
-        inf_acad_fec_ini: fechaInicioFormateada,
-        inf_acad_fec_fin: fechaFinFormateada,
+        startDate: fechaInicioFormateada,
+        endDate: fechaFinFormateada,
       };
       this.academicaService
         .guardarAcademica(academicaNueva, this.id)
         .subscribe(
-          (academicaGuardada: Academica) => {
+          (academicaGuardada: Academical) => {
             this.creationMode = false;
             this.academicaService
               .obtenerListaAcademicasPorUsuario()
