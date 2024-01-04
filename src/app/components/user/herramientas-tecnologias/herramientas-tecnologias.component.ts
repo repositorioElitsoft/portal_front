@@ -5,7 +5,7 @@ import { CertificacionService } from 'src/app/service/certificacion.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { NivelService } from 'src/app/service/nivel.service';
 import { ProductoService } from 'src/app/service/producto.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Certificacion } from 'src/app/interface/certificacion.interface';
 import { Herramientas } from 'src/app/interface/herramientas.interface';
@@ -20,7 +20,7 @@ export class HerramientasTecnologiasComponent implements OnInit {
   herramienta: Herramientas = {
     herr_usr_anos_exp: '',
     herr_usr_vrs: '',
-    usr_id: -1
+    id: -1
   };
   selectedCategoriaId: number | undefined;
   selectedProductoId: number | undefined;
@@ -41,12 +41,12 @@ export class HerramientasTecnologiasComponent implements OnInit {
     private nivelService: NivelService,
     private productoService: ProductoService,
     private route: ActivatedRoute,
-    private usuarioService:UsuarioService) { }
+    private userService:UserService) { }
     ngOnInit(): void {
       this.route.queryParams.subscribe(params => {
-        const usr_id = params['usr_id'];
-        if (usr_id) {
-          this.herramienta.usr_id = usr_id;
+        const id = params['id'];
+        if (id) {
+          this.herramienta.id = id;
         }
         this.obtenerCategorias();
         this.obtenerProductos();

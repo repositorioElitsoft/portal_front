@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { MAT_DIALOG_DATA, MatDialogRef , MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -17,17 +17,17 @@ export class EditPerfilUsuarioRComponent implements OnInit {
   userDataForm: FormGroup;
   usrId:number | null = null
   usuario: UserEditarDTO2 = {
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat:'',
-    usr_rut: '',
-    usr_email:'',
-    usr_tel:'',
-    usr_pass:'',
-    usr_rol:'',
-    usr_direcc: ''
+    name: '',
+    firstLastname: '',
+    secondLastname:'',
+    rut: '',
+    email:'',
+    phone:'',
+    password:'',
+    roles:'',
+    address: ''
   }
-  constructor( private usuarioService:UsuarioService,
+  constructor( private userService:UserService,
     private router:Router,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
@@ -37,22 +37,22 @@ export class EditPerfilUsuarioRComponent implements OnInit {
     private dialog: MatDialog,
     private _snackBar: MatSnackBar) {
     this.userDataForm = this.formBuilder.group({
-      usr_nom: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
-      usr_ap_pat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
-      usr_ap_mat: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
-      usr_rut: [''],
-      usr_email: [''],
-      usr_tel: [''],
-      usr_rol: ['', Validators.required],
+      name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
+      firstLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
+      secondLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
+      rut: [''],
+      email: [''],
+      phone: [''],
+      roles: ['', Validators.required],
     });
   }
   ngOnInit(): void {
     this.usrId = this.data ? this.data.usuarioId : null;
     if (this.usrId) {
-      this.usuarioService.getUsuarioId(this.usrId).subscribe({
+      this.userService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
           this.userDataForm.patchValue(data);
-          this.usuario.usr_id = data.usr_id;
+          this.usuario.id = data.id;
         },
         error: (err) => {
           console.log(err, 'error');
@@ -72,9 +72,9 @@ export class EditPerfilUsuarioRComponent implements OnInit {
     const userData = this.userDataForm.value;
     if (this.usrId) {
         this.usuario = this.userDataForm.value;
-        this.usuarioService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
+        this.userService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
             next: (dato: any) => {
-                this._snackBar.open("Usuario actualizado con éxito", "Cerrar", {
+                this._snackBar.open("User actualizado con éxito", "Cerrar", {
                     duration: 1000
                 });
                 this.cancelar();
@@ -89,12 +89,12 @@ export class EditPerfilUsuarioRComponent implements OnInit {
         });
         return;
     }
-    this.usuarioService.updateUsuario(userData).subscribe({
+    this.userService.updateUsuario(userData).subscribe({
         next: (data) => {
             this.notification.showNotification(
                 'success',
                 'Registro Exitoso',
-                'Usuario agregado con éxito'
+                'User agregado con éxito'
             );
             this.limpiarCampos();         
         },

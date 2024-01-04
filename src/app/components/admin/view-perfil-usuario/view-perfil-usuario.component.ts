@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 @Component({
   selector: 'app-view-perfil-usuario',
   templateUrl: './view-perfil-usuario.component.html',
@@ -10,23 +10,23 @@ export class ViewPerfilUsuarioComponent implements OnInit {
   rol: string;
   email: string;
   usuario: any = {
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_rut: '',
+    name: '',
+    firstLastname: '',
+    secondLastname: '',
+    rut: '',
     email: '',
-    usr_pass: '',
-    usr_tel: '',
-    usr_url_link: '',
+    password: '',
+    phone: '',
+    linkedin: '',
   };
-  constructor(private route: ActivatedRoute, private usuarioService: UsuarioService, private router:Router) {
+  constructor(private route: ActivatedRoute, private userService: UserService, private router:Router) {
     this.email = '';
     this.rol = '';
    }
   ngOnInit(): void {
     this.email = this.route.snapshot.params['email'];
 
-    this.usuarioService.obtenerRolUsuario(this.usuario.email).subscribe(
+    this.userService.obtenerRolUsuario(this.usuario.email).subscribe(
       (rol: string) => {
         this.rol = rol;
       },
@@ -38,7 +38,7 @@ export class ViewPerfilUsuarioComponent implements OnInit {
   }
 
   obtenerPerfilUsuario(): void {
-    this.usuarioService.obtenerPerfil(this.email).subscribe(
+    this.userService.obtenerPerfil(this.email).subscribe(
       (data) => {
         this.usuario = data;
       },

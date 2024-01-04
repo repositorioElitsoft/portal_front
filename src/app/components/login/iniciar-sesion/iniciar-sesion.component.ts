@@ -15,7 +15,7 @@ export class IniciarSesionComponent implements OnInit {
   loginForm: FormGroup;
   error = '';
   email = '';
-  usr_pass = '';
+  password = '';
   inicioSesionFallido = false;
   mensajeError = '';
   constructor(

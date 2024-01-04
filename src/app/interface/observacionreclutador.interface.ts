@@ -24,17 +24,17 @@ export interface Observacion {
     usr1_id: number;
     usr_id_obs:number;
     usr_id_obs_mod: number;
-    usr_id: number;
-    usr_nom:String;
-    usr_ap_pat:String;
-    usr_email:String;
+    id: number;
+    name:String;
+    firstLastname:String;
+    email:String;
   }
   export interface CatObservacionDTO{
      usr2_email: String ;
      usr2_ap_pat: String
      usr2_nom: String ;
      usr2_id: number;
-     cat_obs_id:number;
+     id:number;
      cat_obs_desc:string;
      obs_id: number;
     apr_ger:String;
@@ -46,8 +46,7 @@ export interface Observacion {
     usr1_id: number;
     usr_id_obs:number; 
     usr_id_obs_mod: number ;
-    usr_id: number;
-    usr_nom:String;
-    usr_ap_pat:String;
-    usr_email:String;
+    name:String;
+    firstLastname:String;
+    email:String;
   }

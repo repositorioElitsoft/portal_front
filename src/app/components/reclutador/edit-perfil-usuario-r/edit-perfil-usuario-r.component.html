@@ -1,58 +1,58 @@
-<mat-card-header><h2 class="perfilr">Editar Usuario</h2></mat-card-header>
+<mat-card-header><h2 class="perfilr">Editar User</h2></mat-card-header>
   <mat-card-content>
     <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
       <!-- Nombre -->
       <mat-form-field class="full-width">
         <mat-label>Nombre</mat-label>
-        <input matInput formControlName="usr_nom" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_nom')?.hasError('required')">
+        <input matInput formControlName="name" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('name')?.hasError('required')">
           *Nombre es requerido.
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_nom')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('name')?.hasError('maxlength')">
           *Nombre no debe exceder 30 caracteres
         </mat-error>
       </mat-form-field>
       <!-- Apellido Paterno -->
       <mat-form-field class="full-width">
         <mat-label>Apellido Paterno</mat-label>
-        <input matInput formControlName="usr_ap_pat" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_ap_pat')?.hasError('required')">
+        <input matInput formControlName="firstLastname" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('required')">
           *Apellido Paterno es requerido
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_ap_pat')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('maxlength')">
           *Apellido Paterno no debe exceder 30 caracteres
         </mat-error>
       </mat-form-field>
       <!-- Apellido Materno -->
       <mat-form-field class="full-width">
         <mat-label>Apellido Materno</mat-label>
-        <input matInput formControlName="usr_ap_mat" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('usr_ap_mat')?.hasError('required')">
+        <input matInput formControlName="secondLastname" required maxlength="30">
+        <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('required')">
           *Apellido Materno es requerido
         </mat-error>
-        <mat-error *ngIf="userDataForm.get('usr_ap_mat')?.hasError('maxlength')">
+        <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('maxlength')">
           *Apellido Materno no debe exceder 30 caracteres
         </mat-error>
       </mat-form-field>
        <!-- Rut -->
        <mat-form-field class="full-width">
         <mat-label>Rut</mat-label>
-        <input matInput formControlName="usr_rut" required maxlength="30" readonly>
+        <input matInput formControlName="rut" required maxlength="30" readonly>
       </mat-form-field>
       <!-- Telefono -->
       <mat-form-field class="full-width">
         <mat-label>Teléfono</mat-label>
-        <input matInput formControlName="usr_tel" required maxlength="30">
+        <input matInput formControlName="phone" required maxlength="30">
       </mat-form-field>
       <!-- Email -->
       <mat-form-field class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="usr_email" readonly>
+        <input matInput formControlName="email" readonly>
       </mat-form-field>
   <!-- rol -->
   <mat-form-field class="full-width">
     <mat-label>Rol</mat-label>
-    <input matInput formControlName="usr_rol" required maxlength="30" readonly>
+    <input matInput formControlName="roles" required maxlength="30" readonly>
   </mat-form-field>
       <!-- Botones de acción -->
       <div class="form-group text-center d-flex">
