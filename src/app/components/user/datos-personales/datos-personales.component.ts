@@ -46,7 +46,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      rut: ["",[Validators.required, rutValido]],
+      rut: ["",[Validators.required, validRut]],
       name: ["",[Validators.required]],
       firstLastname: ["",[Validators.required]],
       secondLastname: ["",[Validators.required]],
@@ -58,8 +58,11 @@ export class DatosPersonalesComponent implements OnInit {
       address:["", Validators.required],
       linkedin: ["",[]],
       phone: ["",[Validators.required, Validators.pattern("^[0-9]+$")]],
-      usr_gen:["Masculino", [Validators.required]],
-      usr_gen_otro: ["", [Validators.required]]
+      gender: this.formBuilder.group({
+        id:['1',],
+        name:['', ]
+      }),
+
     });
 
   this.form.get('usr_gen')?.valueChanges.subscribe((value) => {
@@ -164,23 +167,10 @@ export class DatosPersonalesComponent implements OnInit {
         this.usuarioGuardado = data;
         this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
         this.form.patchValue(data);
-        /*
-        this.form.get('usr_gen')?.setValue(this.usuarioGuardado.usr_gen)
-
-        if (this.usuarioGuardado.usr_gen === 'Otro') {
-          this.form.get('usr_gen')?.setValue('Otro');
-        }*/
+    
 
         this.isLoaded= true;
-        const inputElement = document.getElementById("inputTelefono");
-        if (inputElement) {
-          intlTelInput(inputElement, {
-            initialCountry: "cl",
-            separateDialCode: true,
-            utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
-            placeholderNumberType: "UNKNOWN"
-          });
-        }
+
         this.countryService.obtenerPaises().subscribe({
           next: (data: Country[]) => {
             this.countries = this.sortByName(data);
@@ -218,9 +208,11 @@ export class DatosPersonalesComponent implements OnInit {
     event.preventDefault();
     const user: User = this.form.value;
 
+    console.log("USER :", user)
+
+
     try {
-      /*
-      await this.userService.updateUsuario(user).toPromise();*/
+      await this.userService.updateUser(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
         "success",
         "Datos guardados",
@@ -246,16 +238,16 @@ export class DatosPersonalesComponent implements OnInit {
   }
   }
 }
-function rutValido(control: AbstractControl): ValidationErrors | null {
+function validRut(control: AbstractControl): ValidationErrors | null {
   if (!control.value.includes("-")) {
     return { badRut: true };
   }
-  if (control.value && !validarRut(control.value)) {
+  if (control.value && !validateRut(control.value)) {
     return { badRut: true };
   }
   return null;
 }
-function validarRut(rut: string) {
+function validateRut(rut: string) {
   rut = rut.replace(/\s+/g, '').replace(/-/g, '');
   if (!/^[0-9]+[0-9kK]{1}$/.test(rut)) {
     return false;
