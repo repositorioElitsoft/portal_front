@@ -65,12 +65,12 @@
                   </div>
                 </mat-list-item>
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
-                <mat-list-item *ngFor="let laboral of usuarioData.laborales">
-                  <span matListItemTitle>{{ laboral.inf_lab_crg_emp }}</span>
+                <mat-list-item *ngFor="let employment of usuarioData.laborales">
+                  <span matListItemTitle>{{ employment.position }}</span>
                   <span matListItemLine>
-                    {{ laboral.inf_lab_emp }}
+                    {{ employment.company }}
                   </span>
-                    <div *ngFor="let h of laboral.herramientas; let i = index" matListItemLine>
+                    <div *ngFor="let h of employment.herramientas; let i = index" matListItemLine>
                       <mat-chip  class="chips" >
                         {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})  - (Exp:{{ h.herr_usr_anos_exp }} año/s)
                       </mat-chip>
@@ -78,8 +78,8 @@
                   <div matListItemIcon>
                     <mat-icon>work</mat-icon>
                   </div>
-                  <span matListItemMeta> <div>Desde</div> {{ laboral.inf_lab_fec_ini }} </span>
-                  <span matListItemMeta> <div>Hasta</div> {{ laboral.inf_lab_fec_fin }} </span>
+                  <span matListItemMeta> <div>Desde</div> {{ employment.startDate }} </span>
+                  <span matListItemMeta> <div>Hasta</div> {{ employment.endDate }} </span>
                 </mat-list-item>
               </mat-list>
             </mat-tab>
