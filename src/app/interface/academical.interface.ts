@@ -1,5 +1,5 @@
 import { AcademicalReference } from "./referencia-academica.interface";
-export interface Academica {
+export interface Academical {
 
     id?:number,
     degree:string,

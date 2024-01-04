@@ -22,7 +22,7 @@
           <label for="cargosE"  class="col-m-2 col-form-label">Cargos Elitsoft:</label>
           <div class="combobox col-sm-15">
             <select class="form-control" id="cargosE" formControlName="crg_elit_id" name="cargosE">
-              <option *ngFor="let cargo of cargosElitsoft" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</option>
+              <option *ngFor="let cargo of JobPosition" [value]="cargo.id">{{ cargo.name}}</option>
             </select>
           </div>
         </div>

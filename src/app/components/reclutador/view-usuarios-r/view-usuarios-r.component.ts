@@ -29,8 +29,9 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import { HttpClient } from '@angular/common/http';
 import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
-import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
-import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
+import { JobPositionService } from 'src/app/service/jobposition.service';
+import { JobPosition } from 'src/app/interface/jobposition.interface';
+import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -64,7 +65,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   inputContent: boolean = false;
   lastYears: number = 0;
   resultadosExam: any[]=[];
-  cargos: CargosElitsoft[] = [];
+  cargos: JobPosition[] = [];
   idUser:number = 0;
   filterCargo: string = '';
   resultados: any[] = [];
@@ -93,7 +94,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
-    private cargosElitsoftService: CargosElitsoftService,
+    private JobPositionService: JobPositionService,
     private cargoService: CargosUsuarioService
   ) {
     this.selectedCheckbox = this.fb.group({
@@ -105,11 +106,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.getCategories();
     this.obtenerResultadosByUser();
     this.cargoService.listarCargos()
-    this.getCargosElitsoft();
+    this.getJobPosition();
   }
-  getCargosElitsoft() {
-    this.cargosElitsoftService.obtenerListaCargosElitsoft().subscribe(
-      (data: CargosElitsoft[]) => {
+  getJobPosition() {
+    this.JobPositionService.obtenerListaJobPosition().subscribe(
+      (data: JobPosition[]) => {
         this.cargos = data;
       }
     )
@@ -141,11 +142,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
+
+    /*
     if (this.selectedCargo > 0) {
       filteredArray = filteredArray.filter(usuario => {
         return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
       });
     }
+
+    */
 if (this.selectedfechaPostulacion) {
   console.log("seleccioné fecha");
   // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
@@ -282,7 +287,7 @@ if (this.selectedfechaPostulacion) {
     /*
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.laborales?.some((experiencia) => {
+        return usuario.laborales?.some((experiencia : any) => {
           return experiencia.herramientas?.some((herramienta: any) => {
             const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
@@ -302,7 +307,7 @@ if (this.selectedfechaPostulacion) {
       const [min, max] = this.selectedAniosExpRange;
       filteredArray = filteredArray.filter(element => {
         const anosExp = element.herr_exp.split(', ').map(Number);
-        return anosExp.some(anos => anos >= min && anos <= max);
+        return anosExp.some((anos: any) => anos >= min && anos <= max);
       });
     }*/
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);

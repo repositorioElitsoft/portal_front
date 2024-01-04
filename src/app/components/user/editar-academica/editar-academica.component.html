@@ -4,7 +4,7 @@
     <div class="academica-item">
       <mat-form-field>
         <mat-label>Título:</mat-label>
-        <input matInput formControlName="titl" placeholder="Título">
+        <input matInput formControlName="degree" placeholder="Título">
       </mat-form-field>
       <mat-form-field>
         <mat-label>Institución Educativa:</mat-label>
@@ -24,7 +24,7 @@
       </mat-form-field>
   <div class="contenedor-externo">
     <h4 class="perfilr">Referencias Académicas</h4>
-    <div formArrayName="referenciaAcademicas">
+    <div formArrayName="academicalReference">
       <div *ngFor="let ref of referenciaFormArray.controls; let i = index" [formGroupName]="i">
         <mat-card class="referencia-individual">
           <mat-form-field appearance="fill" class="example-full-width">

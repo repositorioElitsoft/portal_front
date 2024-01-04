@@ -54,7 +54,7 @@
         <div class="row mb-3">
           <label for="inputTitulo" class="col-sm-2 col-form-label">Titulo:</label>
           <div class="col-sm-10">
-            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="titl" name="inputTitulo" >
+            <input type="inputTitulo" class="form-control" id="inputTitulo" formControlName="degree" name="inputTitulo" >
           </div>
         </div>
         <div class="row mb-3">
@@ -87,7 +87,7 @@
         </div>
         <div>
           <h4 class="perfilr">Referencias Academicas</h4>
-          <div formArrayName="referenciaAcademicas">
+          <div formArrayName="academicalReference">
             <div *ngFor="let ref of referenciaFormArray.controls; let i = index" [formGroupName]="i">
               <div class="referencia-individual">
                 <div class="row mb-3">

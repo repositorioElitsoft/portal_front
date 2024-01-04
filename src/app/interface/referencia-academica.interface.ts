@@ -4,4 +4,4 @@ export interface AcademicalReference {
     institution: string;
     email: string;
     phone: string;
-}  
+}

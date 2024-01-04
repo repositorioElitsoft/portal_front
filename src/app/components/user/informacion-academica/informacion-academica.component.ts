@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
-import { Academica } from 'src/app/interface/academica.interface';
+import { Academical } from 'src/app/interface/academical.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AcademicalReference } from 'src/app/interface/referencia-academica.interface';
 import { AñadirEstudioComponent } from '../añadir-estudio/añadir-estudio.component';
@@ -15,12 +15,12 @@ import { AcademicaService } from 'src/app/service/academica.service';
 })
 export class InformacionAcademicaComponent implements OnInit {
   creationMode: boolean = false;
-  academicas: Academica[] = []
+  academicas: Academical[] = []
   id: number | null | undefined = null
   form!: FormGroup
   minFecha: string = '';
   today: string;
-  referenciasAcademicas: [] = [];
+  academicalReference: [] = [];
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -32,14 +32,14 @@ export class InformacionAcademicaComponent implements OnInit {
     this.obtenerAcademicasGuardados();
   }
   get referenciaFormArray(){
-    return this.form.get('referenciaAcademicas') as FormArray;
+    return this.form.get('academicalReference') as FormArray;
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
       name: [''],
       institution: [''],
       email: [''],
-      phone: ['']
+      tel: ['']
     });
     this.referenciaFormArray.push(referenciaFormGroup);
   }
@@ -49,11 +49,11 @@ export class InformacionAcademicaComponent implements OnInit {
   private buildForm(){
     this.form = this.formBuilder.group({
       status: ["",[Validators.required]],
-      titl: ["",[Validators.required]],
+      degree: ["",[Validators.required]],
       university: ["",[Validators.required]],
       startDate: ["",[Validators.required]],
       endDate: ["",[Validators.required]],
-      referenciaAcademicas: this.formBuilder.array([])
+      academicalReference: this.formBuilder.array([])
     });
   }
   redirectTo(){
@@ -61,7 +61,7 @@ export class InformacionAcademicaComponent implements OnInit {
   }
   obtenerAcademicasGuardados() {
     this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
-      next: (data: Academica[]) => {
+      next: (data: Academical[]) => {
         this.academicas = data;
       },
       error: (err) => {
@@ -117,20 +117,20 @@ export class InformacionAcademicaComponent implements OnInit {
   }
   submitForm(event: Event) {
     event.preventDefault();
-    const academicaNueva: Academica = {
+    const academicaNueva: Academical = {
       ...this.form.value,
-      referenciaAcademicas: this.referenciaFormArray.value.map( (ref: AcademicalReference) => {
+      academicalReference: this.referenciaFormArray.value.map( (ref: AcademicalReference) => {
         return {
           id: ref.id,
           name: ref.name,
           institution: ref.institution,
           email: ref.email,
-          phone: ref.phone,
+          phonel: ref.phone,
         };
       })
     };
     this.academicaService.guardarAcademica(academicaNueva, this.id).subscribe(
-      (academicaGuardada: Academica) => {
+      (academicaGuardada: Academical) => {
         this.creationMode = false;
         this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
           next:(data)=>{
