@@ -3,7 +3,7 @@ import { CargoUsuario } from "./cargos-usuario.interface"
 import { City } from "./city.interface"
 import { Gender } from "./gender.interface"
 import { HerramientaData } from "./herramienta-data.interface"
-import { Laboral } from "./laboral.interface"
+import { Employment } from "./employment.interface"
 import { UserCV } from "./user-cv.interface"
 import { UserPreferredJob } from "./user-preferred-job-interface"
 
@@ -21,7 +21,7 @@ export interface User {
     city?: City
     address:string
     tools?: HerramientaData[]
-    jobs?: Laboral[]
+    jobs?: Employment[]
     academicalList?: Academical[]
     userJob?: CargoUsuario[]
     userPrefferedJob?: UserPreferredJob

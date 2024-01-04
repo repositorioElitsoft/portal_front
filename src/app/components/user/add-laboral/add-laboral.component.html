@@ -2,21 +2,21 @@
   <h4 class="perfilr">Información laboral</h4>
   <mat-form-field>
     <mat-label>Cargo:</mat-label>
-    <input matInput type="text" id="inputCargo" formControlName="inf_lab_crg_emp" name="inputCargo">
+    <input matInput type="text" id="inputCargo" formControlName="position" name="inputCargo">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Nombre Empresa:</mat-label>
-    <input matInput type="text" id="inputNomEmp" formControlName="inf_lab_emp" name="inputNomEmp">
+    <input matInput type="text" id="inputNomEmp" formControlName="company" name="inputNomEmp">
   </mat-form-field>
   <mat-form-field>
     <mat-label>Actividades Realizadas:</mat-label>
-    <input matInput type="text" id="inputActRe" formControlName="inf_lab_act" name="inputActRe">
+    <input matInput type="text" id="inputActRe" formControlName="activities" name="inputActRe">
   </mat-form-field>
   <mat-form-field class="example-form-field">
     <mat-label>Fecha Inicio - Fecha Fin</mat-label>
     <mat-date-range-input [rangePicker]="rangePicker">
-      <input matStartDate placeholder="Fecha Inicio" id="inputFechain" formControlName="inf_lab_fec_ini" name="inputFechaini">
-      <input matEndDate placeholder="Fecha Fin" id="inputFechafin" formControlName="inf_lab_fec_fin" name="inputFechafin">
+      <input matStartDate placeholder="Fecha Inicio" id="inputFechain" formControlName="startDate" name="inputFechaini">
+      <input matEndDate placeholder="Fecha Fin" id="inputFechafin" formControlName="endDate" name="inputFechafin">
     </mat-date-range-input>
     <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
     <mat-date-range-picker #rangePicker>
@@ -45,24 +45,24 @@
   </mat-card>
   <div class="contenedor-externo">
     <h4 class="perfilr">Referencias Laboral</h4>
-    <div formArrayName="referenciasLaborales">
+    <div formArrayName="employmentReferences">
       <div *ngFor="let ref of referenciasFormArray.controls; let i = index" [formGroupName]="i">
         <mat-card class="referencia-individual">
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Nombre</mat-label>
-            <input matInput type="text" formControlName="ref_lab_nom">
+            <input matInput type="text" formControlName="name">
           </mat-form-field>
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Institución</mat-label>
-            <input matInput type="text" formControlName="ref_lab_emp">
+            <input matInput type="text" formControlName="company">
           </mat-form-field>
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Email</mat-label>
-            <input matInput type="email" formControlName="ref_lab_email">
+            <input matInput type="email" formControlName="email">
           </mat-form-field>
           <mat-form-field appearance="fill" class="example-full-width">
             <mat-label>Teléfono</mat-label>
-            <input matInput type="tel" formControlName="ref_lab_tel">
+            <input matInput type="tel" formControlName="phone">
           </mat-form-field>
           <mat-card class="guardarycancelar mb-2" style="display: flex; justify-content: center; align-items: center; height: 100%;">
             <button mat-mini-fab color="warn" (click)="eliminarReferencia(i)" style="margin: auto;">

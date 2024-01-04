@@ -3,13 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { UserService } from 'src/app/service/user.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { Laboral } from 'src/app/interface/laboral.interface';
+import { Employment } from 'src/app/interface/employment.interface';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AddLaboralComponent } from '../add-laboral/add-laboral.component';
 import { EditLaboralComponent } from '../edit-laboral/edit-laboral.component';
-import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface';
+import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
 @Component({
   selector: 'app-informacion-laboral',
   templateUrl: './informacion-laboral.component.html',
@@ -17,7 +17,7 @@ import { ReferenciaLaboral } from 'src/app/interface/referenciaLaboral.interface
 })
 export class InformacionLaboralComponent implements OnInit {
   creationMode: boolean = false;
-  laborales: Laboral[] = []
+  laborales: Employment[] = []
   id: number | null | undefined = null
   today;
   form!: FormGroup
@@ -25,7 +25,7 @@ export class InformacionLaboralComponent implements OnInit {
   checkboxFormCreated = false;
   herramientasDisponibles!: HerramientaData[];
   herrIdList: number[] = [];
-  referenciasLaborales: [] = []
+  employmentReferences: [] = []
   constructor(
     private formBuilder: FormBuilder,
     public dialog : MatDialog,
@@ -40,11 +40,11 @@ export class InformacionLaboralComponent implements OnInit {
   }
   private buildForm(){
     this.form = this.formBuilder.group({
-      inf_lab_crg_emp: ["",[Validators.required]],
-      inf_lab_emp: ["",[Validators.required]],
-      inf_lab_act: ["",[Validators.required]],
-      inf_lab_fec_ini: ["",[Validators.required]],
-      inf_lab_fec_fin: ["",[Validators.required]],
+      position: ["",[Validators.required]],
+      company: ["",[Validators.required]],
+      activities: ["",[Validators.required]],
+      startDate: ["",[Validators.required]],
+      endDate: ["",[Validators.required]],
       referenciasLaborales: this.formBuilder.array([])
     });
     this.generateHerrForm()
@@ -64,10 +64,10 @@ export class InformacionLaboralComponent implements OnInit {
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
-      ref_lab_nom: [''],
-      ref_lab_emp: [''],
-      ref_lab_email: [''],
-      ref_lab_tel: ['']
+      name: [''],
+      company: [''],
+      email: [''],
+      phone: ['']
     });
     this.referenciasFormArray.push(referenciaFormGroup);
   }
@@ -89,24 +89,24 @@ export class InformacionLaboralComponent implements OnInit {
   }
   editarLaboral(id: number | undefined | null){
     this.id = id;
-    const laboralToEdit = this.laborales.find(laboral => laboral.inf_lab_id === this.id);
+    const laboralToEdit = this.laborales.find(employment => employment.id === this.id);
     this.form.patchValue({
-      inf_lab_crg_emp: laboralToEdit?.inf_lab_crg_emp,
-      inf_lab_emp: laboralToEdit?.inf_lab_emp,
-      inf_lab_act: laboralToEdit?.inf_lab_act,
-      inf_lab_fec_ini: laboralToEdit?.inf_lab_fec_ini,
-      inf_lab_fec_fin: laboralToEdit?.inf_lab_fec_fin,
+      position: laboralToEdit?.position,
+      company: laboralToEdit?.company,
+      activities: laboralToEdit?.activities,
+      startDate: laboralToEdit?.startDate,
+      endDate: laboralToEdit?.endDate,
     });
     while (this.referenciasFormArray.length) {
       this.referenciasFormArray.removeAt(0);
     }
-    laboralToEdit?.referenciasLaborales?.forEach(referencia => {
+    laboralToEdit?.employmentReferences?.forEach(referencia => {
       const referenciaFormGroup = this.formBuilder.group({
-        ref_lab_id: referencia.ref_lab_id,
-        ref_lab_nom: referencia.ref_lab_nom,
-        ref_lab_emp: referencia.ref_lab_emp,
-        ref_lab_email: referencia.ref_lab_email,
-        ref_lab_tel: referencia.ref_lab_tel,
+        id: referencia.id,
+        name: referencia.name,
+        company: referencia.company,
+        email: referencia.email,
+        phone: referencia.phone,
       });
       this.referenciasFormArray.push(referenciaFormGroup);
     });
@@ -151,11 +151,11 @@ export class InformacionLaboralComponent implements OnInit {
   addExperienceRow(){
     this.id = null;
     this.form.patchValue({
-      inf_lab_crg_emp: "",
-      inf_lab_emp: "",
-      inf_lab_act: "",
-      inf_lab_fec_ini:"",
-      inf_lab_fec_fin: "",
+      position: "",
+      company: "",
+      activities: "",
+      startDate:"",
+      endDate: "",
     });
     this.herrIdList.forEach(herrId =>{
       this.form.get(herrId.toString())?.patchValue(false);
@@ -176,21 +176,21 @@ export class InformacionLaboralComponent implements OnInit {
   submitForm(event: Event) {
     event.preventDefault();
     console.log("Form guardado:",this.form.value)
-    const laboralNueva: Laboral = {
+    const laboralNueva: Employment = {
       ...this.form.value,
       herramientas: this.getHerramientasSeleccionadas(),
-      referenciasLaborales: this.referenciasFormArray.value.map( (ref: ReferenciaLaboral) => {
+      employmentReferences: this.referenciasFormArray.value.map( (ref: EmploymentReferences) => {
         return {
-          ref_lab_id: ref.ref_lab_id,
-          ref_lab_nom: ref.ref_lab_nom,
-          ref_lab_emp: ref.ref_lab_emp,
-          ref_lab_email: ref.ref_lab_email,
-          ref_lab_tel: ref.ref_lab_tel,
+          id: ref.id,
+          name: ref.name,
+          company: ref.company,
+          email: ref.email,
+          phone: ref.phone,
         };
       })
     };
     this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
-      (laboralGuardada: Laboral) => {
+      (laboralGuardada: Employment) => {
         this.obtenerLaboralesGuardados();
         this.creationMode = false;
       },
