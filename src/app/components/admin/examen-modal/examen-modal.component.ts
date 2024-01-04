@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Categoria } from 'src/app/interface/categoria.interface';
-import { Producto } from 'src/app/interface/producto.interface';
+import { Product } from 'src/app/interface/producto.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 export class ExamenModalComponent implements OnInit {
   examenForm: FormGroup;
   categorias: Categoria[] = [];
-  productosDisponibles: Producto[] = [];
+  productosDisponibles: Product[] = [];
   @Output() examenActualizado: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
@@ -141,7 +141,7 @@ export class ExamenModalComponent implements OnInit {
       next: (data?) => {
         if (data) {
           this.productosDisponibles = data.slice().sort((a, b) => {
-            return a.prd_nom.localeCompare(b.prd_nom);
+            return a.name.localeCompare(b.name);
           });
         } else {
         }

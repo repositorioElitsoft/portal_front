@@ -1,4 +1,4 @@
-export interface CategoriaProducto{
-    cat_prod_id:number,
+export interface ProductCategory{
+    id:number,
     name:string
 }
