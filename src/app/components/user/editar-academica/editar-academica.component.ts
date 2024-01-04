@@ -53,7 +53,7 @@ export class EditarAcademicaComponent implements OnInit {
       return this.formBuilder.group({
         id: [academica.id], 
         name: [academica.name], 
-        intitution: [academica.institution],
+        institution: [academica.institution],
         email: [academica.email], 
         phone: [academica.phone] 
       });
