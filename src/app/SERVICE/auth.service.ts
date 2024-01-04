@@ -25,6 +25,6 @@ export class AuthService {
   logout(){}
   getUserId(): number | null {
     const usuario: any = this.getUserId();
-    return usuario?.usr_id ?? null;
+    return usuario?.id ?? null;
   }
 }

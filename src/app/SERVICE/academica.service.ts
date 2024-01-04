@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Academica } from '../interface/academica.interface';
+import { Academical } from '../interface/academical.interface';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -9,29 +9,29 @@ import { environment } from 'src/environments/environment';
 export class AcademicaService {
   readonly url = `${environment.URL_HOST}/academicas/`
   constructor(private http: HttpClient) { }
-  guardarAcademica(academica: Academica, acadId: number | undefined | null): Observable<Academica> {
+  guardarAcademica(academica: Academical, acadId: number | undefined | null): Observable<Academical> {
     if (acadId){
-      return this.http.put<Academica>(`${this.url}${acadId}`, academica);
+      return this.http.put<Academical>(`${this.url}${acadId}`, academica);
     }
-    return this.http.post<Academica>(`${this.url}`, academica);
+    return this.http.post<Academical>(`${this.url}`, academica);
   }
-  actualizarAcademica(academicaId: number, academica: Academica, jwt: string): Observable<Academica> {
+  actualizarAcademica(academicaId: number, academica: Academical, jwt: string): Observable<Academical> {
     const url = `${this.url}${academicaId}`;
     const headers = new HttpHeaders({
       'Authorization': jwt
     });
-    return this.http.put<Academica>(url, academica, { headers });
+    return this.http.put<Academical>(url, academica, { headers });
   }
-  obtenerListaAcademicasPorUsuario(): Observable<Academica[]> {
-    return this.http.get<Academica[]>(`${this.url}`);
+  obtenerListaAcademicasPorUsuario(): Observable<Academical[]> {
+    return this.http.get<Academical[]>(`${this.url}`);
   }
-  obtenerAcademica(id: number | null | undefined): Observable<Academica> {
-    return this.http.get<Academica>(`${this.url}${id}`);
+  obtenerAcademica(id: number | null | undefined): Observable<Academical> {
+    return this.http.get<Academical>(`${this.url}${id}`);
   }
-  listarAcademicas(): Observable<Academica[]> {
-    return this.http.get<Academica[]>(`${this.url}listar`);
+  listarAcademicas(): Observable<Academical[]> {
+    return this.http.get<Academical[]>(`${this.url}listar`);
   }
-  eliminarAcademica(id: number | null | undefined): Observable<Academica> {
-    return this.http.delete<Academica>(`${this.url}${id}`);
+  eliminarAcademica(id: number | null | undefined): Observable<Academical> {
+    return this.http.delete<Academical>(`${this.url}${id}`);
   }
 }

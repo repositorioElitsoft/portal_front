@@ -1,11 +1,11 @@
-import { CargosElitsoft } from "./cargos-elitsoft.interface";
+import { JobPosition } from "./jobposition.interface";
 export interface CargoUsuario{
     fecha: string | number | Date;
     usuarioId: any;
     crg_usr_id: Number,
     crg_usr_pret: number,
     crg_prf: String,
-    cargoElitsoft?: CargosElitsoft,
+    jobPosition?: JobPosition,
     disponibilidad: String,
     tiempo_incorporacion:String,
     otro_tiempo_incorporacion: String;

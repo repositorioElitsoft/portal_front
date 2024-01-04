@@ -1,7 +1,7 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Usuario } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 
 @Component({
   selector: 'app-edit-user-dialog',
@@ -13,15 +13,15 @@ export class EditUserDialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<EditUserDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public usuario: Usuario
+    @Inject(MAT_DIALOG_DATA) public usuario: User
   ) {}
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      usr_nom: new FormControl(this.usuario.usr_nom, Validators.required),
-      usr_ap_pat: new FormControl(this.usuario.usr_ap_pat, Validators.required),
-      usr_email: new FormControl(this.usuario.usr_email, [Validators.required, Validators.email]),
-      usr_rut: new FormControl(this.usuario.usr_rut, [Validators.required]),
+      name: new FormControl(this.usuario.name, Validators.required),
+      firstLastname: new FormControl(this.usuario.firstLastname, Validators.required),
+      email: new FormControl(this.usuario.email, [Validators.required, Validators.email]),
+      rut: new FormControl(this.usuario.rut, [Validators.required]),
     });
   }
 

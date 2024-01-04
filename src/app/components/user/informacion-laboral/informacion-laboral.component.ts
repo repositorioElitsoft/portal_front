@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LaboralService } from 'src/app/service/laboral.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { Laboral } from 'src/app/interface/laboral.interface';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';

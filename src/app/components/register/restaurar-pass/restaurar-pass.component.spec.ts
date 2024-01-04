@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RestaurarPassComponent } from './restaurar-pass.component';
 import { HttpClientModule } from '@angular/common/http';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { ActivatedRoute, ParamMap, Router, convertToParamMap } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import { Observable, of } from 'rxjs';
@@ -21,7 +21,7 @@ describe('RestaurarPassComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ RestaurarPassComponent ],
       imports:[HttpClientModule, ReactiveFormsModule, MatCardModule],
-      providers:[UsuarioService,Router,NotificationService,{ provide: ActivatedRoute, useClass: MockActivatedRoute }]
+      providers:[UserService,Router,NotificationService,{ provide: ActivatedRoute, useClass: MockActivatedRoute }]
     })
     .compileComponents();
 
