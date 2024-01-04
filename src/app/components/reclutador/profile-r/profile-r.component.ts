@@ -72,7 +72,7 @@ export class ProfileRComponent implements OnInit {
     event.preventDefault();
     const user: User = this.form.value;
     try {
-      await this.userService.updateUsuario(user).toPromise();
+      await this.userService.updateUser(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
         "success",
         "Datos guardados",

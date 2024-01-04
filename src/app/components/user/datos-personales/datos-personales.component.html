@@ -82,28 +82,32 @@
             </div>
           </div>
         </div>
-        <div class="row mb-3">
-          <label for="inputGenero" class="col-sm-2 col-form-label">Género:</label>
-          <div class="col-sm-10">
-            <select  class="form-control" id="inputGenero" formControlName="gender" name="inputGenero"
-            [ngClass]="{'is-invalid': form.get('gender')?.invalid && form.get('gender')?.touched}">
-            <option [value]="usuarioGuardado.gender">{{ usuarioGuardado.gender }}</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-              <option value="Otro">Otro</option>
-            </select>
-            <div *ngIf="form.get('gender')?.hasError('required') && form.get('gender')?.touched" class="invalid-feedback">
-              Género es obligatorio
+        <div formGroupName="gender">
+          <div class="row mb-3" >
+            <label for="inputGenero" class="col-sm-2 col-form-label">Género:</label>
+            <div class="col-sm-10" >
+              <select  class="form-control" id="inputGenero" formControlName="id" name="inputGenero"
+              [ngClass]="{'is-invalid': form.get('gender')?.invalid && form.get('gender')?.touched}">
+
+                <option value="1">Masculino</option>
+                <option value="2">Femenino</option>
+                <option value="">Otro</option>
+                <option [value]="usuarioGuardado.gender?.id"  *ngIf="usuarioGuardado.gender?.id! > 2">{{ usuarioGuardado.gender?.name }}</option>
+              </select>
+              <div *ngIf="form.get('gender')?.hasError('required') && form.get('gender')?.touched" class="invalid-feedback">
+                Género es obligatorio
+              </div>
             </div>
           </div>
-        </div>
-        <div class="row mb-3" *ngIf="form.get('gender')?.value === 'Otro'">
-          <label for="inputGeneroOtro" class="col-sm-2 col-form-label">Especificar Género:</label>
-          <div class="col-sm-10">
-            <input class="form-control" id="inputGeneroOtro" formControlName="usr_gen_otro" name="inputGeneroOtro"
-            [ngClass]="{'is-invalid': form.get('usr_gen_otro')?.invalid && form.get('usr_gen_otro')?.touched}">
-            <div *ngIf="form.get('usr_gen_otro')?.hasError('required') && form.get('usr_gen_otro')?.touched" class="invalid-feedback">
-              Debe especificar el género
+        
+          <div class="row mb-3" *ngIf="!form.get('gender')?.get('id')?.value">
+            <label for="inputGeneroOtro" class="col-sm-2 col-form-label">Especificar Género:</label>
+            <div class="col-sm-10">
+              <input class="form-control" id="inputGeneroOtro" formControlName="name" name="inputGeneroOtro"
+              [ngClass]="{'is-invalid': form.get('name')?.invalid && form.get('name')?.touched}">
+              <div *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched" class="invalid-feedback">
+                Debe especificar el género
+              </div>
             </div>
           </div>
         </div>
