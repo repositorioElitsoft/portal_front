@@ -1,8 +1,8 @@
-import { Observation } from "./observacion.interface";
+import { Observation } from "./observation.interface";
 
 export interface ObservationCategory {
   id: number;
-  cat_obs_desc: string;
+  cat_description: string;
   observation: Observation[];
 }
 
