@@ -62,7 +62,7 @@
     <mat-tab label="Información Laboral">
       <mat-list>
         <mat-list-item *ngFor="let cargo of usuarioData.cargoUsuario">
-          <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
+          <span matListItemTitle>{{ cargo.jobPosition.crg_elit_nom }}</span>
           <span matListItemLine>Cargo a postular</span>
           <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
 

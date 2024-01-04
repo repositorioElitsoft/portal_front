@@ -30,7 +30,7 @@
     <mat-label>Cargo a postular</mat-label>
     <mat-select [(value)]="selectedCargo" (selectionChange)="filterData()">
       <mat-option value="">Seleccione un opción</mat-option>
-      <mat-option *ngFor="let cargo of cargos" [value]="cargo.crg_elit_id">{{ cargo.crg_elit_nom }}</mat-option>
+      <mat-option *ngFor="let cargo of cargos" [value]="cargo.id">{{ cargo.name }}</mat-option>
     </mat-select>
   </mat-form-field>
   </div>
