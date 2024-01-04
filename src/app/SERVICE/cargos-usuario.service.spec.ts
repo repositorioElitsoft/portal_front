@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CargosUsuarioService } from './cargos-usuario.service';
+import { CargosUsuarioService } from './cargos-user.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';

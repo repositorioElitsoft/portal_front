@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 let vecesEnviado = 0;
 @Component({
   selector: 'app-start',
@@ -33,13 +33,13 @@ export class StartComponent implements OnInit {
     private route:ActivatedRoute,
     private preguntaService:PreguntaService,
     private examenService:ExamenService,
-    private usuarioService: UsuarioService
+    private userService: UserService
       ) { }
   ngOnInit(): void {
-    this.usuarioService.obtenerUsuarioGuardado().subscribe(
+    this.userService.obtenerUsuarioGuardado().subscribe(
       (usuarioGuardado ) => {
         if (usuarioGuardado) {
-          this.idUser = usuarioGuardado.usr_id ?? 0;
+          this.idUser = usuarioGuardado.id ?? 0;
         }
         this.prevenirElBotonDeRetroceso();
         this.examenId = this.route.snapshot.params['exam_id'];
@@ -55,7 +55,7 @@ export class StartComponent implements OnInit {
     this.mostrarGrafico() ;
   }
   obtenerResultados() {
-    this.usuarioService.obtenerResultados().subscribe(
+    this.userService.obtenerResultados().subscribe(
       (data) => {
         this.resultados = data;
       },

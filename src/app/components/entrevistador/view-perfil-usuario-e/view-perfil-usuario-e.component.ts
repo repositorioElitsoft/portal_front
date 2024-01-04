@@ -8,7 +8,7 @@ import { CatObservacionDTO} from 'src/app/interface/observacionreclutador.interf
 import { UserSesionDTO } from 'src/app/interface/user.interface';
 import { CategoriaobservacionService } from 'src/app/service/categoriaobservacion.service';
 import { ObservacionService } from 'src/app/service/observacionreclutador.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-view-perfil-usuario-e',
@@ -29,13 +29,13 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
   isEditing: boolean = false;
   nombresUsuarios: Object[] = []; // Inicializado con un arreglo vacío
   usuarioGuardado: UserSesionDTO = {
-    usr_id:0,
-    usr_rut: '',
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_tel: '',
+    id:0,
+    rut: '',
+    name: '',
+    firstLastname: '',
+    secondLastname: '',
+    email: '',
+    phone: '',
   };
 
   observadoresCat: CatObservacionDTO = {
@@ -55,14 +55,14 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
    obs_fec_cre: new Date (),
    obs_fec_mod: new Date (),
    usr1_id: 0,
-   usr_id_obs:0,   // ID del Usuario que hizo la observación
-   usr_id_obs_mod: 0,   // ID del Usuario que modificó la observación
+   usr_id_obs:0,   // ID del User que hizo la observación
+   usr_id_obs_mod: 0,   // ID del User que modificó la observación
 
-   // Campos de la entidad Usuario
-   usr_id: 0,
-   usr_nom:'',
-   usr_ap_pat:'',
-   usr_email:'',
+   // Campos de la entidad User
+   id: 0,
+   name:'',
+   firstLastname:'',
+   email:'',
 
    
   }
@@ -77,7 +77,7 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
     private categoriaObservacion: CategoriaobservacionService,
     private route: ActivatedRoute,
     private router: Router,
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private form :  ReactiveFormsModule,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ViewPerfilUsuarioEComponent>,
@@ -154,7 +154,7 @@ onCategorySelectionChange() {
 
 // Función para cargar observaciones desde el backend
 cargarObservaciones() {
-  this.observacionService.obtenerCatObservacionesPorUsuarioId(this.usuarioData.usr_id).subscribe(
+  this.observacionService.obtenerCatObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
     (observadoresCat) => {
       this.observaciones = observadoresCat;
       console.log('Observaciones cargadas:', observadoresCat);
@@ -206,7 +206,7 @@ editarObservacion(obs_id: number) {
 
 
   ObtenerUsuarioGuardado() {
-    this.usuarioService.obtenerUsuarioGuardado().subscribe({
+    this.userService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
         console.log(this.usuarioGuardado);
@@ -224,7 +224,7 @@ editarObservacion(obs_id: number) {
 
 
   guardarObservacionCat(usuarioId: number) {
-    console.log('Usuario ID recibido:', usuarioId); // Agrega este console.log para ver el valor de usuarioId
+    console.log('User ID recibido:', usuarioId); // Agrega este console.log para ver el valor de usuarioId
     // Verificar si la observación o las categorías no están vacías
     if (!this.nuevaObservacion.trim() || !this.selectedCategory) {
       console.error('La observación o la categoría no pueden estar vacías.');
@@ -237,8 +237,8 @@ editarObservacion(obs_id: number) {
     this.observadoresCat.cat_obs_id = this.selectedCategory;
   
     // Usar los valores de usr_id_obs y usr_id_obs_mod del usuarioGuardado
-    this.observadoresCat.usr_id_obs = this.usuarioGuardado.usr_id ?? 0;
-    this.observadoresCat.usr_id_obs_mod = this.usuarioGuardado.usr_id ?? 0;
+    this.observadoresCat.usr_id_obs = this.usuarioGuardado.id ?? 0;
+    this.observadoresCat.usr_id_obs_mod = this.usuarioGuardado.id ?? 0;
     if(
       !this.selectedObservacionId
 

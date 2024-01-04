@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { UsuarioService } from "src/app/service/usuario.service";
+import { UserService } from "src/app/service/user.service";
 import { MatDialog } from "@angular/material/dialog";
 import { EditUserDialogComponent } from "../edit-user-dialog/edit-user-dialog.component";
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
@@ -7,7 +7,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
-import { Usuario } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { Producto } from 'src/app/interface/producto.interface';
 import { VersionProducto } from 'src/app/interface/version.interface';
@@ -17,7 +17,7 @@ import { AddUsuariosComponent } from "../add-usuarios/add-usuarios.component";
 import { EditPerfilUsuarioAdminComponent } from "../edit-perfil-usuario-admin/edit-perfil-usuario-admin.component";
 
 
-const ELEMENT_DATA: Usuario[] = [];
+const ELEMENT_DATA: any[] = [];
 
 @Component({
   selector: 'app-view-usuarios',
@@ -25,10 +25,10 @@ const ELEMENT_DATA: Usuario[] = [];
   styleUrls: ['./view-usuarios.component.css']
 })
 export class ViewUsuariosComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_email','usr_rol', 'acciones'];
+  displayedColumns: any[] = ['name', 'email','roles', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
-  originalDataCopy: Usuario[] = [];
+  originalDataCopy: any[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
   versiones: VersionProducto[] = [];
@@ -42,7 +42,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(private userService: UserService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     public dialog: MatDialog, private _snackBar: MatSnackBar) { }
@@ -58,17 +58,17 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
 
 
     obtenerUsuarios(): void {
-      this.usuarioService.obtenerUsuarios().subscribe(
+      this.userService.obtenerUsuarios().subscribe(
         (data: any[]) => {
 
           const usuarios = data.map((usuario) => ({
-            usr_id: usuario.usr_id || '',
-            usr_nom: usuario.usr_nom || '',
-            usr_tel: usuario.usr_tel || '',
-            usr_email: usuario.usr_email || '',
-            usr_direcc:usuario.usr_direcc || '',
-            usr_rol: usuario.usr_rol || '',
-            usr_herr: usuario.herramientas,
+            id: usuario.id || '',
+            name: usuario.name || '',
+            phone: usuario.phone || '',
+            email: usuario.email || '',
+            address:usuario.address || '',
+            roles: usuario.roles || '',
+            tools: usuario.herramientas,
             herr_ver: usuario.herramientas,
             herr_exp: usuario.herramientas,
           }));
@@ -99,15 +99,15 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
 
       if(result){
         //#endregionconsole.log()
-        this.usuarioService.eliminarUsuarioId(event.target.parentElement.id).subscribe({
+        this.userService.eliminarUsuarioId(event.target.parentElement.id).subscribe({
           next:()=>{
-            this._snackBar.open("Usuario eliminado","Cerrar",{
+            this._snackBar.open("User eliminado","Cerrar",{
               duration: 4000
             })
             this.obtenerUsuarios();
           },
           error:()=>{
-            this._snackBar.open("Error al eliminar Usuario","Cerrar",{
+            this._snackBar.open("Error al eliminar User","Cerrar",{
               duration: 4000
             })
           }
@@ -127,7 +127,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
        
       if (id) {
         // Llama al servicio para obtener los datos del usuario usando el ID
-        this.usuarioService.getUsuarioId(id).subscribe({
+        this.userService.getUsuarioId(id).subscribe({
           next: (data) => {
             console.log('Data llegada:', data);
             // Abre el diálogo con los datos obtenidos

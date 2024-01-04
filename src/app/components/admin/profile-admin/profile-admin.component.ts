@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from 'src/app/interface/user.interface';
+import { User } from 'src/app/interface/user.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 @Component({
   selector: 'app-profile-admin',
   templateUrl: './profile-admin.component.html',
@@ -13,32 +13,21 @@ export class ProfileAdminComponent implements OnInit {
   editable: boolean = false;
   form!: FormGroup;
   isLoaded: boolean = true;
-  usuarioGuardado: Usuario = {
-    usr_nom: '',
-    usr_ap_pat: '',
-    usr_ap_mat: '',
-    usr_email: '',
-    usr_direcc:'',
-    usr_herr: '',
-    herr_ver: '',
-    herr_exp: '',
-    laborales: [],
-    cargoUsuario: []
-  };
+  usuarioGuardado!: User;
   router: any;
   constructor(
     private formBuilder: FormBuilder,
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private notification: NotificationService
   ) {
     this.buildForm();
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      usr_nom: ["", [Validators.required]],
-      usr_ap_pat: ["", [Validators.required]],
-      usr_ap_mat: ["", [Validators.required]],
-      usr_email: [""],
+      name: ["", [Validators.required]],
+      firstLastname: ["", [Validators.required]],
+      secondLastname: ["", [Validators.required]],
+      email: [""],
     });
   }
   ngOnInit(): void {
@@ -46,14 +35,14 @@ export class ProfileAdminComponent implements OnInit {
     this.form.disable();
   }
   ObtenerUsuarioGuardado() {
-    this.usuarioService.obtenerUsuarioGuardado().subscribe({
+    this.userService.obtenerUsuarioGuardado().subscribe({
       next: (data) => {
         this.usuarioGuardado = data;
         this.form.patchValue({
-          usr_nom: this.usuarioGuardado.usr_nom,
-          usr_ap_pat: this.usuarioGuardado.usr_ap_pat,
-          usr_ap_mat: this.usuarioGuardado.usr_ap_mat,
-          usr_email: this.usuarioGuardado.usr_email,
+          name: this.usuarioGuardado.name,
+          firstLastname: this.usuarioGuardado.firstLastname,
+          secondLastname: this.usuarioGuardado.secondLastname,
+          email: this.usuarioGuardado.email,
         });
         this.isLoaded = true;
         const inputElement = document.getElementById("inputTelefono");
@@ -81,10 +70,10 @@ export class ProfileAdminComponent implements OnInit {
   }
   async submitForm(event: Event) {
     event.preventDefault();
-    const user: Usuario = this.form.value;
+    const user: User = this.form.value;
     console.log(user)
     try {
-      await this.usuarioService.updateUsuario(user).toPromise();
+      await this.userService.updateUsuario(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
         "success",
         "Datos guardados",

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReferenciaAcademica } from 'src/app/interface/referencia-academica.interface';

@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator} from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort} from '@angular/material/sort';
-import { Usuario} from 'src/app/interface/user.interface';
+import { User} from 'src/app/interface/user.interface';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { CategoriaProducto } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
@@ -31,19 +31,19 @@ import { NivelService } from 'src/app/service/nivel.service';
 import { Niveles } from 'src/app/interface/niveles.interface';
 import { CargosElitsoftService } from 'src/app/service/cargos-elitsoft.service';
 import { CargosElitsoft } from 'src/app/interface/cargos-elitsoft.interface';
-const ELEMENT_DATA: Usuario[] = [];
+const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
   templateUrl: './view-usuarios-r.component.html',
   styleUrls: ['./view-usuarios-r.component.css'],
 })
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['usr_nom', 'usr_tel', 'usr_email', 'acciones', 'seleccionar'];
+  displayedColumns: any[] = ['name', 'phone', 'email', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   filtroPuntaje: string = '';
   filtroCargo: string = '';
-  originalDataCopy: Usuario[] = [];
+  originalDataCopy: User[] = [];
   usuarios: any[] = [];
   categorias: CategoriaProducto[] = [];
   productos: Producto[] = [];
@@ -83,7 +83,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private fb: FormBuilder,
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private observacionReclutadorService: ObservacionService,
     private preguntaService:PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -118,7 +118,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   obtenerResultados() {
-    this.usuarioService.obtenerResultados().subscribe(
+    this.userService.obtenerResultados().subscribe(
       (data) => {
         this.resultados = data;
         this.filterData();
@@ -136,14 +136,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     let filteredArray = this.originalDataCopy;
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
-      return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => {
+      return usuario.userJob && usuario.userJob.some(cargo => {
         const sueldo = cargo.crg_usr_pret; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
     if (this.selectedCargo > 0) {
       filteredArray = filteredArray.filter(usuario => {
-        return usuario.cargoUsuario && usuario.cargoUsuario.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+        return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
       });
     }
 if (this.selectedfechaPostulacion) {
@@ -153,7 +153,7 @@ if (this.selectedfechaPostulacion) {
 
    // Filtrar los cargos por fecha de postulación
    filteredArray = filteredArray.filter(usuario => {
-    const cargos = usuario.cargoUsuario
+    const cargos = usuario.userJob
     console.log("cargos", cargos);
         // Check if cargos is defined and has at least one element
         if (cargos && cargos.length > 0) {
@@ -178,19 +178,21 @@ if (this.selectedfechaPostulacion) {
   console.log("Cargos filtrados por fecha de postulación:", this.cargos);
 }
 
-
+/*
     // Filtro por estado
     if (this.selectedEstado && this.selectedEstado !== '') {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.cargoUsuario && usuario.cargoUsuario.some((estado) => estado.disponibilidad === this.selectedEstado);
+        return usuario.userJob && usuario.userJob.some((estado) => estado.disponibilidad === this.selectedEstado);
       });
-    }
+    }*/
 
     // Filtro por producto
+
+    /*
     if (this.selectedProducto > 0) {
       const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
       if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.usr_herr.includes(selectedProduct.prd_nom));
+        filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.prd_nom));
       }
     }
 
@@ -201,6 +203,7 @@ if (this.selectedfechaPostulacion) {
         filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
       }
     }
+    */
 
 
 
@@ -242,7 +245,7 @@ if (this.selectedfechaPostulacion) {
     if (this.selectedPorcentajeAprobacion) {
       filteredArray = filteredArray.filter(usuario => {
         const resultadosDeUsuario= this.resultados.filter(resultado => {
-          return resultado.usuarioId === usuario.usr_id;
+          return resultado.usuarioId === usuario.id;
 
         });
         const resultadoFinal = resultadosDeUsuario.find(resultado =>{
@@ -276,6 +279,7 @@ if (this.selectedfechaPostulacion) {
         })
     }
     //Filtro
+    /*
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
         return usuario.laborales?.some((experiencia) => {
@@ -291,14 +295,16 @@ if (this.selectedfechaPostulacion) {
           });
         });
       });
-    }
+    }*/
+
+    /*
     if (this.selectedVersion > 0) {
       const [min, max] = this.selectedAniosExpRange;
       filteredArray = filteredArray.filter(element => {
         const anosExp = element.herr_exp.split(', ').map(Number);
         return anosExp.some(anos => anos >= min && anos <= max);
       });
-    }
+    }*/
     console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     console.log('Usuarios filtrados:', filteredArray);
 
@@ -310,7 +316,7 @@ if (this.selectedfechaPostulacion) {
     if (this.filterCargo) {
       const filtroCargoLowerCase = this.filterCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario =>
-        usuario.cargoUsuario?.some(cargo =>
+        usuario.userJob?.some(cargo =>
           cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
         )
       );
@@ -334,8 +340,8 @@ if (this.selectedfechaPostulacion) {
     if (this.filtro) {
       const filtroLowerCase = this.filtro.toLowerCase();
       filteredArray = filteredArray.filter(element => {
-        if (element.usr_nom) {
-          return element.usr_nom.toLowerCase().includes(filtroLowerCase);
+        if (element.name) {
+          return element.name.toLowerCase().includes(filtroLowerCase);
         }
         return false;
       });
@@ -350,7 +356,7 @@ if (this.selectedfechaPostulacion) {
     if (this.filtroCargo) {
       const filtroLowerCase = this.filtroCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario => {
-        const cargo=usuario.laborales;
+        const cargo=usuario.jobs;
         if(cargo && cargo.length >0){
           const primerCargo = cargo[0];
           const cargoOcupado= primerCargo.inf_lab_crg_emp;
@@ -406,20 +412,20 @@ if (this.selectedfechaPostulacion) {
   }
 
 obtenerUsuarios(): void {
-  this.usuarioService.obtenerUsuarios().subscribe(
+  this.userService.obtenerUsuarios().subscribe(
     (data: any[]) => {
       console.log('data:', data);
 
-      // Filtrar usuarios por usr_rol igual a "GUEST"
+      // Filtrar usuarios por roles igual a "GUEST"
       const usuarios = data
-        .filter((usuario) => usuario.usr_rol === 'GUEST')
+        .filter((usuario) => usuario.roles === 'GUEST')
         .map((usuario) => ({
-          usr_nom: usuario.usr_nom + " " + usuario.usr_ap_pat + " " + usuario.usr_ap_mat || '',
-          usr_tel: usuario.usr_tel || '',
-          usr_email: usuario.usr_email || '',
-          usr_rol: usuario.usr_rol || '',
-          usr_direcc: usuario.usr_direcc || '',
-          usr_herr: usuario.herramientas
+          name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
+          phone: usuario.phone || '',
+          email: usuario.email || '',
+          roles: usuario.roles || '',
+          address: usuario.address || '',
+          tools: usuario.herramientas
             .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.prd)
             .map((herramienta: HerramientaData) => herramienta.versionProducto.prd.prd_nom)
             .join(', '),
@@ -432,9 +438,9 @@ obtenerUsuarios(): void {
             .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
             .join(', '),
           laborales: usuario.laborales,
-          usr_id: usuario.usr_id,
+          id: usuario.id,
           cvPath: usuario.cvPath,
-          cargoUsuario: usuario.cargoUsuario,
+          userJob: usuario.userJob,
 
         }));
 
@@ -445,7 +451,7 @@ obtenerUsuarios(): void {
 
 
         usuarios.forEach(usuario =>{
-          this.selectedCheckbox.addControl(String(usuario.usr_email), this.fb.control(false))
+          this.selectedCheckbox.addControl(String(usuario.email), this.fb.control(false))
         });
 
 
@@ -527,7 +533,7 @@ obtenerUsuarios(): void {
         this.dataSource.data = this.originalDataCopy.filter(usuario => {
           // Añadir un console.log dentro del filtro para ver qué está pasando
           const esIgual = this.resultados === resultadoUsuario;
-          console.log('Comparando resultados - Usuario:', usuario, '¿Es igual?:', esIgual);
+          console.log('Comparando resultados - User:', usuario, '¿Es igual?:', esIgual);
 
           return esIgual;
         });
@@ -651,7 +657,7 @@ obtenerUsuarios(): void {
       // Llamadas simultáneas a los servicios
       forkJoin({
         observadores: this.observacionReclutadorService.obtenerObservacionesPorUsuarioId(userId),
-        usuario: this.usuarioService.getUsuarioId(userId)
+        usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {
           // Extraemos los resultados
@@ -697,7 +703,7 @@ openEditProfileDialog(event: any): void {
 
   if (id) {
     // Llama al servicio para obtener los datos del usuario usando el ID
-    this.usuarioService.getUsuarioId(id).subscribe({
+    this.userService.getUsuarioId(id).subscribe({
       next: (data) => {
         console.log('Data llegada:', data);
         // Abre el diálogo con los datos obtenidos

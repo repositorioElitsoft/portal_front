@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 import { Academica } from 'src/app/interface/academica.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,7 +22,7 @@ export class AñadirEstudioComponent implements OnInit {
   today: string;
   navigateToRoute: any;
   constructor(
-    private usuarioService: UsuarioService,
+    private userService: UserService,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private academicaService: AcademicaService,

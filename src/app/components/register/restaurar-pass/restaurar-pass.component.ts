@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators }
 import { Router } from '@angular/router';
 import { Register } from 'src/app/interface/register.interface';
 import { NotificationService } from 'src/app/service/notification.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-restaurar-pass',
@@ -12,16 +12,16 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 })
 export class RestaurarPassComponent {
   registroForm: FormGroup;
-  constructor(private usuarioService: UsuarioService, private router: Router, private notification: NotificationService){
+  constructor(private userService: UserService, private router: Router, private notification: NotificationService){
     this.registroForm = new FormGroup({
-      usr_pass: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       confirmPassword: new FormControl('', [Validators.required])
     }, { validators: this.passwordMatchValidator });  
   }
 
   onSubmit() {
     if (this.registroForm.valid) {
-      this.usuarioService.cambiarPassword(this.registroForm.get('usr_pass')?.value).subscribe(
+      this.userService.cambiarPassword(this.registroForm.get('password')?.value).subscribe(
         async (res) => {
           try{
             console.log(res)
@@ -55,7 +55,7 @@ export class RestaurarPassComponent {
   }
 
   private passwordMatchValidator (control: AbstractControl): ValidationErrors | null {
-    const pass = control.get('usr_pass')?.value;
+    const pass = control.get('password')?.value;
     const confirmPass = control.get('confirmPassword')?.value;
 
     const isMismatch = pass !== confirmPass;

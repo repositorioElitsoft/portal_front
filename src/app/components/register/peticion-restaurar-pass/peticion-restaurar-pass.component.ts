@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
-import { UsuarioService } from 'src/app/service/usuario.service';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-peticion-restaurar-pass',
@@ -13,14 +13,14 @@ export class PeticionRestaurarPassComponent {
   loginForm: FormGroup;
   error = '';
   email = '';
-  usr_pass = '';
+  password = '';
   inicioSesionFallido = false;
   mensajeError = '';
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private notification: NotificationService,
-    private usuarioService: UsuarioService,) 
+    private userService: UserService,) 
     { 
       this.loginForm = this.formBuilder.group({
         email: ['', Validators.required],
@@ -29,7 +29,7 @@ export class PeticionRestaurarPassComponent {
   ngOnInit() {
   }
   onSubmit() {
-    this.usuarioService.pedirReinicioPass(this.loginForm.get('email')?.value).subscribe(
+    this.userService.pedirReinicioPass(this.loginForm.get('email')?.value).subscribe(
       async (res) => {
         try{
         console.log(res)
