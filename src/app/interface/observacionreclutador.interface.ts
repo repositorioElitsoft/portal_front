@@ -46,7 +46,6 @@ export interface Observacion {
     usr1_id: number;
     usr_id_obs:number; 
     usr_id_obs_mod: number ;
-    id: number;
     name:String;
     firstLastname:String;
     email:String;

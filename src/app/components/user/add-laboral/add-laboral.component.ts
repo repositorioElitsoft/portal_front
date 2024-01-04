@@ -138,7 +138,7 @@ export class AddLaboralComponent implements OnInit {
                 prd_nom: "",
                 cat_prod_id: {
                   cat_prod_id: 0,
-                description: ""
+                name: ""
                 }
               }
             }

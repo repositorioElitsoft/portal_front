@@ -59,7 +59,6 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
    usr_id_obs_mod: 0,   // ID del User que modificó la observación
 
    // Campos de la entidad User
-   id: 0,
    name:'',
    firstLastname:'',
    email:'',
