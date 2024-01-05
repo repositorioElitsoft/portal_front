@@ -15,13 +15,15 @@ import Swal from 'sweetalert2';
 })
 export class CargoUsuarioComponent implements OnInit {
   form!: FormGroup;
+  mostrarFormulario: boolean = true;
+  isntrainee: boolean= false;
   JobPosition: JobPosition[] = [];
   selectedjobPosition:number | undefined;
   private buildForm(){
     this.form = this.formBuilder.group({
       crg_usr_pret: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
       crg_prf: [""],
-      crg_elit_id: ["4", [Validators.required]],
+      crg_elit_id: ["", [Validators.required]],
       disponibilidad: [""],
       tiempo_incorporacion: [""],
       otro_tiempo_incorporacion: [""],
@@ -38,7 +40,7 @@ export class CargoUsuarioComponent implements OnInit {
       this.buildForm();
     }
   ngOnInit(): void {
-    this.getCargoUsuairo();
+    this.getCargoUsuario();
     this.obtenerJobPosition();
   }
   navigateToRoute(route: string) {
@@ -50,11 +52,11 @@ export class CargoUsuarioComponent implements OnInit {
         this.JobPosition = data;
       },
       (error) => {
-        console.log('Error al obtener niveles:', error);
+        console.log('Error al obtener el cargo de elitsoft:', error);
       }
     );
   }
-  getCargoUsuairo() {
+  getCargoUsuario() {
     this.cargosusuarioService.getCargosByUserId().subscribe(
       (data: CargoUsuario) => {
         this.form.patchValue(
@@ -67,6 +69,17 @@ export class CargoUsuarioComponent implements OnInit {
             otro_tiempo_incorporacion: data.otro_tiempo_incorporacion,
           }
         )
+        /////////////////////////////////////////
+     // Asegúrate de que jobPosition esté correctamente asignado
+      console.log('jobPosition:', data.jobPosition);
+      // Actualizar la variable mostrarFormulario
+      if (data.jobPosition?.id !== undefined) {
+    //    this.mostrarFormulario = !this.esCargoTrainee(data.jobPosition.id);
+      } else {
+        // Manejar el caso en el que jobPosition.id es undefined
+        this.mostrarFormulario = false; // O el valor que tenga sentido en tu lógica
+      }
+      ///////////////////////////////////////////
       }
     );
   }
@@ -84,6 +97,18 @@ export class CargoUsuarioComponent implements OnInit {
       }
     });
   }
+  redirectToReferencias() {
+    this.router.navigate(['/user/informacion-academica']);
+  }
+  ///////////////////////////////////////////
+  esCargoTrainee(){
+    const cargoSeleccionado = this.JobPosition.find(position => position.id === Number(this.form.get("crg_elit_id")?.value));
+    console.log('cargoSeleccionado:', cargoSeleccionado);
+    console.log('cargoSeleccionado id:', this.form.get("crg_elit_id")?.value);
+    console.log('cargoSeleccionado name:', this.JobPosition);
+    this.isntrainee = !!cargoSeleccionado && !!cargoSeleccionado.name && cargoSeleccionado.name.toLowerCase().includes('trainee');
+  }
+  //////////////////////////////////////
   submitForm(event: Event){
     event.preventDefault();
   const pretensionRentaFormatted = this.form.get('crg_usr_pret')?.value;
@@ -96,8 +121,12 @@ export class CargoUsuarioComponent implements OnInit {
   newCargo.jobPosition = {
     id: this.form.value.crg_elit_id,
   }
+  
   this.cargosusuarioService.guardarCargo(newCargo).subscribe(
     (nuevoCargo: CargoUsuario) => {
+      //////////////
+     // this.mostrarFormulario = !this.esCargoTrainee(nuevoCargo.jobPosition?.id ?? undefined);
+      ////////////////////
     },
     (error) => {
       console.log('Error al guardar herramienta:', error);

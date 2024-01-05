@@ -22,10 +22,16 @@
                         <option *ngFor="let product of productsToDisplay" [value]="product.id"> {{ product.name }}</option>
                         <option value="0">Otro</option>
                     </select>
+<<<<<<< HEAD
                     <input type="text" *ngIf="toolForm.get('product')?.get('id')?.value === '0'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="name">
                 </div>
 
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="version">
+=======
+                </div>
+
+                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="productVersion">
+>>>>>>> b220794dbb23a6727427d309d3d5d0a5c0dd21da
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
                     <select class="form-control" id="version" formControlName="id" name="version" [hidden]="toolForm.get('product')?.get('id')?.value === 'otro'">
                         <option *ngFor="let version of versionsToDisplay" [value]="version.id"> {{ version.name }}</option>
@@ -38,7 +44,11 @@
                 
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="level">
                     <label class="form-label" for="nivel">Nivel</label>
+<<<<<<< HEAD
                     <select class="form-control" id="nivel" formControlName="id" name="nivel">
+=======
+                    <select class="form-control" id="nivel" formControlName="level" name="nivel">
+>>>>>>> b220794dbb23a6727427d309d3d5d0a5c0dd21da
                         <option value="" selected>Selecciona una opcion</option>
                         <option value="1">Alto</option>
                         <option value="2">Medio</option>

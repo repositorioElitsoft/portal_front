@@ -1,8 +1,7 @@
 
 <form [formGroup]="form" (ngSubmit)="submitForm($event)">
   <mat-card class="formacademica">
-    <h4 class="perfilr">Editar Información laboral</h4>
-    <div class="academica-item">
+    <h4 class="perfilr">{{ creationMode ? 'Crear' : 'Editar' }} Información Laboral</h4>    <div class="academica-item">
       <mat-form-field>
         <mat-label>Cargo:</mat-label>
         <input matInput formControlName="position" placeholder="Cargo">
@@ -15,15 +14,22 @@
         <mat-label>Actividades Realizadas:</mat-label>
         <input matInput formControlName="activities" placeholder="Actividades Realizadas">
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Fecha Inicio:</mat-label>
-        <input matInput formControlName="startDate" type="date" placeholder="Fecha Inicio">
+      <mat-form-field class="example-form-field">
+        <mat-label>Fecha Inicio - Fecha Fin</mat-label>
+        <mat-date-range-input [rangePicker]="rangePicker">
+          <input matStartDate placeholder="Fecha Inicio" id="inputFechain" formControlName="startDate" name="inputFechaini">
+          <input matEndDate placeholder="Fecha Fin" id="inputFechafin" formControlName="endDate" name="inputFechafin">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="rangePicker"></mat-datepicker-toggle>
+        <mat-date-range-picker #rangePicker>
+          <mat-date-range-picker-actions>
+            <button class="botonprimario" mat-button matDateRangePickerCancel>Cancelar</button>
+            <button mat-raised-button class="botonprimario" matDateRangePickerApply>Aceptar</button>
+          </mat-date-range-picker-actions>
+        </mat-date-range-picker>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Fecha Fin:</mat-label>
-        <input matInput formControlName="endDate" type="date" placeholder="Fecha Fin">
-      </mat-form-field>
-      <mat-card>
+     
+      <!-- <mat-card>
         <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
         <div *ngIf="herramientasDisponibles && checkboxFormCreated">
           <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
@@ -34,11 +40,11 @@
          
           </div>
         </div>
-      </mat-card>
-      <br>
+      </mat-card> -->
+       <br>
       <div class="contenedor-externo">
         <h4 class="perfilr">Referencias Laborales</h4>
-        <div formArrayName="employmentReferencess">
+        <div formArrayName="employmentReferences">
           <div *ngFor="let ref of referenciasFormArray.controls; let i = index" [formGroupName]="i">
             <mat-card class="referencia-individual">
               <mat-form-field appearance="fill" class="example-full-width">
@@ -70,7 +76,7 @@
       </mat-card>
       </div>    
       <mat-card class="guardarycancelar">
-        <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">Guardar</button>
+        <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">{{ creationMode ? 'Guardar' : 'Guardar' }}</button>
         <button mat-raised-button class="botonprimario m-2" (click)="goBack()">Cancelar</button>
       </mat-card>
     </div>

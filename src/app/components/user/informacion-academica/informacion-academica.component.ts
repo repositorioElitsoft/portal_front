@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from 'src/app/service/user.service';
+import { Router } from '@angular/router';
 import { Academical } from 'src/app/interface/academical.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AcademicalReference } from 'src/app/interface/referencia-academica.interface';
-import { AñadirEstudioComponent } from '../añadir-estudio/añadir-estudio.component';
+import { AddStudyComponent } from '../add-study/add-study.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EditarAcademicaComponent } from '../editar-academica/editar-academica.component';
 import { AcademicaService } from 'src/app/service/academica.service';
 @Component({
   selector: 'app-informacion-academica',
@@ -83,13 +81,13 @@ export class InformacionAcademicaComponent implements OnInit {
     this.router.navigate([route]);
   }
   openAddDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    const dialogRef = this.dialog.open(AñadirEstudioComponent, {
+    const dialogRef = this.dialog.open(AddStudyComponent, {
       width: '600px',
       height: '700px',
       enterAnimationDuration,
       exitAnimationDuration,
     });
-    dialogRef.componentInstance?.AñadirEstudioComponent.subscribe(() => {
+    dialogRef.componentInstance?.AddStudyComponent.subscribe(() => {
       this.obtenerAcademicasGuardados();
     });
   }
@@ -98,12 +96,13 @@ export class InformacionAcademicaComponent implements OnInit {
     if (id) {
       this.academicaService.obtenerAcademica(id).subscribe({
         next: (data) => {
-          const dialogRef = this.dialog.open(EditarAcademicaComponent, {
-            width: '800px',
-            height: '700px',
-            data:  data 
+            const dialogRef = this.dialog.open(AddStudyComponent, {
+                width: '800px',
+                height: '700px',
+                data: { acadId: data.id, ...data } // Asegúrate de pasar acadId aquí
+
           });
-          dialogRef.afterClosed().subscribe((result) => {
+          dialogRef.afterClosed().subscribe(() => {
             this.obtenerAcademicasGuardados();
           });
         },
@@ -115,6 +114,7 @@ export class InformacionAcademicaComponent implements OnInit {
       console.error('id es undefined o null');
     }
   }
+
   submitForm(event: Event) {
     event.preventDefault();
     const academicaNueva: Academical = {

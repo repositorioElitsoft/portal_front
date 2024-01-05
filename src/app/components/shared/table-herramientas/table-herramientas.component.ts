@@ -30,6 +30,7 @@ export class TableHerramientasComponent implements OnInit {
     private router: Router,
   ){}
   ngOnInit(): void {
+<<<<<<< HEAD
     this.toolForm = this.formBuilder.group({
       yearsOfExperience: ["",Validators.required],
       level: this.formBuilder.group({
@@ -45,6 +46,168 @@ export class TableHerramientasComponent implements OnInit {
         name: ["",]
       }),
       categoryId: ["", Validators.required]
+=======
+    this.herramientasForm = this.formBuilder.group({
+      rows: this.formBuilder.array([])
+    });
+    this.getHerramientas()
+    this.getCategories();
+  }
+  getHerramientas() {
+    this.herramientasService.getHerramientasByUserId().subscribe(
+      (herramientas: HerramientaData[]) => {
+        if (herramientas.length > 0) {
+          console.log('respuesta: ', herramientas);
+          this.herramientas = herramientas;
+          this.createFormRows();
+        } else {
+          this.addRow();
+        }
+        this.isLoaded = true;
+      },
+      (error) => {
+        console.error('Error al obtener herramientas:', error);
+      }
+    );
+  }
+  get rowsFormArray() {
+    return this.herramientasForm.get('rows') as FormArray;
+  }
+  getCategories() {
+    this.categoriaProductoService.getCategoriasDisponibles().subscribe(
+      (data: ProductCategory[]) => {
+        this.categorias = data;
+      },
+      (error) => {
+        console.log('Error al obtener categorías:', error);
+      }
+    );
+  }
+  getProducts(index: number) {
+    const row = this.rowsFormArray.at(index);
+    const selectedCategoriaIdControl = row.get('herr_cat_name');
+    const selectedCategoriaIdValue = selectedCategoriaIdControl?.value;
+    if (!selectedCategoriaIdValue) {
+      this.productByRow[index] = [];
+      return;
+    }
+    this.productoService.obtenerProductosPorCategoria(selectedCategoriaIdValue).subscribe(
+      (data: Product[]) => {
+        this.productByRow[index] = data;
+      },
+      (error) => {
+        console.log('Error al obtener productos:', error);
+      }
+    );
+  }
+  getVersion(index: number) {
+    const row = this.rowsFormArray.at(index);
+    const selectedProductoIdControl = row.get('herr_prd_name');
+    const selectedProductoIdValue = selectedProductoIdControl?.value;
+    if (selectedProductoIdValue === 'otro') {
+      const otroProductoValue = row.get('herr_prd_otro')?.value;
+      this.versionByRow[index] = [];
+      this.otroProductoValues[index] = otroProductoValue;
+      return;
+    } else {
+      row.get('herr_prd_otro')?.patchValue('')
+    }
+    if (!selectedProductoIdValue) {
+      return;
+    }
+
+    this.productoService.getVersionByProduct(selectedProductoIdValue).subscribe(
+      (data: ProductVersion[] | undefined) => {
+        this.versionByRow[index] = data || [];
+      },
+      (error) => {
+        console.log(`Error al obtener las versiones: ${error}`);
+      }
+    );
+  }
+    createFormRows() {
+      const rowsArray = this.herramientas.map((herramienta, index) => {
+        this.productoService.obtenerProductosPorCategoria(herramienta.productVersion.product.productCategory.id).subscribe({
+          next: (data: Product[]) => {
+            this.productByRow[index] = data;
+          },
+          error: (error) => {
+            console.log('Error al obtener productos:', error);
+          }
+        });
+        this.productoService.getVersionByProduct(herramienta.productVersion.product.id).subscribe({
+          next: (data: ProductVersion[]) => {
+            this.versionByRow[index] = data;
+          },
+          error: (error) => {
+            console.log('Error al obtener versiones:', error);
+          }
+        })
+        let valorDefectoProducto = String(herramienta.productVersion.product.id)
+        if (herramienta.herr_prd_otro){
+          valorDefectoProducto = 'otro'
+        }
+        const row = this.formBuilder.group({
+          herr_cat_name: [herramienta.productVersion.product.productCategory.id, Validators.required],
+          herr_prd_name: [valorDefectoProducto, Validators.required],
+          yearsOfExperience: [herramienta.yearsOfExperience],
+          herr_prd_otro:[herramienta.herr_prd_otro],
+          productVersion: this.formBuilder.group({
+            vrs_id: [herramienta.productVersion.id, Validators.required],
+            vrs_name: [herramienta.productVersion.name],
+          }),
+         certification: [herramienta. certification],
+          level: [herramienta.level]
+        });
+        return row;
+    });
+      this.herramientasForm.setControl('rows', this.formBuilder.array(rowsArray));
+    }
+  async guardarDatos() {
+    if (this.herramientasForm.invalid) {
+      this.notification.showNotification(
+        'error',
+        'Error al guardar los datos',
+        'Por favor, complete todos los campos antes de guardar.'
+      );
+      return;
+    }
+    const herramientas = this.herramientasForm.value.rows.map((row: any) => {
+      return row;
+    });
+    try {
+      this.herramientasService.guardarHerramienta(herramientas).toPromise();
+      const isConfirmed = await this.notification.showNotification(
+        'success',
+        'Datos guardados correctamente',
+        'Herramientas guardadas correctamente'
+      )
+      if (isConfirmed) {
+        this.router.navigate(['/informacion-academica']);
+      }
+    } catch (error) {
+      this.notification.showNotification(
+        'error',
+        'Error al guardar los datos',
+        'Ha ocurrido un error al guardar los datos, revise los campos y reintente.'
+      );
+    }
+  }
+  addRow() {
+    const newRow = this.formBuilder.group({
+      herr_cat_name: [{ value: '', disabled: false }, Validators.required],
+      herr_prd_name: [{ value: '', disabled: true }, Validators.required],
+      yearsOfExperience: [''],
+      productVersion: this.formBuilder.group({
+        vrs_id: [{ value: 0, disabled: true }, Validators.required],
+        herr_otro_vrs_name: ['']
+
+      }),
+     certification: [false],
+      level: [''],
+      herr_prd_otro: [''],
+      herr_vrs_otro: ['']
+>>>>>>> b220794dbb23a6727427d309d3d5d0a5c0dd21da
     });
     this.isLoaded = true;
 
@@ -61,6 +224,7 @@ export class TableHerramientasComponent implements OnInit {
         console.log("Error at getting tools: ", err)
       }
     });
+<<<<<<< HEAD
   }
   
   getProducts(){
@@ -74,6 +238,14 @@ export class TableHerramientasComponent implements OnInit {
       },
       error: (err) =>{
         console.log("Error al obtener productos desde categoría: ", err)
+=======
+    newRow.get('herr_prd_name')?.valueChanges.subscribe((value) => {
+      const versionProductoControl = newRow.get('productVersion.vrs_id');
+      if (value) {
+        versionProductoControl?.enable();
+      } else {
+        versionProductoControl?.disable();
+>>>>>>> b220794dbb23a6727427d309d3d5d0a5c0dd21da
       }
     })
   }
