@@ -100,6 +100,8 @@ import { ViewUsuariosRComponent } from './components/reclutador/view-usuarios-r/
 import { EditPerfilUsuarioAdminComponent } from './components/admin/edit-perfil-usuario-admin/edit-perfil-usuario-admin.component';
 import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usuario.component';
 import { AddStudyComponent } from './components/user/add-study/add-study.component';
+import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
+import { EditPositionUserComponent } from './components/user/edit-position-user/edit-position-user.component';
 
 @NgModule({
   declarations: [
@@ -168,6 +170,8 @@ import { AddStudyComponent } from './components/user/add-study/add-study.compone
     ViewUsuariosRComponent,
     AddStudyComponent,
     SendMailToUsersDialogueComponent,
+    AddPositionUserComponent,
+    EditPositionUserComponent,
   ],
   imports: [
     MatCheckboxModule,

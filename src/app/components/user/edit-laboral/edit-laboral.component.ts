@@ -58,7 +58,7 @@ export class  EditLaboralComponent implements OnInit {
       return this.formBuilder.group({
         id: [employment.id], 
         name: [employment.name], // Suponiendo que 'nombre' es una propiedad del objeto 'academica'
-        company: [employment.company], // Suponiendo que 'institucion' es una propiedad del objeto 'academica'
+        company: [employment.company], // Suponiendo que 'company' es una propiedad del objeto 'academica'
         email: [employment.email], // Suponiendo que 'email' es una propiedad del objeto 'academica'
         phone: [employment.phone] // Suponiendo que 'telefono' es una propiedad del objeto 'academica'
       });
