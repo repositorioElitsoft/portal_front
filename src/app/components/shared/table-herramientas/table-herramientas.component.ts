@@ -113,7 +113,7 @@ export class TableHerramientasComponent implements OnInit {
   }
     createFormRows() {
       const rowsArray = this.herramientas.map((herramienta, index) => {
-        this.productoService.obtenerProductosPorCategoria(herramienta.versionProducto.product.productCategory.id).subscribe({
+        this.productoService.obtenerProductosPorCategoria(herramienta.productVersion.product.productCategory.id).subscribe({
           next: (data: Product[]) => {
             this.productByRow[index] = data;
           },
@@ -121,7 +121,7 @@ export class TableHerramientasComponent implements OnInit {
             console.log('Error al obtener productos:', error);
           }
         });
-        this.productoService.getVersionByProduct(herramienta.versionProducto.product.id).subscribe({
+        this.productoService.getVersionByProduct(herramienta.productVersion.product.id).subscribe({
           next: (data: ProductVersion[]) => {
             this.versionByRow[index] = data;
           },
@@ -129,22 +129,21 @@ export class TableHerramientasComponent implements OnInit {
             console.log('Error al obtener versiones:', error);
           }
         })
-        let valorDefectoProducto = String(herramienta.versionProducto.product.id)
+        let valorDefectoProducto = String(herramienta.productVersion.product.id)
         if (herramienta.herr_prd_otro){
           valorDefectoProducto = 'otro'
         }
         const row = this.formBuilder.group({
-          herr_usr_id:[herramienta.herr_usr_id],
-          herr_cat_name: [herramienta.versionProducto.product.productCategory.id, Validators.required],
+          herr_cat_name: [herramienta.productVersion.product.productCategory.id, Validators.required],
           herr_prd_name: [valorDefectoProducto, Validators.required],
-          herr_usr_anos_exp: [herramienta.herr_usr_anos_exp],
+          yearsOfExperience: [herramienta.yearsOfExperience],
           herr_prd_otro:[herramienta.herr_prd_otro],
-          versionProducto: this.formBuilder.group({
-            vrs_id: [herramienta.versionProducto.id, Validators.required],
-            vrs_name: [herramienta.versionProducto.name],
+          productVersion: this.formBuilder.group({
+            vrs_id: [herramienta.productVersion.id, Validators.required],
+            vrs_name: [herramienta.productVersion.name],
           }),
-          herr_is_cert: [herramienta.herr_is_cert],
-          herr_nvl: [herramienta.herr_nvl]
+         certification: [herramienta. certification],
+          level: [herramienta.level]
         });
         return row;
     });
@@ -184,14 +183,14 @@ export class TableHerramientasComponent implements OnInit {
     const newRow = this.formBuilder.group({
       herr_cat_name: [{ value: '', disabled: false }, Validators.required],
       herr_prd_name: [{ value: '', disabled: true }, Validators.required],
-      herr_usr_anos_exp: [''],
-      versionProducto: this.formBuilder.group({
+      yearsOfExperience: [''],
+      productVersion: this.formBuilder.group({
         vrs_id: [{ value: 0, disabled: true }, Validators.required],
         herr_otro_vrs_name: ['']
 
       }),
-      herr_is_cert: [false],
-      herr_nvl: [''],
+     certification: [false],
+      level: [''],
       herr_prd_otro: [''],
       herr_vrs_otro: ['']
     });
@@ -204,7 +203,7 @@ export class TableHerramientasComponent implements OnInit {
       }
     });
     newRow.get('herr_prd_name')?.valueChanges.subscribe((value) => {
-      const versionProductoControl = newRow.get('versionProducto.vrs_id');
+      const versionProductoControl = newRow.get('productVersion.vrs_id');
       if (value) {
         versionProductoControl?.enable();
       } else {

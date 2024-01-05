@@ -88,8 +88,7 @@ import { CommonModule } from '@angular/common';
 import { CerrarSesionComponent } from './components/login/cerrar-sesion/cerrar-sesion.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './components/reclutador/upload-files/upload-files.component';
-import { AddLaboralComponent } from './components/user/add-laboral/add-laboral.component';
-import { EditLaboralComponent } from './components/user/edit-laboral/edit-laboral.component';
+import { EditLaboralComponent } from './components/user/add-employment/add-employment.component';
 import { ViewFilesComponent } from './components/reclutador/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './components/user/cargo-usuario/currency-format.pipe';
@@ -159,7 +158,6 @@ import { EditPositionUserComponent } from './components/user/edit-position-user/
     UploadFilesComponent,
     EditLaboralComponent,
     ViewFilesComponent,
-    AddLaboralComponent,
     WelcomeEntrevistadorComponent,
     DashboardEComponent,
     SidebarEComponent,
