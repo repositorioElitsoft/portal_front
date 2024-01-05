@@ -88,7 +88,7 @@ import { CommonModule } from '@angular/common';
 import { CerrarSesionComponent } from './components/login/cerrar-sesion/cerrar-sesion.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './components/reclutador/upload-files/upload-files.component';
-import { AddLaboralComponent } from './components/user/add-laboral/add-laboral.component';
+import { AddEmploymentComponent } from './components/user/add-employment/add-employment.component';
 import { EditLaboralComponent } from './components/user/edit-laboral/edit-laboral.component';
 import { ViewFilesComponent } from './components/reclutador/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
@@ -157,7 +157,7 @@ import { AddStudyComponent } from './components/user/add-study/add-study.compone
     UploadFilesComponent,
     EditLaboralComponent,
     ViewFilesComponent,
-    AddLaboralComponent,
+    AddEmploymentComponent,
     WelcomeEntrevistadorComponent,
     DashboardEComponent,
     SidebarEComponent,

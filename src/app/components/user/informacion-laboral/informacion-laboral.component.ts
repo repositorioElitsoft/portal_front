@@ -7,7 +7,7 @@ import { Employment } from 'src/app/interface/employment.interface';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MatDialog } from '@angular/material/dialog';
-import { AddLaboralComponent } from '../add-laboral/add-laboral.component';
+import { AddEmploymentComponent } from '../add-employment/add-employment.component';
 import { EditLaboralComponent } from '../edit-laboral/edit-laboral.component';
 import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
 @Component({
@@ -138,7 +138,7 @@ export class InformacionLaboralComponent implements OnInit {
     })
   }
   openaddExperienciaLaboral() {
-    const dialogRef = this.dialog.open(AddLaboralComponent, {
+    const dialogRef = this.dialog.open(AddEmploymentComponent, {
       width: '600px',
       height: '700px',
       data: {} 
@@ -166,7 +166,7 @@ export class InformacionLaboralComponent implements OnInit {
     this.navigateToRoute('/user/cargo-usuario')
   }
  addExperienciaLaboral(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    const dialogRef = this.dialog.open(AddLaboralComponent, {
+    const dialogRef = this.dialog.open(AddEmploymentComponent, {
       width: '600px',
       height: '700px',
       enterAnimationDuration,
