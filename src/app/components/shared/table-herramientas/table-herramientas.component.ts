@@ -134,7 +134,6 @@ export class TableHerramientasComponent implements OnInit {
           valorDefectoProducto = 'otro'
         }
         const row = this.formBuilder.group({
-          herr_usr_id:[herramienta.id],
           herr_cat_name: [herramienta.productVersion.product.productCategory.id, Validators.required],
           herr_prd_name: [valorDefectoProducto, Validators.required],
           yearsOfExperience: [herramienta.yearsOfExperience],

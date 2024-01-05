@@ -14,7 +14,7 @@
   <mat-card class="container-datos-personales">
     <div class="div-inputs" *ngIf="!creationMode" >
       <h4 class="perfilr">Información Laboral</h4>
-      <div *ngFor="let labor of laborales">
+      <div *ngFor="let labor of employment">
         <div class="row celda-laboral">
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Cargo</h4>
@@ -42,98 +42,10 @@
           </div>
         </div>
       </div>
-      <div *ngIf="laborales.length === 0">
+      <div *ngIf="employment.length === 0">
         No has definido ninguna experiencia laboral
       </div>
-      <button  class="botonprimario m-2"mat-raised-button  (click)="openaddExperienciaLaboral()" > + Añadir experiencia laboral</button>
-      <button class="botonprimario m-2" mat-raised-button *ngIf="laborales.length > 0" (click)="redirectTo()">Siguiente</button>
-    </div>
-    <div class="div-inputs" *ngIf="creationMode">
-      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
-        <div class="row mb-3">
-          <label for="inputCargo" class="col-sm-2 col-form-label">Cargo:</label>
-          <div class="col-sm-10">
-            <input type="inputCargo" class="form-control" id="inputCargo" formControlName="position">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputNomEmp" class="col-sm-2 col-form-label">Nombre Empresa:</label>
-          <div class="col-sm-10">
-            <input type="inputNomEmp" class="form-control" id="inputNomEmp" formControlName="company">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputActRea" class="col-sm-2 col-form-label">Actividades Realizadas:</label>
-          <div class="col-sm-10">
-            <input type="inputActRea" class="form-control" id="inputActRea" formControlName="activities">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputFechaini" class="col-sm-2 col-form-label">Fecha Inicio:</label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechaini" [min]="minFecha" formControlName="startDate" [max]="today">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
-          <div class="col-sm-10">
-            <input type="date" class="form-control" id="inputFechafin" [min]="minFecha" formControlName="endDate" [max]="today">
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputHerramientas" class="col-sm-2 col-form-label">Tecnologías Utilizadas:</label>
-          <div class="col-sm-10">
-            <div *ngIf="herramientasDisponibles && checkboxFormCreated">
-              <div  *ngFor="let herramienta of herramientasDisponibles; let i = index">
-                <mat-checkbox type="checkbox"  [formControlName]="herramienta.id">
-                {{ herramienta.productVersion.product.name }} (  {{ herramienta.productVersion.name }}) </mat-checkbox>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <h4 class="perfilr">Referencias Laborales</h4>
-          <div formArrayName="employmentReferences">
-            <div *ngFor="let ref of referenciasFormArray.controls; let i = index" [formGroupName]="i">
-              <div class="referencia-individual">
-                <div class="row mb-3">
-                  <label for="inputNombreRef{{i}}" class="col-sm-2 col-form-label">Nombre:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputNombreRef{{i}}" formControlName="name">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputEmpresaRef{{i}}" class="col-sm-2 col-form-label">Empresa:</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmpresaRef{{i}}" formControlName="company">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputEmailRef{{i}}" class="col-sm-2 col-form-label">Email:</label>
-                  <div class="col-sm-10">
-                    <input type="email" class="form-control" id="inputEmailRef{{i}}" formControlName="email">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="inputTelefonoRef{{i}}" class="col-sm-2 col-form-label">Teléfono:</label>
-                  <div class="col-sm-10">
-                    <input type="tel" class="form-control" id="inputTelefonoRef{{i}}" formControlName="phone">
-                  </div>
-                </div>
-                <button mat-mini-fab class="minifabdanger m-1" (click)="eliminarReferencia(i)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </div>
-          </div>
-          <button mat-raised-button type="button" (click)="addReferencia()">+ Añadir Referencia</button>
-        </div>
-        <div class="div-form d-grid justify-content-end">
-          <div class="flex">
-            <button class="botonprimario m-2" mat-raised-button (click)="goBack()">Cancelar</button>
-            <button  class="botonprimario m-2" mat-raised-button [disabled]="!form.valid" type="submit"> Guardar</button>
-          </div>
-        </div>
-      </form>
+      <button  class="botonprimario m-2"mat-raised-button  (click)="openaddExperienciaLaboral('300ms', '150ms')" > + Añadir experiencia laboral</button>
+      <button class="botonprimario m-2" mat-raised-button *ngIf="employment.length > 0" (click)="redirectTo()">Siguiente</button>
     </div>
 </mat-card>

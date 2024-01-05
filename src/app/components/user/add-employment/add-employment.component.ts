@@ -6,16 +6,17 @@ import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HerramientasService } from 'src/app/service/herramientas.service';
+import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
 @Component({
   selector: 'app-add-employment',
   templateUrl: './add-employment.component.html',
-  styleUrls: ['add-employment.component.css']
+  styleUrls: ['./add-employment.component.css']
 })
-export class AddEmploymentComponent implements OnInit {
+export class  EditLaboralComponent implements OnInit {
   [x: string]: any;
-  @Output() AddEmploymentComponent: EventEmitter<void> = new EventEmitter<void>();
-  creationMode: boolean = false;
-  laborales: Employment[] = [];
+  @Output()  EditLaboralComponent: EventEmitter<void> = new EventEmitter<void>();
+  creationMode= false;  
+  employment: Employment[] = [];
   id: number | null | undefined = null;
   today;
   form!: FormGroup;
@@ -29,14 +30,30 @@ export class AddEmploymentComponent implements OnInit {
     private route: ActivatedRoute, private router: Router,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
-    @Inject(MAT_DIALOG_DATA) public data: any, 
+    @Inject(MAT_DIALOG_DATA) public data: any, // Datos pasados al diálogo
     ) {
     this.today = new Date().toISOString().split('T')[0];
     this.buildForm();
   }
   ngOnInit(): void {
-    this.obtenerLaboralesGuardados();
-  }
+    console.log('Datos iniciales:', this.data);
+
+    this.form.patchValue(this.data || {});
+
+    this.id = this.data && this.data.id ? this.data.id : null;
+    console.log('Valor asignado a this.id:', this.id);
+
+    this.creationMode = this.id === null;
+    console.log('Modo de creación:', this.creationMode);
+
+    const employmentReferences = Array.isArray(this.data?.employmentReferences) ? this.data.employmentReferences : [];
+    console.log('Referencias de empleo inicializadas con:', employmentReferences);
+
+    this.crearReferenciasForm(employmentReferences);
+}
+
+
+
   private buildForm() {
     this.form = this.formBuilder.group({
       position: ["", [Validators.required]],
@@ -44,75 +61,69 @@ export class AddEmploymentComponent implements OnInit {
       activities: ["", [Validators.required]],
       startDate: ["", [Validators.required]],
       endDate: ["", [Validators.required]],
-      employmentReferences: this.formBuilder.array([])
+       employmentReferences: this.formBuilder.array([])
     });
     this.generateHerrForm();
   }
-  obtenerLaboralesGuardados() {
-    this.laboralService. obtenerListaLaboralPorUsuario().subscribe(
-      (data) => {
-        this.laborales = data; 
-      },
-      (error) => {
-        console.error('Error al obtener la información laboral:', error); 
-      }
-    );
-  }
-  eliminarLaboral(id: number | undefined | null){
-    this.laboralService.eliminarLaboral(id).subscribe({
-      next:(res)=>{
-        this.obtenerLaboralesGuardados();
-      },
-      error:(err)=>{
-        console.log(err);
-      }
+  crearReferenciasForm(data: EmploymentReferences[]) {
+    if (!Array.isArray(data)) {
+      data = [];
+    }
+  
+    const rowArray = data.map((employment, index) => {
+      return this.formBuilder.group({
+        id: [employment.id],
+        name: [employment.name],
+        company: [employment.company],
+        email: [employment.email],
+        phone: [employment.phone]
+      });
     });
+  
+    this.form.setControl('employmentReferences', this.formBuilder.array(rowArray));
+  }
+  obtenerLaboralesGuardados(id: number) {
+    this.laboralService.obtenerLaboralPorId(id).subscribe({
+      next: (data:Employment) => {
+        this.form.patchValue(data);
+        console.log('Esta es la data del metodo', data)
+        this.checkBoxMarcado(data);
+      },
+      error: (err) => console.log(err)
+    });
+  }
+  checkBoxMarcado(employment : Employment){
+    console.log(employment, 'esta es la laboral')
+    employment.herramientas?.forEach(h => {
+      this.form.get(h.id.toString())?.patchValue(true)
+      if(h.herr_prd_otro)
+        this.form.get(h.herr_prd_otro.toString())?.patchValue(true)
+    })
   }
   goBack() {
     this.form.reset();
     this.dialog.closeAll();
   }
-  editarLaboral(id: number | undefined | null){
-    this.id = id;
-    const laboralToEdit = this.laborales.find(employment => employment.id === this.id);
-    this.form.patchValue({
-      position: laboralToEdit?.position,
-      company: laboralToEdit?.company,
-      activities: laboralToEdit?.activities,
-      startDate: laboralToEdit?.startDate,
-      endDate: laboralToEdit?.endDate,
-    });
-    this.herrIdList.forEach(herrId =>{
-      this.form.get(herrId.toString())?.patchValue(false);
-    })
-    laboralToEdit?.herramientas?.forEach(herr =>{
-      if(this.herrIdList.find((herrID) => herrID === herr.id)){
-        this.form.get(herr.id.toString())?.patchValue(true);
-      }
-    })
-    this.creationMode = !this.creationMode;
-  }
-  generateHerrForm(){
+  generateHerrForm() {
     this.herramientaService.getHerramientasByUserId().subscribe({
-      next:(data: HerramientaData[])=>{
+      next: (data: HerramientaData[]) => {
         this.herramientasDisponibles = data;
-        this.herramientasDisponibles.forEach((herramienta)=>{
-          let wasCheckedAlready = false
+        this.herramientasDisponibles.forEach((herramienta) => {
+          const wasCheckedAlready = this.herrIdList.includes(herramienta.id);
           const newControl = new FormControl(wasCheckedAlready);
-          if (!herramienta.herr_prd_otro){
+          if (!herramienta.herr_prd_otro) {
             this.form.addControl(herramienta.id.toString(), newControl);
-          }
-          else {
+          } else {
             this.form.addControl(herramienta.herr_prd_otro, newControl);
           }
-          this.herrIdList.push(herramienta.id)
-        })
+          this.herrIdList.push(herramienta.id);
+        });
         this.checkboxFormCreated = true;
       },
-      error:(err: any)=>{
-        console.log(err)
-      }
-    })
+      error: (err: any) => {
+        console.log(err);
+      },
+    });
   }
   redirectTo(){
     this.navigateToRoute('/user/cargo-usuario')
@@ -120,67 +131,50 @@ export class AddEmploymentComponent implements OnInit {
   submitForm(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
-      const laboralNueva: Employment = this.form.value;
-      let herramientasFinal: HerramientaData[] = [];
-      this.herrIdList.forEach(id => {
-        if (this.form.get(id.toString())?.value === true) {
-          let herra: HerramientaData = {
-            id: id,
-            certification: {
-              url: ""
-            },
-            level: {
-              description: "" // Asigna un valor por defecto o real, según corresponda
-            },
-            yearsOfExperience: 0,
-            herr_prd_otro: "",
-            productVersion: {
-              id: 0,
-              name: "",
-              product: {
-                id: 0,
-                name: "",
-                productCategory: {
-                  id: 0,
-                  name: ""
-                }
-              }
-            },
-            employments: {
-              position: "", // Asigna un valor por defecto o real
-              company: "", // Asigna un valor por defecto o real
-              activities: "", // Asigna un valor por defecto o real
-              startDate: new Date(), // Asigna una fecha de inicio
-              endDate: new Date(), // Asigna una fecha de fin
-            }
-          };
-          herramientasFinal.push(herra);
+      const fechaInicioFormateada = new Date(this.form.value.startDate).toISOString().split('T')[0];
+      const fechaFinFormateada = new Date(this.form.value.endDate).toISOString().split('T')[0];
+      const referenciasFormArray = this.form.get('employmentReferences') as FormArray;
+      const referencias = referenciasFormArray.getRawValue();
+      const laboral = {
+        ...this.form.value,
+        startDate: fechaInicioFormateada,
+        endDate: fechaFinFormateada,
+        employmentReferences: referencias
+      };
+  
+      // this.id es null cuando estamos creando una nueva entrada
+      const idParaGuardar = this.creationMode ? null : this.id;
+  
+      this.laboralService.guardarLaboral(laboral, idParaGuardar).subscribe({
+        next: (response) => {
+          // Una vez que se ha guardado, actualizamos la lista de registros laborales
+          this.actualizarListaLaboral();
+        },
+        error: (error) => {
+          console.error(`Error al ${this.creationMode ? 'crear' : 'actualizar'} información laboral:`, error);
         }
       });
-      laboralNueva.herramientas = herramientasFinal;
-      this.laboralService.guardarLaboral(laboralNueva, this.id).subscribe(
-        (laboralGuardada: Employment) => {
-          this.creationMode = false; 
-          this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
-            next:(data) => {
-              this.laborales = data;
-                this.AddEmploymentComponent.emit();
-                this.dialog.closeAll();
-            },
-            error:(err) => {
-              console.error('Error al obtener la lista de experiencias laborales:', err);
-            }
-          });
-        },
-        (error) => {
-          console.error('Error al guardar la información laboral:', error);
-        }
-      );
     } else {
+      console.error('El formulario no es válido.');
     }
   }
+  
+  actualizarListaLaboral() {
+    this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
+      next: (data) => {
+        this.employment = data;
+        this.EditLaboralComponent.emit(); // Notifica a otros componentes del cambio
+        this.dialog.closeAll(); // Cierra el diálogo después de la actualización
+      },
+      error: (err) => {
+        console.error('Error al obtener la lista laboral por usuario:', err);
+      }
+    });
+  }
+  
+
   get referenciasFormArray() {
-    return this.form.get('referenciasLaborales') as FormArray;
+    return this.form.get('employmentReferences') as FormArray;
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
@@ -193,5 +187,15 @@ export class AddEmploymentComponent implements OnInit {
   }
   eliminarReferencia(index: number) {
     this.referenciasFormArray.removeAt(index);
+  }
+  eliminarLaboral(id: number | undefined | null){
+    this.laboralService.eliminarLaboral(id).subscribe({
+      next:(res)=>{
+        this.obtenerLaboralesGuardados(this.id ?? 0);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
   }
 }
