@@ -33,16 +33,11 @@
         <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
         <div *ngIf="herramientasDisponibles && checkboxFormCreated">
           <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
-            <div *ngIf="!herramienta.herr_prd_otro">
+    
               <mat-checkbox [formControlName]="herramienta.id">
                 {{ herramienta.productVersion.product.name }} ({{ herramienta.productVersion.name }})
               </mat-checkbox>
-            </div>
-            <div *ngIf="herramienta.herr_prd_otro">
-              <mat-checkbox [formControlName]="herramienta.herr_prd_otro">
-                {{ herramienta.herr_prd_otro }}
-              </mat-checkbox>
-            </div>
+         
           </div>
         </div>
       </mat-card> -->

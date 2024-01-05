@@ -7,6 +7,7 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
+import { ToolDTO } from 'src/app/interface/herramientas.interface';
 @Component({
   selector: 'app-add-employment',
   templateUrl: './add-employment.component.html',
@@ -21,7 +22,7 @@ export class  EditLaboralComponent implements OnInit {
   today;
   form!: FormGroup;
   checkboxFormCreated = false;
-  herramientasDisponibles!: HerramientaData[];
+  herramientasDisponibles!: ToolDTO[];
   herrIdList: number[] = [];
   navigateToRoute: any;
   constructor(
@@ -105,17 +106,15 @@ export class  EditLaboralComponent implements OnInit {
     this.dialog.closeAll();
   }
   generateHerrForm() {
-    this.herramientaService.getHerramientasByUserId().subscribe({
-      next: (data: HerramientaData[]) => {
+    this.herramientaService.getCurrentUserTools().subscribe({
+      next: (data: ToolDTO[]) => {
         this.herramientasDisponibles = data;
         this.herramientasDisponibles.forEach((herramienta) => {
           const wasCheckedAlready = this.herrIdList.includes(herramienta.id);
           const newControl = new FormControl(wasCheckedAlready);
-          if (!herramienta.herr_prd_otro) {
-            this.form.addControl(herramienta.id.toString(), newControl);
-          } else {
-            this.form.addControl(herramienta.herr_prd_otro, newControl);
-          }
+         
+          this.form.addControl(herramienta.id.toString(), newControl);
+         
           this.herrIdList.push(herramienta.id);
         });
         this.checkboxFormCreated = true;

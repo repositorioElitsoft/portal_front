@@ -4,3 +4,6 @@ export interface ProductVersion {
     name: string;
     product: Product;
 }
+
+
+export type CreateProductVersionDTO = Omit<ProductVersion, 'product'  >;

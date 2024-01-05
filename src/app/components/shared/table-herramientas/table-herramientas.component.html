@@ -1,48 +1,51 @@
     <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
-    <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
+    <form class="form-container" [formGroup]="toolForm" *ngIf="isLoaded">
         <h4 class="perfilr">Herramientas y Tecnologías</h4>
-        <div formArrayName="rows">
-            <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
+        <div >
+            <div  class="row mt-3">
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox" >
                     <label class="form-label" for="categoria">Categoría</label>
-                    <select class="form-control" id="categoria" formControlName="herr_cat_name" (change)="getProducts(i)" name="categoria">
+                    <select class="form-control" id="categoria" formControlName="categoryId" (change)="getProducts()" name="categoria">
                         <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.name }}</option>
+                        <option value="1" selected>Sistemas Operativos</option>
+                        <option value="2" selected>Base de Datos</option>
+                        <option value="3" selected>Lenguajes de programación</option>
+                        <option value="4" selected>BigData / Cloud</option>
+                        <option value="5" selected>Office</option>
+                        <option value="6" selected>Business Intelligence</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox" formGroupName="product">
                     <label class="form-label" for="producto">Producto</label>
-                    <select class="form-control" id="producto" formControlName="herr_prd_name" name="producto" (change)="getVersion(i)">
+                    <select class="form-control" id="producto" formControlName="id" name="producto" (change)="getVersions()">
                         <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let producto of productByRow[i]" [value]="producto.id">{{ producto.name }}</option>
-                        <option value="otro">Otro</option>
+                        <option *ngFor="let product of productsToDisplay" [value]="product.id"> {{ product.name }}</option>
+                        <option value="0">Otro</option>
+                    </select>
+                    <input type="text" *ngIf="toolForm.get('product')?.get('id')?.value === '0'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="name">
+                </div>
+
+                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="version">
+                    <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
+                    <select class="form-control" id="version" formControlName="id" name="version" [hidden]="toolForm.get('product')?.get('id')?.value === 'otro'">
+                        <option *ngFor="let version of versionsToDisplay" [value]="version.id"> {{ version.name }}</option>
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option value="0">Otro</option>
+                    </select>
+
+                    <input type="text" *ngIf="toolForm.get('version')?.get('id')?.value === '0' || toolForm.get('product')?.get('id')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre de la versión" formControlName="name">
+                </div>
+                
+                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="level">
+                    <label class="form-label" for="nivel">Nivel</label>
+                    <select class="form-control" id="nivel" formControlName="id" name="nivel">
+                        <option value="" selected>Selecciona una opcion</option>
+                        <option value="1">Alto</option>
+                        <option value="2">Medio</option>
+                        <option value="3">Bajo</option>
                     </select>
                 </div>
 
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="productVersion">
-                    <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                    <select class="form-control" id="version" formControlName="vrs_id" name="version" [hidden]="row.get('herr_prd_name')?.value === 'otro'">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let version of versionByRow[i]" [value]="version.id">{{ version.name}}</option>
-                    </select>
-                </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                    <label class="form-label" for="certificado">Certificado</label>
-                    <select class="form-control" id="certificado" formControlName="herr_is_cert" name="certificado">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option [ngValue]="false">No</option>
-                        <option [ngValue]="true">Si</option>
-                    </select>
-                </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
-                    <label class="form-label" for="nivel">Nivel</label>
-                    <select class="form-control" id="nivel" formControlName="level" name="nivel">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option value="alto">Alto</option>
-                        <option value="medio">Medio</option>
-                        <option value="bajo">Bajo</option>
-                    </select>
-                </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
                     <select class="form-control" id="expLaboral" formControlName="yearsOfExperience" name="expLaboral">
@@ -60,16 +63,28 @@
                     </select>
                 </div>
                 <div class="mt-4 col-md-1">
-                    <button mat-mini-fab  class="minifab" *ngIf="i === 0" type="button" id="addRow" (click)="addRow()">
+                    <button mat-mini-fab  class="minifab" type="button" id="addRow" (click)="addTool()">
                         <mat-icon>library_add</mat-icon>
                     </button>
-                    <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete</mat-icon></button>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-2 offset-md-5">
-                <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>
+               <!--  <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>-->
             </div>
         </div>
+
+
     </form>
+
+    
+
+    <div class="tool-display" *ngFor="let tool of userTools">
+        <div> {{tool.productVersion.product.name}} {{tool.productVersion.name}}</div>
+        <div> {{tool.yearsOfExperience}} año/s  </div>
+        <div> {{tool.level?.description}} </div>
+        <button mat-mini-fab class="minifabdanger m-1" (click)="deleteTool(tool.id)">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
