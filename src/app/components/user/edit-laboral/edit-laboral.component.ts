@@ -78,7 +78,7 @@ export class  EditLaboralComponent implements OnInit {
   checkBoxMarcado(employment : Employment){
     console.log(employment, 'esta es la laboral')
     employment.herramientas?.forEach(h => {
-      this.form.get(h.herr_usr_id.toString())?.patchValue(true)
+      this.form.get(h.id.toString())?.patchValue(true)
       if(h.herr_prd_otro)
         this.form.get(h.herr_prd_otro.toString())?.patchValue(true)
     })
@@ -92,14 +92,14 @@ export class  EditLaboralComponent implements OnInit {
       next: (data: HerramientaData[]) => {
         this.herramientasDisponibles = data;
         this.herramientasDisponibles.forEach((herramienta) => {
-          const wasCheckedAlready = this.herrIdList.includes(herramienta.herr_usr_id);
+          const wasCheckedAlready = this.herrIdList.includes(herramienta.id);
           const newControl = new FormControl(wasCheckedAlready);
           if (!herramienta.herr_prd_otro) {
-            this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
+            this.form.addControl(herramienta.id.toString(), newControl);
           } else {
             this.form.addControl(herramienta.herr_prd_otro, newControl);
           }
-          this.herrIdList.push(herramienta.herr_usr_id);
+          this.herrIdList.push(herramienta.id);
         });
         this.checkboxFormCreated = true;
       },

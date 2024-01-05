@@ -114,8 +114,8 @@ export class InformacionLaboralComponent implements OnInit {
       this.form.get(herrId.toString())?.patchValue(false);
     })
     laboralToEdit?.herramientas?.forEach(herr =>{
-      if(this.herrIdList.find((herrID) => herrID === herr.herr_usr_id)){
-        this.form.get(herr.herr_usr_id.toString())?.patchValue(true);
+      if(this.herrIdList.find((herrID) => herrID === herr.id)){
+        this.form.get(herr.id.toString())?.patchValue(true);
       }
     })
     this.creationMode = !this.creationMode;
@@ -127,8 +127,8 @@ export class InformacionLaboralComponent implements OnInit {
         this.herramientasDisponibles.forEach((herramienta)=>{
           let wasCheckedAlready = false
           const newControl = new FormControl(wasCheckedAlready);
-          this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-          this.herrIdList.push(herramienta.herr_usr_id)
+          this.form.addControl(herramienta.id.toString(), newControl);
+          this.herrIdList.push(herramienta.id)
         })
         this.checkboxFormCreated = true;
       },

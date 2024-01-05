@@ -7,13 +7,13 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 @Component({
-  selector: 'app-add-laboral',
-  templateUrl: './add-laboral.component.html',
-  styleUrls: ['add-laboral.component.css']
+  selector: 'app-add-employment',
+  templateUrl: './add-employment.component.html',
+  styleUrls: ['add-employment.component.css']
 })
-export class AddLaboralComponent implements OnInit {
+export class AddEmploymentComponent implements OnInit {
   [x: string]: any;
-  @Output() AddLaboralComponent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() AddEmploymentComponent: EventEmitter<void> = new EventEmitter<void>();
   creationMode: boolean = false;
   laborales: Employment[] = [];
   id: number | null | undefined = null;
@@ -86,8 +86,8 @@ export class AddLaboralComponent implements OnInit {
       this.form.get(herrId.toString())?.patchValue(false);
     })
     laboralToEdit?.herramientas?.forEach(herr =>{
-      if(this.herrIdList.find((herrID) => herrID === herr.id)){
-        this.form.get(herr.id.toString())?.patchValue(true);
+      if(this.herrIdList.find((herrID) => herrID === herr.herr_usr_id)){
+        this.form.get(herr.herr_usr_id.toString())?.patchValue(true);
       }
     })
     this.creationMode = !this.creationMode;
@@ -100,12 +100,12 @@ export class AddLaboralComponent implements OnInit {
           let wasCheckedAlready = false
           const newControl = new FormControl(wasCheckedAlready);
           if (!herramienta.herr_prd_otro){
-            this.form.addControl(herramienta.id.toString(), newControl);
+            this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
           }
           else {
             this.form.addControl(herramienta.herr_prd_otro, newControl);
           }
-          this.herrIdList.push(herramienta.id)
+          this.herrIdList.push(herramienta.herr_usr_id)
         })
         this.checkboxFormCreated = true;
       },
@@ -125,15 +125,11 @@ export class AddLaboralComponent implements OnInit {
       this.herrIdList.forEach(id => {
         if (this.form.get(id.toString())?.value === true) {
           let herra: HerramientaData = {
-            id: id,
-            certification: {
-              url: ""
-            },
-            level: {
-              description: "" // Asigna un valor por defecto o real, según corresponda
-            },
-            yearsOfExperience: 0,
-            herr_prd_otro: "",
+            herr_usr_id: id,
+           certification: false,
+            level: "",
+            yearsOfExperience: "",
+            herr_prd_otro:"",
             productVersion: {
               id: 0,
               name: "",
@@ -141,17 +137,10 @@ export class AddLaboralComponent implements OnInit {
                 id: 0,
                 name: "",
                 productCategory: {
-                  id: 0,
+                  id:0,
                   name: ""
                 }
               }
-            },
-            employments: {
-              position: "", // Asigna un valor por defecto o real
-              company: "", // Asigna un valor por defecto o real
-              activities: "", // Asigna un valor por defecto o real
-              startDate: new Date(), // Asigna una fecha de inicio
-              endDate: new Date(), // Asigna una fecha de fin
             }
           };
           herramientasFinal.push(herra);
@@ -164,7 +153,7 @@ export class AddLaboralComponent implements OnInit {
           this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
             next:(data) => {
               this.laborales = data;
-                this.AddLaboralComponent.emit();
+                this.AddEmploymentComponent.emit();
                 this.dialog.closeAll();
             },
             error:(err) => {

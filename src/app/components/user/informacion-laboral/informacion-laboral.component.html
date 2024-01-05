@@ -85,8 +85,8 @@
           <div class="col-sm-10">
             <div *ngIf="herramientasDisponibles && checkboxFormCreated">
               <div  *ngFor="let herramienta of herramientasDisponibles; let i = index">
-                <mat-checkbox type="checkbox"  [formControlName]="herramienta.herr_usr_id">
-                {{ herramienta.versionProducto.product.name }} (  {{ herramienta.versionProducto.name }}) </mat-checkbox>
+                <mat-checkbox type="checkbox"  [formControlName]="herramienta.id">
+                {{ herramienta.productVersion.product.name }} (  {{ herramienta.productVersion.name }}) </mat-checkbox>
               </div>
             </div>
           </div>

@@ -81,16 +81,16 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
               roles: usuario.roles || '',
               address:usuario.address || '',
               tools: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
-                .map((herramienta: HerramientaData) => herramienta.versionProducto.product.name)
+                .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
+                .map((herramienta: HerramientaData) => herramienta.productVersion.product.name)
                 .join(', '),
               herr_ver: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.name)
-                .map((herramienta: HerramientaData) => herramienta.versionProducto.name)
+                .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.name)
+                .map((herramienta: HerramientaData) => herramienta.productVersion.name)
                 .join(', '),
               herr_exp: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
-                .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
+                .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
+                .map((herramienta: HerramientaData) => herramienta.yearsOfExperience)
                 .join(', '),
               laborales: usuario.laborales,
               id: usuario.id,

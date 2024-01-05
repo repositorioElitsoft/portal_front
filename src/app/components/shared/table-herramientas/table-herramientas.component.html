@@ -17,10 +17,9 @@
                         <option *ngFor="let producto of productByRow[i]" [value]="producto.id">{{ producto.name }}</option>
                         <option value="otro">Otro</option>
                     </select>
-                    <input type="text" *ngIf="row.get('herr_prd_name')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="herr_prd_otro">
                 </div>
 
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="versionProducto">
+                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="productVersion">
                     <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
                     <select class="form-control" id="version" formControlName="vrs_id" name="version" [hidden]="row.get('herr_prd_name')?.value === 'otro'">
                         <option value="" selected>Selecciona una opcion</option>
@@ -37,7 +36,7 @@
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 combobox">
                     <label class="form-label" for="nivel">Nivel</label>
-                    <select class="form-control" id="nivel" formControlName="herr_nvl" name="nivel">
+                    <select class="form-control" id="nivel" formControlName="level" name="nivel">
                         <option value="" selected>Selecciona una opcion</option>
                         <option value="alto">Alto</option>
                         <option value="medio">Medio</option>
@@ -46,7 +45,7 @@
                 </div>
                 <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
                     <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
-                    <select class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
+                    <select class="form-control" id="expLaboral" formControlName="yearsOfExperience" name="expLaboral">
                         <option value="" selected>Selecciona una opcion</option>
                         <option value=1>1</option>
                         <option value=2>2</option>
