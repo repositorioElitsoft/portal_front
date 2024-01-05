@@ -82,11 +82,9 @@ import { SidebarEComponent } from './components/entrevistador/sidebar-e/sidebar-
 import { ObservacionesComponent } from './components/entrevistador/observaciones/observaciones.component';
 import { SidebarEResponsiveComponent } from './components/entrevistador/sidebar-e-responsive/sidebar-e-responsive.component';
 import { NavbarResponsiveExamenComponent } from './components/user/navbarexamen-responsive/navbarexamen-responsive.component';
-import { AñadirEstudioComponent } from './components/user/añadir-estudio/añadir-estudio.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CommonModule } from '@angular/common';
-import { EditarAcademicaComponent } from './components/user/editar-academica/editar-academica.component';
 import { CerrarSesionComponent } from './components/login/cerrar-sesion/cerrar-sesion.component';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { UploadFilesComponent } from './components/reclutador/upload-files/upload-files.component';
@@ -101,6 +99,7 @@ import { SendMailToUsersDialogueComponent } from './components/reclutador/send-m
 import { ViewUsuariosRComponent } from './components/reclutador/view-usuarios-r/view-usuarios-r.component';
 import { EditPerfilUsuarioAdminComponent } from './components/admin/edit-perfil-usuario-admin/edit-perfil-usuario-admin.component';
 import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usuario.component';
+import { AddStudyComponent } from './components/user/add-study/add-study.component';
 
 @NgModule({
   declarations: [
@@ -155,8 +154,6 @@ import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usu
     AdvertenciaEliminarComponent,
     CaracterOnlyDirective,
     CurrencyFormatPipe,
-    AñadirEstudioComponent,
-    EditarAcademicaComponent,
     UploadFilesComponent,
     EditLaboralComponent,
     ViewFilesComponent,
@@ -169,6 +166,7 @@ import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usu
     ViewPerfilUsuarioEComponent,
     NumericOnlyDirective,
     ViewUsuariosRComponent,
+    AddStudyComponent,
     SendMailToUsersDialogueComponent,
   ],
   imports: [
