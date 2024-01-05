@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { EditLaboralComponent } from '../add-employment/add-employment.component';
+import { ToolDTO } from 'src/app/interface/herramientas.interface';
 @Component({
   selector: 'app-informacion-laboral',
   templateUrl: './informacion-laboral.component.html',
