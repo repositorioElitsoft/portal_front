@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class JobPositionService {
-  readonly url = `${environment.URL_HOST}/JobPosition/`
+  readonly url = `${environment.URL_HOST}/cargoselitsoft/`
   constructor(private http: HttpClient) { }
   obtenerListaJobPosition(): Observable<JobPosition[]> {
     return this.http.get<JobPosition[]>(`${this.url}listar`);
