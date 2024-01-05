@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddLaboralComponent } from '../add-laboral/add-laboral.component';
 import { EditLaboralComponent } from '../edit-laboral/edit-laboral.component';
 import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
+import { ToolDTO } from 'src/app/interface/herramientas.interface';
 @Component({
   selector: 'app-informacion-laboral',
   templateUrl: './informacion-laboral.component.html',
@@ -23,7 +24,7 @@ export class InformacionLaboralComponent implements OnInit {
   form!: FormGroup
   minFecha: string = '';
   checkboxFormCreated = false;
-  herramientasDisponibles!: HerramientaData[];
+  herramientasDisponibles!: ToolDTO[];
   herrIdList: number[] = [];
   employmentReferences: [] = []
   constructor(
@@ -121,14 +122,14 @@ export class InformacionLaboralComponent implements OnInit {
     this.creationMode = !this.creationMode;
   }
   generateHerrForm(){
-    this.herramientaService.getHerramientasByUserId().subscribe({
+    this.herramientaService.getCurrentUserTools().subscribe({
       next:(data)=>{
         this.herramientasDisponibles = data;
         this.herramientasDisponibles.forEach((herramienta)=>{
           let wasCheckedAlready = false
           const newControl = new FormControl(wasCheckedAlready);
-          this.form.addControl(herramienta.herr_usr_id.toString(), newControl);
-          this.herrIdList.push(herramienta.herr_usr_id)
+          this.form.addControl(herramienta.id.toString(), newControl);
+          this.herrIdList.push(herramienta.id)
         })
         this.checkboxFormCreated = true;
       },

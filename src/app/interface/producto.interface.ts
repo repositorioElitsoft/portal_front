@@ -4,3 +4,6 @@ export interface Product {
     name: string;
     productCategory: ProductCategory;
 }
+
+
+export type CreateProductDTO = Omit<Product, 'productCategory' >;

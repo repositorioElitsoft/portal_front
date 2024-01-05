@@ -579,7 +579,7 @@ obtenerUsuarios(): void {
     this.selectedProductoNombre = '';
     this.filterInput();
     if (categoriaId) {
-      this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
+      this.productoService.getProductsByCategory(categoriaId).subscribe(
         (productos: Product[]) => {
           this.productos = productos;
           this.selectedProducto = 0;
