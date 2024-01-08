@@ -101,7 +101,8 @@ export class TableHerramientasComponent implements OnInit {
       console.log("Tool to be sent: ", newTool)
       this.herramientasService.createTool(newTool).subscribe({
         next:(res) => {
-          console.log("Created", res)
+          console.log("Created", res),
+          this.getCurrentTools();
         },
         error: (err) => {
           console.log("Error al crear herramienta: ",err)
