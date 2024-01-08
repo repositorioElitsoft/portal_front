@@ -1,4 +1,3 @@
-
 <form [formGroup]="form" (ngSubmit)="submitForm($event)">
   <mat-card class="formacademica">
     <h4 class="perfilr">{{ creationMode ? 'Crear' : 'Editar' }} Información Laboral</h4>    <div class="academica-item">
@@ -28,19 +27,22 @@
           </mat-date-range-picker-actions>
         </mat-date-range-picker>
       </mat-form-field>
-     
-      <!-- <mat-card>
-        <mat-label for="inputHerramientas">Tecnologías Utilizadas:</mat-label>
-        <div *ngIf="herramientasDisponibles && checkboxFormCreated">
-          <div *ngFor="let herramienta of herramientasDisponibles; let i = index">
-    
-              <mat-checkbox [formControlName]="herramienta.id">
-                {{ herramienta.productVersion.product.name }} ({{ herramienta.productVersion.name }})
-              </mat-checkbox>
-         
-          </div>
-        </div>
-      </mat-card> -->
+      <mat-card>
+        <mat-card-header class="m-2">
+            <mat-card-title class="perfilr">Tecnologías Utilizadas:</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="checkboxFormCreated">
+                <form [formGroup]="form">
+                    <div *ngFor="let herramienta of herramientasDisponibles">
+                        <mat-checkbox [formControlName]="herramienta.id.toString()">
+                            {{ herramienta.productVersion.product.name }} ({{ herramienta.productVersion.name }})
+                        </mat-checkbox>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
        <br>
       <div class="contenedor-externo">
         <h4 class="perfilr">Referencias Laborales</h4>
