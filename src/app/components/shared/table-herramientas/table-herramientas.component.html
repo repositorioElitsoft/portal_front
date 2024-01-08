@@ -84,6 +84,7 @@
         <div> {{tool.productVersion.product.name}} {{tool.productVersion.name}}</div>
         <div> {{tool.yearsOfExperience}} año/s  </div>
         <div> {{tool.level?.description}} </div>
+        <div> <button (click)="openCertificationDialog(tool)"> Añadir Certificaciones</button></div>
         <button mat-mini-fab class="minifabdanger m-1" (click)="deleteTool(tool.id)">
             <mat-icon>delete</mat-icon>
         </button>
