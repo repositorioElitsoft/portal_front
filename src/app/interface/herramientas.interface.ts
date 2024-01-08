@@ -11,7 +11,7 @@ export interface Herramientas {
     yearsOfExperience: number;
     productVersion: ProductVersion;
     user: User;
-    certification?: Certification;
+    certifications?: Certification[];
     level?: Level;
     employments: Employment;
 }

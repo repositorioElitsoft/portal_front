@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { CreateToolDTO, Herramientas, ToolDTO } from '../interface/herramientas.interface';
 import { HerramientaData } from '../interface/herramienta-data.interface';
 import { environment } from 'src/environments/environment';
+import { Certification } from '../interface/certificacion.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,6 +14,16 @@ export class HerramientasService {
   createTool(tool: CreateToolDTO): Observable<CreateToolDTO> {
     return this.http.post<CreateToolDTO>(this.url, tool);
   }
+
+  addToolCertification(toolId: number, certificacion: FormData): Observable<any>{
+    return this.http.post<any>(`${this.url}${toolId}/certification`, certificacion)
+  }
+
+  deleteToolCertification(tooldId: number,certificationId: number | undefined): Observable<ToolDTO>{
+    return this.http.delete<ToolDTO>(`${this.url}${tooldId}/certification/${certificationId}`)
+  }
+
+
   obtenerHerramientaPorId(herramientaId: number): Observable<Herramientas> {
     return this.http.get<Herramientas>(`${this.url}${herramientaId}`);
   }

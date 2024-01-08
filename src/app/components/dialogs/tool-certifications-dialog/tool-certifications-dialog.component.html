@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Certificaciones de Herramientas</h1>
+<div mat-dialog-content>
+
+    <div *ngFor="let cert of tool.certifications" class="d-flex">
+        {{ cert.url }} <button (click)="deleteCertification(cert.id)"> ELIMINAR</button>
+    </div>
+
+
+    <button type="button" class="botonprimario m-2" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
+        <div *ngIf="!isUploadingFile">
+          <div>Cargar nueva certificación </div>
+        </div>
+        <div *ngIf="isUploadingFile"> Cargando Certificación...</div>
+    </button>
+    <input name="file" hidden (change)="addCertification()" #fileInput type="file" id="file">
+
+  
+ 
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Volver</button>
+</div>
