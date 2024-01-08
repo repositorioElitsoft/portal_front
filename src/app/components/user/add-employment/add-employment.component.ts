@@ -54,9 +54,6 @@ export class  EditLaboralComponent implements OnInit {
   
     console.log('Herramientas disponibles en ngOnInit:', this.herramientasDisponibles);
   }
-  
-
-
   private buildForm() {
     this.form = this.formBuilder.group({
       position: ["", [Validators.required]],
@@ -145,7 +142,6 @@ export class  EditLaboralComponent implements OnInit {
           herramientasSeleccionadas.push(herramienta.id);
         }
       });
-  
       console.log('Estos son los checkboxes a guardar:', herramientasSeleccionadas);
   
       const laboral = {
@@ -155,7 +151,6 @@ export class  EditLaboralComponent implements OnInit {
         employmentReferences: referencias,
         herramientas: herramientasSeleccionadas  // Guardar las herramientas seleccionadas
       };
-  
       const idParaGuardar = this.creationMode ? null : this.id;
   
       this.laboralService.guardarLaboral(laboral, idParaGuardar).subscribe({
@@ -170,8 +165,6 @@ export class  EditLaboralComponent implements OnInit {
       console.error('El formulario no es válido.');
     }
   }
-  
-  
   actualizarListaLaboral() {
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
       next: (data) => {
