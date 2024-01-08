@@ -2,7 +2,6 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { Employment } from 'src/app/interface/employment.interface';
-import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HerramientasService } from 'src/app/service/herramientas.service';
@@ -28,7 +27,6 @@ export class  EditLaboralComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private route: ActivatedRoute, private router: Router,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
     @Inject(MAT_DIALOG_DATA) public data: any, // Datos pasados al diálogo
@@ -38,23 +36,24 @@ export class  EditLaboralComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log('Datos iniciales:', this.data);
-
+  
     this.form.patchValue(this.data || {});
-
+  
     this.id = this.data && this.data.id ? this.data.id : null;
     console.log('Valor asignado a this.id:', this.id);
-
+  
     this.creationMode = this.id === null;
     console.log('Modo de creación:', this.creationMode);
-
+  
     const employmentReferences = Array.isArray(this.data?.employmentReferences) ? this.data.employmentReferences : [];
     console.log('Referencias de empleo inicializadas con:', employmentReferences);
-
+  
     this.crearReferenciasForm(employmentReferences);
-}
-
-
-
+  
+    this.generateHerrForm();
+  
+    console.log('Herramientas disponibles en ngOnInit:', this.herramientasDisponibles);
+  }
   private buildForm() {
     this.form = this.formBuilder.group({
       position: ["", [Validators.required]],
@@ -134,19 +133,28 @@ export class  EditLaboralComponent implements OnInit {
       const fechaFinFormateada = new Date(this.form.value.endDate).toISOString().split('T')[0];
       const referenciasFormArray = this.form.get('employmentReferences') as FormArray;
       const referencias = referenciasFormArray.getRawValue();
+      
+      // Obtener el estado de los checkboxes
+      const herramientasSeleccionadas: number[] = [];
+      this.herramientasDisponibles.forEach(herramienta => {
+        const isChecked = this.form.get(herramienta.id.toString())?.value;
+        if (isChecked) {
+          herramientasSeleccionadas.push(herramienta.id);
+        }
+      });
+      console.log('Estos son los checkboxes a guardar:', herramientasSeleccionadas);
+  
       const laboral = {
         ...this.form.value,
         startDate: fechaInicioFormateada,
         endDate: fechaFinFormateada,
-        employmentReferences: referencias
+        employmentReferences: referencias,
+        herramientas: herramientasSeleccionadas  // Guardar las herramientas seleccionadas
       };
-  
-      // this.id es null cuando estamos creando una nueva entrada
       const idParaGuardar = this.creationMode ? null : this.id;
   
       this.laboralService.guardarLaboral(laboral, idParaGuardar).subscribe({
         next: (response) => {
-          // Una vez que se ha guardado, actualizamos la lista de registros laborales
           this.actualizarListaLaboral();
         },
         error: (error) => {
@@ -157,7 +165,6 @@ export class  EditLaboralComponent implements OnInit {
       console.error('El formulario no es válido.');
     }
   }
-  
   actualizarListaLaboral() {
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
       next: (data) => {
@@ -171,7 +178,6 @@ export class  EditLaboralComponent implements OnInit {
     });
   }
   
-
   get referenciasFormArray() {
     return this.form.get('employmentReferences') as FormArray;
   }
