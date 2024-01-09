@@ -20,18 +20,16 @@ import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.c
 import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
 import { forkJoin } from 'rxjs';
-import { LaboralService } from 'src/app/service/laboral.service';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
-import { HttpClient } from '@angular/common/http';
 import { NivelService } from 'src/app/service/nivel.service';
 import {Level } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
-import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
+import { ToolDTO } from 'src/app/interface/herramientas.interface';
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -105,7 +103,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.obtenerUsuarios();
     this.getCategories();
     this.obtenerResultadosByUser();
-    this.cargoService.listarCargos()
     this.getJobPosition();
   }
   getJobPosition() {
@@ -419,29 +416,20 @@ if (this.selectedfechaPostulacion) {
 obtenerUsuarios(): void {
   this.userService.obtenerUsuarios().subscribe(
     (data: any[]) => {
-      console.log('data:', data);
+      console.log('Data de usuario :', data);
 
       // Filtrar usuarios por roles igual a "GUEST"
       const usuarios = data
-        .filter((usuario) => usuario.roles === 'GUEST')
         .map((usuario) => ({
           name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
           phone: usuario.phone || '',
           email: usuario.email || '',
           roles: usuario.roles || '',
           address: usuario.address || '',
-          tools: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
-            .map((herramienta: HerramientaData) => herramienta.productVersion.product.name)
-            .join(', '),
-          herr_ver: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.name)
-            .map((herramienta: HerramientaData) => herramienta.productVersion.name)
-            .join(', '),
-          herr_exp: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
-            .map((herramienta: HerramientaData) => herramienta.yearsOfExperience)
-            .join(', '),
+          tools: usuario.herramientas,
+            // // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
+            // .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
+            // .join(', '),
           laborales: usuario.laborales,
           id: usuario.id,
           cvPath: usuario.cvPath,
@@ -462,9 +450,10 @@ obtenerUsuarios(): void {
 
       this.originalDataCopy = usuarios;
       this.dataSource.data = usuarios;
+      console.log ('esta es la datasource',this.dataSource.data)
     },
     (error) => {
-      console.log(error);
+      console.log('este es un error,',error);
     }
   );
 }
@@ -655,32 +644,60 @@ obtenerUsuarios(): void {
     }
 
 
+    // openUserProfile(event: any) {
+    //   const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+    //   console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+
+    //   // Llamadas simultáneas a los servicios
+    //   forkJoin({
+    //     // observadores: this.observationService.obtenerObservacionesPorUsuarioId(userId),
+    //     usuario: this.userService.getUsuarioId(userId)
+    //   }).subscribe({
+    //     next: (resultados) => {
+    //       // Extraemos los resultados
+    //       // const { observadores, usuario } = resultados;
+
+    //       // Lógica con los datos obtenidos
+    //       // console.log('Observaciones del usuario:', observadores);
+    //       console.log('Perfil del usuario:', userId);
+
+    //       // Configura el tamaño del diálogo
+    //       const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+    //         // data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
+    //         height: '60vh', // Establece la altura del diálogo
+    //       });
+
+    //       dialogRef.afterClosed().subscribe(result => {
+    //         console.log(`Dialog result: ${result}`);
+    //          this.obtenerUsuarios();
+    //       });
+    //     },
+    //     error: (error) => {
+    //       console.error('Error al obtener datos del usuario:', error);
+    //       // Manejo de errores aquí
+    //     }
+    //   });
+    // }
+
     openUserProfile(event: any) {
       const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
       console.log('User ID:', userId); // Imprime el ID del usuario en la consola
-
-      // Llamadas simultáneas a los servicios
-      forkJoin({
-        observadores: this.observationService.obtenerObservacionesPorUsuarioId(userId),
-        usuario: this.userService.getUsuarioId(userId)
-      }).subscribe({
-        next: (resultados) => {
-          // Extraemos los resultados
-          const { observadores, usuario } = resultados;
-
+    
+      // Llamada al servicio de usuario
+      this.userService.getUsuarioId(userId).subscribe({
+        next: (usuario) => {
           // Lógica con los datos obtenidos
-          console.log('Observaciones del usuario:', observadores);
           console.log('Perfil del usuario:', usuario);
-
+    
           // Configura el tamaño del diálogo
           const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
-            data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
+            data: { userId, usuario }, // Pasa los datos del usuario al componente hijo
             height: '60vh', // Establece la altura del diálogo
           });
-
+    
           dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
-             this.obtenerUsuarios();
+            this.obtenerUsuarios();
           });
         },
         error: (error) => {
@@ -689,6 +706,11 @@ obtenerUsuarios(): void {
         }
       });
     }
+    
+
+
+
+
 
 
 

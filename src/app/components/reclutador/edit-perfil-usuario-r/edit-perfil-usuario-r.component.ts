@@ -28,10 +28,8 @@ export class EditPerfilUsuarioRComponent implements OnInit {
     address: ''
   }
   constructor( private userService:UserService,
-    private router:Router,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
-    private route:ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ViewUsuariosRComponent>,
     private dialog: MatDialog,
@@ -43,7 +41,6 @@ export class EditPerfilUsuarioRComponent implements OnInit {
       rut: [''],
       email: [''],
       phone: [''],
-      roles: ['', Validators.required],
     });
   }
   ngOnInit(): void {
