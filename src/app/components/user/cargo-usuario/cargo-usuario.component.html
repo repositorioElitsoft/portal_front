@@ -21,14 +21,14 @@
         <div class="row mb-3">
           <label for="cargosE"  class="col-m-2 col-form-label">Cargo a Postular:</label>
           <div class="combobox col-sm-15">
-            <select class="form-control" (change)="esCargoTrainee()" id="cargosE" formControlName="crg_elit_id" name="cargosE">
+            <select class="form-control" (change)="esCargoTrainee()" id="cargosE" formControlName="JobPositionId" name="cargosE">
               <option value="">Seleccione una opción</option>
               <option *ngFor="let cargo of JobPosition" [value]="cargo.id">{{ cargo.name}}</option>
             </select>
           </div>
         </div>
 
-        <ng-container *ngIf="JobPosition && form.get('crg_elit_id')?.value as selectedJobId">
+        <ng-container *ngIf="JobPosition && form.get('JobPositionId')?.value as selectedJobId">
           <!-- Mostrar mensaje y botón para redirigir a referencias académicas -->
           <div *ngIf="isntrainee && mostrarFormulario" class="alert alert-info">
             Recuerda añadir referencias académicas si deseas postular a un cargo de Trainee.
@@ -44,18 +44,18 @@
               type="text"
               class="form-control"
               id="inputPretension"
-              formControlName="crg_usr_pret"
+              formControlName="salary"
               name="inputPretension"
               placeholder="CLP"
-              [ngClass]="{'is-invalid': form.get('crg_usr_pret')?.invalid && form.get('crg_usr_pret')?.touched}"
+              [ngClass]="{'is-invalid': form.get('salary')?.invalid && form.get('salary')?.touched}"
               (blur)="formatCurrency()"
             >
-            <div *ngIf="form.get('crg_usr_pret')?.hasError('pattern') && form.get('crg_usr_pret')?.touched" class="invalid-feedback">
+            <div *ngIf="form.get('salary')?.hasError('pattern') && form.get('salary')?.touched" class="invalid-feedback">
               Ingresar solamente valores numéricos
             </div>
           </div>
         </div>
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label for="inputPretension" class="col-m-2 col-form-label">Cargo preferente:</label>
           <div class="col-sm-15">
             <input
@@ -68,32 +68,36 @@
             <div *ngIf="form.get('crg_prf')?.invalid && form.get('crg_prf')?.touched" class="invalid-feedback">
             </div>
           </div>
-        </div>
-        <div class="row mb-3">
+        </div> -->
+        <!-- <div class="row mb-3">
           <label for="inputDisponibilidad" class="col-m-2 col-form-label">Disponibilidad laboral:</label>
           <div class="col-sm-15">
-            <select class="form-control" id="inputDisponibilidad" formControlName="disponibilidad" name="inputDisponibilidad">
+            <select class="form-control" id="inputDisponibilidad" formControlName="availability" name="inputDisponibilidad">
               <option value="disponible">Disponible</option>
               <option value="no-disponible">No Disponible</option>
               <option value="contratado">Contratado</option>
             </select>
           </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputTiempoIncorporacion" class="col-m-2 col-form-label">Tiempo de incorporación:</label>
-          <div class="col-sm-15">
-            <select class="form-control" id="inputTiempoIncorporacion" formControlName="tiempo_incorporacion" name="inputTiempoIncorporacion">
-              <option value="inmediata">Inmediata</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-        <div class="row mb-3" *ngIf="form.get('tiempo_incorporacion')?.value === 'otro'">
-          <label for="inputOtroTiempoIncorporacion" class="col-m-2 col-form-label">Especificar tiempo de incorporación:</label>
-          <div class="col-sm-15">
-            <input type="text" class="form-control" id="inputOtroTiempoIncorporacion" formControlName="otro_tiempo_incorporacion" name="inputOtroTiempoIncorporacion">
-          </div>
-        </div>
+        </div> -->
+         <!-- Campo Availability -->
+<div class="row mb-3">
+  <label for="inputAvailability" class="col-sm-2 col-form-label">Disponibilidad laboral:</label>
+  <div class="col-sm-10" formGroupName="availability">
+    <select class="form-control" id="inputAvailability" formControlName="id">
+      <option value="">Selecciona una opción</option>
+      <option value="1">Inmediata</option>
+      <option value="2">1 semana</option>
+      <option value="3">2 semanas</option>
+      <option value="4">3 semanas</option> 
+      <option value="5">4 semanas o más</option>
+      <!-- <option [value]="usuarioGuardado.availability" *ngIf="usuarioGuardado.availability">{{ usuarioGuardado.availability?.time }}</option> -->
+    </select>
+    <div *ngIf="form.get('availability')?.hasError('required') && form.get('availability')?.touched" class="invalid-feedback">
+      Disponibilidad es obligatoria
+    </div>
+  </div>
+</div>
+         
        
         <div class="div-form d-grid my-2">
           <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit" (click)="successMessage()">Finalizar</button>

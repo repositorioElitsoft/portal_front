@@ -4,7 +4,7 @@ import { JobPositionService } from 'src/app/service/jobposition.service';
 import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
 import { UserService } from 'src/app/service/user.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
-import { CargoUsuario } from 'src/app/interface/cargos-usuario.interface';
+import { UserJob } from 'src/app/interface/user-job.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/service/notification.service';
 import Swal from 'sweetalert2';
@@ -21,13 +21,14 @@ export class CargoUsuarioComponent implements OnInit {
   selectedjobPosition:number | undefined;
   private buildForm(){
     this.form = this.formBuilder.group({
-      crg_usr_pret: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
-      crg_prf: [""],
-      crg_elit_id: ["", [Validators.required]],
-      disponibilidad: [""],
-      tiempo_incorporacion: [""],
-      otro_tiempo_incorporacion: [""],
-    });
+      salary: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
+      JobPositionId: ["", [Validators.required]],
+     // availability: ["", [Validators.required]],
+      availability: this.formBuilder.group({
+        id:['1',],
+        time:['', ]
+      }),
+      });
   }
   constructor(
     private userService: UserService,
@@ -58,15 +59,13 @@ export class CargoUsuarioComponent implements OnInit {
   }
   getCargoUsuario() {
     this.cargosusuarioService.getCargosByUserId().subscribe(
-      (data: CargoUsuario) => {
+      (data: UserJob) => {
         this.form.patchValue(
           {
-            crg_usr_pret: data.crg_usr_pret,
-            crg_prf: data.crg_prf,
-            crg_elit_id: data.jobPosition?.id,
-            disponibilidad:data.disponibilidad,
-            tiempo_incorporacion:data.tiempo_incorporacion,
-            otro_tiempo_incorporacion: data.otro_tiempo_incorporacion,
+            salary: data.salary,
+            JobPositionId: data.jobPosition?.id,
+            availability:data.availability?.id,
+            
           }
         )
         /////////////////////////////////////////
@@ -75,17 +74,19 @@ export class CargoUsuarioComponent implements OnInit {
       // Actualizar la variable mostrarFormulario
       if (data.jobPosition?.id !== undefined) {
     //    this.mostrarFormulario = !this.esCargoTrainee(data.jobPosition.id);
+    this.mostrarFormulario = true;
       } else {
+        console.log("Mostar formulario es false ahora")
         // Manejar el caso en el que jobPosition.id es undefined
-        this.mostrarFormulario = false; // O el valor que tenga sentido en tu lógica
+        this.mostrarFormulario = true; // O el valor que tenga sentido en tu lógica
       }
       ///////////////////////////////////////////
       }
     );
   }
   successMessage() {
-    const newCargo: CargoUsuario = this.form.value;
-    const usuarioId = newCargo.usuarioId;
+    const newCargo: UserJob = this.form.value;
+    const usuarioId = newCargo.user;
     Swal.fire({
       icon: 'success',
       title: 'Datos enviados exitosamente',
@@ -102,39 +103,38 @@ export class CargoUsuarioComponent implements OnInit {
   }
   ///////////////////////////////////////////
   esCargoTrainee(){
-    const cargoSeleccionado = this.JobPosition.find(position => position.id === Number(this.form.get("crg_elit_id")?.value));
+    const cargoSeleccionado = this.JobPosition.find(position => position.id === Number(this.form.get("JobPositionId")?.value));
     console.log('cargoSeleccionado:', cargoSeleccionado);
-    console.log('cargoSeleccionado id:', this.form.get("crg_elit_id")?.value);
+    console.log('cargoSeleccionado id:', this.form.get("JobPositionId")?.value);
     console.log('cargoSeleccionado name:', this.JobPosition);
     this.isntrainee = !!cargoSeleccionado && !!cargoSeleccionado.name && cargoSeleccionado.name.toLowerCase().includes('trainee');
   }
   //////////////////////////////////////
   submitForm(event: Event){
     event.preventDefault();
-  const pretensionRentaFormatted = this.form.get('crg_usr_pret')?.value;
+  const pretensionRentaFormatted = this.form.get('salary')?.value;
   const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
-  this.form.get('crg_usr_pret')?.setValue(pretensionRentaWithoutFormat);
-  const newCargo: CargoUsuario = this.form.value;
-  if (newCargo.tiempo_incorporacion !== 'otro') {
-    newCargo.otro_tiempo_incorporacion = '';
-  }
-  newCargo.jobPosition = {
-    id: this.form.value.crg_elit_id,
-  }
+  this.form.get('salary')?.setValue(pretensionRentaWithoutFormat);
+  const newCargo: UserJob = this.form.value;
   
+  newCargo.jobPosition = {
+    id: this.form.value.JobPositionId,
+  }
+  console.log('new cargo:', newCargo);
   this.cargosusuarioService.guardarCargo(newCargo).subscribe(
-    (nuevoCargo: CargoUsuario) => {
+    (nuevoCargo: UserJob) => {
+      console.log("successfully added new job")
       //////////////
      // this.mostrarFormulario = !this.esCargoTrainee(nuevoCargo.jobPosition?.id ?? undefined);
       ////////////////////
     },
     (error) => {
-      console.log('Error al guardar herramienta:', error);
+      console.log('Error al guardar postulación:', error);
     }
   );
   }
   formatCurrency() {
-    const control = this.form.get('crg_usr_pret');
+    const control = this.form.get('salary');
     if (control && control.value) {
       let value = control.value.toString();
       value = value.replace(/[^0-9]/g, '');
