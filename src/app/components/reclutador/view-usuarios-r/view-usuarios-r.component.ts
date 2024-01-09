@@ -187,7 +187,18 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           filteredArray = filteredArray.filter((usuario) => {
             return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
           });
-        }*/
+    
+          // Imprimir el array de cargos filtrados
+          console.log("Cargos filtrados por fecha de postulación:", this.cargos);
+        }
+    
+        /*
+            // Filtro por estado
+            if (this.selectedEstado && this.selectedEstado !== '') {
+              filteredArray = filteredArray.filter((usuario) => {
+                return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
+              });
+            }*/
 
     // Filtro por producto
 

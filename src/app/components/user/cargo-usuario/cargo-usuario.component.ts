@@ -16,30 +16,30 @@ import Swal from 'sweetalert2';
 export class CargoUsuarioComponent implements OnInit {
   form!: FormGroup;
   mostrarFormulario: boolean = true;
-  isntrainee: boolean= false;
+  isntrainee: boolean = false;
   JobPosition: JobPosition[] = [];
-  selectedjobPosition:number | undefined;
-  private buildForm(){
+  selectedjobPosition: number | undefined;
+  private buildForm() {
     this.form = this.formBuilder.group({
       salary: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
       JobPositionId: ["", [Validators.required]],
-     // availability: ["", [Validators.required]],
+      // availability: ["", [Validators.required]],
       availability: this.formBuilder.group({
-        id:['1',],
-        time:['', ]
+        id: ['1',],
+        time: ['',]
       }),
-      });
+    });
   }
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private cargosusuarioService:CargosUsuarioService,
-    private JobPositionService:JobPositionService,
+    private cargosusuarioService: CargosUsuarioService,
+    private JobPositionService: JobPositionService,
     private notification: NotificationService,
     private router: Router,
-    private route: ActivatedRoute ) {
-      this.buildForm();
-    }
+    private route: ActivatedRoute) {
+    this.buildForm();
+  }
   ngOnInit(): void {
     this.getCargoUsuario();
     this.obtenerJobPosition();
@@ -64,23 +64,23 @@ export class CargoUsuarioComponent implements OnInit {
           {
             salary: data.salary,
             JobPositionId: data.jobPosition?.id,
-            availability:data.availability?.id,
-            
+            availability: data.availability?.id,
+
           }
         )
         /////////////////////////////////////////
-     // Asegúrate de que jobPosition esté correctamente asignado
-      console.log('jobPosition:', data.jobPosition);
-      // Actualizar la variable mostrarFormulario
-      if (data.jobPosition?.id !== undefined) {
-    //    this.mostrarFormulario = !this.esCargoTrainee(data.jobPosition.id);
-    this.mostrarFormulario = true;
-      } else {
-        console.log("Mostar formulario es false ahora")
-        // Manejar el caso en el que jobPosition.id es undefined
-        this.mostrarFormulario = true; // O el valor que tenga sentido en tu lógica
-      }
-      ///////////////////////////////////////////
+        // Asegúrate de que jobPosition esté correctamente asignado
+        console.log('jobPosition:', data.jobPosition);
+        // Actualizar la variable mostrarFormulario
+        if (data.jobPosition?.id !== undefined) {
+          //    this.mostrarFormulario = !this.esCargoTrainee(data.jobPosition.id);
+          this.mostrarFormulario = true;
+        } else {
+          console.log("Mostar formulario es false ahora")
+          // Manejar el caso en el que jobPosition.id es undefined
+          this.mostrarFormulario = true; // O el valor que tenga sentido en tu lógica
+        }
+        ///////////////////////////////////////////
       }
     );
   }
@@ -94,7 +94,7 @@ export class CargoUsuarioComponent implements OnInit {
       cancelButtonColor: '#515151',
       confirmButtonColor: '#F57C27',
       customClass: {
-        popup: 'custom-border' 
+        popup: 'custom-border'
       }
     });
   }
@@ -102,7 +102,7 @@ export class CargoUsuarioComponent implements OnInit {
     this.router.navigate(['/user/informacion-academica']);
   }
   ///////////////////////////////////////////
-  esCargoTrainee(){
+  esCargoTrainee() {
     const cargoSeleccionado = this.JobPosition.find(position => position.id === Number(this.form.get("JobPositionId")?.value));
     console.log('cargoSeleccionado:', cargoSeleccionado);
     console.log('cargoSeleccionado id:', this.form.get("JobPositionId")?.value);
@@ -110,28 +110,27 @@ export class CargoUsuarioComponent implements OnInit {
     this.isntrainee = !!cargoSeleccionado && !!cargoSeleccionado.name && cargoSeleccionado.name.toLowerCase().includes('trainee');
   }
   //////////////////////////////////////
-  submitForm(event: Event){
+  submitForm(event: Event) {
     event.preventDefault();
-  const pretensionRentaFormatted = this.form.get('salary')?.value;
-  const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
-  this.form.get('salary')?.setValue(pretensionRentaWithoutFormat);
-  const newCargo: UserJob = this.form.value;
-  
-  newCargo.jobPosition = {
-    id: this.form.value.JobPositionId,
-  }
-  console.log('new cargo:', newCargo);
-  this.cargosusuarioService.guardarCargo(newCargo).subscribe(
-    (nuevoCargo: UserJob) => {
-      console.log("successfully added new job")
-      //////////////
-     // this.mostrarFormulario = !this.esCargoTrainee(nuevoCargo.jobPosition?.id ?? undefined);
-      ////////////////////
-    },
-    (error) => {
-      console.log('Error al guardar postulación:', error);
+    const pretensionRentaFormatted = this.form.get('salary')?.value;
+    const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
+    this.form.get('salary')?.setValue(pretensionRentaWithoutFormat);
+    const newCargo: UserJob = this.form.value;
+
+    newCargo.jobPosition = {
+      id: this.form.value.JobPositionId,
     }
-  );
+    console.log('new cargo:', newCargo);
+    this.cargosusuarioService.guardarCargo(newCargo).subscribe(
+      (nuevoCargo: UserJob) => {
+        //////////////
+        // this.mostrarFormulario = !this.esCargoTrainee(nuevoCargo.jobPosition?.id ?? undefined);
+        ////////////////////
+      },
+      (error) => {
+        console.log('Error al guardar postulación:', error);
+      }
+    );
   }
   formatCurrency() {
     const control = this.form.get('salary');
