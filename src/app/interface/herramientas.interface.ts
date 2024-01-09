@@ -11,7 +11,7 @@ export interface Herramientas {
     yearsOfExperience: number;
     productVersion: ProductVersion;
     user: User;
-    certification?: Certification;
+    certifications?: Certification[];
     level?: Level;
     employments: Employment;
 }
@@ -24,3 +24,4 @@ export type CreateToolDTO = Omit<Herramientas, 'employments'| 'certification' | 
     & { product: CreateProductDTO, version: CreateProductVersionDTO, categoryId: number };
 
 export type ToolDTO = Omit<Herramientas, 'user' | 'id' >  & { id: number};
+export type OnlyIdToolDTO = Omit<Herramientas, 'user' | 'id' | 'yearsOfExperience' | 'employments'| 'productVersion'>  & { id: number};

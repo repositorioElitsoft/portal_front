@@ -8,6 +8,8 @@ import { Product } from 'src/app/interface/producto.interface';
 import { ProductVersion } from 'src/app/interface/version-producto';
 import { NotificationService } from 'src/app/service/notification.service';
 import { CreateToolDTO, Herramientas, ToolDTO } from 'src/app/interface/herramientas.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ToolCertificationsDialogComponent } from '../../dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
 @Component({
   selector: 'app-table-herramientas',
   templateUrl: './table-herramientas.component.html',
@@ -28,6 +30,7 @@ export class TableHerramientasComponent implements OnInit {
     private productoService: ProductoService,
     private notification: NotificationService,
     private router: Router,
+    private certificationDialog: MatDialog
   ){}
   ngOnInit(): void {
     this.toolForm = this.formBuilder.group({
@@ -49,6 +52,18 @@ export class TableHerramientasComponent implements OnInit {
     this.isLoaded = true;
 
     this.getCurrentTools();
+  }
+
+
+  openCertificationDialog(tool: ToolDTO): void {
+    const dialogRef = this.certificationDialog.open(ToolCertificationsDialogComponent, {
+      data: tool,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The certification dialog was closed');
+     
+    });
   }
 
   getCurrentTools(){
@@ -101,7 +116,8 @@ export class TableHerramientasComponent implements OnInit {
       console.log("Tool to be sent: ", newTool)
       this.herramientasService.createTool(newTool).subscribe({
         next:(res) => {
-          console.log("Created", res)
+          console.log("Created", res),
+          this.getCurrentTools();
         },
         error: (err) => {
           console.log("Error al crear herramienta: ",err)

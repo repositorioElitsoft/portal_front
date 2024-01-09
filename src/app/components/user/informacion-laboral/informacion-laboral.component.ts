@@ -39,10 +39,10 @@ obtenerLaboralesGuardados(){
   this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
     next: (data) =>{
       this.employment = data;
-      console.log('Datos de employment obtenidos:', data); // Agregado para depuración
+      console.log('Datos de employment obtenidos:', data);
     },
     error: (err)=>{
-      console.error('Error al obtener datos de employment:', err); // Cambiado a console.error para errores
+      console.error('Error al obtener datos de employment:', err);
     }
   })
 }

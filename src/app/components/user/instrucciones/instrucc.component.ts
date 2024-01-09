@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { ExamenService } from 'src/app/service/examen.service';
+import { ProductoService } from 'src/app/service/producto.service';
 @Component({
   selector: 'app-instrucciones',
   templateUrl: './instrucciones.component.html',
@@ -11,18 +11,19 @@ export class InstruccionesComponent implements OnInit {
   examenId:any;
   examen:any = new Object();
   constructor(
-    private examenService:ExamenService,
+    private productService :ProductoService,
     private route:ActivatedRoute,
     private router:Router
   ) { }
   ngOnInit(): void {
     this.examenId = this.route.snapshot.params['exam_id'];
-    this.examenService.obtenerExamen(this.examenId).subscribe(
+    this.productService.obtenerExamen(this.examenId).subscribe(
       (data:any) => {
         this.examen = data;
       },
       (error) => {
         console.log(error);
+        
       }
     )
   }

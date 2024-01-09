@@ -1,49 +1,25 @@
-<div class="filter-container">
-  <mat-form-field class="filter-input">
-    <input matInput (input)="filterInput()" placeholder="Filtrar..." [(ngModel)]="filtro">
-  </mat-form-field>
-  <button mat-raised-button (click)="saveExamen()" class="custom-btn2" aria-label="Example icon button with a menu icon">
-    <mat-icon>add</mat-icon> Añadir un nuevo examen
-  </button>
-</div>
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
-       class="mat-elevation-z8">
-  <!-- Position Column -->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Título </th>
-    <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
-  </ng-container>
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))" class="mat-elevation-z8">
   <!-- Name Column -->
-  <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef > N° Preguntas </th>
-    <td mat-cell *matCellDef="let element"> {{element.numeroDePreguntas}} </td>
+  <ng-container matColumnDef="Producto">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
   </ng-container>
-  <!-- Weight Column -->
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef> Categoría </th>
-    <td mat-cell *matCellDef="let element"> 
-      <div *ngIf="element.categoria">{{element.categoria.titulo}} </div>
-      <div *ngIf="!element.categoria">Sin categoría</div>
-    </td>
+  <!-- Categoría Column -->
+  <ng-container matColumnDef="Categoria">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </th>
+    <td mat-cell *matCellDef="let element"> {{element.productCategory.name}} </td>
   </ng-container>
-  <ng-container matColumnDef="acciones">
+  <!-- Acciones Column -->
+  <ng-container matColumnDef="Acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-mini-fab class="minifab m-1" id="{{element.examenId}}" (click)="editExamen($event)"
-      aria-label="Example icon button with a menu icon">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-mini-fab class="minifabdanger m-1" id="{{element.examenId}}"  (click)="openDialogEliminar($event)"
-      aria-label="Example icon button with a menu icon">
-        <mat-icon>delete</mat-icon>
+      <button mat-mini-fab class="minifab m-1" (click)="viewPreguntas($event, element.id)" aria-label="Ver preguntas">
+        <mat-icon>assignment</mat-icon> 
       </button>
     </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[5, 10, 20]"
-               showFirstLastButtons
-               aria-label="Select page of periodic elements">
-</mat-paginator>
-  
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements"></mat-paginator>
+

@@ -2,12 +2,11 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LaboralService } from 'src/app/service/laboral.service';
 import { Employment } from 'src/app/interface/employment.interface';
-import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { EmploymentReferences } from 'src/app/interface/employmentReferences.interface';
-import { ToolDTO } from 'src/app/interface/herramientas.interface';
+import { OnlyIdToolDTO, ToolDTO } from 'src/app/interface/herramientas.interface';
 @Component({
   selector: 'app-add-employment',
   templateUrl: './add-employment.component.html',
@@ -23,12 +22,10 @@ export class  EditLaboralComponent implements OnInit {
   form!: FormGroup;
   checkboxFormCreated = false;
   herramientasDisponibles!: ToolDTO[];
-  herrIdList: number[] = [];
   navigateToRoute: any;
   constructor(
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
-    private route: ActivatedRoute, private router: Router,
     private herramientaService:HerramientasService,
     private laboralService: LaboralService,
     @Inject(MAT_DIALOG_DATA) public data: any, // Datos pasados al diálogo
@@ -38,23 +35,24 @@ export class  EditLaboralComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log('Datos iniciales:', this.data);
-
+  
     this.form.patchValue(this.data || {});
-
+  
     this.id = this.data && this.data.id ? this.data.id : null;
     console.log('Valor asignado a this.id:', this.id);
-
+  
     this.creationMode = this.id === null;
     console.log('Modo de creación:', this.creationMode);
-
+  
     const employmentReferences = Array.isArray(this.data?.employmentReferences) ? this.data.employmentReferences : [];
     console.log('Referencias de empleo inicializadas con:', employmentReferences);
-
+  
     this.crearReferenciasForm(employmentReferences);
-}
-
-
-
+  
+   
+  
+    console.log('Herramientas disponibles en ngOnInit:', this.herramientasDisponibles);
+  }
   private buildForm() {
     this.form = this.formBuilder.group({
       position: ["", [Validators.required]],
@@ -62,9 +60,10 @@ export class  EditLaboralComponent implements OnInit {
       activities: ["", [Validators.required]],
       startDate: ["", [Validators.required]],
       endDate: ["", [Validators.required]],
-       employmentReferences: this.formBuilder.array([])
+      employmentReferences: this.formBuilder.array([]),
+      tools: this.formBuilder.array([]),
     });
-    this.generateHerrForm();
+    this.generateToolForm();
   }
   crearReferenciasForm(data: EmploymentReferences[]) {
     if (!Array.isArray(data)) {
@@ -83,70 +82,85 @@ export class  EditLaboralComponent implements OnInit {
   
     this.form.setControl('employmentReferences', this.formBuilder.array(rowArray));
   }
-  obtenerLaboralesGuardados(id: number) {
-    this.laboralService.obtenerLaboralPorId(id).subscribe({
-      next: (data:Employment) => {
-        this.form.patchValue(data);
-        console.log('Esta es la data del metodo', data)
-        this.checkBoxMarcado(data);
-      },
-      error: (err) => console.log(err)
-    });
-  }
-  checkBoxMarcado(employment : Employment){
-    console.log(employment, 'esta es la laboral')
-    employment.herramientas?.forEach(h => {
-      this.form.get(h.id.toString())?.patchValue(true)
-      if(h.herr_prd_otro)
-        this.form.get(h.herr_prd_otro.toString())?.patchValue(true)
+ 
+  checkToolBoxes(){
+    this.getToolsFormArray.forEach(c =>{
+     
     })
   }
+
+
   goBack() {
     this.form.reset();
     this.dialog.closeAll();
   }
-  generateHerrForm() {
+  generateToolForm() {
+
+    const toolIdSet = new Set(this.data?.tools?.map((tool: ToolDTO) => tool.id));
     this.herramientaService.getCurrentUserTools().subscribe({
       next: (data: ToolDTO[]) => {
         this.herramientasDisponibles = data;
         this.herramientasDisponibles.forEach((herramienta) => {
-          const wasCheckedAlready = this.herrIdList.includes(herramienta.id);
-          const newControl = new FormControl(wasCheckedAlready);
-         
-          this.form.addControl(herramienta.id.toString(), newControl);
-         
-          this.herrIdList.push(herramienta.id);
+          const newGroup = this.formBuilder.group({
+            id: [herramienta.id],
+            value: [toolIdSet.has(herramienta.id)]
+          });
+          (this.form.get("tools") as FormArray).push(newGroup);
         });
         this.checkboxFormCreated = true;
+        this.checkToolBoxes();
       },
       error: (err: any) => {
         console.log(err);
       },
     });
+
+
+
   }
+
+
+  get getToolsFormArray() {
+    return (this.form.get('tools') as FormArray).controls;
+  }
+
   redirectTo(){
     this.navigateToRoute('/user/cargo-usuario')
   }
   submitForm(event: Event) {
     event.preventDefault();
     if (this.form.valid) {
+
+      console.log("This is the form value:", this.form.value)
       const fechaInicioFormateada = new Date(this.form.value.startDate).toISOString().split('T')[0];
       const fechaFinFormateada = new Date(this.form.value.endDate).toISOString().split('T')[0];
       const referenciasFormArray = this.form.get('employmentReferences') as FormArray;
       const referencias = referenciasFormArray.getRawValue();
+      
+      // Obtener el estado de los checkboxes
+      const selectedTools: OnlyIdToolDTO[] = [];
+      
+
+      this.getToolsFormArray.forEach(c => {
+        if(c.get("value")!.value){
+          selectedTools.push({id: c.get("id")!.value})
+        }
+      })
+
+      console.log('Estos son los checkboxes a guardar:', selectedTools);
+  
       const laboral = {
         ...this.form.value,
         startDate: fechaInicioFormateada,
         endDate: fechaFinFormateada,
-        employmentReferences: referencias
+        employmentReferences: referencias,
+        tools: selectedTools  // Guardar las herramientas seleccionadas
       };
-  
-      // this.id es null cuando estamos creando una nueva entrada
       const idParaGuardar = this.creationMode ? null : this.id;
   
+      console.log("Laboral to save: ", laboral)
       this.laboralService.guardarLaboral(laboral, idParaGuardar).subscribe({
         next: (response) => {
-          // Una vez que se ha guardado, actualizamos la lista de registros laborales
           this.actualizarListaLaboral();
         },
         error: (error) => {
@@ -157,7 +171,6 @@ export class  EditLaboralComponent implements OnInit {
       console.error('El formulario no es válido.');
     }
   }
-  
   actualizarListaLaboral() {
     this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
       next: (data) => {
@@ -171,7 +184,6 @@ export class  EditLaboralComponent implements OnInit {
     });
   }
   
-
   get referenciasFormArray() {
     return this.form.get('employmentReferences') as FormArray;
   }
@@ -187,14 +199,5 @@ export class  EditLaboralComponent implements OnInit {
   eliminarReferencia(index: number) {
     this.referenciasFormArray.removeAt(index);
   }
-  eliminarLaboral(id: number | undefined | null){
-    this.laboralService.eliminarLaboral(id).subscribe({
-      next:(res)=>{
-        this.obtenerLaboralesGuardados(this.id ?? 0);
-      },
-      error:(err)=>{
-        console.log(err);
-      }
-    });
-  }
+
 }
