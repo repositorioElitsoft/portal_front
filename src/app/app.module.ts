@@ -13,7 +13,6 @@ import { ProfileAdminComponent } from './components/admin/profile-admin/profile-
 import { ViewCategoriasComponent } from './components/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './components/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './components/admin/view-examenes/view-examenes.component';
-import { AddExamenComponent } from './components/admin/add-examen/add-examen.component';
 import { AddPreguntaComponent } from './components/admin/add-pregunta/add-pregunta.component';
 import { ViewExamenPreguntasComponent } from './components/admin/view-examen-preguntas/view-examen-preguntas.component';
 import { ViewUsuariosComponent } from './components/admin/view-usuarios/view-usuarios.component';
@@ -45,7 +44,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserDashboardComponent } from './components/user/user-dashboard/user-dashboard.component';
 import { SidebarComponent as UserSidebar } from './components/user/sidebar/sidebar.component';
 import { LoadExamenComponent } from './components/user/load-examen/load-examen.component';
-import { InstruccionesComponent } from './components/user/instrucciones/instrucciones.component';
+import { InstruccionesComponent } from './components/user/instrucciones/instrucc.component';
 import { StartComponent } from './components/user/start/start.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSelectModule} from '@angular/material/select';
@@ -111,7 +110,6 @@ import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usu
     DashboardComponent,
     ProfileAdminComponent,
     ViewCategoriasComponent,
-    AddExamenComponent,
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
     SidebarRComponent,
