@@ -29,6 +29,7 @@ import { NivelService } from 'src/app/service/nivel.service';
 import {Level } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
+import { UserJob } from 'src/app/interface/user-job.interface';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';
 const ELEMENT_DATA: User[] = [];
 @Component({
@@ -135,7 +136,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
       return usuario.userJob && usuario.userJob.some(cargo => {
-        const sueldo = cargo.crg_usr_pret; 
+        const sueldo = cargo.salary; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
@@ -143,7 +144,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     /*
     if (this.selectedCargo > 0) {
       filteredArray = filteredArray.filter(usuario => {
-        return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.crg_elit_id === this.selectedCargo);
+        return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.JobPositionId === this.selectedCargo);
       });
     }
 
@@ -160,18 +161,18 @@ if (this.selectedfechaPostulacion) {
         // Check if cargos is defined and has at least one element
         if (cargos && cargos.length > 0) {
           console.log("cargos es mayor que 1");
-          // Assuming fechaPostulacion is a property of CargoUsuario
+          // Assuming applicationDate is a property of UserJob
           const primerCargo = cargos[0];
-          const fechaPostulacion = primerCargo.fechaPostulacion;
+          const applicationDate= primerCargo.applicationDate
 
-           // Verificar si la propiedad fechaPostulacion existe y no es undefined
-      if(!fechaPostulacion)return false;
-      console.log("tipo de la fecha:",typeof fechaPostulacion );
-      console.log("fecha obtenida:", fechaPostulacion );
+           // Verificar si la propiedad applicationDateexiste y no es undefined
+      if(!applicationDate)return false;
+      console.log("tipo de la fecha:",typeof applicationDate );
+      console.log("fecha obtenida:", applicationDate );
       // Comparar solo la parte de la fecha
-       console.log("fecha obtenida2:", String(fechaPostulacion).split('T')[0] );
+       console.log("fecha obtenida2:", String(applicationDate).split('T')[0] );
        console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
-       return  String(fechaPostulacion).split('T')[0] === formattedSelectedFechaPostulacion;
+       return  String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
       }
       return false;
   });
@@ -184,7 +185,7 @@ if (this.selectedfechaPostulacion) {
     // Filtro por estado
     if (this.selectedEstado && this.selectedEstado !== '') {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.userJob && usuario.userJob.some((estado) => estado.disponibilidad === this.selectedEstado);
+        return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
       });
     }*/
 
@@ -315,14 +316,14 @@ if (this.selectedfechaPostulacion) {
   filterByCargo() {
     let filteredArray = this.originalDataCopy;
 
-    if (this.filterCargo) {
-      const filtroCargoLowerCase = this.filterCargo.toLowerCase();
-      filteredArray = filteredArray.filter(usuario =>
-        usuario.userJob?.some(cargo =>
-          cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
-        )
-      );
-    }
+    // if (this.filterCargo) {
+    //   const filtroCargoLowerCase = this.filterCargo.toLowerCase();
+    //   filteredArray = filteredArray.filter(usuario =>
+    //     usuario.userJob?.some(cargo =>
+    //       cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
+    //     )
+    //   );
+    // }
     this.dataSource.data = filteredArray;
     console.log('Usuarios filtrados', filteredArray);
   }

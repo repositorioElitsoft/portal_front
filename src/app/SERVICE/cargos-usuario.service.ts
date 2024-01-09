@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CargoUsuario } from '../interface/cargos-usuario.interface';
+import { UserJob } from '../interface/user-job.interface';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -9,17 +9,17 @@ import { environment } from 'src/environments/environment';
 export class CargosUsuarioService {
   readonly url = `${environment.URL_HOST}/cargos/`
   constructor(private http: HttpClient) {}
-  guardarCargo(cargo: CargoUsuario): Observable<CargoUsuario> {  
-    cargo.fechaPostulacion = new Date(); 
-    return this.http.post<CargoUsuario>(this.url, cargo);
+  guardarCargo(cargo: UserJob): Observable<UserJob> {  
+    cargo.applicationDate = new Date(); 
+    return this.http.post<UserJob>(this.url, cargo);
   }
-  obtenerCargosPorUsuario(usuarioId: number): Observable<CargoUsuario[]> {
-    return this.http.get<CargoUsuario[]>(`${this.url}por-usuario/${usuarioId}`);
+  obtenerCargosPorUsuario(usuarioId: number): Observable<UserJob[]> {
+    return this.http.get<UserJob[]>(`${this.url}por-usuario/${usuarioId}`);
   }
-  listarCargos(): Observable<CargoUsuario[]> {
-    return this.http.get<CargoUsuario[]>(`${this.url}listar`);
+  listarCargos(): Observable<UserJob[]> {
+    return this.http.get<UserJob[]>(`${this.url}listar`);
   }
   getCargosByUserId(){
-    return this.http.get<CargoUsuario>(`${this.url}`);   
+    return this.http.get<UserJob>(`${this.url}`);   
   } 
 }
