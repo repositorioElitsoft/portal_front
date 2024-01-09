@@ -48,3 +48,69 @@
     margin: 10px;
   }
 }
+
+/* Estilo para la sección de herramientas */
+.tools-section {
+
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la lista de herramientas */
+.tool-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Estilo para cada tarjeta de herramienta */
+.tool-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1;
+}
+
+/* Estilo para el encabezado de la herramienta */
+.tool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tool-title {
+  font-size: 18px;
+
+}
+
+.tool-experience {
+  color: #555555;
+  font-size: 14px;
+}
+
+/* Estilo para la descripción de la herramienta */
+.tool-description {
+  font-size: 16px;
+ 
+}
+
+/* Estilo para los botones de acción */
+.tool-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.tool-btn {
+  background-color: #ff8b32;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  color: white;
+  padding: 0 1 0 1px;
+ 
+}
