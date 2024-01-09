@@ -101,6 +101,7 @@ import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usu
 import { AddStudyComponent } from './components/user/add-study/add-study.component';
 import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
 import { EditPositionUserComponent } from './components/user/edit-position-user/edit-position-user.component';
+import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
 
 @NgModule({
   declarations: [
@@ -170,6 +171,7 @@ import { EditPositionUserComponent } from './components/user/edit-position-user/
     SendMailToUsersDialogueComponent,
     AddPositionUserComponent,
     EditPositionUserComponent,
+    ToolCertificationsDialogComponent,
   ],
   imports: [
     MatCheckboxModule,

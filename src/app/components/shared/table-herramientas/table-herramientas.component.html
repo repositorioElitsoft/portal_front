@@ -105,6 +105,7 @@
               <div>{{ tool.level?.description }}</div>
             </div>
           </mat-card-content>
+          <div> <button (click)="openCertificationDialog(tool)"> Añadir Certificaciones</button></div>
           <mat-card-actions>
             <button mat-mini-fab class="minifabdanger" (click)="deleteTool(tool.id)">
               <mat-icon>delete</mat-icon>
