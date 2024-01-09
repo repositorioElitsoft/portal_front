@@ -101,6 +101,7 @@ import { AddStudyComponent } from './components/user/add-study/add-study.compone
 import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
 import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -168,6 +169,7 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
     SendMailToUsersDialogueComponent,
     AddPositionUserComponent,
     ToolCertificationsDialogComponent,
+
   ],
   imports: [
     MatCheckboxModule,
