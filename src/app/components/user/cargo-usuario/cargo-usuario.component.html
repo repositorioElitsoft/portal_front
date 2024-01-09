@@ -69,20 +69,11 @@
             </div>
           </div>
         </div> -->
-        <!-- <div class="row mb-3">
-          <label for="inputDisponibilidad" class="col-m-2 col-form-label">Disponibilidad laboral:</label>
-          <div class="col-sm-15">
-            <select class="form-control" id="inputDisponibilidad" formControlName="availability" name="inputDisponibilidad">
-              <option value="disponible">Disponible</option>
-              <option value="no-disponible">No Disponible</option>
-              <option value="contratado">Contratado</option>
-            </select>
-          </div>
-        </div> -->
+        
          <!-- Campo Availability -->
 <div class="row mb-3">
   <label for="inputAvailability" class="col-sm-2 col-form-label">Disponibilidad laboral:</label>
-  <div class="col-sm-10" formGroupName="availability">
+  <div class="col-sm-15" formGroupName="availability">
     <select class="form-control" id="inputAvailability" formControlName="id">
       <option value="">Selecciona una opción</option>
       <option value="1">Inmediata</option>
@@ -90,7 +81,6 @@
       <option value="3">2 semanas</option>
       <option value="4">3 semanas</option> 
       <option value="5">4 semanas o más</option>
-      <!-- <option [value]="usuarioGuardado.availability" *ngIf="usuarioGuardado.availability">{{ usuarioGuardado.availability?.time }}</option> -->
     </select>
     <div *ngIf="form.get('availability')?.hasError('required') && form.get('availability')?.touched" class="invalid-feedback">
       Disponibilidad es obligatoria
