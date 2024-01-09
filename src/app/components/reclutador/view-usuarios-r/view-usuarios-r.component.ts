@@ -289,7 +289,7 @@ if (this.selectedfechaPostulacion) {
       filteredArray = filteredArray.filter((usuario) => {
         return usuario.laborales?.some((experiencia : any) => {
           return experiencia.herramientas?.some((herramienta: any) => {
-            const herramientaExperiencia = herramienta.versionProducto?.prd?.prd_id;
+            const herramientaExperiencia = herramienta.productVersion?.prd?.prd_id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
               const fechaFin = new Date(experiencia.endDate);
               const currentYear = new Date().getFullYear();
@@ -431,16 +431,16 @@ obtenerUsuarios(): void {
           roles: usuario.roles || '',
           address: usuario.address || '',
           tools: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.product.name)
+            .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
+            .map((herramienta: HerramientaData) => herramienta.productVersion.product.name)
             .join(', '),
           herr_ver: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.name)
-            .map((herramienta: HerramientaData) => herramienta.versionProducto.name)
+            .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.name)
+            .map((herramienta: HerramientaData) => herramienta.productVersion.name)
             .join(', '),
           herr_exp: usuario.herramientas
-            .filter((herramienta: HerramientaData) => herramienta.versionProducto && herramienta.versionProducto.product)
-            .map((herramienta: HerramientaData) => herramienta.herr_usr_anos_exp)
+            .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
+            .map((herramienta: HerramientaData) => herramienta.yearsOfExperience)
             .join(', '),
           laborales: usuario.laborales,
           id: usuario.id,
@@ -579,7 +579,7 @@ obtenerUsuarios(): void {
     this.selectedProductoNombre = '';
     this.filterInput();
     if (categoriaId) {
-      this.productoService.obtenerProductosPorCategoria(categoriaId).subscribe(
+      this.productoService.getProductsByCategory(categoriaId).subscribe(
         (productos: Product[]) => {
           this.productos = productos;
           this.selectedProducto = 0;

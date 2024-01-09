@@ -1,76 +1,121 @@
     <mat-spinner class="form-container" *ngIf="!isLoaded"></mat-spinner>
-    <form class="form-container" [formGroup]="herramientasForm" *ngIf="isLoaded">
+    <form class="form-container" [formGroup]="toolForm" *ngIf="isLoaded">
         <h4 class="perfilr">Herramientas y Tecnologías</h4>
-        <div formArrayName="rows">
-            <div *ngFor="let row of rowsFormArray.controls; let i = index" [formGroupName]="i" class="row mt-3">
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox" >
-                    <label class="form-label" for="categoria">Categoría</label>
-                    <select class="form-control" id="categoria" formControlName="herr_cat_name" (change)="getProducts(i)" name="categoria">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.name }}</option>
-                    </select>
+        <div >
+            <div  class="row mt-3">
+                <mat-form-field appearance="fill" class="col-sm-12 col-md-2 col-lg-2 ms-1">
+                    <mat-label>Categoría</mat-label>
+                    <mat-select id="categoria" formControlName="categoryId" (selectionChange)="getProducts()">
+                      <mat-option value="">Selecciona una opción</mat-option>
+                      <mat-option value="1">Sistemas Operativos</mat-option>
+                      <mat-option value="2">Base de Datos</mat-option>
+                      <mat-option value="3">Lenguajes de programación</mat-option>
+                      <mat-option value="4">BigData / Cloud</mat-option>
+                      <mat-option value="5">Office</mat-option>
+                      <mat-option value="6">Business Intelligence</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  
+                  <div class="col-sm-12 col-md-2 col-lg-2 ms-1" formGroupName="product">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Producto</mat-label>
+                        <mat-select id="producto" formControlName="id" (selectionChange)="getVersions()">
+                            <mat-option value="">Selecciona una opción</mat-option>
+                            <mat-option *ngFor="let product of productsToDisplay" [value]="product.id">{{ product.name }}</mat-option>
+                            <mat-option value="0">Otro</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field *ngIf="toolForm.get('product')?.get('id')?.value === '0'" appearance="fill" class="mt-3">
+                        <mat-label>Escribe el nombre del producto</mat-label>
+                        <input matInput placeholder="Nombre del producto" formControlName="name">
+                    </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                    <label class="form-label" for="producto">Producto</label>
-                    <select class="form-control" id="producto" formControlName="herr_prd_name" name="producto" (change)="getVersion(i)">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let producto of productByRow[i]" [value]="producto.id">{{ producto.name }}</option>
-                        <option value="otro">Otro</option>
-                    </select>
-                    <input type="text" *ngIf="row.get('herr_prd_name')?.value === 'otro'" class="form-control mt-3" placeholder="Escribe el nombre del producto" formControlName="herr_prd_otro">
+                
+                <div class="col-sm-12 col-md-2 col-lg-2" formGroupName="version">
+                    <mat-form-field appearance="fill" *ngIf="!(toolForm.get('product')?.get('id')?.value === 'otro')">
+                        <mat-label>Versión Utilizada</mat-label>
+                        <mat-select id="version" formControlName="id">
+                            <mat-option value="">Selecciona una opción</mat-option>
+                            <mat-option *ngFor="let version of versionsToDisplay" [value]="version.id">{{ version.name }}</mat-option>
+                            <mat-option value="0">Otro</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field appearance="fill" *ngIf="toolForm.get('version')?.get('id')?.value === '0' || toolForm.get('product')?.get('id')?.value === 'otro'" class="mt-3">
+                        <mat-label>Escribe el nombre de la versión</mat-label>
+                        <input matInput placeholder="Nombre de la versión" formControlName="name">
+                    </mat-form-field>
+                </div>
+                
+                
+                <div class="col-sm-12 col-md-2 col-lg-2" formGroupName="level">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nivel</mat-label>
+                        <mat-select id="nivel" formControlName="id">
+                            <mat-option value="">Selecciona una opción</mat-option>
+                            <mat-option value="1">Alto</mat-option>
+                            <mat-option value="2">Medio</mat-option>
+                            <mat-option value="3">Bajo</mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox" formGroupName="versionProducto">
-                    <label class="form-label" for="version" style="width: 112px;">Versión Utilizada</label>
-                    <select class="form-control" id="version" formControlName="vrs_id" name="version" [hidden]="row.get('herr_prd_name')?.value === 'otro'">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option *ngFor="let version of versionByRow[i]" [value]="version.id">{{ version.name}}</option>
-                    </select>
-                </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                    <label class="form-label" for="certificado">Certificado</label>
-                    <select class="form-control" id="certificado" formControlName="herr_is_cert" name="certificado">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option [ngValue]="false">No</option>
-                        <option [ngValue]="true">Si</option>
-                    </select>
-                </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 combobox">
-                    <label class="form-label" for="nivel">Nivel</label>
-                    <select class="form-control" id="nivel" formControlName="herr_nvl" name="nivel">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option value="alto">Alto</option>
-                        <option value="medio">Medio</option>
-                        <option value="bajo">Bajo</option>
-                    </select>
-                </div>
-                <div class="col-sm-12 col-md-2 col-lg-2 ms-1 combobox">
-                    <label class="form-label" for="expLaboral" style="width: 175px;">Años de Experiencia</label>
-                    <select class="form-control" id="expLaboral" formControlName="herr_usr_anos_exp" name="expLaboral">
-                        <option value="" selected>Selecciona una opcion</option>
-                        <option value=1>1</option>
-                        <option value=2>2</option>
-                        <option value=3>3</option>
-                        <option value=4>4</option>
-                        <option value=5>5</option>
-                        <option value=6>6</option>
-                        <option value=7>7</option>
-                        <option value=8>8</option>
-                        <option value=9>9</option>
-                        <option value=10>10</option>
-                    </select>
-                </div>
-                <div class="mt-4 col-md-1">
-                    <button mat-mini-fab  class="minifab" *ngIf="i === 0" type="button" id="addRow" (click)="addRow()">
-                        <mat-icon>library_add</mat-icon>
-                    </button>
-                    <button mat-mini-fab  class="minifabdanger" *ngIf="i !== 0" type="button" (click)="removeRow(i)"><mat-icon>delete</mat-icon></button>
+                <div class="col-sm-12 col-md-2 col-lg-2 ms-1">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Años de Experiencia</mat-label>
+                      <mat-select id="expLaboral" formControlName="yearsOfExperience">
+                        <mat-option value="">Selecciona una opción</mat-option>
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+                        <mat-option value="3">3</mat-option>
+                        <mat-option value="4">4</mat-option>
+                        <mat-option value="5">5</mat-option>
+                        <mat-option value="6">6</mat-option>
+                        <mat-option value="7">7</mat-option>
+                        <mat-option value="8">8</mat-option>
+                        <mat-option value="9">9</mat-option>
+                        <mat-option value="10">10</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  
+                  <div class="row mt-4">
+                    <div class="col-md-auto">
+                        <button mat-mini-fab class="minifab" type="button" id="addRow" (click)="addTool()">
+                            <mat-icon>library_add</mat-icon>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col-md-2 offset-md-5">
-                <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button>
+                <!-- <button mat-raised-button class="botonprimario" type="button" (click)="guardarDatos()">Guardar</button> -->
             </div>
         </div>
+
+        
+    <ng-container *ngFor="let tool of userTools">
+        <mat-card class="tool-display">
+          <mat-card-content>
+            <div class="tool-info">
+              <div>{{ tool.productVersion.product.name }} {{ tool.productVersion.name }}</div>
+              <div>{{ tool.yearsOfExperience }} año/s</div>
+              <div>{{ tool.level?.description }}</div>
+            </div>
+          </mat-card-content>
+          <div> <button (click)="openCertificationDialog(tool)"> Añadir Certificaciones</button></div>
+          <mat-card-actions>
+            <button mat-mini-fab class="minifabdanger" (click)="deleteTool(tool.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+
     </form>
+
+
+      
+      

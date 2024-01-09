@@ -9,7 +9,6 @@ export interface Employment{
     startDate:Date,
     endDate:Date,
     user?:number,
-    herr_usr_id?:number
     herramientas?: HerramientaData[];
     employmentReferences?: EmploymentReferences[];
 }

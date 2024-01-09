@@ -1,17 +1,20 @@
-import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AcademicaService } from 'src/app/service/academica.service';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserService } from 'src/app/service/user.service';
 import { Academical } from 'src/app/interface/academical.interface';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AcademicalReference } from 'src/app/interface/referencia-academica.interface';
 @Component({
-  selector: 'app-informacion-academica',
-  templateUrl: './editar-academica.component.html',
-  styleUrls: ['./editar-academica.component.css']
+  selector: 'app-add-study',
+  templateUrl: './add-study.component.html',
+  styleUrls: ['./add-study.component.css'],
 })
-export class EditarAcademicaComponent implements OnInit {
+export class AddStudyComponent implements OnInit {
   [x: string]: any;
-  @Output() EditarAcademicaComponent: EventEmitter<void> = new EventEmitter<void>();
+  @Output() AddStudyComponent: EventEmitter<void> = new EventEmitter<void>();
   form!: FormGroup;
   minFecha: string = new Date().toISOString().split('T')[0];
   authService: any;
@@ -30,11 +33,13 @@ export class EditarAcademicaComponent implements OnInit {
   ) {
     this.buildForm();
   }
-  ngOnInit(): void {
-    this.form.patchValue(this.data);
-    this.acadId= this.data && this.data.acadId ? this.data.acadId : null;
-    this.crearReferenciasForm(this.data.academicalReference);
+ ngOnInit(): void {
+  this.form.patchValue(this.data || {});
+  this.acadId = this.data && this.data.acadId ? this.data.acadId : null;
+  this.creationMode = this.acadId === null;
+  this.crearReferenciasForm(this.data ? this.data.academicalReference : []);
 }
+
   private buildForm() {
     this.form = this.formBuilder.group({
       status: ['', Validators.required],
@@ -62,8 +67,7 @@ export class EditarAcademicaComponent implements OnInit {
   }
   submitForm(event: Event) {
     event.preventDefault();
-  
-    if (this.form.valid && this.acadId !== null) {
+    if (this.form.valid) {
       const fechaInicioFormateada = new Date(this.form.value.startDate).toISOString().split('T')[0];
       const fechaFinFormateada = new Date(this.form.value.endDate).toISOString().split('T')[0];
       const referenciasFormArray = this.form.get('academicalReference') as FormArray;
@@ -72,36 +76,52 @@ export class EditarAcademicaComponent implements OnInit {
         ...this.form.value,
         startDate: fechaInicioFormateada,
         endDate: fechaFinFormateada,
-        academicalReference: referencias 
-      };      
-      this.academicaService
-      .guardarAcademica(academicaNueva, this.acadId)
-      .subscribe(
-        (academicaGuardada: Academical) => {
-          this.creationMode = false;
-          this.academicaService
-            .obtenerListaAcademicasPorUsuario()
-            .subscribe({
-              next: (data) => {
-                this.academicas = data;
-                this.EditarAcademicaComponent.emit();
-                this.dialog.closeAll();
-              },
-              error: (err) => {
-                console.log(err);
-              },
-            });
-        },
-        (error) => {
-          console.error('Error al actualizar información académica:', error);
-        }
-      );
-    } else {
+        academicalReference: referencias
+      };
+  
       if (this.acadId === null) {
-        console.error('El ID es nulo o no está definido.');
+        // Crear una nueva academia
+        this.academicaService.guardarAcademica(academicaNueva, this.acadId).subscribe(
+          (respuesta) => {
+            // Manejo de la respuesta al crear
+            this.postSubmit();
+          },
+          (error) => {
+            console.error('Error al crear información académica:', error);
+          }
+        );
+      } else {
+        // Actualizar una academia existente
+        this.academicaService.guardarAcademica(academicaNueva, this.acadId).subscribe(
+          (respuesta) => {
+            // Manejo de la respuesta al actualizar
+            this.postSubmit();
+          },
+          (error) => {
+            console.error('Error al actualizar información académica:', error);
+          }
+        );
       }
+    } else {
+      console.error('El formulario no es válido o el ID es nulo.');
     }
   }
+
+  postSubmit() {
+    this.academicaService.obtenerListaAcademicasPorUsuario().subscribe({
+      next: (data) => {
+        this.academicas = data;
+        this.AddStudyComponent.emit();
+        this.dialog.closeAll();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+
+
   get referenciaFormArray(){
     return this.form.get('academicalReference') as FormArray;
   }

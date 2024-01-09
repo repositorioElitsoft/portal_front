@@ -1,50 +1,50 @@
-  .combobox {
-    display: flex;
-    flex-direction: column;
-    flex:1 
-  } 
-  .combobox label {
-    font-size: 13px;
-    font-weight: bold;
-    width: 50px;
-  } 
-  .form-control,
-  .form-select {
-    font-size: 14px;
-    width: 300%;
-    max-width: 130px;
-  }
-.botonprimario{
-  font-size: 1em !important;
+.form-container {
+  padding: 10px;
 }
-  .container-datos-personales {
-    border: 1px solid #F57C27;
-    border-radius: 10px;     
-  } 
-  @media (max-width: 600px) {
-    .container-datos-personales {    
-      border: 1px solid #F57C27;
-      border-radius: 10px;       
-    }  
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+.col-sm-12 {
+  flex-basis: 100%;
+  margin: 10px 0;
+}
+
+.tool-display {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #F57C27;
+}
+.tool-info > div {
+  margin-bottom: 10px;
+}
+.minifabdanger {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+.minifabdanger mat-icon {
+  font-size: 20px;
+}
+
+@media (max-width: 767px) {
+  .mat-form-field {
+    flex-basis: 100%;
+    margin: 5px 0;
   }
-  .container-datos-personales {   
-    border: 1px solid #F57C27;
-    border-radius: 10px;   
+}
+
+@media (min-width: 768px) {
+  .col-md-2 {
+    flex-basis: calc(50% - 20px);
+    margin: 10px;
   }
-  .herramientasytecnologiash2{ margin-left: 150px;}
-  .combobox {
-    flex-basis: calc(35% - 30px);
+}
+@media (min-width: 992px) {
+  .col-lg-2 {
+    flex-basis: calc(33.33% - 20px);
+    margin: 10px;
   }
-  .container-datos-personales {   
-    border: 1px solid #F57C27;
-    border-radius: 10px; 
-  }
-  @media screen and (max-width: 1200px) {
-    .combobox {
-      flex-basis: calc(50% - 20px);
-    }
-    .container-datos-personales {
-      border: 1px solid #F57C27;
-      border-radius: 10px;  
-    }
-  }
+}

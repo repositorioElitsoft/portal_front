@@ -86,7 +86,7 @@
 
             <div *ngFor="let h of employment.herramientas; let i = index" matListItemLine>
               <mat-chip  class="chips" >
-                {{ h.versionProducto.prd.prd_nom }} ({{ h.versionProducto.vrs_name }})  - (Exp:{{ h.herr_usr_anos_exp }} año/s)
+                {{ h.productVersion.prd.prd_nom }} ({{ h.productVersion.vrs_name }})  - (Exp:{{ h.yearsOfExperience }} año/s)
               </mat-chip>
             </div>
 

@@ -1,18 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
-import { Herramientas } from '../interface/herramientas.interface';
+import { CreateToolDTO, Herramientas, ToolDTO } from '../interface/herramientas.interface';
 import { HerramientaData } from '../interface/herramienta-data.interface';
 import { environment } from 'src/environments/environment';
+import { Certification } from '../interface/certificacion.interface';
 @Injectable({
   providedIn: 'root'
 })
 export class HerramientasService {
   readonly url = `${environment.URL_HOST}/herramientas/`
   constructor(private http: HttpClient) { }
-  guardarHerramienta(herramienta: HerramientaData[]): Observable<HerramientaData> {
-    return this.http.post<HerramientaData>(this.url, herramienta);
+  createTool(tool: CreateToolDTO): Observable<CreateToolDTO> {
+    return this.http.post<CreateToolDTO>(this.url, tool);
   }
+
+  addToolCertification(toolId: number, certificacion: FormData): Observable<any>{
+    return this.http.post<any>(`${this.url}${toolId}/certification`, certificacion)
+  }
+
+  deleteToolCertification(tooldId: number,certificationId: number | undefined): Observable<ToolDTO>{
+    return this.http.delete<ToolDTO>(`${this.url}${tooldId}/certification/${certificationId}`)
+  }
+
+
   obtenerHerramientaPorId(herramientaId: number): Observable<Herramientas> {
     return this.http.get<Herramientas>(`${this.url}${herramientaId}`);
   }
@@ -22,7 +33,11 @@ export class HerramientasService {
   listarHerramientas(): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}lista-herramientas`);
   }
-  getHerramientasByUserId(): Observable<HerramientaData[]> {
-    return this.http.get<HerramientaData[]>(this.url);
+  getCurrentUserTools(): Observable<ToolDTO[]> {
+    return this.http.get<ToolDTO[]>(this.url);
+  }
+
+  deleteTool(toolId: number): Observable<ToolDTO>{
+    return this.http.delete<ToolDTO>(`${this.url}${toolId}`)
   }
 }

@@ -13,7 +13,7 @@ export class ProductoService {
   obtenerTodosLosProductos(): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.url}/productos/`);
   }
-  obtenerProductosPorCategoria(categoriaId: number): Observable<Product[]> {
+  getProductsByCategory(categoriaId: number): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.url}/productos/producto-por-categoria/${categoriaId}`);
   }
   getVersionByProduct(productId: number): Observable<ProductVersion[]> {
