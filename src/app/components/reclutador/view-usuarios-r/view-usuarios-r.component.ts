@@ -458,28 +458,27 @@ obtenerUsuarios(): void {
   );
 }
 
+onSendMailPressed(){
+  const values = this.selectedCheckbox.value
 
-  onSendMailPressed(){
-    const values = this.selectedCheckbox.value
+  const emails: any = []
 
-    const emails: any = []
-
-    for (const key in values) {
-      if (!values.hasOwnProperty(key)){continue}
-      const value = values[key];
-      if (!value){continue}
-      emails.push(key)
-    }
-
-    const dialogRef = this.dialog.open(SendMailToUsersDialogueComponent, {
-      data: {emails},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-
+  for (const key in values) {
+    if (!values.hasOwnProperty(key)){continue}
+    const value = values[key];
+    if (!value){continue}
+    emails.push(key)
   }
+
+  const dialogRef = this.dialog.open(SendMailToUsersDialogueComponent, {
+    data: {emails},
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+  });
+
+}
 
 
 
@@ -708,9 +707,9 @@ obtenerUsuarios(): void {
     }
     
 
-
-
-
+isAnyCheckboxChecked(): boolean {
+  return Object.values(this.selectedCheckbox.controls).some(control => control.value);
+}
 
 
 

@@ -1,18 +1,33 @@
 <h1 mat-dialog-title>Envío de correos automáticos</h1>
-<div mat-dialog-content>
-  <p>Seleccione el asunto de su correo</p>
-  <mat-form-field >
+<div mat-dialog-content class="dialog-content">
+  <mat-form-field appearance="fill">
+    <mat-label>Destinatario/s</mat-label>
+    <input matInput [value]="getDestinatarios()" [matTooltip]="getDestinatarios()" disabled>
+  </mat-form-field>  
+  <p class="select-message">Seleccione el asunto de su correo</p>
+  <mat-form-field appearance="fill">
     <mat-label>Motivo</mat-label>
-    <mat-select  [(ngModel)]="selectedSubject">
-        <mat-option value="Solicitud de datos">Solicitud de datos</mat-option>
-        <mat-option value="Contactar">Contactar</mat-option>
-        <mat-option value="Invitar a nueva postulación">Invitar a nueva postulación</mat-option>
-        <mat-option value="Informar Resultados de proceso de selección">Informar Resultados de proceso de selección</mat-option>
-        <mat-option value="Informar que el usuario fue aprobado">Informar que el usuario fue aprobado</mat-option>
+    <mat-select [(ngModel)]="selectedSubject">
+      <mat-option value="Solicitud de datos">Solicitud de datos</mat-option>
+      <mat-option value="Contactar">Contactar</mat-option>
+      <mat-option value="Invitar a nueva postulación">Invitar a nueva postulación</mat-option>
+      <mat-option value="Informar Resultados de proceso de selección">Informar Resultados de proceso de selección</mat-option>
+      <mat-option value="Informar que el usuario fue aprobado">Informar que el usuario fue aprobado</mat-option>
     </mat-select>
   </mat-form-field>
+  
+  <div *ngIf="isSending" class="status-message sending">
+    <mat-spinner diameter="50" color="warn"></mat-spinner>
+    <p>Enviando correo...</p>
+  </div>
+    <div *ngIf="sendSuccess" class="status-message success">
+    <p>Correo enviado exitosamente.</p>
+  </div>
+  <div *ngIf="sendError" class="status-message error">
+    <p>Lo sentimos, el correo no pudo ser enviado.</p>
+  </div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="dialog-actions">
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button (click)="onSendClick()" cdkFocusInitial>Enviar</button>
+  <button mat-button (click)="onSendClick()" [disabled]="isSending" cdkFocusInitial>Enviar</button>
 </div>
