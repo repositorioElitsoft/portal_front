@@ -2,10 +2,10 @@ import { Component, Inject, OnInit, EventEmitter, Output, OnDestroy } from '@ang
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { Categoria } from 'src/app/interface/categoria.interface';
 import { Product } from 'src/app/interface/producto.interface';
 import { CategoriaService } from 'src/app/service/categoria.service';
-import { ExamenService } from 'src/app/service/examen.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import Swal from 'sweetalert2';
@@ -26,7 +26,7 @@ export class ExamenModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public examen: any,
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
-    private examenService: ExamenService,
+    private productService:ProductoService,
     private snackBar: MatSnackBar,
     private preguntaService: PreguntaService,
     private productoService: ProductoService
@@ -76,7 +76,7 @@ export class ExamenModalComponent implements OnInit {
         console.log('Esto estamos mandando', this.examenForm.value)
         let examen = this.examenForm.value;
         examen["examenId"] = this.examen.examenId
-        this.examenService.actualizarExamen(examen, this.examen.examenId).subscribe(
+        this.productService.actualizarExamen(examen, this.examen.examenId).subscribe(
           (data) => {
             console.log('response', data);
             this.snackBar.open('Examen actualizado', 'OK', { duration: 3000 }); 
@@ -89,7 +89,7 @@ export class ExamenModalComponent implements OnInit {
       }
       else {
         console.log('Esto estamos mandando para guardar', this.examenForm.value);
-        this.examenService.agregarExamen(this.examenForm.value).subscribe(
+        this.productService.agregarExamen(this.examenForm.value).subscribe(
           (data) => {
             console.log(data);
             Swal.fire('Examen guardado','El examen ha sido guardado con éxito','success');

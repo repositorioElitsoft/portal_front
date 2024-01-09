@@ -4,9 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
-import { ExamenService } from 'src/app/service/examen.service';
 import 'chartjs-plugin-annotation';
 import { UserService } from 'src/app/service/user.service';
+import { ProductoService } from 'src/app/service/producto.service';
 let vecesEnviado = 0;
 @Component({
   selector: 'app-start',
@@ -32,7 +32,7 @@ export class StartComponent implements OnInit {
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
     private preguntaService:PreguntaService,
-    private examenService:ExamenService,
+    private productService:ProductoService,
     private userService: UserService
       ) { }
   ngOnInit(): void {
@@ -170,7 +170,7 @@ export class StartComponent implements OnInit {
     }, 1);
   }
   cargarPreguntas(){
-    this.examenService.obtenerExamen(this.examenId).subscribe({
+    this.productService.obtenerExamen(this.examenId).subscribe({
       next: (data)=>{
         this.examen = data
       },

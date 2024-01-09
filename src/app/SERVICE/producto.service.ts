@@ -19,4 +19,22 @@ export class ProductoService {
   getVersionByProduct(productId: number): Observable<ProductVersion[]> {
     return this.http.get<ProductVersion[]>(`${this.url}/versiones-producto/por-producto/${productId}`);
   }
+  public eliminarExamen(examenId:any){
+    return this.http.delete(`${this.url}/examen/eliminar/${examenId}`);
+  }
+  public obtenerExamen(examenId:any){
+    return this.http.get(`${this.url}/examen/${examenId}`);
+  }
+  public obtenerExamenesActivos():Observable<any>{
+    return this.http.get(`${this.url}/examen/usuario/`);
+  } 
+  public actualizarExamen(examen:any, examenId: number){
+    return this.http.put(`${this.url}/examen/actualizar/${examenId}`,examen);
+  }
+  public agregarExamen(examen:any){
+    return this.http.post(`${this.url}/examen/`,examen);
+  }
+  public obtenerPreguntasPorProducto(productoId: number): Observable<any> {
+    return this.http.get(`${this.url}/pregunta/por-producto/${productoId}`);
+  }
 }

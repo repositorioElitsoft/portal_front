@@ -112,7 +112,7 @@ export class UserService {
     return this.HttpClient.get<any>(`${this.url}/usuarios/email/${email}`);
   }
   obtenerUsuarios(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.url}/usuarios/usuarios-herramientas`);
+    return this.HttpClient.get<any[]>(`${this.url}/users/usuarios-herramientas`);
   }
   eliminarUsuarioId(usuarioId: number): Observable<string> {
     return this.HttpClient.delete<string>(`${this.url}/usuarios/eliminar/${usuarioId}`);
@@ -142,10 +142,10 @@ export class UserService {
  
 
   public getUsuarioId(usuarioId: number):Observable<any>{
-    return this.HttpClient.get(`${this.url}/usuarios/${usuarioId}`)
+    return this.HttpClient.get(`${this.url}/users/${usuarioId}`)
   }
   public actualizarUsuarioAdmin(usuarioId: number, usuario: UserEditarDTO): Observable<UserEditarDTO> {
-    return this.HttpClient.put<UserEditarDTO>(`${this.url}/usuarios/actualizar/${usuarioId}`, usuario);
+    return this.HttpClient.put<UserEditarDTO>(`${this.url}/users/actualizar/${usuarioId}`, usuario);
   }
  
 

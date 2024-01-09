@@ -45,19 +45,7 @@ button.mat-raised-button {
 button.mat-raised-button mat-icon {
   margin-right: 8px;
 }
-.send-email-button{
-  position: fixed;
-  top: 90%;
-  left: 90%;
-  z-index: 20;
-  background-color: #F57C27;
-  display: flex;
-  color: white;
-  padding: 16px;
-  border: none;
-  border-radius: 50%;
 
-}
 .custom-range {
   position: absolute;
   top: -10px;
