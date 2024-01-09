@@ -57,9 +57,9 @@
                 <mat-list-item *ngFor="let cargo of usuarioData.userJob">
                   <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
                   <span matListItemLine>Cargo a postular</span>
-                  <span matListItemLine>Pretensión de renta: ${{cargo.crg_usr_pret }}</span>
-                  <span matListItemLine>Fecha de postulación: {{ cargo.fechaPostulacion | date: 'dd/MM/yyyy' }}</span>
-                  <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
+                  <span matListItemLine>Pretensión de renta: ${{cargo.salary }}</span>
+                  <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
+                  <!-- <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span> -->
                   <div matListItemIcon>
                     <mat-icon>forward</mat-icon>
                   </div>
