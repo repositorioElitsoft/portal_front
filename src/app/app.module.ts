@@ -99,7 +99,6 @@ import { EditPerfilUsuarioAdminComponent } from './components/admin/edit-perfil-
 import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usuario.component';
 import { AddStudyComponent } from './components/user/add-study/add-study.component';
 import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
-import { EditPositionUserComponent } from './components/user/edit-position-user/edit-position-user.component';
 import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
 
 @NgModule({
@@ -168,7 +167,6 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
     AddStudyComponent,
     SendMailToUsersDialogueComponent,
     AddPositionUserComponent,
-    EditPositionUserComponent,
     ToolCertificationsDialogComponent,
   ],
   imports: [
