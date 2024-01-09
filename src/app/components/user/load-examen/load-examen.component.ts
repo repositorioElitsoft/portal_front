@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ExamenService } from 'src/app/service/examen.service';
+import { ProductoService } from 'src/app/service/producto.service';
 @Component({
   selector: 'app-load-examen',
   templateUrl: './load-examen.component.html',
@@ -11,13 +11,13 @@ export class LoadExamenComponent implements OnInit {
   examenes?:any;
   constructor(
     private route:ActivatedRoute,
-    private examenService:ExamenService
+    private productService:ProductoService
   ) { }
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.catId = params['catId'];
       if(this.catId == 0){
-        this.examenService.obtenerExamenesActivos().subscribe(
+        this.productService.obtenerExamenesActivos().subscribe(
           (data) => {
             this.examenes = data.filter((examen: any) =>{
               return examen.categoria !== null
@@ -29,7 +29,7 @@ export class LoadExamenComponent implements OnInit {
         )
       }
       else{
-        this.examenService.obtenerExamenesActivos().subscribe(
+        this.productService.obtenerExamenesActivos().subscribe(
           (data:any) => {
             this.examenes = data.filter((obj: any) => obj.categoria.categoriaId === this.catId);
           },

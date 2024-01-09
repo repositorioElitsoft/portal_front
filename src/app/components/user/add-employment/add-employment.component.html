@@ -34,10 +34,12 @@
         <mat-card-content>
             <div *ngIf="checkboxFormCreated">
                 <form [formGroup]="form">
-                    <div *ngFor="let herramienta of herramientasDisponibles">
-                        <mat-checkbox [formControlName]="herramienta.id.toString()">
+                    <div *ngFor="let herramienta of herramientasDisponibles; let i = index" formGroupName="tools">
+                      <div [formGroupName]="i">
+                        <mat-checkbox formControlName="value">
                             {{ herramienta.productVersion.product.name }} ({{ herramienta.productVersion.name }})
                         </mat-checkbox>
+                      </div>
                     </div>
                 </form>
             </div>

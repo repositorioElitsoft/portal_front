@@ -8,7 +8,6 @@ import { ProfileAdminComponent } from './components/admin/profile-admin/profile-
 import { ViewCategoriasComponent } from './components/admin/view-categorias/view-categorias.component';
 import { AddCategoriaComponent } from './components/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './components/admin/view-examenes/view-examenes.component';
-import { AddExamenComponent } from './components/admin/add-examen/add-examen.component';
 import { ViewExamenPreguntasComponent } from './components/admin/view-examen-preguntas/view-examen-preguntas.component';
 import { AddPreguntaComponent } from './components/admin/add-pregunta/add-pregunta.component';
 import { ViewUsuariosComponent } from './components/admin/view-usuarios/view-usuarios.component';
@@ -29,7 +28,7 @@ import { PeticionRestaurarPassComponent } from './components/register/peticion-r
 import { RestaurarPassComponent } from './components/register/restaurar-pass/restaurar-pass.component';
 import { UserDashboardComponent } from './components/user/user-dashboard/user-dashboard.component';
 import { LoadExamenComponent } from './components/user/load-examen/load-examen.component';
-import { InstruccionesComponent } from './components/user/instrucciones/instrucciones.component';
+import { InstruccionesComponent } from './components/user/instrucciones/instrucc.component';
 import { StartComponent } from './components/user/start/start.component';
 import { AddUsuariosComponent } from './components/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './components/reclutador/estadisticas/estadisticas.component';
@@ -96,11 +95,6 @@ const routes: Routes = [
         path:'view-examenes',
         component:ViewExamenesComponent
       },
-      {
-        path:'add-examen',
-        component:AddExamenComponent
-      },
-
       {
         path:'view-examen-preguntas/:exam_id/:exam_titl',
         component:ViewExamenPreguntasComponent

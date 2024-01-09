@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InstruccionesComponent } from './instrucciones.component';
+import { InstruccionesComponent } from './instrucc.component';
 import { HttpClientModule } from '@angular/common/http'; // Importa HttpClientModule
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule } from '@angular/material/card';
