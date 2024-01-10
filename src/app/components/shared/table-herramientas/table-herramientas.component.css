@@ -106,11 +106,6 @@
 
 }
 
-.tool-btn {
-  background-color: #ff8b32;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  color: white;
-  padding: 0 1 0 1px;
- 
+.botonprimario {
+  font-size: 10px !important;
 }

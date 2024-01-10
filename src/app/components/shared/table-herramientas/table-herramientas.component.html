@@ -18,7 +18,7 @@
         </mat-form-field>
       </div>
       <div class="col-sm-12 col-md-2 col-lg-2" formGroupName="product">
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
           <mat-label>Producto</mat-label>
           <mat-select id="producto" formControlName="id" (selectionChange)="getVersions()">
             <mat-option value="">Selecciona una opción</mat-option>
@@ -93,7 +93,7 @@
         </div>
         <div class="tool-description">{{ tool.level?.description }}</div>
         <div class="tool-actions">
-          <button (click)="openCertificationDialog(tool)" class="tool-btn">Añadir Certificaciones</button>
+          <button mat-raised-button class="botonprimario m-2" (click)="openCertificationDialog(tool)" >Añadir Certificaciones</button>
           <button mat-mini-fab class="minifabdanger" (click)="deleteTool(tool.id)">
             <mat-icon>delete</mat-icon>
           </button>

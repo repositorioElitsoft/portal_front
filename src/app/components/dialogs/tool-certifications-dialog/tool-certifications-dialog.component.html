@@ -1,22 +1,30 @@
 <h1 mat-dialog-title>Certificaciones de Herramientas</h1>
-<div mat-dialog-content>
-
-    <div *ngFor="let cert of tool.certifications" class="d-flex">
-        {{ cert.url }} <button (click)="deleteCertification(cert.id)"> ELIMINAR</button>
+<div mat-dialog-content class="file-upload-container">
+  <ng-container *ngIf="!isUploadingFile; else loading">
+    <div *ngFor="let cert of tool.certifications" class="certification-item">
+      <span>{{ cert.url.substring(cert.url.lastIndexOf('_') + 1) }}</span>
+      <button mat-mini-fab  class="minifabdanger m-2"  (click)="deleteCertification(cert.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
-
-
-    <button type="button" class="botonprimario m-2" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
-        <div *ngIf="!isUploadingFile">
-          <div>Cargar nueva certificación </div>
-        </div>
-        <div *ngIf="isUploadingFile"> Cargando Certificación...</div>
+    <button type="button" class="botonprimario" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
+      Cargar nueva certificación
     </button>
     <input name="file" hidden (change)="addCertification()" #fileInput type="file" id="file">
-
-  
- 
+    <mat-card *ngIf="uploadSuccess" class="success-message">
+      <mat-icon class="white-icon">check_circle</mat-icon>
+      <span>Archivo cargado exitosamente</span>
+    </mat-card>
+    <mat-card *ngIf="uploadError" class="error-message">
+      <mat-icon class="white-icon">error</mat-icon>
+      <span>No se pudo subir el archivo. Inténtalo de nuevo.</span>
+    </mat-card>
+  </ng-container>
+  <ng-template #loading>
+    <mat-spinner color="primary" diameter="32"></mat-spinner>
+    <div>Cargando Certificación...</div>
+  </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="" cdkFocusInitial>Volver</button>
+  <button mat-button [mat-dialog-close]="" cdkFocusInitial >Volver</button>
 </div>

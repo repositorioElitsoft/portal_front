@@ -1,0 +1,110 @@
+/* Estilos para el contenedor principal */
+.file-upload-container {
+    padding: 20px;
+    background-color: #f4f4f4; /* Color de fondo del contenedor */
+    border-radius: 5px;
+  }
+  
+  /* Estilos para los elementos dentro del contenedor */
+  .certification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff; /* Color de fondo de los elementos */
+    border: 1px solid #e0e0e0; /* Borde suave */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+  
+
+  
+  /* Estilo para el botón de carga */
+  .botonprimario {
+    background-color: #ff5722; /* Color primario naranja */
+    color: #fff;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .botonprimario:hover {
+    background-color: #ff7043; /* Cambia el color de fondo al pasar el mouse */
+  }
+  
+  /* Estilos para los mensajes de éxito y error */
+  .success-message, .error-message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .success-message,
+  .error-message {
+    background-color: #fff; /* Fondo blanco */
+    color: #fff;; /* Texto oscuro */
+    padding: 8px 16px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde delgado */
+    border-radius: 4px; /* Bordes redondeados */
+    display: flex; /* Para alinear ícono y texto en el centro */
+    align-items: center; /* Para alinear ícono y texto en el centro */
+    font-size: 14px; /* Tamaño de fuente */
+    box-shadow: none;
+  }
+  
+  .success-message mat-icon,
+  .error-message mat-icon {
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+    font-size: 18px; /* Tamaño de fuente del ícono */
+  }
+  
+  .success-message {
+    background-color: #43a047; /* Verde más oscuro para mensaje de éxito */
+  }
+  
+  .error-message {
+    background-color: #e53935; /* Rojo más oscuro para mensaje de error */
+  }
+  
+  
+  /* Estilos para el título del diálogo */
+  mat-dialog-title {
+    font-size: 1.5rem; /* Tamaño de fuente más grande para el título */
+    margin-bottom: 20px; /* Espacio inferior adicional */
+  }
+  
+
+  mat-dialog-actions button {
+    background-color: #607d8b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  mat-dialog-actions button:hover {
+    background-color: #455a64;
+  }
+  
+.white-icon {
+    color: white;
+  }
+  
+.hide-characters {
+    max-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .botonprimario {
+    display: flex!important;
+    width: 100%; 
+    justify-content: center;
+    align-items: center; 
+  }
+  
