@@ -168,7 +168,7 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
     AddStudyComponent,
     SendMailToUsersDialogueComponent,
     AddPositionUserComponent,
-    ToolCertificationsDialogComponent
+    ToolCertificationsDialogComponent,
 
   ],
   imports: [
