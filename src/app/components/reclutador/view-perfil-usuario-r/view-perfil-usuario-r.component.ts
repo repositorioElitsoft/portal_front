@@ -12,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ViewPerfilUsuarioRComponent implements OnInit {
   usuarioData: any;
-  observadoresData: ObservacionDTO[];
+  // observadoresData: ObservacionDTO[];
   nuevaObservacion: string = '';
   observaciones: ObservacionDTO[] = [];
   enEdicion: any;
@@ -55,22 +55,22 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.usuarioData = data.usuario;
-    this.observadoresData = data.observadores;
+    // this.observadoresData = data.observadores;
   }
   ngOnInit(): void {
     this.ObtenerUsuarioGuardado();
-    this.cargarObservaciones();
+    // this.cargarObservaciones();
   }
-cargarObservaciones() {
-  this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
-    (observadores) => {
-      this.observaciones = observadores;
-    },
-    (error) => {
-      console.error('Error al cargar las observaciones:', error);
-    }
-  );
-}
+// cargarObservaciones() {
+//   this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
+//     (observadores) => {
+//       this.observaciones = observadores;
+//     },
+//     (error) => {
+//       console.error('Error al cargar las observaciones:', error);
+//     }
+//   );
+// }
 guardarObservacion() {
   if (!this.nuevaObservacion.trim()) {
     this.openSnackBar('La observación no puede estar vacía', 'Cerrar');
@@ -106,7 +106,7 @@ guardarObservacion() {
       this.observacionService.guardarObservacionRec(nuevaObservacion, this.usuarioData.id, nuevaObservacion.usr_id_obs,
           nuevaObservacion.usr_id_obs_mod).subscribe(
         (resultado) => {
-          this.cargarObservaciones(); 
+          // this.cargarObservaciones(); 
           this.nuevaObservacion = ''; 
           this.openSnackBar('Observación guardada con éxito', 'Cerrar');
         },
@@ -136,7 +136,7 @@ actualizarObservacion(observadores: ObservacionDTO) {
     (resultado) => {
       this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
       this.enEdicion = null; 
-      this.cargarObservaciones();
+      // this.cargarObservaciones();
     },
     (error) => {
       console.error('Error al actualizar la observación:', error);

@@ -1,0 +1,48 @@
+.custom-spinner-color .mat-spinner circle {
+    stroke: orange; /* Reemplaza 'orange' con el código de color exacto que prefieras */
+  }
+  
+  .dialog-content {
+    color: #333; /* Color de texto general, ajusta según tu preferencia */
+  }
+  
+  .select-message {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+  
+  mat-form-field {
+    width: 100%; /* Asegura que el campo de selección se expanda al ancho completo */
+  }
+  
+  .status-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .status-message p {
+    margin-left: 10px;
+  }
+  
+  .sending p {
+    color: #FFA500; /* Color naranjo para el mensaje de enviando */
+  }
+  
+  .success p {
+    color: #28a745; /* Color verde para éxito */
+  }
+  
+  .error p {
+    color: #dc3545; /* Color rojo para errores */
+  }
+  
+  .dialog-actions {
+    justify-content: flex-end;
+  }
+  
+  button[mat-button] {
+    margin-right: 10px;
+  }
+  
