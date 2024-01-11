@@ -1,14 +1,15 @@
 // add-position-user.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UserService } from 'src/app/service/user.service';
-import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { UserJobService} from 'src/app/service/user-job.service';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import Swal from 'sweetalert2';
+import { UserJob } from 'src/app/interface/user-job.interface';
 
 @Component({
   selector: 'app-add-position-user',
@@ -16,75 +17,171 @@ import Swal from 'sweetalert2';
   styleUrls: ['./add-position-user.component.css']
 })
 export class AddPositionUserComponent implements OnInit {
+  @Output()  AddPositionUserComponent: EventEmitter<void> = new EventEmitter<void>();
   form!: FormGroup;
-  jobPositions: JobPosition[] = [];
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private cargosUsuarioService: CargosUsuarioService,
-    private jobPositionService: JobPositionService,
-    private notification: NotificationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public dialog: MatDialog,
-    private userService: UserService
-  ) {
-    this.buildForm();
-  }
-
-  ngOnInit(): void {
-    this.obtenerJobPositions();
-  }
-
-  buildForm() {
+  mostrarFormulario: boolean = true;
+  isntrainee: boolean= false;
+  JobPosition: JobPosition[] = [];
+  creationMode = true;
+  selectedjobPosition:number | undefined;
+  private buildForm(){
     this.form = this.formBuilder.group({
-      // Define los campos necesarios para la postulación
       salary: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
-      crg_prf: [""],
       JobPositionId: ["", [Validators.required]],
-      availability: [""],
-      tiempo_incorporacion: [""],
-      otro_tiempo_incorporacion: [""],
+     // availability: ["", [Validators.required]],
+      availability: this.formBuilder.group({
+        id:['1',],
+        time:['', ]
+      }),
+      });
+  }
+  constructor(
+    private userService: UserService,
+    private formBuilder: FormBuilder,
+    private cargosusuarioService:UserJobService,
+    private JobPositionService:JobPositionService,
+    private router: Router,
+    private dialog : MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
+      this.buildForm();
+    }
+    ngOnInit(): void {
+      this.getCargoUsuario();
+      this.obtenerJobPosition();
+      this.form.patchValue(this.data.userJob);
+      if (this.data.userJob) {
+        this.form.patchValue(this.data.userJob);
+        this.form.get('JobPositionId')?.patchValue(this.data.userJob.jobPosition?.id);
+        this.creationMode = !this.data.userJob.id;
+      }
+    }
+    
+    
+    
+  navigateToRoute(route: string) {
+    this.router.navigate([route]);
+  }
+  obtenerJobPosition() {
+    this.JobPositionService.obtenerListaJobPosition().subscribe(
+      (data: JobPosition[]) => {
+        this.JobPosition = data;
+      },
+      (error) => {
+        console.log('Error al obtener el cargo de elitsoft:', error);
+      }
+    );
+  }
+   getCargoUsuario() {
+  //   this.cargosusuarioService.getCargosByUserId().subscribe(
+  //     (data: UserJob) => {
+  //       this.form.patchValue(
+  //         {
+  //           salary: data.salary,
+  //           JobPositionId: data.jobPosition?.id,
+  //           availability:data.availability?.id,
+            
+  //         }
+  //       )
+  //       /////////////////////////////////////////
+  //    // Asegúrate de que jobPosition esté correctamente asignado
+  //     console.log('jobPosition:', data.jobPosition);
+  //     // Actualizar la variable mostrarFormulario
+  //     if (data.jobPosition?.id !== undefined) {
+  //   //    this.mostrarFormulario = !this.esCargoTrainee(data.jobPosition.id);
+  //     } else {
+  //       // Manejar el caso en el que jobPosition.id es undefined
+  //       this.mostrarFormulario = false; // O el valor que tenga sentido en tu lógica
+  //     }
+  //     ///////////////////////////////////////////
+  //     }
+  //   );
+  }
+  successMessage() {
+    const newCargo: UserJob = this.form.value;
+    const usuarioId = newCargo.user;
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos enviados exitosamente',
+      text: 'Gracias por postular en Elitsoft',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' 
+      }
+    });
+  }
+  redirectToReferencias() {
+    this.router.navigate(['/user/informacion-academica']);
+  }
+  ///////////////////////////////////////////
+  esCargoTrainee(){
+    const cargoSeleccionado = this.JobPosition.find(position => position.id === Number(this.form.get("JobPositionId")?.value));
+    console.log('cargoSeleccionado:', cargoSeleccionado);
+    console.log('cargoSeleccionado id:', this.form.get("JobPositionId")?.value);
+    console.log('cargoSeleccionado name:', this.JobPosition);
+    this.isntrainee = !!cargoSeleccionado && !!cargoSeleccionado.name && cargoSeleccionado.name.toLowerCase().includes('trainee');
+  }
+  ////////////////////////////////////
+  submitForm(event: Event) {
+    event.preventDefault();
+    const pretensionRentaFormatted = this.form.get('salary')?.value;
+    const pretensionRentaWithoutFormat = pretensionRentaFormatted.replace(/[^\d]/g, '');
+    this.form.get('salary')?.setValue(pretensionRentaWithoutFormat);
+    const newCargo: UserJob = this.form.value;
+
+    newCargo.jobPosition = {
+      id: this.form.value.JobPositionId,
+    }
+
+    if (this.data.userJob?.id) {
+      console.log('ID existente en data:', this.data.userJob.id);
+      newCargo.id = this.data.userJob.id;
+    } else {
+      console.log('Creando un nuevo registro');
+    }
+
+    console.log('Datos a guardar:', newCargo);
+
+    this.cargosusuarioService.guardarCargo(newCargo).subscribe(
+      (nuevoCargo: UserJob) => {
+        this.postSubmit(); // Llama a postSubmit después de guardar los datos
+      },
+      (error) => {
+        console.log('Error al guardar postulación:', error);
+      }
+    );
+  }
+
+  // Función para cerrar el formulario y recargar
+  postSubmit() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Datos enviados exitosamente',
+      text: 'Gracias por postular en Elitsoft',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border'
+      }
+    }).then(() => {
+      this.dialog.closeAll();
     });
   }
 
-  obtenerJobPositions() {
-    this.jobPositionService.obtenerListaJobPosition().subscribe(
-      (data: JobPosition[]) => {
-        this.jobPositions = data;
-      },
-      (error) => {
-        console.log('Error al obtener las posiciones de trabajo:', error);
-      }
-    );
-  }
 
-  submitForm(event: Event) {
-    event.preventDefault();
-
-    // Realiza la lógica necesaria para guardar la postulación
-    const nuevaPostulacion = this.form.value;
-
-    this.cargosUsuarioService.guardarCargo(nuevaPostulacion).subscribe(
-      (respuesta) => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Postulación enviada exitosamente',
-          text: 'Gracias por postular en Elitsoft',
-          cancelButtonColor: '#515151',
-          confirmButtonColor: '#F57C27',
-          customClass: {
-            popup: 'custom-border'
-          }
-        });
-
-        // Puedes redirigir a otra página después de enviar la postulación
-        this.router.navigate(['/user/cargo-usuario']);
-      },
-      (error) => {
-        console.log('Error al guardar la postulación:', error);
-      }
-    );
+ 
+  
+  formatCurrency() {
+    const control = this.form.get('salary');
+    if (control && control.value) {
+      let value = control.value.toString();
+      value = value.replace(/[^0-9]/g, '');
+      const formattedValue = new Intl.NumberFormat('es-CL', {
+        style: 'currency',
+        currency: 'CLP',
+      }).format(Number(value));
+      control.setValue(formattedValue);
+    }
   }
 }
-

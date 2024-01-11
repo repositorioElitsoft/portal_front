@@ -1,0 +1,22 @@
+
+.btn {
+    font-size: 15px;
+  }
+  .form {
+    width: fit-content;
+  }
+  .contenedorform{
+   padding-left: 30%;
+   padding-right: 30%;
+   box-shadow: none;
+  }
+  @media (max-width: 768px) {
+    .container-datos-personales {
+      margin-right: 5%; 
+      margin-left: 5%;
+      padding-right: 100px;
+      padding-top: 5%;
+      padding-bottom: 5%;
+      align-items: center;
+    }
+  }

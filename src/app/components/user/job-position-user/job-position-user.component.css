@@ -1,0 +1,55 @@
+.div-inputs {
+  width: 100%;
+}
+
+.btn-marg {
+  margin-right: 8px;
+}
+
+.btn {
+  font-size: 15px;
+}
+
+.form {
+  width: fit-content;
+}
+
+.celda-laboral {
+  border-bottom: 1px rgb(190, 190, 190) solid;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 2vh;
+}
+
+.cargo {
+  font-size: medium;
+  font-weight: 600;
+}
+
+.Titulos {
+  font-size: 12px;
+  font-family: 'Meera Inimai', sans-serif;
+  font-weight: bold;
+}
+
+.fechas2 {
+  font-size: 14px;
+  font-family: 'Meera Inimai', sans-serif;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.perfilr {
+  font-weight: bold;
+  font-size: 2em;
+}
