@@ -1,22 +1,33 @@
-
-.btn {
-    font-size: 15px;
+.contenedorform {
+  display: flex;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  box-shadow: none;
+}
+.mat-form-field{
+  width: 100%;
+}
+.ng-star-inserted {
+  width: 100% !important;
+  padding-left: 2%;
+  padding-right: 2%;
   }
-  .form {
-    width: fit-content;
+  .mat-card {
+    width: 100%; 
+    box-sizing: border-box; 
+    margin-bottom: 16px; 
   }
-  .contenedorform{
-   padding-left: 30%;
-   padding-right: 30%;
-   box-shadow: none;
+  .perfilr {
+    width: 100%;
+    text-align: center; 
   }
-  @media (max-width: 768px) {
-    .container-datos-personales {
-      margin-right: 5%; 
-      margin-left: 5%;
-      padding-right: 100px;
-      padding-top: 5%;
-      padding-bottom: 5%;
-      align-items: center;
-    }
-  }
+  
+  .guardarycancelar
+{
+background-color: none;
+box-shadow: none;
+width: 100%;
+}

@@ -100,6 +100,7 @@ import { JobPositionUserComponent } from './components/user/job-position-user/jo
 import { AddStudyComponent } from './components/user/add-study/add-study.component';
 import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
 import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
+import { UserPrefferedJobComponent } from './components/user/user-preffered-job/user-preffered-job.component';
 
 
 @NgModule({
@@ -169,6 +170,7 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
     SendMailToUsersDialogueComponent,
     AddPositionUserComponent,
     ToolCertificationsDialogComponent,
+    UserPrefferedJobComponent,
 
   ],
   imports: [

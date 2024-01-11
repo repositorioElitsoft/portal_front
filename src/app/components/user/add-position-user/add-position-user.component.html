@@ -1,16 +1,20 @@
-<h4 class="perfilr">Cargos activos en Elitsoft</h4>
 <mat-card class="contenedorform">
   <div class="div-inputs">
+    <h4 class="perfilr">Cargos activos en Elitsoft</h4>
     <form [formGroup]="form" (ngSubmit)="submitForm($event)">
       <div class="row mb-3">
         <label for="cargosE" class="col-m-2 col-form-label">Cargo a Postular:</label>
-        <div class="combobox col-sm-15">
-          <select class="form-control" (change)="esCargoTrainee()" id="cargosE" formControlName="JobPositionId" name="cargosE">
+        <!-- Mostrar el select solo en modo creación -->
+        <div class="combobox col-sm-15" *ngIf="creationMode">
+          <select class="form-control" (change)="esCargoTrainee()" id="cargosE" formControlName="JobPositionId" name="cargosE" [disabled]="!creationMode">
             <option value="">Seleccione una opción</option>
             <option *ngFor="let cargo of JobPosition" [value]="cargo.id">{{ cargo.name }}</option>
           </select>
         </div>
+        <!-- Mostrar el input bloqueado solo en modo edición -->
+        <input class="form-control" *ngIf="!creationMode" type="text" formControlName="jobPositionName" readonly>
       </div>
+      
       <ng-container *ngIf="JobPosition && form.get('JobPositionId')?.value as selectedJobId">
         <!-- Mostrar mensaje y botón para redirigir a referencias académicas -->
         <div *ngIf="isntrainee && mostrarFormulario" class="alert alert-info">

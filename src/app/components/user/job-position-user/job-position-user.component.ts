@@ -140,7 +140,13 @@ export class JobPositionUserComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' 
+      }
+      
     }).then((result) => {
       if (result.isConfirmed) {
         this.cargosusuarioService.eliminarPostulacionPorId(userjob.id).subscribe(
