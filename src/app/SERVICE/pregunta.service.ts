@@ -16,8 +16,8 @@ export class PreguntaService {
   public eliminarPregunta(preguntaId:any){
     return this.http.delete(`${this.url}/pregunta/eliminar/${preguntaId}`);
   }
-  public actualizarPregunta(pregunta:any){
-    return this.http.put(`${this.url}/pregunta/`,pregunta);
+  public actualizarPregunta(preguntaId: number, pregunta: any){
+    return this.http.put(`${this.url}/pregunta/actualizar/${preguntaId}`, pregunta);
   }
   public obtenerPregunta(preguntaId:any){
     return this.http.get(`${this.url}/pregunta/${preguntaId}`);
@@ -34,4 +34,6 @@ export class PreguntaService {
   public guardarResultados(resultados:any){
     return this.http.post(`${this.url}/resultados/`, resultados);
     }
+  
+  
 }

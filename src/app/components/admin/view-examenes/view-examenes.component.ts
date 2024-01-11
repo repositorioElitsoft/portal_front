@@ -95,13 +95,12 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
     });
   }
   viewPreguntas(event: any, productId: number): void {
-    // Llamada al servicio para obtener preguntas
     this.productoService.obtenerPreguntasPorProducto(productId).subscribe({
       next: (preguntas: any) => {
         const dialogRef = this.dialog.open(ExamenModalComponent, {
           width: '800px',
           height: '700px',
-          data: { preguntas: preguntas },
+          data: preguntas,
         });
         dialogRef.afterClosed().subscribe(result => {
         });
@@ -132,16 +131,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  saveExamen() {
-    const dialogRef = this.dialog.open(ExamenModalComponent, {
-      width: '800px', 
-      height: '700px',
-    });
-
-    dialogRef.componentInstance?.examenActualizado.subscribe(() => {
-      this.getProducts();
-    });
-  }
+  
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
