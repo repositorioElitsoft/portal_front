@@ -21,7 +21,6 @@ import { DatosPersonalesComponent } from './components/user/datos-personales/dat
 import { HerramientasTecnologiasComponent } from './components/user/herramientas-tecnologias/herramientas-tecnologias.component';
 import { InformacionAcademicaComponent } from './components/user/informacion-academica/informacion-academica.component';
 import { InformacionLaboralComponent } from './components/user/informacion-laboral/informacion-laboral.component';
-import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usuario.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { ValidarMailComponent } from './components/register/validar-mail/validar-mail.component';
 import { PeticionRestaurarPassComponent } from './components/register/peticion-restaurar-pass/peticion-restaurar-pass.component';
@@ -36,6 +35,7 @@ import { DashboardEComponent } from './components/entrevistador/dashboard-e/dash
 import { WelcomeEntrevistadorComponent } from './components/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
 import { ObservacionesComponent } from './components/entrevistador/observaciones/observaciones.component';
 import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
+import { JobPositionUserComponent } from './components/user/job-position-user/job-position-user.component';
 
 
 const routes: Routes = [
@@ -60,7 +60,7 @@ const routes: Routes = [
       {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
       {path:'informacion-academica', component:InformacionAcademicaComponent,},
       {path:'informacion-laboral', component:InformacionLaboralComponent, },
-      {path:'cargo-usuario', component:CargoUsuarioComponent,},
+      {path:'cargo-usuario', component:JobPositionUserComponent,},
 
     ]
   },

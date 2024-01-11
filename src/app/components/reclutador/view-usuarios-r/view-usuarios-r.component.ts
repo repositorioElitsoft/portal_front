@@ -21,7 +21,7 @@ import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
 import { forkJoin } from 'rxjs';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
-import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { UserJobService} from 'src/app/service/user-job.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
@@ -94,7 +94,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
     private JobPositionService: JobPositionService,
-    private cargoService: CargosUsuarioService
+    private cargoService: UserJobService
   ) {
     this.selectedCheckbox = this.fb.group({
     });

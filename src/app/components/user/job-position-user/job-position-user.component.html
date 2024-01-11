@@ -1,0 +1,44 @@
+  <app-sidebar-user></app-sidebar-user>
+  <br>
+  <app-sidebar-userdesk></app-sidebar-userdesk>
+<div class="container">
+<mat-card class="container-datos-personales">
+  <div class="div-inputs" *ngIf="!creationMode">
+    <h4 class="perfilr">Cargos activos en Elitsoft</h4>
+    <div *ngFor="let userjob of userJobs"> 
+      <div class="row celda-laboral">
+          <div class="col-6 cargo">
+            <h4 class="Titulos mb-5">Cargo a Postular</h4>
+            <p>{{ userjob.jobPosition?.name }}</p>
+          </div>
+          <div class="col-2 fechas">
+            <h4 class="Titulos mb-5">Salario</h4>
+            <p class="fechas2">${{ userjob.salary }}</p>
+          </div>
+          <div class="col-2 fechas">
+            <h4 class="Titulos mb-5">Fecha postulación</h4>
+            <p class="fechas2">{{ userjob.applicationDate | date }}</p>
+          </div>
+          <div class="col-2">
+            <div class="flex">
+              <h4 class="Titulos  mb-4">Acciones</h4>
+              <button mat-mini-fab class="minifab m-1"   id="{{userjob.id}}" (click)="editJob(userjob)">
+                <mat-icon>edit</mat-icon>
+              </button> 
+              <button mat-mini-fab class="minifabdanger m-1" (click)="deleteJob(userjob)">
+                <mat-icon>delete</mat-icon>
+              </button>              
+            </div>
+             </div>
+          </div>
+        </div>
+      <div *ngIf="userJobs.length === 0">
+        No has definido ninguna experiencia laboral
+      </div>
+  <button class="botonprimario m-2" mat-raised-button (click)="openAddPositionUser('300ms', '150ms')"> + Añadir postulación</button>
+<button class="botonprimario m-2" mat-raised-button *ngIf="userJobs.length > 0" (click)="redirectTo()">Siguiente</button>
+</div>
+</mat-card>
+</div>
+
+

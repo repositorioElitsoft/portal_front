@@ -1,24 +1,27 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component,  OnInit} from '@angular/core';
+import {  Router } from '@angular/router';
 import { JobPositionService } from 'src/app/service/jobposition.service';
-import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
-import { UserService } from 'src/app/service/user.service';
+import { UserJobService} from 'src/app/service/user-job.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NotificationService } from 'src/app/service/notification.service';
 import Swal from 'sweetalert2';
+import { AddPositionUserComponent } from '../add-position-user/add-position-user.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
-  selector: 'app-cargo-usuario',
-  templateUrl: './cargo-usuario.component.html',
-  styleUrls: ['./cargo-usuario.component.css']
+  selector: 'app-job-position-user',
+  templateUrl: './job-position-user.component.html',
+  styleUrls: ['./job-position-user.component.css']
 })
-export class CargoUsuarioComponent implements OnInit {
+export class JobPositionUserComponent implements OnInit {
   form!: FormGroup;
   mostrarFormulario: boolean = true;
   isntrainee: boolean= false;
+  creationMode: boolean = false;
   JobPosition: JobPosition[] = [];
+  userJobs: UserJob[] = [];
   selectedjobPosition:number | undefined;
+  
   private buildForm(){
     this.form = this.formBuilder.group({
       salary: ["", [Validators.required, Validators.pattern(/^[0-9$.]+$/)]],
@@ -31,13 +34,11 @@ export class CargoUsuarioComponent implements OnInit {
       });
   }
   constructor(
-    private userService: UserService,
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
-    private cargosusuarioService:CargosUsuarioService,
+    private cargosusuarioService:UserJobService,
     private JobPositionService:JobPositionService,
-    private notification: NotificationService,
-    private router: Router,
-    private route: ActivatedRoute ) {
+    private router: Router ) {
       this.buildForm();
     }
   ngOnInit(): void {
@@ -51,37 +52,24 @@ export class CargoUsuarioComponent implements OnInit {
     this.JobPositionService.obtenerListaJobPosition().subscribe(
       (data: JobPosition[]) => {
         this.JobPosition = data;
+        console.log('JobPosition:', this.JobPosition); // Agrega este console.log
       },
       (error) => {
         console.log('Error al obtener el cargo de elitsoft:', error);
       }
     );
   }
+  
+  
   getCargoUsuario() {
     this.cargosusuarioService.getCargosByUserId().subscribe(
-      (data: UserJob) => {
-        this.form.patchValue(
-          {
-            salary: data.salary,
-            JobPositionId: data.jobPosition?.id,
-            availability:data.availability?.id,
-            
-          }
-        )
-        /////////////////////////////////////////
-     // Asegúrate de que jobPosition esté correctamente asignado
-      console.log('jobPosition:', data.jobPosition);
-      // Actualizar la variable mostrarFormulario
-      if (data.jobPosition?.id !== undefined) {
-    //    this.mostrarFormulario = !this.esCargoTrainee(data.jobPosition.id);
-      } else {
-        // Manejar el caso en el que jobPosition.id es undefined
-        this.mostrarFormulario = false; // O el valor que tenga sentido en tu lógica
-      }
-      ///////////////////////////////////////////
+      (data: UserJob[]) => {
+        console.log('esta es la data:', data);
+        this.userJobs= data;
       }
     );
   }
+
   successMessage() {
     const newCargo: UserJob = this.form.value;
     const usuarioId = newCargo.user;
@@ -141,5 +129,72 @@ export class CargoUsuarioComponent implements OnInit {
       }).format(Number(value));
       control.setValue(formattedValue);
     }
+
+    
   }
+ 
+  deleteJob(userjob: UserJob) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'Esta acción eliminará la postulación. Esta acción no se puede deshacer.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' 
+      }
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cargosusuarioService.eliminarPostulacionPorId(userjob.id).subscribe(
+          (eliminacionExitosa) => {
+              this.getCargoUsuario();
+              Swal.fire('Eliminado', 'Su postulación ha sido eliminada con éxito.', 'success');
+          },
+          (error) => {
+            console.error('Error al eliminar su postulación:', error);
+            Swal.fire('Error', 'Ocurrió un error al eliminar la postulación.', 'error');
+          }
+        );
+      }
+    });
+  }
+  
+  editJob(userJob: UserJob) {
+    if (userJob) {
+      console.log('esta es la data:', userJob);
+      const dialogRef = this.dialog.open(AddPositionUserComponent, {
+        width: '800px',
+        height: '700px',
+        data: { userJob: userJob, creationMode: false } 
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log(`Dialog result: ${result}`);
+        this.getCargoUsuario();
+      });
+    } else {
+      console.error('JobPositionId es undefined o null');
+    }
+  }
+  
+  
+  openAddPositionUser(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(AddPositionUserComponent, {
+      width: '600px',
+      height: '700px',
+      data: {}, 
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getCargoUsuario();    });
+  }
+  redirectTo(){
+    this.navigateToRoute('/user-dashboard/0')
+  }
+  
 }
