@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CargosUsuarioService {
-  readonly url = `${environment.URL_HOST}/cargos/`
+  readonly url = `${environment.URL_HOST}/userjob/`
   constructor(private http: HttpClient) {}
   guardarCargo(cargo: UserJob): Observable<UserJob> {  
     cargo.applicationDate = new Date(); 
