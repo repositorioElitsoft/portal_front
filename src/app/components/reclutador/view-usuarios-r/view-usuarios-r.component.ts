@@ -31,6 +31,7 @@ import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';
+import { AcademicaService } from 'src/app/service/academica.service';
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -94,7 +95,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
     private JobPositionService: JobPositionService,
-    private cargoService: UserJobService
+    private UserJobService: UserJobService,
+    private AcademicalReferences: AcademicaService
   ) {
     this.selectedCheckbox = this.fb.group({
     });
@@ -421,17 +423,19 @@ obtenerUsuarios(): void {
 
       // Filtrar usuarios por roles igual a "GUEST"
       const usuarios = data
+      // .filter((usuario) => usuario.roles === 'GUEST')
         .map((usuario) => ({
           name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
           phone: usuario.phone || '',
           email: usuario.email || '',
           roles: usuario.roles || '',
           address: usuario.address || '',
-          tools: usuario.herramientas,
-            // // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
-            // .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
-            // .join(', '),
-          laborales: usuario.laborales,
+          tools: usuario.Herramientas,
+          // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
+          //   .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
+          //   .join(', '),
+          jobs: usuario.jobs,
+          academicalList: usuario.academicalList,
           id: usuario.id,
           cvPath: usuario.cvPath,
           userJob: usuario.userJob,
