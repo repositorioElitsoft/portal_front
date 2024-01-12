@@ -38,7 +38,7 @@ export class  EditLaboralComponent implements OnInit {
   
     this.form.patchValue(this.data || {});
   
-    this.id = this.data && this.data.id ? this.data.id : null;
+    this.id = this.data && this.data.id ? this.data : null;
     console.log('Valor asignado a this.id:', this.id);
   
     this.creationMode = this.id === null;
