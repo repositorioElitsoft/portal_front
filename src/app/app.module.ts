@@ -102,6 +102,7 @@ import { AddPositionUserComponent } from './components/user/add-position-user/ad
 import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
 import { UserPrefferedJobComponent } from './components/user/user-preffered-job/user-preffered-job.component';
 import { ObservationRecruiterComponent } from './components/reclutador/observation-recruiter/observation-recruiter.component';
+import { ObservationRecruiterEditComponent } from './components/reclutador/observation-recruiter-edit/observation-recruiter-edit.component';
 
 
 @NgModule({
@@ -173,6 +174,7 @@ import { ObservationRecruiterComponent } from './components/reclutador/observati
     ToolCertificationsDialogComponent,
     UserPrefferedJobComponent,
     ObservationRecruiterComponent,
+    ObservationRecruiterEditComponent
 
   ],
   imports: [

@@ -75,11 +75,11 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   }
 
 
-  verObservacion( userJob: UserJob): void {
-    const id = userJob.id
-    console.log('userjob id : ', userJob.id)
+  verObservacion(userJob: UserJob, idUserJob: number | null): void {
+    const id = idUserJob !== null ? idUserJob : null; // Usar null como valor predeterminado si idUserJob es nulo o indefinido
+    console.log('userjob id : ', id);
   
-    if (id) {
+    if (id !== null) {
       this.observacionService.obtenerObservacionesPorUserJob(id).subscribe({
         next: (data) => {
           console.log('Data llegada:', data);
@@ -87,21 +87,22 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
             width: '800px',
             height: '700px',
             data: {
-              usuario: data
+              usuario: data,
+              userJobId: id // Pasar el valor de id a ObservationRecruiterComponent
             }
           });
-            dialogRef.afterClosed().subscribe((result) => {
+  
+          dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
             this.ObtenerUsuarioGuardado();
           });
         },
         error: (error) => {
           console.log(error);
-          // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
         }
       });
     } else {
-      console.error('No se pudo obtener el ID del usuario');
+      console.error('ID de UserJob no válido');
     }
   }
   
