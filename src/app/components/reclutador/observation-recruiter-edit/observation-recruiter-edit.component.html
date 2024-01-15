@@ -1,4 +1,4 @@
-<mat-card class="elitsoft-card" *ngFor="let usuario of usuarioData">
+<mat-card class="elitsoft-card">
   <mat-card-content>
     <form (ngSubmit)="submitForm()" class="observation-form" [formGroup]="formulario">
 
@@ -6,9 +6,9 @@
       <section class="user-info">
         <mat-card-title>Observación realizada por:</mat-card-title>
         <div class="author-details">
-          <div class="author-name">{{ usuario.author.name }} {{ usuario.author.firstLastname }} {{ usuario.author.secondLastname }}</div>
-          <div class="author-email">{{ usuario.author.email }}</div>
-          <div class="author-date">{{ usuario.author.date | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
+          <div class="author-name">{{ data.usuario.author.name }} {{ data.usuario.author.firstLastname }} {{ data.usuario.author.secondLastname }}</div>
+          <div class="author-email">{{ data.usuario.author.email }}</div>
+          <div class="author-date">{{ data.usuario.author.date | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
         </div>
       </section>
 
@@ -16,16 +16,16 @@
       <section class="responsable">
         <mat-card-subtitle>Actualizado por:</mat-card-subtitle>
         <div class="author-details">
-          <h2 class="name">{{ usuario.lastUpdateResponsible.name }} {{ usuario.lastUpdateResponsible.firstLastname }} {{ usuario.lastUpdateResponsible.secondLastname }}</h2>
-          <p class="email">{{ usuario.lastUpdateResponsible.email }}</p>
-          <p class="date">{{ usuario.lastUpdateResponsible.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+          <h2 class="name">{{ data.usuario.lastUpdateResponsible.name }} {{ data.usuario.lastUpdateResponsible.firstLastname }} {{ data.usuario.lastUpdateResponsible.secondLastname }}</h2>
+          <p class="email">{{ data.usuario.lastUpdateResponsible.email }}</p>
+          <p class="date">{{ data.usuario.lastUpdateResponsible.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
         </div>
       </section>
 
       <!-- Sección de descripción -->
       <mat-form-field class="full-width" appearance="outline">
         <mat-label>Descripción</mat-label>
-        <textarea matInput id="description" name="description" [(ngModel)]="usuario.description" formControlName="description"></textarea>
+        <textarea matInput id="description" name="description" [(ngModel)]="data.usuario.description" formControlName="description"></textarea>
       </mat-form-field>
       <mat-card> <button mat-raised-button color="primary" type="submit">Editar</button>
       </mat-card>

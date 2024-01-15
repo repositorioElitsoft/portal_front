@@ -76,7 +76,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
 
 
   verObservacion(userJob: UserJob, idUserJob: number | null): void {
-    const id = idUserJob !== null ? idUserJob : null; // Usar null como valor predeterminado si idUserJob es nulo o indefinido
+    const id = idUserJob !== null ? idUserJob : null; 
     console.log('userjob id : ', id);
   
     if (id !== null) {

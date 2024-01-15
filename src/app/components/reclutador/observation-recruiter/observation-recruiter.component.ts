@@ -6,6 +6,8 @@ import { ObservacionDTO, Observation } from 'src/app/interface/observation.inter
 import { UserSesionDTO } from 'src/app/interface/user.interface';
 import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
+import { ObservationRecruiterEditComponent } from '../observation-recruiter-edit/observation-recruiter-edit.component';
+import { UserJob } from 'src/app/interface/user-job.interface';
 
 @Component({
   selector: 'app-observation-recruiter',
@@ -36,6 +38,7 @@ export class ObservationRecruiterComponent implements OnInit {
   ) {
     this.usuarioData = [];
     this.userJobId = undefined;
+    
   }
   
   ngOnInit(): void {
@@ -53,31 +56,24 @@ export class ObservationRecruiterComponent implements OnInit {
       })
     });
   }
-
-  editarObservacion(usuarioId: number): void {
-    console.log('id de la obs : ', usuarioId);
-  
-    this.observacionService.obtenerObservacionesPorUserJob(usuarioId).subscribe({
-      next: (data) => {
-        console.log('data que se enviará:', data);
-        const dialogRef = this.dialog.open(ObservationRecruiterComponent, {
-          width: '800px',
-          height: '700px',
-          data: {
-            usuario: data
-          }
-        });
-  
-        dialogRef.afterClosed().subscribe((result) => {
-          console.log(`Dialog result: ${result}`);
-        });
-      },
-      error: (error) => {
-        console.log(error);
+  editarObservacion(usuario: any): void {
+    const userId = usuario.id; 
+    console.log('data de usuario: ', usuario);
+    const dialogRef = this.dialog.open(ObservationRecruiterEditComponent, {
+      width: '800px',
+      height: '700px',
+      data: {
+        usuario: usuario, 
+        observationId: userId,
       }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.obtenerObservacionesPorUserJob(this.userJobId ?? 0);
     });
   }
   
+
   nuevaObs(data: any) {
     // Verificar que se haya ingresado una descripción
     const descripcion = this.formulario.get('description')?.value;
