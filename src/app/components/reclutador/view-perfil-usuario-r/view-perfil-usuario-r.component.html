@@ -65,37 +65,63 @@
                   </div>
                 </mat-list-item>
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
-                <mat-list-item *ngFor="let employment of usuarioData.laborales">
-                  <span matListItemTitle>{{ employment.position }}</span>
+                <mat-list-item *ngFor="let jobs of usuarioData.jobs">
+                  <span matListItemTitle>{{ jobs.position }}</span>
                   <span matListItemLine>
-                    {{ employment.company }}
+                    {{ jobs.company }}
                   </span>
-                    <div *ngFor="let h of employment.herramientas; let i = index" matListItemLine>
+                    <div *ngFor="let h of jobs.herramientas; let i = index" matListItemLine>
                       <mat-chip  class="chips" >
-                        {{ h.productVersion.prd.prd_nom }} ({{ h.productVersion.vrs_name }})  - (Exp:{{ h.yearsOfExperience }} año/s)
+                        {{ h.productVersion.prd.name }} ({{ h.productVersion.name }})  - (Exp:{{ h.yearsOfExperience }} año/s)
                       </mat-chip>
                     </div>
+                  <!-- Referencias Laborales -->  
+                  <div class="mb-3 mt-1"> Referencias Laborales:</div>
+                  <ul *ngIf="jobs.employmentReferences && jobs.employmentReferences.length">
+                    <li *ngFor="let employmentReferences of jobs.employmentReferences">
+                      <span matListItemLine>Nombre: {{employmentReferences.name }}</span>
+                      <span matListItemLine>Empresa: {{employmentReferences.company }}</span>
+                      <span matListItemLine>Teléfono: {{employmentReferences.phone }}</span>
+                      <span matListItemLine>Email: {{employmentReferences.email }}</span>
+                    </li>
+                  </ul>
+
                   <div matListItemIcon>
                     <mat-icon>work</mat-icon>
                   </div>
-                  <span matListItemMeta> <div>Desde</div> {{ employment.startDate }} </span>
-                  <span matListItemMeta> <div>Hasta</div> {{ employment.endDate }} </span>
+                  <span matListItemMeta> <div>Desde</div> {{ jobs.startDate }} </span>
+                  <span matListItemMeta> <div>Hasta</div> {{ jobs.endDate }} </span>
                 </mat-list-item>
               </mat-list>
             </mat-tab> -->
             <mat-tab label="Información Académica">
+            
               <mat-list>
-              <mat-list-item *ngFor="let academica of usuarioData.academicas">
-                <span matListItemTitle>{{ academica.degree }}</span>
-                <span matListItemLine>{{academica.university }}</span>
-                <span matListItemLine>{{academica.status }}</span>
-                <div matListItemIcon>
-                  <mat-icon>school</mat-icon>
-                </div>
-                <span matListItemMeta> <div>Desde</div> {{ academica.startDate }} </span>
-                <span matListItemMeta> <div>Hasta</div> {{ academica.endDate }} </span>
-              </mat-list-item>
-            </mat-list>
+                <mat-list-item *ngFor="let academicalList of usuarioData.academicalList">
+                  <span matListItemTitle>{{ academicalList.degree }}</span>
+                  <span matListItemLine>{{academicalList.university }}</span>
+                  <span matListItemLine>{{academicalList.status }}</span>
+                  
+                  <!-- Referencias académicas -->
+    <div class="mb-3 mt-1"> Referencias Académicas:</div>
+    <ul *ngIf="academicalList.academicalReference && academicalList.academicalReference.length">
+      <li *ngFor="let academicalReference of academicalList.academicalReference">
+        <span matListItemLine>Nombre: {{academicalReference.name }}</span>
+        <span matListItemLine>Institución: {{academicalReference.institution }}</span>
+        <span matListItemLine>Teléfono: {{academicalReference.phone }}</span>
+        <span matListItemLine>Email: {{academicalReference.email }}</span>
+      </li>
+    </ul>
+                  
+                  <div matListItemIcon>
+                    <mat-icon>school</mat-icon>
+                  </div>
+                  <span matListItemMeta> <div>Desde</div> {{ academicalList.startDate }} </span>
+                  <span matListItemMeta> <div>Hasta</div> {{ academicalList.endDate }} </span>
+                </mat-list-item>
+              </mat-list>
+              
+              
             </mat-tab>
             <mat-tab label="Postulaciones">
               <mat-list >
