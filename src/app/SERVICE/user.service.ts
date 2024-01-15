@@ -121,7 +121,7 @@ export class UserService {
     localStorage.setItem('usuario', JSON.stringify(usuario));
   }
   obtenerUsuarioGuardado() {
-    return this.HttpClient.get<User>(`${this.url}/usuarios/`);
+    return this.HttpClient.get<User>(`${this.url}/users/`);
   }
   updateUser(user: User){
     return this.HttpClient.put<User>(`${this.url}/users/`,user);

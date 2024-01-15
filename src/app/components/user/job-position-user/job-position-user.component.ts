@@ -11,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserPrefferedJobComponent } from '../user-preffered-job/user-preffered-job.component';
 import { UserPreferredJob } from 'src/app/interface/user-preferred-job-interface';
 import { UserService } from 'src/app/service/user.service';
+import { BrowserModule } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-job-position-user',
   templateUrl: './job-position-user.component.html',
