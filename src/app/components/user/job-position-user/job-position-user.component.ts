@@ -8,6 +8,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AddPositionUserComponent } from '../add-position-user/add-position-user.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserPrefferedJobComponent } from '../user-preffered-job/user-preffered-job.component';
+import { UserPreferredJob } from 'src/app/interface/user-preferred-job-interface';
+import { UserService } from 'src/app/service/user.service';
+import { BrowserModule } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-job-position-user',
   templateUrl: './job-position-user.component.html',
@@ -20,6 +25,7 @@ export class JobPositionUserComponent implements OnInit {
   creationMode: boolean = false;
   JobPosition: JobPosition[] = [];
   userJobs: UserJob[] = [];
+  userPreferredJob: UserPreferredJob | null = null;
   selectedjobPosition:number | undefined;
   
   private buildForm(){
@@ -37,6 +43,7 @@ export class JobPositionUserComponent implements OnInit {
     private dialog: MatDialog,
     private formBuilder: FormBuilder,
     private cargosusuarioService:UserJobService,
+    private userService:UserService,
     private JobPositionService:JobPositionService,
     private router: Router ) {
       this.buildForm();
@@ -44,6 +51,7 @@ export class JobPositionUserComponent implements OnInit {
   ngOnInit(): void {
     this.getCargoUsuario();
     this.obtenerJobPosition();
+    this.getPreferredJobs(); 
   }
   navigateToRoute(route: string) {
     this.router.navigate([route]);
@@ -65,10 +73,21 @@ export class JobPositionUserComponent implements OnInit {
     this.cargosusuarioService.getCargosByUserId().subscribe(
       (data: UserJob[]) => {
         console.log('esta es la data:', data);
-        this.userJobs= data;
+        if (data && data.length > 0) {
+          this.userJobs = data;
+        } else {
+          console.log('No se han encontrado datos');
+          // Aquí puedes mostrar un mensaje al usuario o realizar otras acciones según tus necesidades.
+        }
+      },
+      (error) => {
+        console.error('Error al obtener los datos:', error);
+        // Maneja el error si es necesario
       }
     );
   }
+  
+  
 
   successMessage() {
     const newCargo: UserJob = this.form.value;
@@ -196,5 +215,44 @@ export class JobPositionUserComponent implements OnInit {
   redirectTo(){
     this.navigateToRoute('/user-dashboard/0')
   }
+  
+  openPrefferedJob(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    const dialogRef = this.dialog.open(UserPrefferedJobComponent, {
+      width: '400px',
+      height: '300px',
+      data: {creationMode: true }, 
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getPreferredJobs();    });
+  }
+
+  getPreferredJobs() {
+    this.userService.getPreferredJob().subscribe(
+      (data: UserPreferredJob) => { // Cambia el tipo de dato a UserPreferredJob
+        console.log('Datos recibidos en ngOnInit:', data);
+        this.userPreferredJob= data; // Convierte el objeto en un array de un solo elemento
+      },
+      (error) => {
+        console.log('Error al obtener el cargo preferido:', error);
+      }
+    );
+  }
+  
+  editpostpref(userPreferredJob: UserPreferredJob) {
+    const dialogRef = this.dialog.open(UserPrefferedJobComponent, {
+      width: '400px',
+      height: '300px',
+      data: { userPreferredJob: userPreferredJob, creationMode: false },
+      enterAnimationDuration: '300ms',
+      exitAnimationDuration: '150ms',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      this.getPreferredJobs();     });
+  }
+  
+  
   
 }

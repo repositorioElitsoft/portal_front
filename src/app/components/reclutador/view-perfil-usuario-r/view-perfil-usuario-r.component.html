@@ -52,9 +52,18 @@
               </mat-list-item>
               </mat-list>
             </mat-tab>
-            <mat-tab label="Información Laboral">
+            <!-- <mat-tab label="Información Laboral">
               <mat-list>
-              
+                <mat-list-item *ngFor="let cargo of usuarioData.userJob">
+                  <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
+                  <span matListItemLine>Cargo a postular</span>
+                  <span matListItemLine>Pretensión de renta: ${{cargo.salary }}</span>
+                  <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
+                  <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
+                  <div matListItemIcon>
+                    <mat-icon>forward</mat-icon>
+                  </div>
+                </mat-list-item>
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
                 <mat-list-item *ngFor="let jobs of usuarioData.jobs">
                   <span matListItemTitle>{{ jobs.position }}</span>
@@ -66,8 +75,8 @@
                         {{ h.productVersion.prd.name }} ({{ h.productVersion.name }})  - (Exp:{{ h.yearsOfExperience }} año/s)
                       </mat-chip>
                     </div>
-                  <!-- Referencias Laborales -->  
-                  <div class="mb-3 mt-1"> Referencias Laborales:</div>
+                    Referencias Laborales -->  
+                  <!-- <div class="mb-3 mt-1"> Referencias Laborales:</div>
                   <ul *ngIf="jobs.employmentReferences && jobs.employmentReferences.length">
                     <li *ngFor="let employmentReferences of jobs.employmentReferences">
                       <span matListItemLine>Nombre: {{employmentReferences.name }}</span>
@@ -84,8 +93,7 @@
                   <span matListItemMeta> <div>Hasta</div> {{ jobs.endDate }} </span>
                 </mat-list-item>
               </mat-list>
-            </mat-tab>
-
+            </mat-tab>  -->
             <mat-tab label="Información Académica">
             
               <mat-list>
@@ -115,73 +123,30 @@
               
               
             </mat-tab>
-           
-            <mat-tab label="Observaciones">
-              <!-- <div *ngFor="let observadores of observadoresData; let i = index" class="observacion-comentario">
-                <mat-card class="comentario-card">
-                  <mat-card>
-                    <mat-card-header>
-                      <div mat-card-avatar class="avatar">
-                      </div>
-                      <mat-card-subtitle style="color: #000000">Autor de la observación: </mat-card-subtitle>
-                      <mat-card-title class="mb-2">{{ observadores.name }} {{ observadores.firstLastname }}</mat-card-title>
-                      <mat-card-subtitle class="mb-2">Modificado por: {{ observadores.usr2_nom }} {{ observadores.usr2_ap_pat }}</mat-card-subtitle>
-                    </mat-card-header>
-                  </mat-card>
-                  <mat-accordion>
-                    <mat-expansion-panel (opened)="panelOpenState = true"
-                                         (closed)="panelOpenState = false">
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                         Aprobaciones: 
-                        </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <mat-card-subtitle>Aprobación: Gerencia</mat-card-subtitle>
-                      <mat-label>{{ observadores.apr_ger }}</mat-label>
-                      <mat-card-subtitle>Aprobación: Operaciones</mat-card-subtitle>
-                      <mat-label>{{ observadores.operationalApproval }}</mat-label>
-                      <mat-card-subtitle>Aprobación: Técnica</mat-card-subtitle>
-                      <mat-label>{{ observadores.technicalApproval }}</mat-label>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                  <br>
-                  <mat-card-content>
-                    <div *ngIf="enEdicion === observadores.obs_id">
-                      <mat-form-field class="ancho-completo">
-                        <textarea matInput [(ngModel)]="observadores.description"></textarea>
-                      </mat-form-field>
-                    </div>
-                    <p *ngIf="enEdicion !== observadores.obs_id" class="observacion-texto">{{ observadores.description }}</p>
-                    <div class="acciones-comentario">
-                      <button mat-button class="botonprimario" *ngIf="enEdicion !== observadores.obs_id" (click)="editarObservacion(observadores.obs_id)">Editar</button>
-                      <button mat-button class="botonprimario"  *ngIf="enEdicion === observadores.obs_id" (click)="actualizarObservacion(observadores)">Guardar</button>
-                    </div>
-                  </mat-card-content>
-                  <mat-card class="observacion-card">
-                    <mat-card-content>
-                      <div class="fecha-info">
-                        <mat-chip-list>
-                          <mat-chip color="primary" selected>
-                            Creado: {{observadores.creationDate | date:'medium' }}
-                          </mat-chip>
-                          <mat-chip *ngIf="observadores.modificationDate" color="accent" selected>
-                            Modificado: {{ observadores.modificationDate | date:'medium' }}
-                          </mat-chip>
-                        </mat-chip-list>
-                      </div>
-                    </mat-card-content>
-                  </mat-card>
-                </mat-card>
-              </div> -->
-              <div class="comentario-box mt-2">
-                <mat-form-field appearance="outline" class="ancho-completo">
-                  <mat-label>Escribe una observación...</mat-label>
-                  <textarea matInput [(ngModel)]="nuevaObservacion" class="nueva-observacion"></textarea>
-                </mat-form-field>
-              </div>
-              <button mat-raised-button class="botonprimario  m-2" (click)="guardarObservacion()" aria-label="Añadir una Nueva Observación">Guardar Nueva Observación</button>
+            <mat-tab label="Postulaciones">
+              <mat-list >
+              <mat-list-item *ngFor="let cargo of usuarioData.userJob"  class="postulaciones">
+                <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
+                <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>               
+                 <span matListItemLine>Disponibilidad: {{cargo.availability.time }}</span> 
+                <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
+                <span matListItemLine>Aprobaciones: {{cargo.approvals }}</span>
+                <div *ngIf="usuarioData.preferredJob?.description" class="preferred-job-container">
+                  <mat-icon class="job-icon">star</mat-icon>
+                  <span class="job-description">Otro cargo preferente: {{ usuarioData.preferredJob.description }}</span>
+                </div>   
+                                                        
+                <div matListItemIcon>
+                  <mat-icon>forward</mat-icon>
+                </div>
+                <div *ngIf="usuarioData.userJob" class="preferred-job-container">
+                <button mat-raised-button class="botonprimario m-4"  (click)="verObservacion(cargo, cargo.id)">
+                  <mat-icon>visibility</mat-icon> Ver Observación
+                </button></div>
+              </mat-list-item>    
+            </mat-list>
               <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
-            </mat-tab>
+            </mat-tab> 
             </mat-tab-group>
            </div>
           </div>

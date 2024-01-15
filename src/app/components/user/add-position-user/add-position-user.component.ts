@@ -168,10 +168,6 @@ export class AddPositionUserComponent implements OnInit {
 
 
   onJobPositionChange(event: any) {
-    // Tu código existente para manejar cambios en la selección de cargo
-    // ...
-
-    // Actualiza el nombre del cargo bloqueado en modo edición
     if (!this.creationMode) {
       const selectedCargoId = this.data.userJob.jobPosition?.id;
       const selectedCargo = this.JobPosition.find(cargo => cargo.id === selectedCargoId);

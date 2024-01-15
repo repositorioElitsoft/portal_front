@@ -121,7 +121,7 @@ export class UserService {
     localStorage.setItem('usuario', JSON.stringify(usuario));
   }
   obtenerUsuarioGuardado() {
-    return this.HttpClient.get<User>(`${this.url}/usuarios/`);
+    return this.HttpClient.get<User>(`${this.url}/users/`);
   }
   updateUser(user: User){
     return this.HttpClient.put<User>(`${this.url}/users/`,user);
@@ -148,18 +148,12 @@ export class UserService {
     return this.HttpClient.put<UserEditarDTO>(`${this.url}/users/actualizar/${usuarioId}`, usuario);
   }
  
+  createOrUpdatePreferredJob(userPreferredJob: any): Observable<any> {
+    return this.HttpClient.post(`${this.url}/users/preferred`, userPreferredJob);
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
+  getPreferredJob(): Observable<any> {
+    return this.HttpClient.get(`${this.url}/users/preferred`);
+  }
 
 }

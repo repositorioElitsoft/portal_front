@@ -180,7 +180,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       const userId = event.currentTarget.id;
       console.log('User ID:', userId);
       forkJoin({
-        observadores: this.observationService.obtenerCatObservacionesPorUsuarioId(userId),
+        observadores: this.observationService.obtenerObservacionesPorUserJob(userId),
         usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {
