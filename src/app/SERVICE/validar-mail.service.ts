@@ -7,8 +7,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class ValidarMailService {
-  readonly url = `${environment.URL_HOST}/usuarios/verificar/`
-  constructor(private http: HttpClient,private route: ActivatedRoute,) {  }
+  readonly url = `${environment.URL_HOST}/users/verify/`
+  constructor(private http: HttpClient, private route: ActivatedRoute,) { }
   verificarEmail(): Observable<any> {
     return this.route.queryParamMap.pipe(
       map(params => params.get("code")),
