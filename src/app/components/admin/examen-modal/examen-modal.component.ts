@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Pregunta } from 'src/app/interface/pregunta.interface';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { ProductoService } from 'src/app/service/producto.service';
 
@@ -12,7 +12,7 @@ import { ProductoService } from 'src/app/service/producto.service';
 export class ExamenModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ExamenModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public preguntas: any,
+    @Inject(MAT_DIALOG_DATA) public preguntas: Pregunta[],
     private productService: ProductoService,
     private preguntaService:PreguntaService
     
@@ -23,13 +23,13 @@ export class ExamenModalComponent implements OnInit {
   cerrarDialog() {
     this.dialogRef.close();
   }
-  deletePregunta(index: number) {
-    const preguntaId = this.preguntas.value[index].preguntaId;
+  deletePregunta(pregunta: Pregunta) {
+    const preguntaId = pregunta?.id;
     console.log("preguntaId",preguntaId)
     if (preguntaId) {
       this.preguntaService.eliminarPregunta(preguntaId).subscribe(
         (data) => {
-          this.preguntas.removeAt(index);
+          this.preguntas = this.preguntas.filter((p:any) => p.id !== preguntaId);
           console.log('Pregunta eliminada', preguntaId);
         },
         (error) => {
@@ -37,7 +37,7 @@ export class ExamenModalComponent implements OnInit {
         }
       )
     } else {
-      this.preguntas.removeAt(index);
+      this.preguntas = this.preguntas.filter((p:any) => p.id !== preguntaId);
     }
   }
   

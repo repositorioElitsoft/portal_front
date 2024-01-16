@@ -7,7 +7,10 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import 'chartjs-plugin-annotation';
 import { UserService } from 'src/app/service/user.service';
 import { ProductoService } from 'src/app/service/producto.service';
-let vecesEnviado = 0;
+import { HerramientasService } from 'src/app/service/herramientas.service';
+import { ResultadosService } from 'src/app/SERVICE/resultados.service';
+import { Result } from 'src/app/interface/exam-results.interface';
+
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
@@ -28,42 +31,105 @@ export class StartComponent implements OnInit {
   enviosTotales = 0;
   resultadosExamenes: number[] = [];
   resultados: any[] = [];   
+  herramientas: any;
+  lvl: any;
+  productIds: any;
+  productname: any;
+  questions: any;
+  productid: any;
+  lvlid: any;
+  puntuacionMaxima: number = 20; 
+
+  
   constructor(
     private locationSt:LocationStrategy,
     private route:ActivatedRoute,
     private preguntaService:PreguntaService,
     private productService:ProductoService,
-    private userService: UserService
+    private userService: UserService,
+    private herramientasService:HerramientasService,
+    private resultadosService:ResultadosService
+    
       ) { }
   ngOnInit(): void {
     this.userService.obtenerUsuarioGuardado().subscribe(
       (usuarioGuardado ) => {
         if (usuarioGuardado) {
           this.idUser = usuarioGuardado.id ?? 0;
+          
         }
         this.prevenirElBotonDeRetroceso();
         this.examenId = this.route.snapshot.params['exam_id'];
         this.cargarPreguntas();
-        this.obtenerResultados();
+        
       },
       (error) => {
         console.error('Error al obtener el usuario guardado:', error);
       }
     );
-  }
-  ngAfterViewInit(): void {
-    this.mostrarGrafico() ;
-  }
-  obtenerResultados() {
-    this.userService.obtenerResultados().subscribe(
-      (data) => {
-        this.resultados = data;
+    this.herramientasService.getCurrentUserTools().subscribe(
+      (herramientas:any) => {
+        if (herramientas && herramientas.length > 0) {
+          this.herramientas = herramientas
+          this.lvl= herramientas.map((herramienta:any) => herramienta.level.description);
+          console.log("herramientas",this.herramientas);
+          this.productIds = herramientas.map((herramienta:any) => herramienta.productVersion.name);
+          this.productname = herramientas.map((herramienta:any) => herramienta.productVersion.product.name);
+          this.productid = herramientas.map((herramienta:any) => herramienta.productVersion.product.id);
+           this.productid = herramientas.map((herramienta:any) => herramienta.productVersion.product.id);
+           this.lvlid= herramientas.map((herramienta:any) => herramienta.level.id);
+          console.log('IDs de productos:', this.productIds);
+          console.log('name de productos:', this.productname);
+          console.log('level:', this.lvl);
+          console.log('level:', this.lvl);
+          this.generarExamen();
+        } else {
+          console.log('No se encontraron herramientas para el usuario.');
+        }
       },
       (error) => {
+        console.error('Error al obtener el usuario guardado:', error);
+      }
+    );
+    
+  }
+  ngAfterViewInit(): void {
+   
+  }
+  obtenerResultados() {
+    this.resultadosService.obtenerResultadosByUser().subscribe(
+      (data:any) => {
+        this.resultados = data;
+        console.log("data", data);
+        this.mostrarGrafico() ;
+      },
+      (error:any) => {
         console.error(error);
       }
     );
   }
+  generarExamen(): void {
+    const description = this.lvl;
+    this.questions = []; 
+    this.timer = 180; 
+    console.log("description blabla bla",description);
+    for (const productId of this.productIds) {
+      this.preguntaService.generarExamen(description[0], productId).subscribe({
+        next: (examQuestions) => {
+          console.log(`Preguntas del examen para el producto ${productId}:`, examQuestions);
+          this.questions = this.questions.concat(examQuestions);
+        },  
+        error: (error) => {
+          console.error(`Error al generar el examen para el producto ${productId}:`, error);
+        },
+        complete: () => {
+          this.iniciarTemporizador(); 
+          this.obtenerResultados();
+        }
+      });
+    }
+  }
+  
   mostrarGrafico(): void {
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
@@ -72,19 +138,19 @@ export class StartComponent implements OnInit {
         canvas.height = 600; 
         const ctx = canvas.getContext('2d');
         const dataParaMostrar: any = [];
-        const resultadosFiltrados = this.resultados.filter(resultado => {
-          return resultado.usuarioId === this.idUser;
-        });
-        const examenesFiltrados = resultadosFiltrados.filter(resultado => {
-          return String(resultado.examen.examenId) === String(this.examenId);
-        });
-        this.vecesEnviado = examenesFiltrados.length;
+        console.log("data", this.resultados);
+        const examenesFiltrados =this.resultados;
+        console.log("examenesFiltrados",examenesFiltrados);
+        const veces = examenesFiltrados.length;
+        console.log("examenes totales",veces);
         const ultimosTresExamenes = examenesFiltrados.slice(-3);
         ultimosTresExamenes.forEach(resultado => {
-          dataParaMostrar.push(resultado.resultadosExamen);
+          dataParaMostrar.push(resultado.score);
+          
         });
+        console.log("dataParaMostrar",dataParaMostrar);
         const labelsConPuntos = dataParaMostrar.map((valor: string) => valor + ' puntos');
-        const puntuacionMaxima = examenesFiltrados[0]?.examen.puntuacionMaxima; 
+        const puntuacionMaxima = 20; 
         if (ctx) {
           const myChart = new Chart(ctx, {
             type: 'bar',
@@ -206,71 +272,80 @@ export class StartComponent implements OnInit {
     }
     return array;
   }
-  iniciarTemporizador(){
+  iniciarTemporizador() {
     let t = window.setInterval(() => {
-      if(this.timer <= 0){
+      if (this.timer <= 0) {
         this.evaluarExamen();
         clearInterval(t);
-      }else{
-        this.timer --;
+      } else {
+        this.timer--; // Disminuir como número
       }
-    },1000)
+    }, 1000);
   }
+  
   prevenirElBotonDeRetroceso(){
     history.pushState(null,null!,location.href);
     this.locationSt.onPopState(() => {
       history.pushState(null,null!,location.href);
     })
   }
-  enviarCuestionario(){
+  enviarCuestionario() {
     Swal.fire({
       title: '¿Quieres enviar el examen?',
       showCancelButton: true,
-      cancelButtonText:'Cancelar',
+      cancelButtonText: 'Cancelar',
       confirmButtonText: 'Enviar',
-        cancelButtonColor: '#515151',
-        confirmButtonColor: '#F57C27',
-        icon: 'info',
-        customClass: {
-            popup: 'custom-border'
-        }
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      icon: 'info',
+      customClass: {
+        popup: 'custom-border'
+      }
     }).then((e) => {
-      if(e.isConfirmed){
+      if (e.isConfirmed) {
         this.evaluarExamen();
-        const resultados = {
-          resultadosExamen:this.puntosConseguidos,
-          tiempo: Math.abs(100-this.timer),
-          examen:{
-            examenId: this.examenId
-          }
-        }
-        this.preguntaService.guardarResultados(resultados).subscribe({
-          next:(respuesta)=>{
+  
+        const resultados: Result = {
+          score: this.puntosConseguidos,
+          time: Math.abs(100 - this.timer),
+          product: {
+            id: this.productid[0],
+            name: '',
           },
-          error:(err)=>{
-          console.log("hay un error")
-          console.log(err)
+          level: {
+            id: this.lvlid[0],
+            description: ''
           }
-        })
-        vecesEnviado++;
-        this.vecesEnviado = vecesEnviado;
-      }
-    })
-  }
-  evaluarExamen(){
-    this.esEnviado = true;
-    this.preguntas.forEach((p:any) => {
-      if(p.respuestaDada == p.respuesta){
-        this.respuestasCorrectas ++;
-        let puntos = this.examen.puntosMaximos/this.preguntas.length;
-        this.puntosConseguidos += puntos;
-      }
-      if(p.respuestaDada.trim() != ''){
-        this.preguntasTotales ++;
+        };
+  
+        this.resultadosService.guardarResultados(resultados).subscribe({
+          next: (respuesta: any) => {
+            this.vecesEnviado = this.resultados.length;
+          },
+          error: (err: any) => {
+            console.log('Hay un error', err);
+          }
+        });
       }
     });
-    this.mostrarGrafico()
   }
+
+  evaluarExamen() {
+  this.esEnviado = true;
+  this.questions.forEach((p: any) => {
+    if (p.respuestaDada == p.answer) {
+      this.respuestasCorrectas++;
+      this.puntosConseguidos += 2;
+    }
+    if (p.respuestaDada.trim() != '') {
+      this.preguntasTotales++;
+    }
+  });
+  this.mostrarGrafico();
+  console.log('Puntos conseguidos:', this.puntosConseguidos);
+}
+
+
   obtenerHoraFormateada(){
     let mm = Math.floor(this.timer/60);
     let ss = this.timer - mm*60;

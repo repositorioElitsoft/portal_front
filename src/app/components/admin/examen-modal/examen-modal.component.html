@@ -2,7 +2,7 @@
   <h2>Preguntas del Producto</h2>
   <ul>
     <li *ngFor="let pregunta of preguntas">
-      {{ pregunta.contenido }}
+      {{ pregunta.content}}
       <button mat-icon-button color="warn" (click)="deletePregunta(pregunta)">
         <mat-icon>delete</mat-icon>
       </button>

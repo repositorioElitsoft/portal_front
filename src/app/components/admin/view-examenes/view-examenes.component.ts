@@ -11,6 +11,7 @@ import { AdvertenciaEliminarComponent } from '../../shared/advertencia-eliminar/
 import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
 import { Product } from 'src/app/interface/producto.interface';
 import { ProductoService } from 'src/app/service/producto.service';
+import { Pregunta } from 'src/app/interface/pregunta.interface';
 
 const ELEMENT_DATA: Product[] = [];
 @Component({
@@ -96,7 +97,7 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
   }
   viewPreguntas(event: any, productId: number): void {
     this.productoService.obtenerPreguntasPorProducto(productId).subscribe({
-      next: (preguntas: any) => {
+      next: (preguntas: Pregunta[]) => {
         const dialogRef = this.dialog.open(ExamenModalComponent, {
           width: '800px',
           height: '700px',

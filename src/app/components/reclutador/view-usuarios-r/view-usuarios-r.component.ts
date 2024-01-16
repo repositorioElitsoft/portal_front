@@ -31,6 +31,7 @@ import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';
+import { ResultadosService } from 'src/app/SERVICE/resultados.service';
 import { AcademicaService } from 'src/app/service/academica.service';
 const ELEMENT_DATA: User[] = [];
 @Component({
@@ -95,6 +96,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
     private JobPositionService: JobPositionService,
+    private resultadosService:ResultadosService,
     private UserJobService: UserJobService,
     private AcademicalReferences: AcademicaService
   ) {
@@ -119,7 +121,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   obtenerResultados() {
-    this.userService.obtenerResultados().subscribe(
+    this.resultadosService.obtenerResultados().subscribe(
       (data) => {
         this.resultados = data;
         this.filterData();
@@ -214,8 +216,8 @@ if (this.selectedfechaPostulacion) {
 
 // Filtro por resultado del usuario
   if (this.resultados !== undefined) {
-  this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
-    (resultadoUsuario) => {
+  this.resultadosService.obtenerResultadosByUser().subscribe(
+    (resultadoUsuario:any) => {
       console.log('Resultado obtenido del servicio:', resultadoUsuario);
       console.log('Resultados actuales en el componente:', this.resultados);
 
@@ -226,7 +228,7 @@ if (this.selectedfechaPostulacion) {
 
       console.log('Array filtrado:', filteredArray);
     },
-    (error) => {
+    (error:any) => {
       console.error('Error al obtener resultados del usuario: ', error);
     }
   );
@@ -523,8 +525,8 @@ onSendMailPressed(){
   obtenerYFiltrarResultados() {
     console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
 
-    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
-      (resultadoUsuario) => {
+    this.resultadosService.obtenerResultadosByUser().subscribe(
+      (resultadoUsuario:any) => {
         console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
 
         // Aquí puedes verificar si los datos recibidos son lo que esperas
@@ -539,24 +541,19 @@ onSendMailPressed(){
         // Mostrar los datos filtrados
         console.log('Datos después de aplicar el filtro:', this.dataSource.data);
       },
-      (error) => {
+      (error:any) => {
         console.error('Error al obtener resultados del usuario: ', error);
       }
     );
 
   }
-
-
-
-
-
   obtenerResultadosByUser() {
-    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+    this.resultadosService.obtenerResultadosByUser().subscribe(
       (data: any) => {
         this.resultados = data;
         console.log('Resultados obtenidos:', this.resultados);
       },
-      (error) => {
+      (error:any) => {
         console.error('Error al obtener resultados:', error);
       }
     );
