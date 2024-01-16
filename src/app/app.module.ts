@@ -103,6 +103,7 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
 import { UserPrefferedJobComponent } from './components/user/user-preffered-job/user-preffered-job.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -171,6 +172,7 @@ import { UserPrefferedJobComponent } from './components/user/user-preffered-job/
     AddPositionUserComponent,
     ToolCertificationsDialogComponent,
     UserPrefferedJobComponent,
+    
 
   ],
   imports: [

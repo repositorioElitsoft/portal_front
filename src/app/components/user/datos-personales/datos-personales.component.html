@@ -27,7 +27,7 @@
             matTooltipPosition="after"
             formControlName="rut"
             [ngClass]="{'is-invalid': form.get('rut')?.invalid && form.get('rut')?.touched}">
-          <mat-hint>Ejemplo: 111111-1</mat-hint>
+          <mat-hint>Ejemplo: 11111111-1</mat-hint>
           <mat-error *ngIf="form.get('rut')?.invalid && form.get('rut')?.touched">Rut no es válido</mat-error>
         </mat-form-field>
         
@@ -47,7 +47,7 @@
             type="apellidop"
             formControlName="firstLastname"
             [ngClass]="{'is-invalid': form.get('firstLastname')?.invalid && form.get('firstLastname')?.touched}">
-          <mat-hint>Ejemplo: Apellido Paterno</mat-hint>
+          <!-- <mat-hint>Ejemplo: Apellido Paterno</mat-hint> -->
           <mat-error *ngIf="form.get('firstLastname')?.invalid && form.get('firstLastname')?.touched">Debe ingresar apellido</mat-error>
         </mat-form-field>
         
@@ -57,7 +57,7 @@
             type="apellidom"
             formControlName="secondLastname"t
             [ngClass]="{'is-invalid': form.get('secondLastname')?.invalid && form.get('secondLastname')?.touched}">
-          <mat-hint>Ejemplo: Apellido Materno</mat-hint>
+          <!-- <mat-hint>Ejemplo: Apellido Materno</mat-hint> -->
           <mat-error *ngIf="form.get('secondLastname')?.invalid && form.get('secondLastname')?.touched">Debe ingresar apellido</mat-error>
         </mat-form-field>
       

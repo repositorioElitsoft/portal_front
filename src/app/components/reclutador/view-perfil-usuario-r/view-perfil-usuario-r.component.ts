@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ObservacionDTO } from 'src/app/interface/observation.interface';
 import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
 import { UserSesionDTO, User } from 'src/app/interface/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UploadFilesService } from 'src/app/service/upload-files.service';
+import { HerramientasService } from 'src/app/service/herramientas.service';
 @Component({
   selector: 'app-view-perfil-usuario-r',
   templateUrl: './view-perfil-usuario-r.component.html',
@@ -50,6 +52,11 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   constructor(
     private userService: UserService,
     public dialogRef: MatDialogRef<ViewPerfilUsuarioRComponent>,
+    // public dialog: MatDialogRef<ViewPerfilUsuarioRComponent>,
+    private dialog: MatDialog,
+    private uploadService: UploadFilesService,
+    private herramientasService: HerramientasService,
+    
     @Inject(MAT_DIALOG_DATA) public data: any,
     private observacionService: ObservacionService,
     private _snackBar: MatSnackBar
@@ -160,4 +167,26 @@ actualizarObservacion(observadores: ObservacionDTO) {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
+
+  descargarCertificacion(certId: number): void {
+    this.herramientasService.downloadCertification(certId)
+      .subscribe((response: any) => {
+       
+          const url = window.URL.createObjectURL(response.body);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = response.headers.get("pragma");
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        
+      }, (error: any) => {
+        console.error('Error al descargar la certificación:', error);
+        // Manejar el error según sea necesario
+      });
+  }
+  
+
+  
+  
 }

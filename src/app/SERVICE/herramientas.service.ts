@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { CreateToolDTO, Herramientas, ToolDTO } from '../interface/herramientas.interface';
 import { HerramientaData } from '../interface/herramienta-data.interface';
 import { environment } from 'src/environments/environment';
 import { Certification } from '../interface/certificacion.interface';
+import { catchError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -40,4 +41,9 @@ export class HerramientasService {
   deleteTool(toolId: number): Observable<ToolDTO>{
     return this.http.delete<ToolDTO>(`${this.url}${toolId}`)
   }
+
+  downloadCertification(certId: number): Observable<any> {
+    return this.http.get(`${this.url}certification/${certId}`, { responseType: 'blob', observe: 'response' });
+  }
+  
 }

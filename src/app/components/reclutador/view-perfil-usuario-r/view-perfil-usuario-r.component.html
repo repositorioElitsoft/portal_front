@@ -52,6 +52,38 @@
               </mat-list-item>
               </mat-list>
             </mat-tab>
+            <!-- Herramientas y Tecnologías  -->
+            <mat-tab label="Herramientas">
+              <mat-list>
+                <div class="mb-3 mt-1"> Herramientas y/o tecnologías manejadas por el Postulante:</div>
+                <mat-list-item *ngFor="let tools of usuarioData.tools">
+
+                  <span matListItemTitle> {{ tools.productVersion.product.name }} {{ tools.productVersion.name }}</span>
+                  <span matListItemLine>Nivel: {{ tools.level?.description}}</span>
+                  <span matListItemLine>{{ tools.yearsOfExperience }} año/s de experiencia</span>
+                  
+                   <!-- Certificaciones -->
+                  <div *ngIf="tools.certifications && tools.certifications.length">
+                    <h3>Certificaciones:</h3>
+                    <ul>
+                      <li *ngFor="let certification of tools.certifications">
+                        <div style="display: flex; align-items: center;">
+                          <span matListItemLine>{{ certification.url.substring(certification.url.lastIndexOf('_') + 1) }}</span>
+                          <button mat-icon-button matTooltip="Descargar" (click)="descargarCertificacion(certification.id)">
+                            <mat-icon>cloud_download</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div matListItemIcon>
+                    <mat-icon>bubble_chart</mat-icon>
+                  </div>
+                </mat-list-item>
+              </mat-list>
+            </mat-tab>
+            
+            <!-- Información Laboral  -->
             <mat-tab label="Información Laboral">
               <mat-list>
               
