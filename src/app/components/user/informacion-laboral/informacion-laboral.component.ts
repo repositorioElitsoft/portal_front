@@ -4,7 +4,6 @@ import { LaboralService } from 'src/app/service/laboral.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { Employment } from 'src/app/interface/employment.interface';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { EditLaboralComponent } from '../add-employment/add-employment.component';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';

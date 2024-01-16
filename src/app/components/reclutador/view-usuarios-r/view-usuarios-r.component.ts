@@ -21,7 +21,7 @@ import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
 import { forkJoin } from 'rxjs';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
-import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { UserJobService} from 'src/app/service/user-job.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
@@ -32,6 +32,7 @@ import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';
 import { ResultadosService } from 'src/app/SERVICE/resultados.service';
+import { AcademicaService } from 'src/app/service/academica.service';
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -96,7 +97,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private nivelService: NivelService,
     private JobPositionService: JobPositionService,
     private resultadosService:ResultadosService,
-    private cargoService: CargosUsuarioService
+    private UserJobService: UserJobService,
+    private AcademicalReferences: AcademicaService
   ) {
     this.selectedCheckbox = this.fb.group({
     });
@@ -423,17 +425,19 @@ obtenerUsuarios(): void {
 
       // Filtrar usuarios por roles igual a "GUEST"
       const usuarios = data
+      // .filter((usuario) => usuario.roles === 'GUEST')
         .map((usuario) => ({
           name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
           phone: usuario.phone || '',
           email: usuario.email || '',
           roles: usuario.roles || '',
           address: usuario.address || '',
-          tools: usuario.herramientas,
-            // // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
-            // .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
-            // .join(', '),
-          laborales: usuario.laborales,
+          tools: usuario.Herramientas,
+          // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
+          //   .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
+          //   .join(', '),
+          jobs: usuario.jobs,
+          academicalList: usuario.academicalList,
           id: usuario.id,
           cvPath: usuario.cvPath,
           userJob: usuario.userJob,

@@ -1,0 +1,89 @@
+.div-inputs {
+  width: 100%;
+}
+
+.btn-marg {
+  margin-right: 8px;
+}
+
+.btn {
+  font-size: 15px;
+}
+
+.form {
+  width: fit-content;
+}
+
+.celda-laboral {
+  border-bottom: 1px rgb(190, 190, 190) solid;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 2vh;
+}
+
+.cargo {
+  font-size: medium;
+  font-weight: 600;
+}
+
+.Titulos {
+  font-size: 12px;
+  font-family: 'Meera Inimai', sans-serif;
+  font-weight: bold;
+}
+
+.fechas2 {
+  font-size: 14px;
+  font-family: 'Meera Inimai', sans-serif;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.perfilr {
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.user-preferred-job-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #F57C27;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 5px;
+}
+
+.user-preferred-job {
+  flex: 1;
+}
+
+.user-preferred-job-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.user-preferred-job-description {
+  font-size: 14px;
+}
+
+.user-preferred-job-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.user-preferred-job-buttons button {
+  margin-left: 8px;
+}

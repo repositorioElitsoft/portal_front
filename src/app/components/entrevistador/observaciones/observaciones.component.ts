@@ -18,7 +18,8 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { ProductoService } from 'src/app/service/producto.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { Product } from 'src/app/interface/producto.interface';
-import { ResultadosService } from 'src/app/SERVICE/resultados.service';
+import { JobPosition } from 'src/app/interface/jobposition.interface';
+import { JobPositionService } from 'src/app/service/jobposition.service';
 
 const ELEMENT_DATA: any[] = [];
 
@@ -36,6 +37,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
   filtroPuntaje: string = '';
   originalDataCopy: any[] = [];
   usuarios: any[] = [];
+  cargos: JobPosition[] = [];
   categorias: ProductCategory[] = [];
   productos: Product[] = [];
   versiones: ProductVersion[] = [];
@@ -51,6 +53,8 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  resultadosService: any;
+  
 
   constructor(private userService: UserService,
     private _liveAnnouncer: LiveAnnouncer,
@@ -59,13 +63,22 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     private observationService: ObservacionService,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
-    private resultadosService: ResultadosService ){}
+    private JobPositionService: JobPositionService,
+    private preguntaService: PreguntaService ){}
 
     ngOnInit(): void {
       this.obtenerUsuarios();
       this.getCategories();
       this.obtenerResultadosByUser();
-    }
+      this.getJobPosition();
+  }
+  getJobPosition() {
+    this.JobPositionService.obtenerListaJobPosition().subscribe(
+      (data: JobPosition[]) => {
+        this.cargos = data;
+      }
+    )
+  }
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -74,31 +87,27 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       this.userService.obtenerUsuarios().subscribe(
         (data: any[]) => {
           const usuarios = data
-            .filter((usuario) => usuario.roles === 'GUEST')
+          
+            // .filter((usuario) => usuario.roles === 'GUEST')
             .map((usuario) => ({
               name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
               phone: usuario.phone || '',
               email: usuario.email || '',
               roles: usuario.roles || '',
               address:usuario.address || '',
-              tools: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
-                .map((herramienta: HerramientaData) => herramienta.productVersion.product.name)
-                .join(', '),
-              herr_ver: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.name)
-                .map((herramienta: HerramientaData) => herramienta.productVersion.name)
-                .join(', '),
-              herr_exp: usuario.herramientas
-                .filter((herramienta: HerramientaData) => herramienta.productVersion && herramienta.productVersion.product)
-                .map((herramienta: HerramientaData) => herramienta.yearsOfExperience)
-                .join(', '),
-              laborales: usuario.laborales,
-              id: usuario.id,
-              cvPath: usuario.cvPath,
+              tools: usuario.Herramientas,
+          // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
+          //   .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
+          //   .join(', '),
+          jobs: usuario.jobs,
+          academicalList: usuario.academicalList,
+          id: usuario.id,
+          cvPath: usuario.cvPath,
+          userJob: usuario.userJob,
             }));
           this.originalDataCopy = usuarios;
           this.dataSource.data = usuarios;
+          console.log ('esta es la datasource',this.dataSource.data)
         },
         (error) => {
           console.log(error);
@@ -122,7 +131,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
         (data: any) => {
           this.resultados = data;
         },
-        (error) => {
+        (error:any) => {
           console.error('Error al obtener resultados:', error);
         }
       );
@@ -172,7 +181,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       const userId = event.currentTarget.id;
       console.log('User ID:', userId);
       forkJoin({
-        observadores: this.observationService.obtenerCatObservacionesPorUsuarioId(userId),
+        observadores: this.observationService.obtenerObservacionesPorUserJob(userId),
         usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {

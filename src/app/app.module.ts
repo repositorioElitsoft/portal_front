@@ -90,16 +90,19 @@ import { UploadFilesComponent } from './components/reclutador/upload-files/uploa
 import { EditLaboralComponent } from './components/user/add-employment/add-employment.component';
 import { ViewFilesComponent } from './components/reclutador/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
-import { CurrencyFormatPipe } from './components/user/cargo-usuario/currency-format.pipe';
+import { CurrencyFormatPipe } from './components/user/job-position-user/currency-format.pipe';
 import {MatStepperModule} from '@angular/material/stepper';
 import { EditPerfilUsuarioRComponent } from './components/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 import { SendMailToUsersDialogueComponent } from './components/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { ViewUsuariosRComponent } from './components/reclutador/view-usuarios-r/view-usuarios-r.component';
 import { EditPerfilUsuarioAdminComponent } from './components/admin/edit-perfil-usuario-admin/edit-perfil-usuario-admin.component';
-import { CargoUsuarioComponent } from './components/user/cargo-usuario/cargo-usuario.component';
+import { JobPositionUserComponent } from './components/user/job-position-user/job-position-user.component';
 import { AddStudyComponent } from './components/user/add-study/add-study.component';
 import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
 import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
+import { UserPrefferedJobComponent } from './components/user/user-preffered-job/user-preffered-job.component';
+import { ObservationRecruiterComponent } from './components/reclutador/observation-recruiter/observation-recruiter.component';
+import { ObservationRecruiterEditComponent } from './components/reclutador/observation-recruiter-edit/observation-recruiter-edit.component';
 
 
 @NgModule({
@@ -122,7 +125,7 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
     HerramientasTecnologiasComponent,
     InformacionLaboralComponent,
     InformacionAcademicaComponent,
-    CargoUsuarioComponent,
+    JobPositionUserComponent,
     AppNavbarComponent,
     EditPerfilUsuarioRComponent,
     AppSidebarComponent,
@@ -169,6 +172,9 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
     SendMailToUsersDialogueComponent,
     AddPositionUserComponent,
     ToolCertificationsDialogComponent,
+    UserPrefferedJobComponent,
+    ObservationRecruiterComponent,
+    ObservationRecruiterEditComponent
 
   ],
   imports: [

@@ -99,7 +99,7 @@ export class ViewPerfilUsuarioEComponent implements OnInit {
   ngOnInit(): void {
 
     this.ObtenerUsuarioGuardado();
-    this.cargarObservaciones();
+    // this.cargarObservaciones();
     this.obtenerCategorias();
 
   }
@@ -151,18 +151,18 @@ onCategorySelectionChange() {
   
   
 
-// Función para cargar observaciones desde el backend
-cargarObservaciones() {
-  this.observacionService.obtenerCatObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
-    (observadoresCat) => {
-      this.observaciones = observadoresCat;
-      console.log('Observaciones cargadas:', observadoresCat);
-    },
-    (error) => {
-      console.error('Error al cargar las observaciones:', error);
-    }
-  );
-}
+// // Función para cargar observaciones desde el backend
+// cargarObservaciones() {
+//   this.observacionService.obtenerCatObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
+//     (observadoresCat) => {
+//       this.observaciones = observadoresCat;
+//       console.log('Observaciones cargadas:', observadoresCat);
+//     },
+//     (error) => {
+//       console.error('Error al cargar las observaciones:', error);
+//     }
+//   );
+// }
 
 
 
@@ -222,60 +222,60 @@ editarObservacion(obs_id: number) {
   }
 
 
-  guardarObservacionCat(usuarioId: number) {
-    console.log('User ID recibido:', usuarioId); // Agrega este console.log para ver el valor de usuarioId
-    // Verificar si la observación o las categorías no están vacías
-    if (!this.nuevaObservacion.trim() || !this.selectedCategory) {
-      console.error('La observación o la categoría no pueden estar vacías.');
-      this.openSnackBar('La observación o la categoría no pueden estar vacías', 'Cerrar');
-      return;
-    }
+  // guardarObservacionCat(usuarioId: number) {
+  //   console.log('User ID recibido:', usuarioId); // Agrega este console.log para ver el valor de usuarioId
+  //   // Verificar si la observación o las categorías no están vacías
+  //   if (!this.nuevaObservacion.trim() || !this.selectedCategory) {
+  //     console.error('La observación o la categoría no pueden estar vacías.');
+  //     this.openSnackBar('La observación o la categoría no pueden estar vacías', 'Cerrar');
+  //     return;
+  //   }
   
-    // Asignar la observación y la categoría seleccionada a observadoresCat
-    this.observadoresCat.description = this.nuevaObservacion;
-    this.observadoresCat.id = this.selectedCategory;
+  //   // Asignar la observación y la categoría seleccionada a observadoresCat
+  //   this.observadoresCat.description = this.nuevaObservacion;
+  //   this.observadoresCat.id = this.selectedCategory;
   
-    // Usar los valores de usr_id_obs y usr_id_obs_mod del usuarioGuardado
-    this.observadoresCat.usr_id_obs = this.usuarioGuardado.id ?? 0;
-    this.observadoresCat.usr_id_obs_mod = this.usuarioGuardado.id ?? 0;
-    if(
-      !this.selectedObservacionId
+  //   // Usar los valores de usr_id_obs y usr_id_obs_mod del usuarioGuardado
+  //   this.observadoresCat.usr_id_obs = this.usuarioGuardado.id ?? 0;
+  //   this.observadoresCat.usr_id_obs_mod = this.usuarioGuardado.id ?? 0;
+  //   if(
+  //     !this.selectedObservacionId
 
-    ){
-    // Llama al servicio para guardar la nueva observación en el backend
-    this.observacionService.guardarObservacionCat(
-      this.observadoresCat,
-      usuarioId, // Usar el valor de usuarioId pasado como parámetro
-      this.observadoresCat.id,
-      this.observadoresCat.usr_id_obs,
-      this.observadoresCat.usr_id_obs_mod
-    ).subscribe(
-      (resultado) => {
-        console.log('Observación guardada con éxito', resultado);
-        this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
-        this.openSnackBar('Observación guardada con éxito', 'Cerrar');
-        this.mostrarStepper = false; // Ocultar el stepper
-        this.resetearFormularioStepper(); //
-      },
-      (error) => {
-        console.error('Error al guardar la observación:', error);
-        this.openSnackBar('Error al guardar la observación', 'Cerrar');
-      }
-    );}
+  //   ){
+  //   // Llama al servicio para guardar la nueva observación en el backend
+  //   this.observacionService.guardarObservacionCat(
+  //     this.observadoresCat,
+  //     usuarioId, // Usar el valor de usuarioId pasado como parámetro
+  //     this.observadoresCat.id,
+  //     this.observadoresCat.usr_id_obs,
+  //     this.observadoresCat.usr_id_obs_mod
+  //   ).subscribe(
+  //     (resultado) => {
+  //       console.log('Observación guardada con éxito', resultado);
+  //       this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
+  //       this.openSnackBar('Observación guardada con éxito', 'Cerrar');
+  //       this.mostrarStepper = false; // Ocultar el stepper
+  //       this.resetearFormularioStepper(); //
+  //     },
+  //     (error) => {
+  //       console.error('Error al guardar la observación:', error);
+  //       this.openSnackBar('Error al guardar la observación', 'Cerrar');
+  //     }
+  //   );}
 
-    else{ 
-      this.observacionService.actualizarObservacionCat(this.selectedObservacionId, this.observadoresCat.id,this.observadoresCat.usr_id_obs_mod, this.observadoresCat).subscribe({
-      next: (data) => {
-        console.log('Observación actualizada con éxito', data);
-        this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
-        this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
-        this.mostrarStepper = false; // Ocultar el stepper
-      },
-      error:(err)=>{
-        console.log(err)
-      }
-     })
-    }}
+  //   else{ 
+  //     this.observacionService.actualizarObservacionCat(this.selectedObservacionId, this.observadoresCat.id,this.observadoresCat.usr_id_obs_mod, this.observadoresCat).subscribe({
+  //     next: (data) => {
+  //       console.log('Observación actualizada con éxito', data);
+  //       this.cargarObservaciones(); // Vuelve a cargar las observaciones actualizadas
+  //       this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
+  //       this.mostrarStepper = false; // Ocultar el stepper
+  //     },
+  //     error:(err)=>{
+  //       console.log(err)
+  //     }
+  //    })
+  //   }}
   
 // Opcional: Método para resetear los valores del stepper
 resetearFormularioStepper() {
