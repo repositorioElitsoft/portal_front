@@ -18,6 +18,7 @@ import { CategoriaProductoService } from 'src/app/service/categoria-producto.ser
 import { ProductoService } from 'src/app/service/producto.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { Product } from 'src/app/interface/producto.interface';
+import { ResultadosService } from 'src/app/SERVICE/resultados.service';
 
 const ELEMENT_DATA: any[] = [];
 
@@ -58,7 +59,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     private observationService: ObservacionService,
     private categoriaProductoService: CategoriaProductoService,
     private productoService: ProductoService,
-    private preguntaService: PreguntaService ){}
+    private resultadosService: ResultadosService ){}
 
     ngOnInit(): void {
       this.obtenerUsuarios();
@@ -117,7 +118,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     }
 
     obtenerResultadosByUser() {
-      this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+      this.resultadosService.obtenerResultadosByUser().subscribe(
         (data: any) => {
           this.resultados = data;
         },

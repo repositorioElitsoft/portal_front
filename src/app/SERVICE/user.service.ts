@@ -98,16 +98,9 @@ export class UserService {
     const url = `${this.url}/users/eliminar-cv/${UserId}`;
     return this.HttpClient.delete(url);
   }
-  obtenerResultados(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.url}/resultados/`);
-  }
-
-
- 
   public registrarUsuario(registerData: Register){
     return this.HttpClient.post<any>(`${this.url}/usuarios/`, registerData)
   }
-
   obtenerPerfil(email: string): Observable<any> {
     return this.HttpClient.get<any>(`${this.url}/usuarios/email/${email}`);
   }
