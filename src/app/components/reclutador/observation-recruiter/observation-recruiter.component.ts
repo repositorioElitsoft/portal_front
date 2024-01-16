@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ObservacionDTO, Observation } from 'src/app/interface/observation.interface';
 import { UserSesionDTO } from 'src/app/interface/user.interface';
@@ -8,6 +8,7 @@ import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
 import { ObservationRecruiterEditComponent } from '../observation-recruiter-edit/observation-recruiter-edit.component';
 import { UserJob } from 'src/app/interface/user-job.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-observation-recruiter',
@@ -30,6 +31,7 @@ export class ObservationRecruiterComponent implements OnInit {
   observacionesPorUserJob: ObservacionDTO[] = [];
   constructor(
     private dialog: MatDialog,
+    private dialogRef: MatDialogRef<ObservationRecruiterComponent>,
     private userService: UserService,
     private formbuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -134,25 +136,44 @@ export class ObservationRecruiterComponent implements OnInit {
   }
 
   eliminarObservacion(userJobId: number): void {
-    this.observacionService.eliminarObservacion(userJobId).subscribe(
-      () => {
-        // Notificar al usuario sobre la eliminación exitosa
-        this._snackBar.open('La observación se ha eliminado con éxito.', 'Cerrar', {
-          duration: 3000,
-        });
+    Swal.fire({
+      title: '¿Está seguro?',
+      text: '¿Realmente desea eliminar la observación?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' 
+    }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Lógica de eliminación
+        this.observacionService.eliminarObservacion(userJobId).subscribe(
+          () => {
+            // Notificar al usuario sobre la eliminación exitosa
+            this._snackBar.open('La observación se ha eliminado con éxito.', 'Cerrar', {
+              duration: 3000,
+            });
   
-        this.obtenerObservacionesPorUserJob(this.userJobId ?? 0);
-      },
-      (error) => {
-        console.error('Error al eliminar la observación:', error);
+            // Actualizar la lista de observaciones después de la eliminación
+            this.obtenerObservacionesPorUserJob(this.userJobId ?? 0);
+          },
+          (error) => {
+            console.error('Error al eliminar la observación:', error);
   
-        // Notificar al usuario sobre cualquier error
-        this._snackBar.open('Error al eliminar la observación. Por favor, inténtelo de nuevo.', 'Cerrar', {
-          duration: 3000,
-        });
+            // Notificar al usuario sobre cualquier error
+            this._snackBar.open('Error al eliminar la observación. Por favor, inténtelo de nuevo.', 'Cerrar', {
+              duration: 3000,
+            });
+          }
+        );
       }
-    );
+    });
   }
+  
   
 
   obtenerObservacionesPorUserJob(userJobId: number): void {
@@ -162,6 +183,40 @@ export class ObservationRecruiterComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
+      }
+    });
+  }
+
+  getInitials(name: string, firstLastname: string, secondLastname: string): string {
+    // Obtener las dos primeras letras de name y firstLastname
+    const initials = name.charAt(0) + firstLastname.charAt(0);
+    
+    // Verificar si secondLastname existe y no es vacío
+    if (secondLastname && secondLastname.trim() !== '') {
+      // Si existe, agregar la primera letra de secondLastname
+      return initials + secondLastname.charAt(0);
+    } else {
+      // Si no existe, solo retornar las dos iniciales anteriores
+      return initials;
+    }
+  }
+
+  confirmarCierreFormulario() {
+    Swal.fire({
+      title: '¿Está seguro?',
+      text: '¿Desea salir de Observaciones??',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, salir',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border' 
+    }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.dialogRef.close();
       }
     });
   }
