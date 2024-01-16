@@ -5,6 +5,8 @@ import { ObservacionService } from 'src/app/service/observation.service';
 import { UserService } from 'src/app/service/user.service';
 import { UserSesionDTO, User } from 'src/app/interface/user.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UploadFilesService } from 'src/app/service/upload-files.service';
+import { HerramientasService } from 'src/app/service/herramientas.service';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { UserJobService } from 'src/app/service/user-job.service';
 import { ObservationRecruiterComponent } from '../observation-recruiter/observation-recruiter.component';
@@ -58,6 +60,11 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     private userjobservice: UserJobService,
     private dialog: MatDialog,  
     public dialogRef: MatDialogRef<ViewPerfilUsuarioRComponent>,
+    // public dialog: MatDialogRef<ViewPerfilUsuarioRComponent>,
+   
+    private uploadService: UploadFilesService,
+    private herramientasService: HerramientasService,
+    
     @Inject(MAT_DIALOG_DATA) public data: any,
     private observacionService: ObservacionService,
     private _snackBar: MatSnackBar
@@ -207,4 +214,26 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
+
+  descargarCertificacion(certId: number): void {
+    this.herramientasService.downloadCertification(certId)
+      .subscribe((response: any) => {
+       
+          const url = window.URL.createObjectURL(response.body);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = response.headers.get("pragma");
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        
+      }, (error: any) => {
+        console.error('Error al descargar la certificación:', error);
+        // Manejar el error según sea necesario
+      });
+  }
+  
+
+  
+  
 }

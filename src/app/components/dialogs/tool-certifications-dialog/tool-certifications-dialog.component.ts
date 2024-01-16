@@ -63,6 +63,7 @@ export class ToolCertificationsDialogComponent {
           console.log("Uploaded successfully")
           this.tool = response;
           this.uploadSuccess = true;
+          
         },
         error: (err) => {
           console.log("Error al subir certificación", err);

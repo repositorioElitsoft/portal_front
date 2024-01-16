@@ -1,57 +1,88 @@
-/* Colores base */
-:root {
-    --color-primary: #1976d2; /* Azul Material */
-    --color-accent: #ef6c00; /* Naranja Material */
-    --color-text: #212121;
-    --color-divider: #e0e0e0;
-  }
-  
-  /* Estilos globales para la tarjeta */
-  .elitsoft-card {
-    margin: 16px;
-    border-radius: 8px;
-  }
-  
-  .mat-card-content {
-    padding: 16px;
-  }
-  
-  /* Estilos para los títulos y subtítulos */
-  .mat-card-title {
-    color: var(--color-accent);
-    font-size: 1.5em;
-    margin-bottom: 8px;
-  }
-  
-  .mat-card-subtitle {
-    color: var(--color-text);
-    font-size: 1em;
-    margin-bottom: 4px;
-  }
-  
-  /* Estilos para los detalles del autor y responsable */
-  .author-details {
-    padding: 8px 0;
-    border-bottom: 1px solid var(--color-divider);
-  }
-  
-  .name {
-    font-weight: 500;
-    color: var(--color-primary);
-  }
-  
-  .email, .date {
-    color: var(--color-text);
-    font-size: 0.9em;
-  }
-  
-  /* Estilos para la sección de descripción */
-  .mat-form-field.full-width {
-    width: 100%;
-  }
-  
-  /* Botón */
-  button.mat-raised-button {
-    margin-top: 16px;
-  }
-  
+/* Estilo para el formulario */
+.observation-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+}
+
+/* Estilo para las tarjetas */
+.elitsoft-card {
+  width: 100%; /* Asegura que la tarjeta ocupe todo el ancho disponible */
+  max-width: 600px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border: 1px solid #F57C27!important;
+  border-radius: 10px!important;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilo para los textareas */
+textarea {
+  width: 100%; /* Asegura que el texto ocupe todo el espacio disponible en la tarjeta */
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  text-align: justify; /* Texto justificado */
+  cursor: pointer;
+}
+
+
+/* Estilo para las secciones */
+.user-info, .responsable {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+/* Estilo para los detalles del autor */
+.author-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+/* Estilo para el botón de eliminar */
+mat-icon-button {
+  color: #ff0000;
+}
+
+/* Estilo para los campos de texto */
+mat-form-field {
+  width: 100%;
+}
+
+/* Estilo para las etiquetas */
+mat-label {
+  font-weight: bold;
+}
+
+
+/* Estilo para el espacio entre las tarjetas */
+mat-card:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+/* Estilo para el avatar de reconocimiento */
+.avatar {
+  width: 100px; /* Ajusta el tamaño del avatar según tus preferencias */
+  height: 100px; /* Ajusta el tamaño del avatar según tus preferencias */
+  border-radius: 50%;
+  background-color:  #000080; /* Color de fondo del avatar */
+  color: #fff; /* Color del texto dentro del avatar */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px; /* Tamaño del texto dentro del avatar */
+  margin: 0 auto; /* Centra horizontalmente el avatar */
+}

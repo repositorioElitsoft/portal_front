@@ -105,6 +105,7 @@ import { ObservationRecruiterComponent } from './components/reclutador/observati
 import { ObservationRecruiterEditComponent } from './components/reclutador/observation-recruiter-edit/observation-recruiter-edit.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

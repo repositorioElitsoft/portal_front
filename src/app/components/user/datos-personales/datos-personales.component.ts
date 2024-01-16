@@ -46,14 +46,14 @@ export class DatosPersonalesComponent implements OnInit {
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      rut: ["", [Validators.required, validRut]],
-      name: ["", [Validators.required]],
-      firstLastname: ["", [Validators.required]],
-      secondLastname: ["", [Validators.required]],
+      rut: ["",  [Validators.required, validRut]],
+      name: ["",  [Validators.required]],
+      firstLastname: ["",  [Validators.required]],
+      secondLastname: ["",  [Validators.required]],
       country: ["1", [Validators.required]],
       state: ["", [Validators.required]],
       city: this.formBuilder.group({
-        id: ['', Validators.required]
+       id: ["", Validators.required],
       }),
       address: ["", Validators.required],
       linkedin: ["", []],
@@ -62,18 +62,18 @@ export class DatosPersonalesComponent implements OnInit {
         id: ['1'],
         name: ['']
       }),
-
     });
 
-  this.form.get('usr_gen')?.valueChanges.subscribe((value) => {
-    if (value === 'Otro') {
-      this.form.get('usr_gen_otro')?.setValidators([Validators.required]);
+this.form.get("gender.id")?.valueChanges.subscribe((value) => {
+    if (value === "Otro") {
+      this.form.get("gender.name")?.setValidators([Validators.required]);
     } else {
-      this.form.get('usr_gen_otro')?.setValidators(null);
-      this.form.get('usr_gen_otro')?.setValue('');
+      this.form.get("gender.name")?.setValidators(null);
+      this.form.get("gender.name")?.setValue("");
     }
-    this.form.get('usr_gen_otro')?.updateValueAndValidity();
+    this.form.get("gender.name")?.updateValueAndValidity();
   });
+
   }
 
   onCountrySelected(){
