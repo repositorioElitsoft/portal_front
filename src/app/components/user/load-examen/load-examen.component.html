@@ -2,36 +2,35 @@
   <div class="container-fluid">
     <h2 style="color: #F57C27;">Exámenes disponibles</h2>
     <br>
-    <div class="row mt20" *ngIf="examenes">
-      <div class="col-md-6" *ngFor="let e of examenes">
+      <div class="col-md-6" *ngFor="let e of herramientas">
         <mat-card class="m-2" style=" background-color: #f2f2f2;">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image">
             </div>
             <mat-card-title>
-              {{ e.titulo }}
+              {{ e.productVersion.product.name}}
             </mat-card-title>
             <mat-card-subtitle>
-              {{ e.categoria.titulo }}
+              {{ e.id }}
             </mat-card-subtitle>
           </mat-card-header>
-          <mat-card-content>
-            <p>{{ e.descripcion }}</p>
+          <mat-card-content>  
+            <p>{{ e.name }}</p>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button style="color: #F57C27;" class="botonmath" [routerLink]="'/user-dashboard/instrucciones/' + e.examenId">
+            <button mat-button style="color: #F57C27;" class="botonmath" [routerLink]="'/user-dashboard/instrucciones/' +e.id.toString()">
               <mat-icon>play_circle_outline</mat-icon> Empezar
             </button>
             <button mat-button style="color: #F57C27;" class="botonmath">
-              <mat-icon>question_answer</mat-icon> Preguntas: {{ e.numeroDePreguntas }}
+              <mat-icon>question_answer</mat-icon> Preguntas: 
             </button>
             <button mat-button style="color: #F57C27;"class="botonmath">
-              <mat-icon>star</mat-icon> P.M: {{ e.puntosMaximos }}
+              <mat-icon>star</mat-icon> P.M:
             </button>
           </mat-card-actions>
         </mat-card>
       </div>
-      <div class="col-md-12" *ngIf="examenes.length === 0">
+      <div class="col-md-12" *ngIf="herramientas.length === 0">
         <mat-card>
           <mat-card-content>
             <h3>No hay exámenes en esta categoría</h3>
@@ -40,4 +39,3 @@
       </div>
     </div>
   </div>
-</div>

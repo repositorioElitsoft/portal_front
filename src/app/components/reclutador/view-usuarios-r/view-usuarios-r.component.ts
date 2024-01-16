@@ -21,7 +21,7 @@ import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
 import { forkJoin } from 'rxjs';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
-import { CargosUsuarioService } from 'src/app/service/cargos-usuario.service';
+import { UserJobService } from 'src/app/service/user-job.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
@@ -31,6 +31,8 @@ import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';
+import { ResultadosService } from 'src/app/SERVICE/resultados.service';
+import { AcademicaService } from 'src/app/service/academica.service';
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -94,7 +96,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
     private JobPositionService: JobPositionService,
-    private cargoService: CargosUsuarioService
+    private resultadosService: ResultadosService,
+    private UserJobService: UserJobService,
+    private AcademicalReferences: AcademicaService
   ) {
     this.selectedCheckbox = this.fb.group({
     });
@@ -117,7 +121,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   obtenerResultados() {
-    this.userService.obtenerResultados().subscribe(
+    this.resultadosService.obtenerResultados().subscribe(
       (data) => {
         this.resultados = data;
         this.filterData();
@@ -223,8 +227,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     // Filtro por resultado del usuario
     if (this.resultados !== undefined) {
-      this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
-        (resultadoUsuario) => {
+      this.resultadosService.obtenerResultadosByUser().subscribe(
+        (resultadoUsuario: any) => {
           console.log('Resultado obtenido del servicio:', resultadoUsuario);
           console.log('Resultados actuales en el componente:', this.resultados);
 
@@ -235,7 +239,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
           console.log('Array filtrado:', filteredArray);
         },
-        (error) => {
+        (error: any) => {
           console.error('Error al obtener resultados del usuario: ', error);
         }
       );
@@ -432,17 +436,19 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
         // Filtrar usuarios por roles igual a "GUEST"
         const usuarios = data
+          // .filter((usuario) => usuario.roles === 'GUEST')
           .map((usuario) => ({
             name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
             phone: usuario.phone || '',
             email: usuario.email || '',
             roles: usuario.roles || '',
             address: usuario.address || '',
-            tools: usuario.herramientas,
-            // // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
-            // .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
-            // .join(', '),
-            laborales: usuario.laborales,
+            tools: usuario.Herramientas,
+            // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
+            //   .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
+            //   .join(', '),
+            jobs: usuario.jobs,
+            academicalList: usuario.academicalList,
             id: usuario.id,
             cvPath: usuario.cvPath,
             userJob: usuario.userJob,
@@ -530,8 +536,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   obtenerYFiltrarResultados() {
     console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
 
-    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
-      (resultadoUsuario) => {
+    this.resultadosService.obtenerResultadosByUser().subscribe(
+      (resultadoUsuario: any) => {
         console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
 
         // Aquí puedes verificar si los datos recibidos son lo que esperas
@@ -546,24 +552,19 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         // Mostrar los datos filtrados
         console.log('Datos después de aplicar el filtro:', this.dataSource.data);
       },
-      (error) => {
+      (error: any) => {
         console.error('Error al obtener resultados del usuario: ', error);
       }
     );
 
   }
-
-
-
-
-
   obtenerResultadosByUser() {
-    this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+    this.resultadosService.obtenerResultadosByUser().subscribe(
       (data: any) => {
         this.resultados = data;
         console.log('Resultados obtenidos:', this.resultados);
       },
-      (error) => {
+      (error: any) => {
         console.error('Error al obtener resultados:', error);
       }
     );

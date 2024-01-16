@@ -1,0 +1,57 @@
+/* Colores base */
+:root {
+    --color-primary: #1976d2; /* Azul Material */
+    --color-accent: #ef6c00; /* Naranja Material */
+    --color-text: #212121;
+    --color-divider: #e0e0e0;
+  }
+  
+  /* Estilos globales para la tarjeta */
+  .elitsoft-card {
+    margin: 16px;
+    border-radius: 8px;
+  }
+  
+  .mat-card-content {
+    padding: 16px;
+  }
+  
+  /* Estilos para los títulos y subtítulos */
+  .mat-card-title {
+    color: var(--color-accent);
+    font-size: 1.5em;
+    margin-bottom: 8px;
+  }
+  
+  .mat-card-subtitle {
+    color: var(--color-text);
+    font-size: 1em;
+    margin-bottom: 4px;
+  }
+  
+  /* Estilos para los detalles del autor y responsable */
+  .author-details {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-divider);
+  }
+  
+  .name {
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+  
+  .email, .date {
+    color: var(--color-text);
+    font-size: 0.9em;
+  }
+  
+  /* Estilos para la sección de descripción */
+  .mat-form-field.full-width {
+    width: 100%;
+  }
+  
+  /* Botón */
+  button.mat-raised-button {
+    margin-top: 16px;
+  }
+  

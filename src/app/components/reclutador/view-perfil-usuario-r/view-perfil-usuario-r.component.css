@@ -162,3 +162,25 @@
   margin-left: 8px; 
   font-size: 0.85em;
 }
+.postulaciones {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin-bottom: 8px; 
+  background-color: #f9f9f9; 
+  border-radius: 10px;
+  border: 1px solid #F57C27!important;
+}
+
+.preferred-job-container {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.postulaciones, 
+button[mat-raised-button].botonprimario {
+  margin-left: auto;
+  margin-top: 8px;
+}
+

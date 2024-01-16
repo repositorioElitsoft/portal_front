@@ -1,0 +1,20 @@
+<mat-card class="contenedorform text-center">
+  <h4 class="perfilr">Cargos Preferentes</h4>
+  <form (ngSubmit)="submitForm()" [formGroup]="form">
+    <mat-form-field appearance="outline">
+      <mat-label>Ingrese su Cargo Preferente</mat-label>
+      <input matInput placeholder="Cargo Preferente" formControlName="description">
+      <mat-icon matSuffix>work</mat-icon>
+      <mat-hint>Debe escribir el cargo preferente que desea postular</mat-hint>
+      <mat-error *ngIf="campoTieneErrores('description')">
+        El campo Cargo Preferente es obligatorio.
+      </mat-error>
+    </mat-form-field>
+    <button mat-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">
+      {{ this.data.creationMode ? 'Enviar Cargo Preferente' : 'Editar Cargo Preferente' }}
+    </button>    
+    <div *ngIf="!this.data.creationMode && data && data.description">
+      <p>Estás editando el cargo preferente: {{ data.description }}</p>
+    </div>
+  </form>
+</mat-card>
