@@ -22,7 +22,10 @@ export class ViewFilesComponent implements OnInit {
   constructor(private uploadService: UploadFilesService, @Inject(MAT_DIALOG_DATA,) 
   public data: any,
   private dialogRef: MatDialogRef<ViewFilesComponent>
-     )  {     this.usuarioGuardado.id = data.userId; }
+     )  {     
+      // Inicializar usuarioGuardado como un objeto User
+      this.usuarioGuardado = {} as User;
+      this.usuarioGuardado.id = data.userId; }
 
   ngOnInit(): void {
     this.loadFiles();

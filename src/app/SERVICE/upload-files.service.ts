@@ -25,4 +25,9 @@ export class UploadFilesService {
     const url = `${this.baseUrl}/delete/${id}/${filename}`;
     return this.http.delete<void>(url);
   }
+
+  downloadCertification(filename: string, id: number): Observable<Blob> {
+    const url = `${this.baseUrl}/download-certs/${id}/${filename}`;
+    return this.http.get(url, { responseType: 'blob' });
+  }
 }

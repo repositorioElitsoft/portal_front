@@ -52,18 +52,41 @@
               </mat-list-item>
               </mat-list>
             </mat-tab>
-            <!-- <mat-tab label="Información Laboral">
+            <!-- Herramientas y Tecnologías  -->
+            <mat-tab label="Herramientas">
               <mat-list>
-                <mat-list-item *ngFor="let cargo of usuarioData.userJob">
-                  <span matListItemTitle>{{ cargo.cargoElitsoft.crg_elit_nom }}</span>
-                  <span matListItemLine>Cargo a postular</span>
-                  <span matListItemLine>Pretensión de renta: ${{cargo.salary }}</span>
-                  <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
-                  <span matListItemLine *ngIf="cargo.crg_prf">Otro cargo preferente: {{cargo.crg_prf }}</span>
+                <div class="mb-3 mt-1"> Herramientas y/o tecnologías manejadas por el Postulante:</div>
+                <mat-list-item *ngFor="let tools of usuarioData.tools">
+
+                  <span matListItemTitle> {{ tools.productVersion.product.name }} {{ tools.productVersion.name }}</span>
+                  <span matListItemLine>Nivel: {{ tools.level?.description}}</span>
+                  <span matListItemLine>{{ tools.yearsOfExperience }} año/s de experiencia</span>
+                  
+                   <!-- Certificaciones -->
+                  <div *ngIf="tools.certifications && tools.certifications.length">
+                    <h3>Certificaciones:</h3>
+                    <ul>
+                      <li *ngFor="let certification of tools.certifications">
+                        <div style="display: flex; align-items: center;">
+                          <span matListItemLine>{{ certification.url.substring(certification.url.lastIndexOf('_') + 1) }}</span>
+                          <button mat-icon-button matTooltip="Descargar" (click)="descargarCertificacion(certification.id)">
+                            <mat-icon>cloud_download</mat-icon>
+                          </button>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
                   <div matListItemIcon>
-                    <mat-icon>forward</mat-icon>
+                    <mat-icon>bubble_chart</mat-icon>
                   </div>
                 </mat-list-item>
+              </mat-list>
+            </mat-tab>
+            
+            <!-- Información Laboral  -->
+             <mat-tab label="Información Laboral">
+              <mat-list>
+                
                 <div class="mb-3 mt-1"> Experiencia laboral:</div>
                 <mat-list-item *ngFor="let jobs of usuarioData.jobs">
                   <span matListItemTitle>{{ jobs.position }}</span>
@@ -75,8 +98,8 @@
                         {{ h.productVersion.prd.name }} ({{ h.productVersion.name }})  - (Exp:{{ h.yearsOfExperience }} año/s)
                       </mat-chip>
                     </div>
-                    Referencias Laborales -->  
-                  <!-- <div class="mb-3 mt-1"> Referencias Laborales:</div>
+                   <!--    Referencias Laborales -->  
+                <div class="mb-3 mt-1"> Referencias Laborales:</div>
                   <ul *ngIf="jobs.employmentReferences && jobs.employmentReferences.length">
                     <li *ngFor="let employmentReferences of jobs.employmentReferences">
                       <span matListItemLine>Nombre: {{employmentReferences.name }}</span>
@@ -93,7 +116,7 @@
                   <span matListItemMeta> <div>Hasta</div> {{ jobs.endDate }} </span>
                 </mat-list-item>
               </mat-list>
-            </mat-tab>  -->
+            </mat-tab>  
             <mat-tab label="Información Académica">
             
               <mat-list>
@@ -128,7 +151,7 @@
               <mat-list-item *ngFor="let cargo of usuarioData.userJob"  class="postulaciones">
                 <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
                 <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>               
-                 <span matListItemLine>Disponibilidad: {{cargo.availability.time }}</span> 
+                 <!-- <span matListItemLine>Disponibilidad: {{cargo.availability.time }}</span>  -->
                 <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
                 <span matListItemLine>Aprobaciones: {{cargo.approvals }}</span>
                 <div *ngIf="usuarioData.preferredJob?.description" class="preferred-job-container">

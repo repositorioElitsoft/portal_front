@@ -24,7 +24,7 @@ export class ExamenModalComponent implements OnInit {
     this.dialogRef.close();
   }
   deletePregunta(pregunta: Pregunta) {
-    const preguntaId = pregunta?.id;
+    const preguntaId = pregunta.id;
     console.log("preguntaId",preguntaId)
     if (preguntaId) {
       this.preguntaService.eliminarPregunta(preguntaId).subscribe(
@@ -40,18 +40,6 @@ export class ExamenModalComponent implements OnInit {
       this.preguntas = this.preguntas.filter((p:any) => p.id !== preguntaId);
     }
   }
-  
-  
-  
-
- 
-  
-
-
-
-
-
-
 }
 
 
