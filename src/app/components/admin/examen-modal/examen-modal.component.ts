@@ -40,8 +40,6 @@ export class ExamenModalComponent implements OnInit {
       this.preguntas = this.preguntas.filter((p:any) => p.id !== preguntaId);
     }
   }
-  
-
 }
 
 
