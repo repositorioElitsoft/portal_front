@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 import { Register } from '../interface/register.interface';
 import { ActivatedRoute } from '@angular/router';
@@ -11,16 +11,16 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   readonly url = `${environment.URL_HOST}`
   public loginStatusSubjec = new Subject<boolean>();
-  constructor(private HttpClient: HttpClient,private route: ActivatedRoute, ) { }
-  public actualizarCV(formData: FormData): Observable<any>{
+  constructor(private HttpClient: HttpClient, private route: ActivatedRoute,) { }
+  public actualizarCV(formData: FormData): Observable<any> {
     return this.HttpClient.put<FormData>(`${this.url}/users/file`, formData);
   }
-  public registrarUser(registerData: Register){
+  public registrarUser(registerData: Register) {
     return this.HttpClient.post<any>(`${this.url}/users/`, registerData)
   }
-  public cambiarPassword(newPassword: string){
+  public cambiarPassword(newPassword: string) {
     const cod = this.route.snapshot.queryParamMap.get("code");
-    return this.HttpClient.put<any>(`${this.url}/users/cambiar-password/${cod}`, {pass: newPassword})
+    return this.HttpClient.put<any>(`${this.url}/users/cambiar-password/${cod}`, { pass: newPassword })
   }
   public iniciarSesion(datosInicioSesion: any) {
     return this.HttpClient.post(`${this.url}/users/iniciar-sesion/`, datosInicioSesion);
@@ -39,7 +39,7 @@ export class UserService {
     return this.HttpClient.get<User>(`${this.url}/users/`);
   }
 
-  updateUserById(id: number, user: User): Observable<User>{
+  updateUserById(id: number, user: User): Observable<User> {
     return this.HttpClient.put<User>(`${this.url}/users/actualizar/${id}`, user);
   }
   obtenerUserDesdeLocalStorage() {
@@ -52,8 +52,8 @@ export class UserService {
   obtenerRolUser(email: string): Observable<string> {
     return this.HttpClient.get<string>(`${this.url}/users/${email}`);
   }
-  pedirReinicioPass(email: string){
-    return this.HttpClient.post(`${this.url}/users/pedir-restauracion-pass`,{email: email});
+  pedirReinicioPass(email: string) {
+    return this.HttpClient.post(`${this.url}/users/pedir-restauracion-pass`, { email: email });
   }
   guardarAdmin(User: User): Observable<User> {
     return this.HttpClient.post<User>(`${this.url}/users/admin`, User);
@@ -61,53 +61,46 @@ export class UserService {
   guardarRec(User: User): Observable<User> {
     return this.HttpClient.post<User>(`${this.url}/users/rec`, User);
   }
-  public getUserId(UserId: number):Observable<any>{
+  public getUserId(UserId: number): Observable<any> {
     return this.HttpClient.get(`${this.url}/users/${UserId}`)
   }
   public actualizarUserAdmin(UserId: number, User: UserEditarDTO): Observable<UserEditarDTO> {
     return this.HttpClient.put<UserEditarDTO>(`${this.url}/users/actualizar/${UserId}`, User);
   }
-  
+
   public logout() {
     localStorage.removeItem('user');
     return true;
   }
-  public setUser(user:any){
+  public setUser(user: any) {
     localStorage.setItem('user', JSON.stringify(user));
   }
-  public getUser(){
+  public getUser() {
     let userStr = localStorage.getItem('user');
-    if(userStr != null){
+    if (userStr != null) {
       return JSON.parse(userStr);
-    }else{
+    } else {
       this.logout();
       return null;
     }
   }
-  public getCv(userId: any){
+  public getCv(userId: any) {
     return this.HttpClient.get(`${this.url}/users/file/${userId}`);
   }
-  public getUserRole(){
+  public getUserRole() {
     let user = this.getUser();
     return user.authorities[0].authority;
   }
   public downloadCv(userId: any): Observable<Blob> {
-    return this.HttpClient.get(`${this.url}/users/file/${userId}`, {responseType: 'blob'});
+    return this.HttpClient.get(`${this.url}/users/file/${userId}`, { responseType: 'blob' });
   }
   public borrarCV(UserId: number): Observable<any> {
     const url = `${this.url}/users/eliminar-cv/${UserId}`;
     return this.HttpClient.delete(url);
   }
-  obtenerResultados(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.url}/resultados/`);
+  public registrarUsuario(registerData: Register) {
+    return this.HttpClient.post<any>(`${this.url}/users/`, registerData)
   }
-
-
- 
-  public registrarUsuario(registerData: Register){
-    return this.HttpClient.post<any>(`${this.url}/usuarios/`, registerData)
-  }
-
   obtenerPerfil(email: string): Observable<any> {
     return this.HttpClient.get<any>(`${this.url}/usuarios/email/${email}`);
   }
@@ -123,10 +116,10 @@ export class UserService {
   obtenerUsuarioGuardado() {
     return this.HttpClient.get<User>(`${this.url}/users/`);
   }
-  updateUser(user: User){
-    return this.HttpClient.put<User>(`${this.url}/users/`,user);
+  updateUser(user: User) {
+    return this.HttpClient.put<User>(`${this.url}/users/`, user);
   }
-  updateUsuarioById(id: number, user: User): Observable<User>{
+  updateUsuarioById(id: number, user: User): Observable<User> {
     return this.HttpClient.put<User>(`${this.url}/usuarios/actualizar/${id}`, user);
   }
   obtenerUsuarioDesdeLocalStorage() {
@@ -139,15 +132,15 @@ export class UserService {
   obtenerRolUsuario(email: string): Observable<string> {
     return this.HttpClient.get<string>(`${this.url}/usuarios/${email}`);
   }
- 
 
-  public getUsuarioId(usuarioId: number):Observable<any>{
+
+  public getUsuarioId(usuarioId: number): Observable<any> {
     return this.HttpClient.get(`${this.url}/users/${usuarioId}`)
   }
   public actualizarUsuarioAdmin(usuarioId: number, usuario: UserEditarDTO): Observable<UserEditarDTO> {
     return this.HttpClient.put<UserEditarDTO>(`${this.url}/users/actualizar/${usuarioId}`, usuario);
   }
- 
+
   createOrUpdatePreferredJob(userPreferredJob: any): Observable<any> {
     return this.HttpClient.post(`${this.url}/users/preferred`, userPreferredJob);
   }

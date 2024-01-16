@@ -6,7 +6,7 @@
           <!--Instrucciones-->
           <mat-card style = "margin-top: 70px;">
             <mat-card-content>
-              <h3><b>Instrucciones</b></h3>
+              <h3><b>Instrucciones:</b></h3>
               <ul>
                 <li>No actualice la página, de lo contrario obtendrá nuevas preguntas en este cuestionario</li>
                 <li>No cambies las pestañas</li>
@@ -20,25 +20,28 @@
           <!--Preguntas-->
           <ng-container *ngIf = "preguntas">
             <h1 class="mt20">
-              En curso <b>{{ examen?.titulo }}</b>
+              En curso <b>{{ herramientas.productVersion.product.name}}</b>
             </h1>
           </ng-container>
-          <mat-card *ngFor = "let p of preguntas;let i = index">
+          
+         
+
+          <mat-card *ngFor="let pregunta of questions">
             <mat-card-content>
-              <p><b>{{ i+1 }} </b> <span [innerHTML] = "p.contenido"></span></p>
+              <p><b>{{ pregunta.id }} </b> <span [innerHTML]="pregunta.content"></span></p>
               <mat-divider></mat-divider>
               <div class="row mt20">
                 <div class="col-md-8 mt10">
-                  <input [(ngModel)] = "p.respuestaDada" type="radio" [value] = "p.opcion1" name = {{i}}> {{ p.opcion1 }}
+                  <input [(ngModel)]="pregunta.respuestaDada" type="radio" [value]="pregunta.option1" name="{{ pregunta.id }}"> {{ pregunta.option1 }}
                 </div>
                 <div class="col-md-8 mt10">
-                  <input [(ngModel)] = "p.respuestaDada" type="radio" [value] = "p.opcion2" name = {{i}}> {{ p.opcion2 }}
+                  <input [(ngModel)]="pregunta.respuestaDada" type="radio" [value]="pregunta.option2" name="{{ pregunta.id }}"> {{ pregunta.option2 }}
                 </div>
                 <div class="col-md-8 mt10">
-                  <input [(ngModel)] = "p.respuestaDada" type="radio" [value] = "p.opcion3" name = {{i}}> {{ p.opcion3 }}
+                  <input [(ngModel)]="pregunta.respuestaDada" type="radio" [value]="pregunta.option3" name="{{ pregunta.id }}"> {{ pregunta.option3 }}
                 </div>
                 <div class="col-md-8 mt10">
-                  <input [(ngModel)] = "p.respuestaDada" type="radio" [value] = "p.opcion4" name = {{i}}> {{ p.opcion4 }}
+                  <input [(ngModel)]="pregunta.respuestaDada" type="radio" [value]="pregunta.option4" name="{{ pregunta.id }}"> {{ pregunta.option4 }}
                 </div>
               </div>
             </mat-card-content>
@@ -75,11 +78,11 @@
           <mat-card class="resultado">
               <mat-card-header class="resultadoprueba">
                   <mat-card-title>
-                     Resultado de la prueba <b>{{ examen.titulo }}</b>
+                     Resultado de la prueba <b>{{ herramientas[0].productVersion.product.name }}</b>
                   </mat-card-title>
               </mat-card-header>
               <mat-card-content class="text-center">
-                  <h1>Has conseguido un total de {{ puntosConseguidos }} puntos de {{ examen.puntosMaximos }}</h1>
+                  <h1>Has conseguido un total de {{this.puntosConseguidos}} puntos de {{ this.puntuacionMaxima }}</h1>
                   <h1>Respuestas correctas: {{ respuestasCorrectas }}</h1>
                   <h1>Has realizado el examen {{ vecesEnviado }} veces</h1>
                   <!-- Contenedor para el gráfico de barras -->

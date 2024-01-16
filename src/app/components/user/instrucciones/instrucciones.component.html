@@ -9,15 +9,15 @@
                         <br> <br>
                     </mat-card-header>
                     <mat-card-content class="ml30">
-                        <h1><i class="material-icons">assignment</i> {{ examen.titulo }}</h1>
+                        <h1><i class="material-icons">assignment</i> {{herramientas[0].productVersion.product.name}}</h1>
                         <p>{{ examen.descripcion }}</p>
                         <mat-divider></mat-divider>
                         <br>
                         <h1><i class="material-icons">important_devices</i> Instrucciones importantes</h1>
                         <ul>
                             <li><i class="material-icons">check_circle_outline</i> Este examen es solo para fines de práctica</li>
-                            <li><i class="material-icons">timer</i> Tienes que enviar el examen en <b>{{ examen.numeroDePreguntas }} minutos</b></li>
-                            <li><i class="material-icons">help_outline</i> Hay <b>{{ examen.puntosMaximos/examen.numeroDePreguntas }} puntos por pregunta</b></li>
+                            <li><i class="material-icons">timer</i>Tienes que enviar el examen en<b>{{time}} minutos</b></li>
+                            <li><i class="material-icons">help_outline</i> Hay <b>{{puntosPorPregunta}} puntos</b> por pregunta</li>
                         </ul>
                         <mat-divider></mat-divider>
                         <br>
