@@ -6,20 +6,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { User } from 'src/app/interface/user.interface';
-import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Product } from 'src/app/interface/producto.interface';
 import { ProductVersion } from 'src/app/interface/version-producto';
 import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
-import { forkJoin } from 'rxjs';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { UserJobService } from 'src/app/service/user-job.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -29,10 +26,9 @@ import { NivelService } from 'src/app/service/nivel.service';
 import { Level } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
-import { UserJob } from 'src/app/interface/user-job.interface';
-import { ToolDTO } from 'src/app/interface/herramientas.interface';
-import { ResultadosService } from 'src/app/SERVICE/resultados.service';
 import { AcademicaService } from 'src/app/service/academica.service';
+import { ResultadosService } from 'src/app/service/resultados.service';
+
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -801,9 +797,4 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
 
-}
-
-
-function saveAs(blob: Blob, arg1: string) {
-  throw new Error('Function not implemented.');
 }

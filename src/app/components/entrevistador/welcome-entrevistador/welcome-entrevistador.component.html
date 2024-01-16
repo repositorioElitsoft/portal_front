@@ -1,8 +1,9 @@
-<mat-card style="background-color: transparent; border: 0; box-shadow: none; padding-top: 5vh;">
+<mat-card style="background-color: transparent; border: 0; box-shadow: none; padding-top: 5vh;" >
   <p class="admin-panel-text">Panel de Entrevistador</p>
   <div class="profile-container">
       <div class="profile-box">
-        <h2>Bienvenido Entrevistador </h2>
+        <h2 *ngIf="authorities.has('ROLE_ENTR')">Bienvenido Entrevistador </h2>
+        <h2 *ngIf="!authorities.has('ROLE_ENTR')">Bienvenido BLablaba </h2>
         <p></p>
         <p>Sus funciones:</p>
         <ul>

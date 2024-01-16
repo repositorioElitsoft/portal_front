@@ -27,4 +27,8 @@ export class AuthService {
     const usuario: any = this.getUserId();
     return usuario?.id ?? null;
   }
+
+  getAuthorities(): Set<string>{
+    return new Set (this.currentUser?.authorities)
+  }
 }
