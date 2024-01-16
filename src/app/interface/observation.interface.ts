@@ -1,18 +1,11 @@
-import { ObservationCategory } from "./observationcategory.interface";
-import { User } from "./user.interface";
+import { ObservationUpdate } from "./observation-uptdate.interface";
+import { UserJob } from "./user-job.interface";
 
 export interface Observation {
   obs_id: number;
   description: string;
-  creationDate: Date;
-  modificationDate: Date;
-  operationalApproval: string;
-  technicalApproval: string;
-  managementApproval: string;
-  user: User;
-  usr_id_obs: number;
-  usr_id_obs_mod: number;
-  observationCategory: ObservationCategory;
+  userJob: UserJob; 
+  updates: ObservationUpdate[]; 
 }
   export interface ObservacionDTO{
      usr2_email: String ;
@@ -55,3 +48,4 @@ export interface Observation {
     firstLastname:String;
     email:String;
   }
+

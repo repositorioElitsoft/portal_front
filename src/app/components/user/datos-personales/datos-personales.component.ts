@@ -46,21 +46,21 @@ export class DatosPersonalesComponent implements OnInit {
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      rut: ["", [Validators.required, validRut]],
-      name: ["", [Validators.required]],
-      firstLastname: ["", [Validators.required]],
-      secondLastname: ["", [Validators.required]],
+      rut: ["",  [Validators.required, validRut]],
+      name: ["",  [Validators.required]],
+      firstLastname: ["",  [Validators.required]],
+      secondLastname: ["",  [Validators.required]],
       country: ["1", [Validators.required]],
       state: ["", [Validators.required]],
       city: this.formBuilder.group({
-        id: ["", Validators.required],
+       id: ["", Validators.required],
       }),
       address: ["", Validators.required],
-      linkedin: [""],
+      linkedin: ["", []],
       phone: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
       gender: this.formBuilder.group({
-        id: ["1"],
-        name: [""],
+        id: ['1'],
+        name: ['']
       }),
     });
 

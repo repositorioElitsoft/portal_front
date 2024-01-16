@@ -1,36 +1,29 @@
-// observacion-reclutador.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CatObservacionDTO, ObservacionDTO, Observation } from '../interface/observation.interface';
+import { Observation, ObservacionDTO } from '../interface/observation.interface';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ObservacionService {
-  private baseUrl = 'http://localhost:8080/observaciones';
+  private baseUrl = 'http://localhost:8080/observations';
+
   constructor(private http: HttpClient) { }
-  obtenerObservacionesPorUsuario(userId: number): Observable<Observation[]> {
-    return this.http.get<Observation[]>(`${this.baseUrl}/por-usuario/${userId}`);
+
+  crearObservacion(observation: Observation): Observable<Observation> {
+    return this.http.post<Observation>(`${this.baseUrl}/`, observation);
   }
-  guardarObservacionRec(observadores: ObservacionDTO, userId: number, usr_id_obs: number, usr_id_obs_mod: number): Observable<ObservacionDTO> {
-    return this.http.post<ObservacionDTO>(`${this.baseUrl}/guardarRec/${userId}/${usr_id_obs}/${usr_id_obs_mod}`, observadores);
+
+  obtenerObservacionesPorUserJob(userJobId: Number): Observable<ObservacionDTO[]> {
+    return this.http.get<ObservacionDTO[]>(`${this.baseUrl}/user-job/${userJobId}`);
   }
-  actualizarObservacionRec(observacionId: number, observadores: ObservacionDTO, usr_id_obs_mod: number): Observable<ObservacionDTO> {
-    return this.http.put<ObservacionDTO>(`${this.baseUrl}/actualizar/${observacionId}/${usr_id_obs_mod}`, observadores);
+
+  actualizarObservacion(observationId: Number, observation: Observation ): Observable<Observation> {
+    return this.http.put<Observation>(`${this.baseUrl}/${observationId}`, observation, { });
   }
-  obtenerNombresUsuarios(): Observable<Object[]> {
-    return this.http.get<Object[]>(`${this.baseUrl}/nombres-usuarios`);
-  }
-  obtenerObservacionesPorUsuarioId(usrId: number): Observable<ObservacionDTO[]> {
-    return this.http.get<ObservacionDTO[]>(`${this.baseUrl}/${usrId}`);
-  }
-  guardarObservacionCat(catObservacion: CatObservacionDTO, userId: number, catObsId: number, usr_id_obs: number, usr_id_obs_mod: number): Observable<boolean> {
-    return this.http.post<boolean>(`${this.baseUrl}/guardarCat/${userId}/${catObsId}/${usr_id_obs}/${usr_id_obs_mod}`, catObservacion);
-  }
-  actualizarObservacionCat(obsId: number, catObsId: number, usrIdObsMod: number, catObservacion: CatObservacionDTO ): Observable<CatObservacionDTO> {
-    return this.http.put<CatObservacionDTO>(`${this.baseUrl}/actualizarCat/${obsId}/${catObsId}/${usrIdObsMod}`, catObservacion);
-  }
-  obtenerCatObservacionesPorUsuarioId(usrId: number): Observable<CatObservacionDTO[]> {
-    return this.http.get<CatObservacionDTO[]>(`${this.baseUrl}/Cat/${usrId}`);
+
+  eliminarObservacion(id: Number): Observable<string> {
+    return this.http.delete<string>(`${this.baseUrl}/${id}`);
   }
 }

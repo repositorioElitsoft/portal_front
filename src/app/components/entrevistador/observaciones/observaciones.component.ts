@@ -53,6 +53,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  resultadosService: any;
   
 
   constructor(private userService: UserService,
@@ -126,11 +127,11 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
     }
 
     obtenerResultadosByUser() {
-      this.preguntaService.obtenerResultadosByUser(this.idUser).subscribe(
+      this.resultadosService.obtenerResultadosByUser().subscribe(
         (data: any) => {
           this.resultados = data;
         },
-        (error) => {
+        (error:any) => {
           console.error('Error al obtener resultados:', error);
         }
       );
@@ -180,7 +181,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       const userId = event.currentTarget.id;
       console.log('User ID:', userId);
       forkJoin({
-        observadores: this.observationService.obtenerCatObservacionesPorUsuarioId(userId),
+        observadores: this.observationService.obtenerObservacionesPorUserJob(userId),
         usuario: this.userService.getUsuarioId(userId)
       }).subscribe({
         next: (resultados) => {

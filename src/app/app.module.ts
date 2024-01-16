@@ -46,31 +46,31 @@ import { SidebarComponent as UserSidebar } from './components/user/sidebar/sideb
 import { LoadExamenComponent } from './components/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './components/user/instrucciones/instrucc.component';
 import { StartComponent } from './components/user/start/start.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatSelectModule} from '@angular/material/select';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {MatCardModule} from '@angular/material/card';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatIconModule} from '@angular/material/icon';
-import {MatListModule} from '@angular/material/list';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { SidebarRResponsiveComponent } from './components/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './components/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './components/reclutador/estadisticas/estadisticas.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSliderModule } from '@angular/material/slider';
 import { ExamenModalComponent } from './components/admin/examen-modal/examen-modal.component';
-import {TextFieldModule} from '@angular/cdk/text-field';
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { AdvertenciaEliminarComponent } from './components/shared/advertencia-eliminar/advertencia-eliminar.component';
 import { EditUserDialogComponent } from './components/admin/edit-user-dialog/edit-user-dialog.component';
 import { CaracterOnlyDirective } from './directives/caracter-only-directive';
@@ -91,7 +91,7 @@ import { EditLaboralComponent } from './components/user/add-employment/add-emplo
 import { ViewFilesComponent } from './components/reclutador/view-files/view-files.component';
 import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { CurrencyFormatPipe } from './components/user/job-position-user/currency-format.pipe';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { EditPerfilUsuarioRComponent } from './components/reclutador/edit-perfil-usuario-r/edit-perfil-usuario-r.component';
 import { SendMailToUsersDialogueComponent } from './components/reclutador/send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { ViewUsuariosRComponent } from './components/reclutador/view-usuarios-r/view-usuarios-r.component';
@@ -101,6 +101,8 @@ import { AddStudyComponent } from './components/user/add-study/add-study.compone
 import { AddPositionUserComponent } from './components/user/add-position-user/add-position-user.component';
 import { ToolCertificationsDialogComponent } from './components/dialogs/tool-certifications-dialog/tool-certifications-dialog.component';
 import { UserPrefferedJobComponent } from './components/user/user-preffered-job/user-preffered-job.component';
+import { ObservationRecruiterComponent } from './components/reclutador/observation-recruiter/observation-recruiter.component';
+import { ObservationRecruiterEditComponent } from './components/reclutador/observation-recruiter-edit/observation-recruiter-edit.component';
 
 
 
@@ -172,7 +174,8 @@ import { UserPrefferedJobComponent } from './components/user/user-preffered-job/
     AddPositionUserComponent,
     ToolCertificationsDialogComponent,
     UserPrefferedJobComponent,
-    
+    ObservationRecruiterComponent,
+    ObservationRecruiterEditComponent
 
   ],
   imports: [
