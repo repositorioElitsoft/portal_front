@@ -1,32 +1,30 @@
 <div class="bootstrap-wrapper">
   <div class="container-fluid">
     <h2 style="color: #F57C27;">Exámenes disponibles</h2>
-    <br>
-      <div class="col-md-6" *ngFor="let e of herramientas">
-        <mat-card class="m-2" style=" background-color: #f2f2f2;">
+    <div class="exams-container">
+      <div *ngFor="let e of herramientas" class="exam-card">
+        <mat-card class="m-2 example-card" style=" background-color: #f2f2f2;">
+
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image">
-            </div>
             <mat-card-title>
+
               {{ e.productVersion.product.name}}
             </mat-card-title>
             <mat-card-subtitle>
-              {{ e.id }}
+              Nivel: {{ e.level?.description}}
             </mat-card-subtitle>
           </mat-card-header>
-          <mat-card-content>  
-            <p>{{ e.name }}</p>
+
+          <mat-card-content>
+
           </mat-card-content>
+
           <mat-card-actions>
-            <button mat-button style="color: #F57C27;" class="botonmath" [routerLink]="'/user-dashboard/instrucciones/' +e.id.toString()">
+            <button mat-button style="color: #F57C27;" class="botonmath"
+              [routerLink]="'/user-dashboard/instrucciones/' +e.id?.toString()">
               <mat-icon>play_circle_outline</mat-icon> Empezar
             </button>
-            <button mat-button style="color: #F57C27;" class="botonmath">
-              <mat-icon>question_answer</mat-icon> Preguntas: 
-            </button>
-            <button mat-button style="color: #F57C27;"class="botonmath">
-              <mat-icon>star</mat-icon> P.M:
-            </button>
+
           </mat-card-actions>
         </mat-card>
       </div>
@@ -39,3 +37,4 @@
       </div>
     </div>
   </div>
+</div>
