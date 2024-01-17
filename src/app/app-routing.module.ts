@@ -30,10 +30,6 @@ import { InstruccionesComponent } from './components/user/instrucciones/instrucc
 import { StartComponent } from './components/user/start/start.component';
 import { AddUsuariosComponent } from './components/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './components/reclutador/estadisticas/estadisticas.component';
-import { DashboardEComponent } from './components/entrevistador/dashboard-e/dashboard-e.component';
-import { WelcomeEntrevistadorComponent } from './components/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
-import { ObservacionesComponent } from './components/entrevistador/observaciones/observaciones.component';
-import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
 import { JobPositionUserComponent } from './components/user/job-position-user/job-position-user.component';
 import { PortalViewComponent } from './components/user/portal-view/portal-view.component';
 import { DatosPersonalesComponent } from './components/user/datos-personales/datos-personales.component';
@@ -176,22 +172,22 @@ const routes: Routes = [
   },
   {
     path: "entrevistador",
-    component: DashboardEComponent,
+    component: DashboardRComponent,
     canActivate: [AuthGuard],
-    data: { role: 'ROLE_ENTR' },
+    data: { roles: ['ROLE_ENTR', 'ENTR_TEC'] },
     children: [
       {
-        path: 'welcome-entrevistador',
-        component: WelcomeEntrevistadorComponent
+        path: 'welcome-reclutador',
+        component: WelcomeReclutadorComponent
       },
       {
-        path: 'viewperfilusuarioe',
-        component: ViewPerfilUsuarioEComponent
+        path: 'view-usuarios-r',
+        component: ViewUsuariosRComponent
       },
       {
-        path: 'observaciones',
-        component: ObservacionesComponent
-      }
+        path: 'view-perfil-usuario-r/:email',
+        component: ViewPerfilUsuarioRComponent
+      },
     ]
   }
 ];

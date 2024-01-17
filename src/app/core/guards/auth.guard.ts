@@ -16,7 +16,6 @@ export class AuthGuard implements CanActivate {
 
       console.log('usuario roles: ', userRoles);
       console.log('rol requerido: ', requiredRole);
-
       if (requiredRole !== undefined) {
         if (userRoles.includes(requiredRole)) {
           return true;
@@ -24,9 +23,15 @@ export class AuthGuard implements CanActivate {
           if (userRoles.includes("ROLE_REC")) {
             this.router.navigate(['/reclutador/welcome-reclutador']);
           }
+
           if (userRoles.includes("ROLE_ADMIN")) {
             this.router.navigate(['/admin/welcome-admin']);
           }
+
+          if (userRoles.includes("ROLE_ENTR") || userRoles.includes("ENTR_TEC")) {
+            this.router.navigate(['/reclutador/welcome-reclutador']);
+          }
+
           return false;
         }
       } else if (userRoles.includes("ROLE_GUEST")) {
@@ -34,6 +39,7 @@ export class AuthGuard implements CanActivate {
         return true;
       }
       return false;
+
     }
     this.router.navigate(['/iniciar-sesion']);
     return false;
