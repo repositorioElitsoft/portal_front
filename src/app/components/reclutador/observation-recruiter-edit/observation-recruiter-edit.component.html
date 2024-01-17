@@ -1,9 +1,11 @@
+<form  class="observation-form" [formGroup]="formulario">
 <mat-card class="elitsoft-card">
   <mat-card-content>
     <form (ngSubmit)="submitForm()" class="observation-form" [formGroup]="formulario">
 
       <!-- Sección del autor de la observación -->
       <section class="user-info">
+        <div class="avatar">{{ getInitials(data.usuario.author.name, data.usuario.author.firstLastname, data.usuario.author.secondLastname) }}</div>
         <mat-card-title>Observación realizada por:</mat-card-title>
         <div class="author-details">
           <div class="author-name">{{ data.usuario.author.name }} {{ data.usuario.author.firstLastname }} {{ data.usuario.author.secondLastname }}</div>
@@ -27,8 +29,9 @@
         <mat-label>Descripción</mat-label>
         <textarea matInput id="description" name="description" [(ngModel)]="data.usuario.description" formControlName="description"></textarea>
       </mat-form-field>
-      <mat-card> <button mat-raised-button color="primary" type="submit">Editar</button>
+      <mat-card> <button mat-raised-button class="botonprimario" type="submit">Editar</button>
       </mat-card>
     </form>
   </mat-card-content>
 </mat-card>
+</form>

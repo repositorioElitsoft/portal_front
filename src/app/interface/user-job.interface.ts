@@ -1,3 +1,4 @@
+import { Approvals } from "./approvals.interface";
 import { JobPosition } from "./jobposition.interface";
 import { UserJobAvailability } from "./user-job-availability.interface";
 import { User } from "./user.interface";
@@ -10,6 +11,6 @@ export interface UserJob{
     jobPosition?: JobPosition,
     availability?: UserJobAvailability,
     applicationDate: Date;
-    approvals: any;
+    approvals: Approvals[];
     
 }

@@ -6,20 +6,17 @@ import { MatPaginator } from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 import { User } from 'src/app/interface/user.interface';
-import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
 import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Product } from 'src/app/interface/producto.interface';
 import { ProductVersion } from 'src/app/interface/version-producto';
 import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
-import { forkJoin } from 'rxjs';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
 import { UserJobService } from 'src/app/service/user-job.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -29,10 +26,11 @@ import { NivelService } from 'src/app/service/nivel.service';
 import { Level } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
-import { UserJob } from 'src/app/interface/user-job.interface';
-import { ToolDTO } from 'src/app/interface/herramientas.interface';
-import { ResultadosService } from 'src/app/service/resultados.service';
 import { AcademicaService } from 'src/app/service/academica.service';
+import { HerramientasService } from 'src/app/service/herramientas.service';
+import { Result } from 'src/app/interface/exam-results.interface';
+import { ResultadosService } from 'src/app/service/resultados.service';
+
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -40,7 +38,8 @@ const ELEMENT_DATA: User[] = [];
   styleUrls: ['./view-usuarios-r.component.css'],
 })
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['name', 'phone', 'email', 'acciones', 'seleccionar'];
+
+  displayedColumns: any[] = ['name', 'phone', 'email','porcentajeAprobacion', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   filtroPuntaje: string = '';
@@ -70,10 +69,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   idUser: number = 0;
   filterCargo: string = '';
   resultados: any[] = [];
-  porcentajeAprobacion: number = 0;
-  filteredUsuarios: any = [] = [];
-  selectedOption: String = '';
-  selectedNivel: number = 0;
+  porcentajeAprobacion:number = 0;
+  filteredUsuarios:any=[]=[];
+  puntosMaximos?:number;
+  selectedOption:String = '';
+  selectedNivel : number = 0;
   isSueldoSliderEnabled = true;
   porcentajesAprobacion = [
     { value: 100, label: '100%' },
@@ -83,6 +83,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedPorcentajeAprobacion: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  herramientas: any;
+  lvl: any;
+  productname: any;
+  productIds: any;
+  productid: any;
+  lvlid: any;
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -98,7 +104,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private JobPositionService: JobPositionService,
     private resultadosService: ResultadosService,
     private UserJobService: UserJobService,
-    private AcademicalReferences: AcademicaService
+    private AcademicalReferences: AcademicaService,
+    private herramientasService: HerramientasService
   ) {
     this.selectedCheckbox = this.fb.group({
     });
@@ -109,6 +116,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.getCategories();
     this.obtenerResultadosByUser();
     this.getJobPosition();
+    this.obtenerHerramientas();
+    this.initializeDataSource();
+    
   }
   getJobPosition() {
     this.JobPositionService.obtenerListaJobPosition().subscribe(
@@ -121,13 +131,46 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   obtenerResultados() {
-    this.resultadosService.obtenerResultados().subscribe(
-      (data) => {
+    this.resultadosService.obtenerResultadosByUser().subscribe(
+      (data:any) => {
         this.resultados = data;
-        this.filterData();
+        console.log("data", data);
+      },
+      (error:any) => {
+        console.error(error);
+      }
+    );
+  }
+  initializeDataSource() {
+    this.dataSource.sortingDataAccessor = this.customSortingAccessor.bind(this);
+    this.dataSource.sort = this.sort;
+  }
+  
+  customSortingAccessor(item:any, property:any) {
+    if (property === 'porcentajeAprobacion') {
+      return this.calculateUserResults(item.results);
+    } else {
+      return item[property];
+    }
+  }
+
+  obtenerHerramientas() {
+    this.herramientasService.getCurrentUserTools().subscribe(
+      (herramientas:any) => {
+        if (herramientas && herramientas.length > 0) {
+          this.herramientas = herramientas
+          this.lvl= herramientas.map((herramienta:any) => herramienta.level.description);
+          console.log("herramientas",this.herramientas);
+          this.productIds = herramientas.map((herramienta:any) => herramienta.productVersion.name);
+          this.productname = herramientas.map((herramienta:any) => herramienta.productVersion.product.name);
+          this.productid = herramientas.map((herramienta:any) => herramienta.productVersion.product.id);
+          this.lvlid= herramientas.map((herramienta:any) => herramienta.level.id);
+        } else {
+          console.log('No se encontraron herramientas para el usuario.');
+        }
       },
       (error) => {
-        console.error(error);
+        console.error('Error al obtener el usuario guardado:', error);
       }
     );
   }
@@ -136,14 +179,18 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   filterData() {
-    let filteredArray = this.originalDataCopy;
+    let filteredArray:User[] = this.originalDataCopy;
+   
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
+      
       return usuario.userJob && usuario.userJob.some(cargo => {
         const sueldo = cargo.salary;
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
+    console.log("filteredArray",filteredArray);
+    
 
     
     // if (this.selectedCargo > 0) {
@@ -208,44 +255,62 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       if (selectedProduct) {
         filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.prd_nom));
       }
-    }
+      return false;
+  });
 
-    // Filtro por versión
-    if (this.selectedVersion > 0) {
-      const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
-      if (selectedVersion) {
-        filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
-      }
-    }
-    */
+  // Imprimir el array de cargos filtrados
+  console.log("Cargos filtrados por fecha de postulación:", this.cargos);
+}
 
 
+    // //Filtro por estado
+    // if (this.selectedEstado && this.selectedEstado !== '') {
+    //   filteredArray = filteredArray.filter((usuario) => {
+    //     return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
+    //   });
+   
 
-    // Filtro por resultado del usuario
-    if (this.resultados !== undefined) {
-      this.resultadosService.obtenerResultadosByUser().subscribe(
-        (resultadoUsuario: any) => {
-          console.log('Resultado obtenido del servicio:', resultadoUsuario);
-          console.log('Resultados actuales en el componente:', this.resultados);
+    // //Filtro por producto
+    // if (this.selectedProducto > 0) {
+    //   const selectedProduct = this.productos.find(product => product.id === this.selectedProducto);
+    //   if (selectedProduct) {
+    //     filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.name));
+    //   }
+    // }
 
-          filteredArray = filteredArray.filter(usuario => {
-            // Usar una función de flecha para preservar el contexto
-            return resultadoUsuario === this.resultados;
-          });
+    // //Filtro por versión
+    // if (this.selectedVersion > 0) {
+    //   const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
+    //   if (selectedVersion) {
+    //     filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
+    //   }
+    // }
+    
 
-          console.log('Array filtrado:', filteredArray);
-        },
-        (error: any) => {
-          console.error('Error al obtener resultados del usuario: ', error);
-        }
-      );
-    }
+
+
+// // Filtro por resultado del usuario
+//   if (this.resultados !== undefined) {
+//   this.resultadosService.obtenerResultadosByUser().subscribe(
+//     (resultadoUsuario:any) => {
+//       filteredArray = filteredArray.filter(usuario => {
+//         // Usar una función de flecha para preservar el contexto
+//         return resultadoUsuario === this.resultados;
+//       });
+
+//       console.log('Array filtrado:', filteredArray);
+//     },
+//     (error:any) => {
+//       console.error('Error al obtener resultados del usuario: ', error);
+//     }
+//   );
+// }
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
       filteredArray = filteredArray.filter(resultados => {
         return this.resultados.find(resultado => {
-          const nivelDificultad = resultado.examen.nivelDificultad;
-          const productos = resultado.examen.productos;
+          const nivelDificultad = resultado.level.description;
+          const productos = resultado.product;
 
           console.log('nivel examen:', nivelDificultad);
           console.log('nivel seleccionado:', this.selectedNivel);
@@ -256,22 +321,26 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     }
     // Filtro por porcentaje de aprobación
-    if (this.selectedPorcentajeAprobacion) {
-      filteredArray = filteredArray.filter(usuario => {
-        const resultadosDeUsuario = this.resultados.filter(resultado => {
-          return resultado.usuarioId === usuario.id;
-
-        });
-        const resultadoFinal = resultadosDeUsuario.find(resultado => {
-          const resultadoExamen = resultado.resultadosExamen;
-          const puntosMaximos = resultado.examen.puntosMaximos;
-          const nivelDificultad = resultado.examen.nivelDificultad;
-          const productos = resultado.examen.productos;
+    console.log("estoy filtrando",typeof this.selectedPorcentajeAprobacion); 
+    if (typeof this.selectedPorcentajeAprobacion ==="object") { 
+      console.log("en el filter",filteredArray); 
+      filteredArray = filteredArray.filter(resultado => {
+          console.log("resultado aaaaaa",resultado); 
+          const resultadoFinal = this.resultados.find(resultado =>{
+          const resultadoExamen = resultado.score;
+          const puntosMaximos = 4;
+          console.log("resultadoExamen",resultadoExamen); 
+          const nivelDificultad = resultado.level.description;
+          const productos = resultado.product; 
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
-          // Verifica si el usuario cumple con los filtros anteriores
-          const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
-          // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
-          if (cumpleFiltrosAnteriores) {
+          const cumpleFiltrosAnteriores = productos.length > 0 && productos.id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+          console.log("porcentajeAprobacion",porcentajeAprobacion);
+          console.log("this.selectedProducto",this.selectedProducto);
+          console.log("resultadoExamen",resultadoExamen); 
+          console.log("nivelDificultad",nivelDificultad);
+          console.log("this.selectedNivel",this.selectedNivel);
+          console.log("productos",productos);
+          
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
               return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
                 porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
@@ -282,7 +351,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
               console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
               return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
             }
-          }
+          
           return false;
         });
         console.log("resultado final", resultadoFinal);
@@ -319,10 +388,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return anosExp.some((anos: any) => anos >= min && anos <= max);
       });
     }*/
-    console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    console.log('Usuarios filtrados:', filteredArray);
+    // console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
+    // console.log('Usuarios filtrados:', filteredArray);
 
-    this.dataSource.data = filteredArray;
+     this.dataSource.data = filteredArray;
   }
   
   filterByCargo() {
@@ -431,24 +500,25 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       (data: any[]) => {
         console.log('Data de usuario :', data);
 
-        // Filtrar usuarios por roles igual a "GUEST"
-        const usuarios = data
-          // .filter((usuario) => usuario.roles === 'GUEST')
-          .map((usuario) => ({
-            name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
-            phone: usuario.phone || '',
-            email: usuario.email || '',
-            roles: usuario.roles || '',
-            address: usuario.address || '',
-            tools: usuario.Herramientas,
-            // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
-            //   .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
-            //   .join(', '),
-            jobs: usuario.jobs,
-            academicalList: usuario.academicalList,
-            id: usuario.id,
-            cvPath: usuario.cvPath,
-            userJob: usuario.userJob,
+      // Filtrar usuarios por roles igual a "GUEST"
+      const usuarios = data
+      // .filter((usuario) => usuario.roles === 'GUEST')
+        .map((usuario) => ({
+          name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
+          phone: usuario.phone || '',
+          email: usuario.email || '',
+          roles: usuario.roles || '',
+          address: usuario.address || '',
+          tools: usuario.Herramientas,
+          // .filter((herramienta: ToolDTO) => herramienta.productVersion && herramienta.productVersion.product)
+          //   .map((herramienta: ToolDTO) => herramienta.productVersion.product.name)
+          //   .join(', '),
+          jobs: usuario.jobs,
+          academicalList: usuario.academicalList,
+          id: usuario.id,
+          cvPath: usuario.cvPath,
+          userJob: usuario.userJob,
+          results: usuario.results,
 
           }));
 
@@ -463,15 +533,29 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         });
 
 
-        this.originalDataCopy = usuarios;
-        this.dataSource.data = usuarios;
-        console.log('esta es la datasource', this.dataSource.data)
-      },
-      (error) => {
-        console.log('este es un error,', error);
-      }
-    );
+      this.originalDataCopy = usuarios;
+      this.dataSource.data = usuarios;
+      console.log ('esta es la datasource',this.dataSource.data)
+    },
+    (error) => {
+      console.log('este es un error,',error);
+    }
+  );
+}
+calculateUserResults(results: Result[]) {
+  const puntosMaximos = 20;
+  if (results.length === 0) {
+    return 0;
   }
+  const maxResult: number = results.reduce((max, current) => {
+    const score = current.score ?? 0;
+    return score > max ? score : max;
+  }, Number.NEGATIVE_INFINITY);
+  const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
+  return porcentajeAprobacionByUser;
+}
+
+
 
   onSendMailPressed() {
     const values = this.selectedCheckbox.value
@@ -559,7 +643,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.resultadosService.obtenerResultadosByUser().subscribe(
       (data: any) => {
         this.resultados = data;
-        console.log('Resultados obtenidos:', this.resultados);
+        console.log('Resultados obtenidos aaaa:', this.resultados);
       },
       (error: any) => {
         console.error('Error al obtener resultados:', error);
@@ -630,8 +714,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   }
 
+  // numbertoString(results:number){
+  //   return String(results)
 
+  // }
 
+  
 
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
@@ -798,9 +886,4 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
 
-}
-
-
-function saveAs(blob: Blob, arg1: string) {
-  throw new Error('Function not implemented.');
 }

@@ -1,14 +1,18 @@
+<button mat-icon-button class="close-button" (click)="confirmarCierreFormulario()" 
+matTooltip="Cerrar Ventana" >
+  <mat-icon>arrow_back_ios</mat-icon>
+</button>
 <form  class="observation-form" [formGroup]="formulario">
 <mat-card class="elitsoft-card" *ngFor="let usuario of usuarioData">
-
-
   <mat-card-content >
     <!-- Sección del autor de la observación -->
     <section class="user-info">
+      <div class="avatar">{{ getInitials(usuario.author.name, usuario.author.firstLastname, usuario.author.secondLastname) }}</div>
       <mat-card-title>Observación realizada por:</mat-card-title>
       <div class="author-details">
         <div class="author-name">{{ usuario.author.name }} {{ usuario.author.firstLastname }} {{ usuario.author.secondLastname }}</div>
         <div class="author-email">{{ usuario.author.email }}</div>
+        <mat-card-subtitle>Fecha de creación</mat-card-subtitle>
         <div class="author-date">{{ usuario.author.date | date: 'dd/MM/yyyy HH:mm:ss' }}</div>
       </div>
     </section>
@@ -19,6 +23,7 @@
       <div class="author-details">
         <div class="author-name">{{ usuario.lastUpdateResponsible.name }} {{ usuario.lastUpdateResponsible.firstLastname }} {{ usuario.lastUpdateResponsible.secondLastname }}</div>
         <p class="author-email">{{ usuario.lastUpdateResponsible.email }}</p>
+        <mat-card-subtitle>Fecha de Modificación</mat-card-subtitle>
         <p class="author-date">{{ usuario.lastUpdateResponsible.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
       </div>
     </section>
@@ -26,14 +31,14 @@
     <!-- Sección de descripción -->
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Descripción</mat-label>
-      <textarea matInput id="description" name="description" [value]="usuario.description" readonly></textarea>
+      <textarea matInput id="description" name="description" [value]="usuario.description" readonly matTooltip="Para modificar la descripción, presione el botón de editar"></textarea>
     </mat-form-field>
     
     <mat-card >
       <button mat-raised-button class="botonprimario" (click)="editarObservacion(usuario)">Editar</button>
     </mat-card>
 
-    <button mat-icon-button (click)="eliminarObservacion(usuario.id)">
+    <button mat-icon-button (click)="eliminarObservacion(usuario.id)" matTooltip="Eliminar Observación">
       <mat-icon>delete</mat-icon>
     </button>
     

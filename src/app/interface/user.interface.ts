@@ -6,6 +6,7 @@ import { HerramientaData } from "./herramienta-data.interface"
 import { Employment } from "./employment.interface"
 import { UserCV } from "./user-cv.interface"
 import { UserPreferredJob } from "./user-preferred-job-interface"
+import { Result } from "./exam-results.interface"
 
 export interface User {
     id?:number
@@ -26,6 +27,7 @@ export interface User {
     userJob?: UserJob[]
     userPrefferedJob?: UserPreferredJob
     cv?: UserCV
+    results?:Result[];
 
 }
 
