@@ -10,6 +10,9 @@ import { HerramientasService } from 'src/app/service/herramientas.service';
 import { UserJob } from 'src/app/interface/user-job.interface';
 import { UserJobService } from 'src/app/service/user-job.service';
 import { ObservationRecruiterComponent } from '../observation-recruiter/observation-recruiter.component';
+import { AuthService } from 'src/app/service/auth.service';
+import { CreateUserJobApprovalDTO } from 'src/app/interface/user-job-approval.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-perfil-usuario-r',
@@ -20,12 +23,15 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   usuarioData: any;
   // observadoresData: ObservacionDTO[];
   nuevaObservacion: string = '';
+  userJobId!: number; // Asigna el valor adecuado
+  userJobApprovalDTO: CreateUserJobApprovalDTO | undefined;
+  authorities!: Set<string>;
   observaciones: ObservacionDTO[] = [];
   enEdicion: any;
-  nombresUsuarios: Object[] = []; 
-  userJob: UserJob[] = []; 
+  nombresUsuarios: Object[] = [];
+  userJob: UserJob[] = [];
   usuarioGuardado: UserSesionDTO = {
-    id:0,
+    id: 0,
     rut: '',
     name: '',
     firstLastname: '',
@@ -34,40 +40,41 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     phone: '',
   };
   panelOpenState = false;
-  observadores: ObservacionDTO ={
+  observadores: ObservacionDTO = {
     usr2_email: '',
     usr2_ap_pat: '',
     usr2_nom: '',
     usr2_id: 0,
     obs_id: 0,
-   apr_ger:'',
-   technicalApproval:'',
-   operationalApproval:'',
-   description:'',
-   creationDate: new Date(),
-   modificationDate:new Date(),
-   usr1_id: 0,
-   usr_id_obs:0,    
-   usr_id_obs_mod: 0,   
-   id: 0,   
-   name:'',
-   firstLastname:'',
-   email:'',
+    apr_ger: '',
+    technicalApproval: '',
+    operationalApproval: '',
+    description: '',
+    creationDate: new Date(),
+    modificationDate: new Date(),
+    usr1_id: 0,
+    usr_id_obs: 0,
+    usr_id_obs_mod: 0,
+    id: 0,
+    name: '',
+    firstLastname: '',
+    email: '',
   }
 
   constructor(
     private userService: UserService,
     private userjobservice: UserJobService,
-    private dialog: MatDialog,  
+    private dialog: MatDialog,
     public dialogRef: MatDialogRef<ViewPerfilUsuarioRComponent>,
     // public dialog: MatDialogRef<ViewPerfilUsuarioRComponent>,
-   
+
     private uploadService: UploadFilesService,
     private herramientasService: HerramientasService,
-    
+
     @Inject(MAT_DIALOG_DATA) public data: any,
     private observacionService: ObservacionService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.usuarioData = data.usuario;
 
@@ -75,17 +82,15 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   }
   ngOnInit(): void {
     this.ObtenerUsuarioGuardado();
-    this.data.usuario.userJob.forEach((job: { id: any; }) => {
-      console.log('esta es una id que enviaré al hijo:', job);
-    });
-      
+    this.data.usuario.userJob.forEach(() => { });
+    this.authorities = this.authService.getAuthorities();
   }
 
 
   verObservacion(userJob: UserJob, idUserJob: number | null): void {
-    const id = idUserJob !== null ? idUserJob : null; 
+    const id = idUserJob !== null ? idUserJob : null;
     console.log('userjob id : ', id);
-  
+
     if (id !== null) {
       this.observacionService.obtenerObservacionesPorUserJob(id).subscribe({
         next: (data) => {
@@ -95,10 +100,9 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
             height: '700px',
             data: {
               usuario: data,
-              userJobId: id // Pasar el valor de id a ObservationRecruiterComponent
+              userJobId: id
             }
           });
-  
           dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
             this.ObtenerUsuarioGuardado();
@@ -112,91 +116,8 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
       console.error('ID de UserJob no válido');
     }
   }
-  
-  
-// cargarObservaciones() {
-//   this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
-//     (observadores) => {
-//       this.observaciones = observadores;
-//     },
-//     (error) => {
-//       console.error('Error al cargar las observaciones:', error);
-//     }
-//   );
-// }
-// guardarObservacion() {
-//   if (!this.nuevaObservacion.trim()) {
-//     this.openSnackBar('La observación no puede estar vacía', 'Cerrar');
-//     return;
-//   }
-//   this.observacionService.obtenerObservacionesPorUsuarioId(this.usuarioData.id).subscribe(
-//     (observaciones) => {
-//       if (observaciones.length >= 10) {
-//         console.error('Se ha alcanzado el límite máximo de observaciones.');
-//         this.openSnackBar('Se ha alcanzado el límite máximo de observaciones', 'Cerrar');
-//         return;
-//       }
-//       const nuevaObservacion: ObservacionDTO = {
-//         obs_id: 0,
-//         id: 0,
-//         name: '',
-//         email: '',
-//         firstLastname: '',
-//         description: this.nuevaObservacion,
-//         creationDate: new Date(),
-//         modificationDate: new Date(),
-//         technicalApproval: '',
-//         operationalApproval: '',
-//         apr_ger: '',
-//         usr_id_obs: this.usuarioGuardado.id ?? 0,
-//         usr_id_obs_mod: this.usuarioGuardado.id ?? 0,
-//         usr1_id: 0,
-//         usr2_email: '',
-//         usr2_ap_pat: '',
-//         usr2_nom: '',
-//         usr2_id: 0,
-//       };
-//       this.observacionService.crearObservacion(nuevaObservacion, this.usuarioData.id, nuevaObservacion.usr_id_obs,
-//           nuevaObservacion.usr_id_obs_mod).subscribe(
-//         (resultado) => {
-//           // this.cargarObservaciones(); 
-//           this.nuevaObservacion = ''; 
-//           this.openSnackBar('Observación guardada con éxito', 'Cerrar');
-//         },
-//         (error) => {
-//           console.error('Error al guardar la observación:', error);
-//           this.openSnackBar('Error al guardar la observación', 'Cerrar');
-//         }
-//       );
-//     },
-//     (error) => {
-//       console.error('Error al cargar las observaciones:', error);
-//       this.openSnackBar('Error al cargar las observaciones', 'Cerrar');
-//     }
-//   );
-// }
-//   editarObservacion(obs_id: number) {
-//     this.enEdicion = obs_id;
-// }
-// actualizarObservacion(observadores: ObservacionDTO) {
-//   if (!observadores.description.trim()) {
-//     console.error('La descripción de la observación no puede estar vacía.');
-//     this.openSnackBar('La descripción de la observación no puede estar vacía', 'Cerrar');
-//     return;
-//   }
-//   observadores.usr_id_obs_mod = this.usuarioGuardado?.id ?? 0;
-//   this.observacionService.actualizarObservacion(observadores.id, observadores, observadores.usr_id_obs_mod).subscribe(
-//     (resultado) => {
-//       this.openSnackBar('Observación actualizada con éxito', 'Cerrar');
-//       this.enEdicion = null; 
-//       // this.cargarObservaciones();
-//     },
-//     (error) => {
-//       console.error('Error al actualizar la observación:', error);
-//       this.openSnackBar('Error al actualizar la observación', 'Cerrar');
-//     }
-//   );
-// }
+
+
   salir() {
     this.dialogRef.close();
   }
@@ -210,7 +131,7 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
       }
     });
   }
-  
+
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action);
   }
@@ -218,22 +139,86 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
   descargarCertificacion(certId: number): void {
     this.herramientasService.downloadCertification(certId)
       .subscribe((response: any) => {
-       
-          const url = window.URL.createObjectURL(response.body);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = response.headers.get("pragma");
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-        
+
+        const url = window.URL.createObjectURL(response.body);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = response.headers.get("pragma");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
       }, (error: any) => {
         console.error('Error al descargar la certificación:', error);
         // Manejar el error según sea necesario
       });
   }
-  
+  aprobarObservacionUsuario(userJob: UserJob, i: number): void {
+    console.log('userJobId:', userJob.id);
 
-  
-  
+    const self = this; // Captura el valor de 'this'
+
+    Swal.fire({
+      title: '¿Deseas aprobar esta Postulación?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Aprobar Postulación',
+      cancelButtonText: 'Rechazar Postulación',
+      cancelButtonColor: '#515151',
+      confirmButtonColor: '#F57C27',
+      customClass: {
+        popup: 'custom-border'
+      }, showCloseButton: true, // Mostrar el botón de cierre
+      closeButtonAriaLabel: 'Cerrar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // El usuario hizo clic en "Aceptar"
+        enviarAprobacion(true);
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // El usuario hizo clic en "Rechazar"
+        enviarAprobacion(false);
+      }
+    });
+
+    function enviarAprobacion(isApproved: boolean) {
+      const userJobApprovalDTO = {
+        isApproved: isApproved,
+      };
+
+      console.log('Objeto userJobApprovalDTO a enviar:', userJobApprovalDTO);
+
+      self.userjobservice.aprobarObservacion(userJob.id, userJobApprovalDTO).subscribe({
+        next: (response) => {
+          console.log('userjob', self.usuarioData.userJob[i])
+          self.usuarioData.userJob[i].approvals = response;
+          console.log('Observation approved successfully:', response);
+
+          // Mostrar un MatSnackBar
+          if (isApproved) {
+            self.mostrarSnackBar('Se ha aprobado la postulación');
+          } else {
+            self.mostrarSnackBar('Se ha rechazado la postulación');
+          }
+        },
+        error: (error) => {
+          console.error('Error approving observation:', error);
+        },
+      });
+    }
+  }
+
+  mostrarSnackBar(message: string) {
+    this._snackBar.open(message, 'Cerrar', {
+      duration: 3000, // Duración en milisegundos
+      horizontalPosition: 'center', // Posición horizontal
+      verticalPosition: 'bottom', // Posición vertical
+    });
+  }
+
+
+
+
 }
+
+
+
