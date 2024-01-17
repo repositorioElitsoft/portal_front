@@ -101,7 +101,7 @@ export class ObservationRecruiterComponent implements OnInit {
           address: '',
         },
         applicationDate: new Date(),
-        approvals: undefined,
+        approvals:[],
       },
       updates: [],
     };

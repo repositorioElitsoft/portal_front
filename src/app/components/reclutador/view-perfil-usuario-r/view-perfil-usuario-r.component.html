@@ -1,176 +1,210 @@
+<div class="card">
+  <div class="card-header ">
+    <div class="card-custom">
+      <button mat-mini-fab color="primary" class="btn-custom" mat-dialog-close
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <h2 class="card-title-custom">Perfil de Usuario </h2>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="user-profile">
+      <mat-tab-group>
+        <mat-tab label="Datos Personales">
+          <mat-list>
+            <mat-list-item>
+              <span matListItemTitle>{{ usuarioData.name }} {{ usuarioData.firstLastname }} {{
+                usuarioData.secondLastname }}</span>
+              <span matListItemLine>Nombre</span>
+              <div matListItemIcon>
+                <mat-icon>person</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>{{ usuarioData.rut }}</span>
+              <span matListItemLine>Rut</span>
+              <div matListItemIcon>
+                <mat-icon>credit_card</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>{{ usuarioData.email}}</span>
+              <span matListItemLine>Correo Electrónico</span>
+              <div matListItemIcon>
+                <mat-icon>email</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle>{{ usuarioData.phone}}</span>
+              <span matListItemLine>Teléfono</span>
+              <div matListItemIcon>
+                <mat-icon>phone</mat-icon>
+              </div>
+            </mat-list-item>
+            <mat-list-item>
+              <span matListItemTitle *ngIf="usuarioData.linkedin">{{ usuarioData.linkedin}}</span>
+              <span matListItemTitle *ngIf="!usuarioData.linkedin">No especificado</span>
+              <span matListItemLine>LinkedIn</span>
+              <div matListItemIcon>
+                <mat-icon>public</mat-icon>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <!-- Herramientas y Tecnologías  -->
+        <mat-tab label="Herramientas">
+          <mat-list>
+            <div class="mb-3 mt-1"> Herramientas y/o tecnologías manejadas por el Postulante:</div>
+            <mat-list-item *ngFor="let tools of usuarioData.tools">
 
-        <div class="card">
-          <div class="card-header ">
-            <div class="card-custom">
-              <button mat-mini-fab color="primary" class="btn-custom" mat-dialog-close
-              aria-label="Example icon button with a menu icon">
-              <mat-icon>keyboard_arrow_left</mat-icon>
-            </button>
-            <h2 class="card-title-custom">Perfil de Usuario </h2>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="user-profile">
-          <mat-tab-group>
-            <mat-tab label="Datos Personales">
-              <mat-list>
-              <mat-list-item>
-                <span matListItemTitle>{{ usuarioData.name }} {{ usuarioData.firstLastname }} {{ usuarioData.secondLastname }}</span>
-                <span matListItemLine>Nombre</span>
-                <div matListItemIcon>
-                  <mat-icon>person</mat-icon>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <span matListItemTitle>{{ usuarioData.rut }}</span>
-                <span matListItemLine>Rut</span>
-                <div matListItemIcon>
-                  <mat-icon>credit_card</mat-icon>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <span matListItemTitle>{{ usuarioData.email}}</span>
-                <span matListItemLine>Correo Electrónico</span>
-                <div matListItemIcon>
-                  <mat-icon>email</mat-icon>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <span matListItemTitle>{{ usuarioData.phone}}</span>
-                <span matListItemLine>Teléfono</span>
-                <div matListItemIcon>
-                  <mat-icon>phone</mat-icon>
-                </div>
-              </mat-list-item>
-              <mat-list-item>
-                <span matListItemTitle *ngIf="usuarioData.linkedin">{{ usuarioData.linkedin}}</span>
-                <span matListItemTitle *ngIf="!usuarioData.linkedin">No especificado</span>
-                <span matListItemLine>LinkedIn</span>
-                <div matListItemIcon>
-                  <mat-icon>public</mat-icon>
-                </div>
-              </mat-list-item>
-              </mat-list>
-            </mat-tab>
-            <!-- Herramientas y Tecnologías  -->
-            <mat-tab label="Herramientas">
-              <mat-list>
-                <div class="mb-3 mt-1"> Herramientas y/o tecnologías manejadas por el Postulante:</div>
-                <mat-list-item *ngFor="let tools of usuarioData.tools">
+              <span matListItemTitle> {{ tools.productVersion.product.name }} {{ tools.productVersion.name }}</span>
+              <span matListItemLine>Nivel: {{ tools.level?.description}}</span>
+              <span matListItemLine>{{ tools.yearsOfExperience }} año/s de experiencia</span>
 
-                  <span matListItemTitle> {{ tools.productVersion.product.name }} {{ tools.productVersion.name }}</span>
-                  <span matListItemLine>Nivel: {{ tools.level?.description}}</span>
-                  <span matListItemLine>{{ tools.yearsOfExperience }} año/s de experiencia</span>
-                  
-                   <!-- Certificaciones -->
-                  <div *ngIf="tools.certifications && tools.certifications.length">
-                    <h3>Certificaciones:</h3>
-                    <ul>
-                      <li *ngFor="let certification of tools.certifications">
-                        <div style="display: flex; align-items: center;">
-                          <span matListItemLine>{{ certification.url.substring(certification.url.lastIndexOf('_') + 1) }}</span>
-                          <button mat-icon-button matTooltip="Descargar" (click)="descargarCertificacion(certification.id)">
-                            <mat-icon>cloud_download</mat-icon>
-                          </button>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <div matListItemIcon>
-                    <mat-icon>bubble_chart</mat-icon>
-                  </div>
-                </mat-list-item>
-              </mat-list>
-            </mat-tab>
-            
-            <!-- Información Laboral  -->
-             <mat-tab label="Información Laboral">
-              <mat-list>
-                
-                <div class="mb-3 mt-1"> Experiencia laboral:</div>
-                <mat-list-item *ngFor="let jobs of usuarioData.jobs">
-                  <span matListItemTitle>{{ jobs.position }}</span>
-                  <span matListItemLine>
-                    {{ jobs.company }}
-                  </span>
-                    <div *ngFor="let h of jobs.herramientas; let i = index" matListItemLine>
-                      <mat-chip  class="chips" >
-                        {{ h.productVersion.prd.name }} ({{ h.productVersion.name }})  - (Exp:{{ h.yearsOfExperience }} año/s)
-                      </mat-chip>
+              <!-- Certificaciones -->
+              <div *ngIf="tools.certifications && tools.certifications.length">
+                <h3>Certificaciones:</h3>
+                <ul>
+                  <li *ngFor="let certification of tools.certifications">
+                    <div style="display: flex; align-items: center;">
+                      <span matListItemLine>{{ certification.url.substring(certification.url.lastIndexOf('_') + 1)
+                        }}</span>
+                      <button mat-icon-button matTooltip="Descargar" (click)="descargarCertificacion(certification.id)">
+                        <mat-icon>cloud_download</mat-icon>
+                      </button>
                     </div>
-                   <!--    Referencias Laborales -->  
-                <div class="mb-3 mt-1"> Referencias Laborales:</div>
-                  <ul *ngIf="jobs.employmentReferences && jobs.employmentReferences.length">
-                    <li *ngFor="let employmentReferences of jobs.employmentReferences">
-                      <span matListItemLine>Nombre: {{employmentReferences.name }}</span>
-                      <span matListItemLine>Empresa: {{employmentReferences.company }}</span>
-                      <span matListItemLine>Teléfono: {{employmentReferences.phone }}</span>
-                      <span matListItemLine>Email: {{employmentReferences.email }}</span>
-                    </li>
-                  </ul>
+                  </li>
+                </ul>
+              </div>
+              <div matListItemIcon>
+                <mat-icon>bubble_chart</mat-icon>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
 
-                  <div matListItemIcon>
-                    <mat-icon>work</mat-icon>
+        <!-- Información Laboral  -->
+        <mat-tab label="Información Laboral">
+          <mat-list>
+
+            <div class="mb-3 mt-1"> Experiencia laboral:</div>
+            <mat-list-item *ngFor="let jobs of usuarioData.jobs">
+              <span matListItemTitle>{{ jobs.position }}</span>
+              <span matListItemLine>
+                {{ jobs.company }}
+              </span>
+              <div *ngFor="let h of jobs.herramientas; let i = index" matListItemLine>
+                <mat-chip class="chips">
+                  {{ h.productVersion.prd.name }} ({{ h.productVersion.name }}) - (Exp:{{ h.yearsOfExperience }} año/s)
+                </mat-chip>
+              </div>
+              <!--    Referencias Laborales -->
+              <div class="mb-3 mt-1"> Referencias Laborales:</div>
+              <ul *ngIf="jobs.employmentReferences && jobs.employmentReferences.length">
+                <li *ngFor="let employmentReferences of jobs.employmentReferences">
+                  <span matListItemLine>Nombre: {{employmentReferences.name }}</span>
+                  <span matListItemLine>Empresa: {{employmentReferences.company }}</span>
+                  <span matListItemLine>Teléfono: {{employmentReferences.phone }}</span>
+                  <span matListItemLine>Email: {{employmentReferences.email }}</span>
+                </li>
+              </ul>
+
+              <div matListItemIcon>
+                <mat-icon>work</mat-icon>
+              </div>
+              <span matListItemMeta>
+                <div>Desde</div> {{ jobs.startDate }}
+              </span>
+              <span matListItemMeta>
+                <div>Hasta</div> {{ jobs.endDate }}
+              </span>
+            </mat-list-item>
+          </mat-list>
+        </mat-tab>
+        <mat-tab label="Información Académica">
+
+          <mat-list>
+            <mat-list-item *ngFor="let academicalList of usuarioData.academicalList">
+              <span matListItemTitle>{{ academicalList.degree }}</span>
+              <span matListItemLine>{{academicalList.university }}</span>
+              <span matListItemLine>{{academicalList.status }}</span>
+
+              <!-- Referencias académicas -->
+              <div class="mb-3 mt-1"> Referencias Académicas:</div>
+              <ul *ngIf="academicalList.academicalReference && academicalList.academicalReference.length">
+                <li *ngFor="let academicalReference of academicalList.academicalReference">
+                  <span matListItemLine>Nombre: {{academicalReference.name }}</span>
+                  <span matListItemLine>Institución: {{academicalReference.institution }}</span>
+                  <span matListItemLine>Teléfono: {{academicalReference.phone }}</span>
+                  <span matListItemLine>Email: {{academicalReference.email }}</span>
+                </li>
+              </ul>
+
+              <div matListItemIcon>
+                <mat-icon>school</mat-icon>
+              </div>
+              <span matListItemMeta>
+                <div>Desde</div> {{ academicalList.startDate }}
+              </span>
+              <span matListItemMeta>
+                <div>Hasta</div> {{ academicalList.endDate }}
+              </span>
+            </mat-list-item>
+          </mat-list>
+
+
+        </mat-tab>
+        <mat-tab label="Postulaciones">
+          <mat-list>
+            <mat-list-item *ngFor="let cargo of usuarioData.userJob;let i = index" class="postulaciones">
+              <mat-card>
+                <mat-card-content>
+                  <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
+                  <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>
+                  <span matListItemLine>Disponibilidad: {{ cargo.availability.time }}</span>
+                  <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
+                  <span matListItemLine class="mat-list-item-content" style="font-weight: bold;">Aprobaciones:
+                    <ng-container *ngIf="cargo.approvals && cargo.approvals.length > 0; else noApprovals">
+                      <span matListItemLine *ngFor="let approval of cargo.approvals">
+                        {{ approval.id.approval.name }}:
+                        <ng-container *ngIf="approval.isApproved; else rejected">
+                          Aprobado <mat-icon>check_circle</mat-icon>
+                        </ng-container>
+                        <ng-template #rejected>
+                          Rechazado <mat-icon>cancel</mat-icon>
+                        </ng-template>
+                        <mat-divider></mat-divider>
+                      </span>
+                    </ng-container>
+                    <ng-template #noApprovals>Pendiente...</ng-template>
+                  </span>
+                  <div *ngIf="usuarioData.preferredJob?.description" class="preferred-job-container">
+                    <mat-icon class="job-icon">star</mat-icon>
+                    <span class="job-description">Otro cargo preferente: {{ usuarioData.preferredJob.description
+                      }}</span>
                   </div>
-                  <span matListItemMeta> <div>Desde</div> {{ jobs.startDate }} </span>
-                  <span matListItemMeta> <div>Hasta</div> {{ jobs.endDate }} </span>
-                </mat-list-item>
-              </mat-list>
-            </mat-tab>  
-            <mat-tab label="Información Académica">
-            
-              <mat-list>
-                <mat-list-item *ngFor="let academicalList of usuarioData.academicalList">
-                  <span matListItemTitle>{{ academicalList.degree }}</span>
-                  <span matListItemLine>{{academicalList.university }}</span>
-                  <span matListItemLine>{{academicalList.status }}</span>
-                  
-                  <!-- Referencias académicas -->
-    <div class="mb-3 mt-1"> Referencias Académicas:</div>
-    <ul *ngIf="academicalList.academicalReference && academicalList.academicalReference.length">
-      <li *ngFor="let academicalReference of academicalList.academicalReference">
-        <span matListItemLine>Nombre: {{academicalReference.name }}</span>
-        <span matListItemLine>Institución: {{academicalReference.institution }}</span>
-        <span matListItemLine>Teléfono: {{academicalReference.phone }}</span>
-        <span matListItemLine>Email: {{academicalReference.email }}</span>
-      </li>
-    </ul>
-                  
-                  <div matListItemIcon>
-                    <mat-icon>school</mat-icon>
-                  </div>
-                  <span matListItemMeta> <div>Desde</div> {{ academicalList.startDate }} </span>
-                  <span matListItemMeta> <div>Hasta</div> {{ academicalList.endDate }} </span>
-                </mat-list-item>
-              </mat-list>
-              
-              
-            </mat-tab>
-            <mat-tab label="Postulaciones">
-              <mat-list >
-              <mat-list-item *ngFor="let cargo of usuarioData.userJob"  class="postulaciones">
-                <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
-                <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>               
-                 <span matListItemLine>Disponibilidad: {{cargo.availability.time }}</span> 
-                <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
-                <span matListItemLine>Aprobaciones: {{cargo.approvals }}</span>
-                <div *ngIf="usuarioData.preferredJob?.description" class="preferred-job-container">
-                  <mat-icon class="job-icon">star</mat-icon>
-                  <span class="job-description">Otro cargo preferente: {{ usuarioData.preferredJob.description }}</span>
-                </div>   
-                                                        
-                <div matListItemIcon>
-                  <mat-icon>forward</mat-icon>
-                </div>
-                <div *ngIf="usuarioData.userJob" class="preferred-job-container">
-                <button mat-raised-button class="botonprimario m-4"  (click)="verObservacion(cargo, cargo.id)">
+                </mat-card-content>
+              </mat-card>
+              <div matListItemIcon>
+                <mat-icon>forward</mat-icon>
+              </div>
+              <div *ngIf="usuarioData.userJob" class="preferred-job-container">
+                <button mat-raised-button class="botonprimario m-4" (click)="verObservacion(cargo, cargo.id)">
                   <mat-icon>visibility</mat-icon> Ver Observación
-                </button></div>
-              </mat-list-item>    
-            </mat-list>
-              <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar Ventana</button>
-            </mat-tab> 
-            </mat-tab-group>
-           </div>
-          </div>
-        </div>
+                </button>
+                <button mat-raised-button class="botonprimario m-4" (click)="aprobarObservacionUsuario(cargo,i)"
+                  *ngIf="authorities.has('ROLE_ENTR')">
+                  <mat-icon>check</mat-icon> Realizar Aprobación
+                </button>
+
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <button mat-raised-button class="botonprimario m-2" (click)="salir()" aria-label="Salir">Cerrar
+            Ventana</button>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

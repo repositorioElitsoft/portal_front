@@ -1,4 +1,4 @@
-export interface Approval {
+export interface Approvals {
     id: number;
     name: string;
 }
