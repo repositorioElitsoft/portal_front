@@ -145,14 +145,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     });
 
-    /*
-    if (this.selectedCargo > 0) {
-      filteredArray = filteredArray.filter(usuario => {
-        return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.JobPositionId === this.selectedCargo);
-      });
-    }
+    
+    // if (this.selectedCargo > 0) {
+    //   filteredArray = filteredArray.filter(usuario => {
+    //     console.log("cargo a postular", this.selectedCargo);
+    //     return usuario.userJob && usuario.userJob.some(cargo => cargo.jobPosition && cargo.jobPosition.id === this.selectedCargo);
+    //   });
+    // }
 
-    */
+    
     if (this.selectedfechaPostulacion) {
       console.log("seleccioné fecha");
       // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
@@ -184,25 +185,20 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       // Imprimir el array de cargos filtrados
       console.log("Cargos filtrados por fecha de postulación:", this.cargos);
     }
+  
+    
 
-    /*
-        // Filtro por estado
-        if (this.selectedEstado && this.selectedEstado !== '') {
-          filteredArray = filteredArray.filter((usuario) => {
-            return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
-          });
-    
-          // Imprimir el array de cargos filtrados
-          console.log("Cargos filtrados por fecha de postulación:", this.cargos);
-        }
-    
-        /*
-            // Filtro por estado
-            if (this.selectedEstado && this.selectedEstado !== '') {
-              filteredArray = filteredArray.filter((usuario) => {
-                return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
+          // Filtro por estado de disponibilidad
+          if (this.selectedEstado && this.selectedEstado !== '') {
+            console.log("estado disponibilidad", this.cargos);
+            filteredArray = filteredArray.filter((usuario) => {
+              return usuario.userJob && usuario.userJob.some((job) => {
+                return job.availability && job.availability.time === this.selectedEstado;
               });
-            }*/
+            });
+          }
+
+       
 
     // Filtro por producto
 
@@ -328,6 +324,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     this.dataSource.data = filteredArray;
   }
+  
   filterByCargo() {
     let filteredArray = this.originalDataCopy;
 
