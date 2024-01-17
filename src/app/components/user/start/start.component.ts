@@ -8,7 +8,7 @@ import 'chartjs-plugin-annotation';
 import { UserService } from 'src/app/service/user.service';
 import { ProductoService } from 'src/app/service/producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
-import { ResultadosService } from 'src/app/SERVICE/resultados.service';
+import { ResultadosService } from 'src/app/service/resultados.service';
 import { Result } from 'src/app/interface/exam-results.interface';
 
 @Component({

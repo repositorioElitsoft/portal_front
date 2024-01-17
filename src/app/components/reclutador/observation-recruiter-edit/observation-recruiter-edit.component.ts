@@ -84,5 +84,18 @@ export class ObservationRecruiterEditComponent implements OnInit {
     }
   }
   
+  getInitials(name: string, firstLastname: string, secondLastname: string): string {
+    // Obtener las dos primeras letras de name y firstLastname
+    const initials = name.charAt(0) + firstLastname.charAt(0);
+    
+    // Verificar si secondLastname existe y no es vacío
+    if (secondLastname && secondLastname.trim() !== '') {
+      // Si existe, agregar la primera letra de secondLastname
+      return initials + secondLastname.charAt(0);
+    } else {
+      // Si no existe, solo retornar las dos iniciales anteriores
+      return initials;
+    }
+  }
   
 }
