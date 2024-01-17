@@ -100,7 +100,7 @@
           <div class="filter-row">
           <mat-form-field class="filter-select">
             <mat-label>Porcentaje de aprobación</mat-label>
-            <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
+            <mat-select  [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
               <mat-option value="">Seleccione un opción</mat-option>
               <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label }}</mat-option>
             </mat-select>
@@ -152,9 +152,15 @@
     </ng-container>
     <!-- Weight Column -->
     <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Correo </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
       <td mat-cell *matCellDef="let element"> {{element.email}} </td>
     </ng-container>
+    <!-- Porcentaje de Aprobación -->
+    <ng-container matColumnDef="porcentajeAprobacion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Porcentaje de Aprobación </th>
+      <td mat-cell *matCellDef="let element"> {{ calculateUserResults(element.results)}}% </td>
+    </ng-container>
+
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">

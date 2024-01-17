@@ -64,6 +64,7 @@ export class UserPrefferedJobComponent {
   }
   
 
+  
   submitForm() {
     const userPreferredJobData = this.form.value;
     if (this.data.creationMode) {

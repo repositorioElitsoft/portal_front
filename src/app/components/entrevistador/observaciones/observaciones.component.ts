@@ -20,6 +20,7 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
 import { Product } from 'src/app/interface/producto.interface';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
+import { Result } from 'src/app/interface/exam-results.interface';
 
 const ELEMENT_DATA: any[] = [];
 
@@ -29,7 +30,7 @@ const ELEMENT_DATA: any[] = [];
   styleUrls: ['./observaciones.component.css']
 })
 export class ObservacionesComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['name', 'phone', 'email', 'acciones'];
+  displayedColumns: any[] = ['name', 'phone', 'email','porcentajeAprobacion', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   resultados  = [];
   idUser: string = '';
@@ -71,6 +72,8 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       this.getCategories();
       this.obtenerResultadosByUser();
       this.getJobPosition();
+      this.initializeDataSource();
+      
   }
   getJobPosition() {
     this.JobPositionService.obtenerListaJobPosition().subscribe(
@@ -79,10 +82,25 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
       }
     )
   }
-    ngAfterViewInit() {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+  initializeDataSource() {
+    this.dataSource.sortingDataAccessor = this.customSortingAccessor.bind(this);
+    this.dataSource.sort = this.sort;
+  }
+  
+  customSortingAccessor(item:any, property:any) {
+    if (property === 'porcentajeAprobacion') {
+      return this.calculateUserResults(item.results);
+    } else {
+      return item[property];
     }
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+  
+  
     obtenerUsuarios(): void {
       this.userService.obtenerUsuarios().subscribe(
         (data: any[]) => {
@@ -104,6 +122,7 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
           id: usuario.id,
           cvPath: usuario.cvPath,
           userJob: usuario.userJob,
+          results: usuario.results,
             }));
           this.originalDataCopy = usuarios;
           this.dataSource.data = usuarios;
@@ -124,6 +143,18 @@ export class ObservacionesComponent implements OnInit, AfterViewInit {
           console.log('Error al obtener categorías:');
         }
       );
+    }
+    calculateUserResults(results: Result[]) {
+      const puntosMaximos = 20;
+      if (results.length === 0) {
+        return 0;
+      }
+      const maxResult: number = results.reduce((max, current) => {
+        const score = current.score ?? 0;
+        return score > max ? score : max;
+      }, Number.NEGATIVE_INFINITY);
+      const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
+      return porcentajeAprobacionByUser;
     }
 
     obtenerResultadosByUser() {

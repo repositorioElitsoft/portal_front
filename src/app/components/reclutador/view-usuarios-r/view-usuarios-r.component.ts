@@ -33,6 +33,8 @@ import { UserJob } from 'src/app/interface/user-job.interface';
 import { ToolDTO } from 'src/app/interface/herramientas.interface';
 import { ResultadosService } from 'src/app/SERVICE/resultados.service';
 import { AcademicaService } from 'src/app/service/academica.service';
+import { HerramientasService } from 'src/app/service/herramientas.service';
+import { Result } from 'src/app/interface/exam-results.interface';
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -40,7 +42,8 @@ const ELEMENT_DATA: User[] = [];
   styleUrls: ['./view-usuarios-r.component.css'],
 })
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['name', 'phone', 'email', 'acciones', 'seleccionar'];
+
+  displayedColumns: any[] = ['name', 'phone', 'email','porcentajeAprobacion', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   filtroPuntaje: string = '';
@@ -72,6 +75,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   resultados: any[] = [];
   porcentajeAprobacion:number = 0;
   filteredUsuarios:any=[]=[];
+  puntosMaximos?:number;
   selectedOption:String = '';
   selectedNivel : number = 0;
   isSueldoSliderEnabled = true;
@@ -83,6 +87,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedPorcentajeAprobacion: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  herramientas: any;
+  lvl: any;
+  productname: any;
+  productIds: any;
+  productid: any;
+  lvlid: any;
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -98,7 +108,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private JobPositionService: JobPositionService,
     private resultadosService:ResultadosService,
     private UserJobService: UserJobService,
-    private AcademicalReferences: AcademicaService
+    private AcademicalReferences: AcademicaService,
+    private herramientasService: HerramientasService
   ) {
     this.selectedCheckbox = this.fb.group({
     });
@@ -109,6 +120,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.getCategories();
     this.obtenerResultadosByUser();
     this.getJobPosition();
+    this.obtenerHerramientas();
+    this.initializeDataSource();
+    
   }
   getJobPosition() {
     this.JobPositionService.obtenerListaJobPosition().subscribe(
@@ -121,13 +135,46 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.isSueldoSliderEnabled = !this.isSueldoSliderEnabled;
   }
   obtenerResultados() {
-    this.resultadosService.obtenerResultados().subscribe(
-      (data) => {
+    this.resultadosService.obtenerResultadosByUser().subscribe(
+      (data:any) => {
         this.resultados = data;
-        this.filterData();
+        console.log("data", data);
+      },
+      (error:any) => {
+        console.error(error);
+      }
+    );
+  }
+  initializeDataSource() {
+    this.dataSource.sortingDataAccessor = this.customSortingAccessor.bind(this);
+    this.dataSource.sort = this.sort;
+  }
+  
+  customSortingAccessor(item:any, property:any) {
+    if (property === 'porcentajeAprobacion') {
+      return this.calculateUserResults(item.results);
+    } else {
+      return item[property];
+    }
+  }
+
+  obtenerHerramientas() {
+    this.herramientasService.getCurrentUserTools().subscribe(
+      (herramientas:any) => {
+        if (herramientas && herramientas.length > 0) {
+          this.herramientas = herramientas
+          this.lvl= herramientas.map((herramienta:any) => herramienta.level.description);
+          console.log("herramientas",this.herramientas);
+          this.productIds = herramientas.map((herramienta:any) => herramienta.productVersion.name);
+          this.productname = herramientas.map((herramienta:any) => herramienta.productVersion.product.name);
+          this.productid = herramientas.map((herramienta:any) => herramienta.productVersion.product.id);
+          this.lvlid= herramientas.map((herramienta:any) => herramienta.level.id);
+        } else {
+          console.log('No se encontraron herramientas para el usuario.');
+        }
       },
       (error) => {
-        console.error(error);
+        console.error('Error al obtener el usuario guardado:', error);
       }
     );
   }
@@ -136,23 +183,26 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   filterData() {
-    let filteredArray = this.originalDataCopy;
+    let filteredArray:User[] = this.originalDataCopy;
+   
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
+      
       return usuario.userJob && usuario.userJob.some(cargo => {
         const sueldo = cargo.salary; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
+    console.log("filteredArray",filteredArray);
+    // //filtro por cargo
+    // if (this.selectedCargo > 0) {
+    //   filteredArray = filteredArray.filter(usuario => {
+    //     return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.JobPositionId === this.selectedCargo);
+    //   });
+    // }
 
-    /*
-    if (this.selectedCargo > 0) {
-      filteredArray = filteredArray.filter(usuario => {
-        return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.JobPositionId === this.selectedCargo);
-      });
-    }
 
-    */
+//filtro por fecha de postulacion
 if (this.selectedfechaPostulacion) {
   console.log("seleccioné fecha");
   // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
@@ -185,60 +235,55 @@ if (this.selectedfechaPostulacion) {
   console.log("Cargos filtrados por fecha de postulación:", this.cargos);
 }
 
-/*
-    // Filtro por estado
-    if (this.selectedEstado && this.selectedEstado !== '') {
-      filteredArray = filteredArray.filter((usuario) => {
-        return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
-      });
-    }*/
 
-    // Filtro por producto
+    // //Filtro por estado
+    // if (this.selectedEstado && this.selectedEstado !== '') {
+    //   filteredArray = filteredArray.filter((usuario) => {
+    //     return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
+    //   });
+   
 
-    /*
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.prd_nom));
-      }
-    }
+    // //Filtro por producto
+    // if (this.selectedProducto > 0) {
+    //   const selectedProduct = this.productos.find(product => product.id === this.selectedProducto);
+    //   if (selectedProduct) {
+    //     filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.name));
+    //   }
+    // }
 
-    // Filtro por versión
-    if (this.selectedVersion > 0) {
-      const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
-      if (selectedVersion) {
-        filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
-      }
-    }
-    */
+    // //Filtro por versión
+    // if (this.selectedVersion > 0) {
+    //   const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
+    //   if (selectedVersion) {
+    //     filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
+    //   }
+    // }
+    
 
 
 
-// Filtro por resultado del usuario
-  if (this.resultados !== undefined) {
-  this.resultadosService.obtenerResultadosByUser().subscribe(
-    (resultadoUsuario:any) => {
-      console.log('Resultado obtenido del servicio:', resultadoUsuario);
-      console.log('Resultados actuales en el componente:', this.resultados);
+// // Filtro por resultado del usuario
+//   if (this.resultados !== undefined) {
+//   this.resultadosService.obtenerResultadosByUser().subscribe(
+//     (resultadoUsuario:any) => {
+//       filteredArray = filteredArray.filter(usuario => {
+//         // Usar una función de flecha para preservar el contexto
+//         return resultadoUsuario === this.resultados;
+//       });
 
-      filteredArray = filteredArray.filter(usuario => {
-        // Usar una función de flecha para preservar el contexto
-        return resultadoUsuario === this.resultados;
-      });
-
-      console.log('Array filtrado:', filteredArray);
-    },
-    (error:any) => {
-      console.error('Error al obtener resultados del usuario: ', error);
-    }
-  );
-}
+//       console.log('Array filtrado:', filteredArray);
+//     },
+//     (error:any) => {
+//       console.error('Error al obtener resultados del usuario: ', error);
+//     }
+//   );
+// }
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
       filteredArray = filteredArray.filter(resultados => {
         return this.resultados.find(resultado => {
-          const nivelDificultad = resultado.examen.nivelDificultad;
-          const productos = resultado.examen.productos;
+          const nivelDificultad = resultado.level.description;
+          const productos = resultado.product;
 
           console.log('nivel examen:', nivelDificultad);
           console.log('nivel seleccionado:', this.selectedNivel);
@@ -249,22 +294,26 @@ if (this.selectedfechaPostulacion) {
       });
     }
     // Filtro por porcentaje de aprobación
-    if (this.selectedPorcentajeAprobacion) {
-      filteredArray = filteredArray.filter(usuario => {
-        const resultadosDeUsuario= this.resultados.filter(resultado => {
-          return resultado.usuarioId === usuario.id;
-
-        });
-        const resultadoFinal = resultadosDeUsuario.find(resultado =>{
-          const resultadoExamen = resultado.resultadosExamen;
-          const puntosMaximos = resultado.examen.puntosMaximos;
-          const nivelDificultad = resultado.examen.nivelDificultad;
-          const productos = resultado.examen.productos;
+    console.log("estoy filtrando",typeof this.selectedPorcentajeAprobacion); 
+    if (typeof this.selectedPorcentajeAprobacion ==="object") { 
+      console.log("en el filter",filteredArray); 
+      filteredArray = filteredArray.filter(resultado => {
+          console.log("resultado aaaaaa",resultado); 
+          const resultadoFinal = this.resultados.find(resultado =>{
+          const resultadoExamen = resultado.score;
+          const puntosMaximos = 4;
+          console.log("resultadoExamen",resultadoExamen); 
+          const nivelDificultad = resultado.level.description;
+          const productos = resultado.product; 
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
-          // Verifica si el usuario cumple con los filtros anteriores
-          const cumpleFiltrosAnteriores = productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
-          // Verifica si el porcentaje de aprobación cumple con el rango seleccionado
-          if (cumpleFiltrosAnteriores) {
+          const cumpleFiltrosAnteriores = productos.length > 0 && productos.id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+          console.log("porcentajeAprobacion",porcentajeAprobacion);
+          console.log("this.selectedProducto",this.selectedProducto);
+          console.log("resultadoExamen",resultadoExamen); 
+          console.log("nivelDificultad",nivelDificultad);
+          console.log("this.selectedNivel",this.selectedNivel);
+          console.log("productos",productos);
+          
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
               return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
                     porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
@@ -275,7 +324,7 @@ if (this.selectedfechaPostulacion) {
               console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
               return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
             }
-          }
+          
           return false;
         });
         console.log("resultado final",resultadoFinal);
@@ -312,10 +361,10 @@ if (this.selectedfechaPostulacion) {
         return anosExp.some((anos: any) => anos >= min && anos <= max);
       });
     }*/
-    console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    console.log('Usuarios filtrados:', filteredArray);
+    // console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
+    // console.log('Usuarios filtrados:', filteredArray);
 
-    this.dataSource.data = filteredArray;
+     this.dataSource.data = filteredArray;
   }
   filterByCargo() {
     let filteredArray = this.originalDataCopy;
@@ -441,6 +490,7 @@ obtenerUsuarios(): void {
           id: usuario.id,
           cvPath: usuario.cvPath,
           userJob: usuario.userJob,
+          results: usuario.results,
 
         }));
 
@@ -464,6 +514,19 @@ obtenerUsuarios(): void {
     }
   );
 }
+calculateUserResults(results: Result[]) {
+  const puntosMaximos = 20;
+  if (results.length === 0) {
+    return 0;
+  }
+  const maxResult: number = results.reduce((max, current) => {
+    const score = current.score ?? 0;
+    return score > max ? score : max;
+  }, Number.NEGATIVE_INFINITY);
+  const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
+  return porcentajeAprobacionByUser;
+}
+
 
 onSendMailPressed(){
   const values = this.selectedCheckbox.value
@@ -551,7 +614,7 @@ onSendMailPressed(){
     this.resultadosService.obtenerResultadosByUser().subscribe(
       (data: any) => {
         this.resultados = data;
-        console.log('Resultados obtenidos:', this.resultados);
+        console.log('Resultados obtenidos aaaa:', this.resultados);
       },
       (error:any) => {
         console.error('Error al obtener resultados:', error);
@@ -622,8 +685,12 @@ onSendMailPressed(){
 
     }
 
+  // numbertoString(results:number){
+  //   return String(results)
 
+  // }
 
+  
 
   announceSortChange(sortState: Sort) {
       if (sortState.direction) {
