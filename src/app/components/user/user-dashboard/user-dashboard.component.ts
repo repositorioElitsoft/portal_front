@@ -1,18 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { HerramientasService } from 'src/app/service/herramientas.service';
-import { PreguntaService } from 'src/app/service/pregunta.service';
-import { UserService } from 'src/app/service/user.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/service/auth.service';
+
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.css']
 })
 export class UserDashboardComponent implements OnInit {
-exams: any;
-  constructor(private preguntaService: PreguntaService,
-    private userService:UserService,
-    private herramientasService : HerramientasService) {   
-  }
+  authorities!: Set<string>;
+  constructor(private router: Router,
+    private authService: AuthService
+  ) { }
   ngOnInit(): void {
+    this.authorities = this.authService.getAuthorities();
+
+  }
+  cerrarSesion() {
+    this.router.navigate(['/iniciar-sesion']);
   }
 }

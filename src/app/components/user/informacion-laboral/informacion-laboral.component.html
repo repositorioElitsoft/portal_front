@@ -1,15 +1,12 @@
-  <app-sidebar-user></app-sidebar-user>
-  <br>
-  <app-sidebar-userdesk></app-sidebar-userdesk>
-  <div class="container">
+<div class="container">
   <mat-card class="container-datos-personales">
-    <div class="div-inputs" *ngIf="!creationMode" >
+    <div class="div-inputs" *ngIf="!creationMode">
       <h4 class="perfilr">Información Laboral</h4>
       <div *ngFor="let labor of employment">
         <div class="row celda-laboral">
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Cargo</h4>
-              <p>{{ labor.position}}</p>
+            <p>{{ labor.position}}</p>
           </div>
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Inicio</h4>
@@ -18,26 +15,28 @@
           <div class="col-2 fechas">
             <h4 class="Titulos mb-5">Fecha Fin</h4>
             <p class="fechas2">
-            {{ labor.endDate}}</p>
+              {{ labor.endDate}}</p>
           </div>
           <div class="col-2">
-          <div class="flex">
-            <h4 class="Titulos  mb-4">Acciones</h4>
-           <button mat-mini-fab  class="minifab m-1"  id="{{labor.id}}" (click)="editLaboral($event)">
-            <mat-icon>edit</mat-icon>
-           </button>
-           <button mat-mini-fab  class="minifabdanger m-1" (click)="eliminarLaboral(labor.id)">
-            <mat-icon>delete</mat-icon>
-           </button>
-          </div>
+            <div class="flex">
+              <h4 class="Titulos  mb-4">Acciones</h4>
+              <button mat-mini-fab class="minifab m-1" id="{{labor.id}}" (click)="editLaboral($event)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-mini-fab class="minifabdanger m-1" (click)="eliminarLaboral(labor.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
       </div>
       <div *ngIf="employment.length === 0">
         No has definido ninguna experiencia laboral
       </div>
-      <button  class="botonprimario m-2"mat-raised-button  (click)="openaddExperienciaLaboral('300ms', '150ms')" > + Añadir experiencia laboral</button>
-      <button class="botonprimario m-2" mat-raised-button *ngIf="employment.length > 0" (click)="redirectTo()">Siguiente</button>
+      <button class="botonprimario m-2" mat-raised-button (click)="openaddExperienciaLaboral('300ms', '150ms')"> +
+        Añadir experiencia laboral</button>
+      <button class="botonprimario m-2" mat-raised-button *ngIf="employment.length > 0"
+        (click)="redirectTo()">Siguiente</button>
     </div>
-</mat-card>
+  </mat-card>
 </div>

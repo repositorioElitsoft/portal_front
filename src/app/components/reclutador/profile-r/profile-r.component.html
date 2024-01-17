@@ -1,59 +1,60 @@
-
 <mat-card class="profile-container">
-<h4 class="perfilr">Detalles del perfil</h4>
-    <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
-    <div class="div-inputs"  *ngIf="isLoaded">
-      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
- 
-        <div class="row mb-3">
-          <label for="inputNombres" class="col-sm-2 col-form-label">Nombres:</label>
-          <div class="col-sm-10">
-            <input type="nombres" class="form-control" id="inputNombres" formControlName="name" name="inputNombres"
-            [ngClass]="{'is-invalid': form.get('name')?.invalid && form.get('name')?.touched}" >
-            <div *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched" class="invalid-feedback">
-              Debe ingresar nombre
-            </div>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputApellidop" class="col-sm-2 col-form-label">Apellido Paterno:</label>
-          <div class="col-sm-10">
-            <input type="apellidop" class="form-control" id="inputApellidop" formControlName="firstLastname" name="inputApellidop"
+  <h4 class="perfilr">Detalles del perfil</h4>
+  <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
+  <div class="div-inputs" *ngIf="isLoaded">
+    <form [formGroup]="form" (ngSubmit)="submitForm($event)">
+
+      <div class="row mb-3">
+        <mat-form-field appearance="outline" class="col-sm-12">
+          <mat-label>Nombres:</mat-label>
+          <input matInput formControlName="name" name="inputNombres"
+            [ngClass]="{'is-invalid': form.get('name')?.invalid && form.get('name')?.touched}">
+          <mat-error *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">
+            Debe ingresar nombre
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row mb-3">
+        <mat-form-field appearance="outline" class="col-sm-12">
+          <mat-label>Apellido Paterno:</mat-label>
+          <input matInput formControlName="firstLastname" name="inputApellidop"
             [ngClass]="{'is-invalid': form.get('firstLastname')?.invalid && form.get('firstLastname')?.touched}">
-            <div *ngIf="form.get('firstLastname')?.hasError('required') && form.get('firstLastname')?.touched" class="invalid-feedback">
-              Debe ingresar apellido
-            </div>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="inputApellidom" class="col-sm-2 col-form-label">Apellido Materno:</label>
-          <div class="col-sm-10">
-            <input type="apellidom" class="form-control" id="inputApellidom" formControlName="secondLastname" name="inputApellidom"
+          <mat-error *ngIf="form.get('firstLastname')?.hasError('required') && form.get('firstLastname')?.touched">
+            Debe ingresar apellido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row mb-3">
+        <mat-form-field appearance="outline" class="col-sm-12">
+          <mat-label>Apellido Materno:</mat-label>
+          <input matInput formControlName="secondLastname" name="inputApellidom"
             [ngClass]="{'is-invalid': form.get('secondLastname')?.invalid && form.get('secondLastname')?.touched}">
-            
-            <div *ngIf="form.get('secondLastname')?.hasError('required') && form.get('secondLastname')?.touched" class="invalid-feedback">
-              Debe ingresar apellido
-            </div>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label for="email" class="col-sm-2 col-form-label">Email</label>
-          <div class="col-sm-10">
-            <input type="email" class="form-control no-mouse-action" id="email" formControlName="email" name="email" readonly>
-          </div>
-        </div>
-        <button mat-raised-button type="button" class="btn btn-primary"
-        (click)="toggleEditable()" *ngIf="!editable"
+          <mat-error *ngIf="form.get('secondLastname')?.hasError('required') && form.get('secondLastname')?.touched">
+            Debe ingresar apellido
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row mb-3">
+        <mat-form-field appearance="outline" class="col-sm-12">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" name="email" readonly>
+        </mat-form-field>
+      </div>
+
+      <button mat-raised-button type="button" class="btn btn-primary" (click)="toggleEditable()" *ngIf="!editable"
         style="background-color: #F76805; border: 0; color: #ffff;"
         onmouseover="this.style.backgroundColor='#ffff'; this.style.color='#F76805';"
         onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">
         <mat-icon>edit</mat-icon>Editar
-      </button>       
-        <button  mat-raised-button type="submit" class="btn btn-primary" *ngIf="editable"style="background-color: #F76805; border: 0; color: #ffff;"
+      </button>
+
+      <button mat-raised-button type="submit" class="btn btn-primary" *ngIf="editable"
+        style="background-color: #F76805; border: 0; color: #ffff;"
         onmouseover="this.style.backgroundColor='#ffff'; this.style.color='#F76805';"
-        onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">Guardar</button>   
-      </form>     
-    </div>
-  </mat-card>
-
-
+        onmouseout="this.style.backgroundColor='#F76805'; this.style.color='#ffff';">Guardar</button>
+    </form>
+  </div>
+</mat-card>

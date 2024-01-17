@@ -3,19 +3,27 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
+import { AuthService } from 'src/app/service/auth.service';
 @Component({
-  selector: 'app-sidebar-userdesk',
-  templateUrl: './sidebar-userdesk.component.html',
-  styleUrls: ['./sidebar-userdesk.component.css']
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.css']
 })
-export class SidebarUserDeskComponent implements OnInit  {
+export class SidebarComponent implements OnInit {
+  authorities!: Set<string>;
   constructor(
     private router: Router,
     public dialog: MatDialog,
-    private cookieService: CookieService
-  ) {}
-  ngOnInit(): void {}
+    private cookieService: CookieService,
+    private authService: AuthService,
+
+
+  ) { }
+  ngOnInit(): void {
+    this.authorities = this.authService.getAuthorities();
+  }
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    console.log('permisos: ', this.authorities);
     this.dialog.open(CerrarSesionComponent, {
       width: '250px',
       enterAnimationDuration,

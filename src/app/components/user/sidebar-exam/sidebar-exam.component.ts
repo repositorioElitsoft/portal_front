@@ -3,26 +3,26 @@ import { Component, OnInit } from '@angular/core';
 import { CategoriaService } from 'src/app/service/categoria.service';
 import { LoginService } from 'src/app/service/login.service';
 @Component({
-  selector: 'app-sidebar-user-exam',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  selector: 'app-sidebar-exam',
+  templateUrl: './sidebar-exam.component.html',
+  styleUrls: ['./sidebar-exam.component.css']
 })
-export class SidebarComponent implements OnInit {
-  categorias:any;
+export class SidebarExamComponent implements OnInit {
+  categorias: any;
   constructor(
-    private categoriaService:CategoriaService,
-    private snack:MatSnackBar,
-    public login:LoginService
+    private categoriaService: CategoriaService,
+    private snack: MatSnackBar,
+    public login: LoginService
   ) { }
   ngOnInit(): void {
     this.categoriaService.listarCategorias().subscribe(
-      (data:any) => {
+      (data: any) => {
         this.categorias = data;
       },
       (error) => {
         console.log(error);
-        this.snack.open('Error al cargar las categorías','',{
-          duration:3000
+        this.snack.open('Error al cargar las categorías', '', {
+          duration: 3000
         })
         console.log(error);
       }

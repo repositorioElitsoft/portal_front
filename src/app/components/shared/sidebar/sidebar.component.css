@@ -7,14 +7,17 @@
   padding-top: 14vh;
   z-index: 0;
 }
-.custom-icon{
+
+.custom-icon {
   margin-right: 4px;
 }
+
 .sidebar-header {
   text-align: center;
   padding-bottom: 20px;
-  color: #6c757d; 
+  color: #6c757d;
 }
+
 .list-unstyled li a {
   display: block;
   padding: 10px 15px;
@@ -24,23 +27,28 @@
   display: flex;
   align-self: center;
 }
+
 .list-unstyled li a:hover {
   background-color: #555;
   color: #fff;
 }
+
 .list-unstyled li a.active {
   background-color: #f39c12;
   color: #fff;
 }
+
 .app-sidebar-admin {
   z-index: 0;
 }
+
 .navbar {
-  margin-top: 10px; 
+  margin-top: 10px;
   float: right;
 }
+
 @media (max-width: 1300px) {
-  .sidebar{
+  .sidebar {
     display: none;
     pointer-events: none;
   }
