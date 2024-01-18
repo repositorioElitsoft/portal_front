@@ -46,10 +46,10 @@
             <div class="form-group">
               <label for="prg_resp">Seleccione la respuesta</label>
               <select class="form-control" id="prg_resp" name="prg_resp" formControlName="answer" required>
-                <option value="1">{{ form.get("option1")?.value }}</option>
-                <option value="2">{{ form.get("option2")?.value }}</option>
-                <option value="3">{{ form.get("option3")?.value }}</option>
-                <option value="4">{{ form.get("option4")?.value }}</option>
+                <option [value]="form.get('option1')?.value">{{ form.get("option1")?.value }}</option>
+                <option [value]="form.get('option2')?.value">{{ form.get("option2")?.value }}</option>
+                <option [value]="form.get('option3')?.value">{{ form.get("option3")?.value }}</option>
+                <option [value]="form.get('option4')?.value">{{ form.get("option4")?.value }}</option>
               </select>
             </div>
             <div formGroupName="level">
