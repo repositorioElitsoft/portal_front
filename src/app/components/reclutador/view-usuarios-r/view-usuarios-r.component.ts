@@ -244,31 +244,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
               });
             });
           }
-
-       
-
-    // Filtro por producto
-
-    /*
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.prd_nom));
-      }
-      return false;
-  });
-
-  // Imprimir el array de cargos filtrados
-  console.log("Cargos filtrados por fecha de postulación:", this.cargos);
-}
-
-
-    // //Filtro por estado
-    // if (this.selectedEstado && this.selectedEstado !== '') {
-    //   filteredArray = filteredArray.filter((usuario) => {
-    //     return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
-    //   });
-   
+     
 
     // //Filtro por producto
     // if (this.selectedProducto > 0) {
@@ -287,24 +263,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     // }
     
 
-
-
-// // Filtro por resultado del usuario
-//   if (this.resultados !== undefined) {
-//   this.resultadosService.obtenerResultadosByUser().subscribe(
-//     (resultadoUsuario:any) => {
-//       filteredArray = filteredArray.filter(usuario => {
-//         // Usar una función de flecha para preservar el contexto
-//         return resultadoUsuario === this.resultados;
-//       });
-
-//       console.log('Array filtrado:', filteredArray);
-//     },
-//     (error:any) => {
-//       console.error('Error al obtener resultados del usuario: ', error);
-//     }
-//   );
-// }
     // Filtro por nivel de examen
     if (this.selectedNivel > 0) {
       filteredArray = filteredArray.filter(resultados => {
@@ -361,13 +319,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return false;
       })
     }
-    //Filtro
-    /*
+    //Filtro años de experiencia
+    
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.laborales?.some((experiencia : any) => {
+        return usuario.jobs?.some((experiencia : any) => {
           return experiencia.herramientas?.some((herramienta: any) => {
-            const herramientaExperiencia = herramienta.productVersion?.prd?.prd_id;
+            const herramientaExperiencia = herramienta.productVersion?.id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
               const fechaFin = new Date(experiencia.endDate);
               const currentYear = new Date().getFullYear();
@@ -378,36 +336,24 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           });
         });
       });
-    }*/
+    }
 
-    /*
-    if (this.selectedVersion > 0) {
-      const [min, max] = this.selectedAniosExpRange;
-      filteredArray = filteredArray.filter(element => {
-        const anosExp = element.herr_exp.split(', ').map(Number);
-        return anosExp.some((anos: any) => anos >= min && anos <= max);
-      });
-    }*/
-    // console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    // console.log('Usuarios filtrados:', filteredArray);
+    
+    // if (this.selectedVersion > 0) {
+    //   const [min, max] = this.selectedAniosExpRange;
+    //   filteredArray = filteredArray.filter(element => {
+    //     const anosExp = element.tools?[0][0].jhjhj.split(', ').map(Number);
+    //     return anosExp.some((anos: any) => anos >= min && anos <= max);
+    //   });
+    // }
+    //  console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
+     console.log('Usuarios filtrados:', filteredArray);
 
      this.dataSource.data = filteredArray;
   }
   
-  filterByCargo() {
-    let filteredArray = this.originalDataCopy;
-
-    // if (this.filterCargo) {
-    //   const filtroCargoLowerCase = this.filterCargo.toLowerCase();
-    //   filteredArray = filteredArray.filter(usuario =>
-    //     usuario.userJob?.some(cargo =>
-    //       cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
-    //     )
-    //   );
-    // }
-    this.dataSource.data = filteredArray;
-    console.log('Usuarios filtrados', filteredArray);
-  }
+  
+    
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
       this.lastYears = 0;

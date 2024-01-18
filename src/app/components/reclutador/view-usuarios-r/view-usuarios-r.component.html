@@ -36,7 +36,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-
+    <!-- Filtro por estado laboral -->
     <div class="filter-row">
       <mat-form-field class="filter-select" appearance="outline">
         <mat-label>Disponibilidad</mat-label>
@@ -108,9 +108,6 @@
         </mat-select>
       </mat-form-field>
     </div>
-
-
-
     <!-- Filtro por Porcentaje Aprobación -->
     <div class="filter-row">
       <mat-form-field class="filter-select" appearance="outline">
@@ -122,7 +119,6 @@
         </mat-select>
       </mat-form-field>
     </div>
-
     <!-- Filtro por Rango de Sueldo -->
     <div class="filter-slider d-flex flex-column align-items-center">
       <mat-label>Rango de Sueldos: </mat-label>
@@ -139,7 +135,7 @@
     <div class="filter-slider d-flex flex-column align-items-center m-2">
       <mat-label>Rango de años de Experiencia: </mat-label>
       <mat-slider min="1" max="10" (input)="filterAniosExp()" discrete [displayWith]="formatLabel"
-        [disabled]="!selectedVersion">
+        >
         <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
         <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
       </mat-slider>
@@ -156,39 +152,29 @@
         </mat-form-field>
       </div>
     </div>
-
-
-
-
   </div>
-
-
 </mat-card>
-
-
-<table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
-  class="mat-elevation-z8">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} {{element.firstLastname}}
-      {{element.secondLastname}} </td>
-  </ng-container>
-  <!-- Name Column -->
-  <ng-container matColumnDef="phone">
-    <th mat-header-cell *matHeaderCellDef> Telefono </th>
-    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
-  </ng-container>
-  <!-- Weight Column -->
-  <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
-    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-  </ng-container>
-  <!-- Porcentaje de Aprobación -->
-  <ng-container matColumnDef="porcentajeAprobacion">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Porcentaje de Aprobación </th>
-    <td mat-cell *matCellDef="let element"> {{ calculateUserResults(element.results)}}% </td>
-  </ng-container>
-
+   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
+         class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} {{element.firstLastname}}  {{element.secondLastname}}  </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="phone">
+      <th mat-header-cell *matHeaderCellDef > Telefono </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+    <!-- Porcentaje de Aprobación -->
+    <ng-container matColumnDef="porcentajeAprobacion">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Porcentaje de Aprobación </th>
+      <td mat-cell *matCellDef="let element"> {{ calculateUserResults(element.results)}}% </td>
+    </ng-container>
   <ng-container matColumnDef="acciones">
     <th mat-header-cell *matHeaderCellDef> Acciones </th>
     <td mat-cell *matCellDef="let element">
