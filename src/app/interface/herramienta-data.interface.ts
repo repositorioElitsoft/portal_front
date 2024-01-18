@@ -4,7 +4,7 @@ import { Level } from "./niveles.interface";
 import { ProductVersion} from "./version-producto";
 export interface HerramientaData {
     id: number;
-    yearsOfExperience: number;
+    yearsOfExperience?: number;
     herr_prd_otro:string;
     productVersion: ProductVersion;
     certification?: Certification;

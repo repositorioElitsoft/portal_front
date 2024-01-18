@@ -510,18 +510,42 @@ if (this.selectedfechaPostulacion) {
     }
   );
 }
-calculateUserResults(results: Result[]) {
+// calculateUserResults(results: Result[]) {
+//   const puntosMaximos = 20;
+//   if (results.length === 0) {
+//     return 0;
+//   }
+//   const maxResult: number = results.reduce((max, current) => {
+//     const score = current.score ?? 0;
+//     return score > max ? score : max;
+//   }, Number.NEGATIVE_INFINITY);
+//   const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
+//   return porcentajeAprobacionByUser;
+// }
+
+calculateUserResults(results: Result[]):String {
   const puntosMaximos = 20;
   if (results.length === 0) {
-    return 0;
+    return "No ha realizado examenes";
   }
-  const maxResult: number = results.reduce((max, current) => {
+  let maxResult = Number.NEGATIVE_INFINITY;
+  let maxResultName = '';
+  let maxResultLevel = '';
+  results.forEach((current) => {
     const score = current.score ?? 0;
-    return score > max ? score : max;
-  }, Number.NEGATIVE_INFINITY);
+    if (score > maxResult) {
+      maxResult = score;
+      maxResultName = current.product.name;
+      maxResultLevel = current.level.description;
+    }
+  });
   const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
-  return porcentajeAprobacionByUser;
+  const puntuacion = String(porcentajeAprobacionByUser);
+  return   puntuacion+"%" + " " + maxResultName+ " " + maxResultLevel;  
 }
+
+
+
 
 
 
