@@ -7,23 +7,27 @@ import { MatDialog } from '@angular/material/dialog';  //
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.component';
+import { AuthService } from 'src/app/service/auth.service';
 @Component({
   selector: 'app-sidebar-r-responsive',
   templateUrl: './sidebar-r-responsive.component.html',
   styleUrls: ['./sidebar-r-responsive.component.css']
 })
 export class SidebarRResponsiveComponent implements OnInit {
-
+  authorities!: Set<string>;
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
   constructor(
+
     changeDetectorRef: ChangeDetectorRef,
     private categoriaService: CategoriaService,
     public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
+    private router: Router, private cookieService: CookieService,
     private snack: MatSnackBar,
+    private authService: AuthService,
     public login: LoginService,
-    media: MediaMatcher
+    media: MediaMatcher,
+
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 1300px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -31,6 +35,7 @@ export class SidebarRResponsiveComponent implements OnInit {
   }
   categorias: any;
   ngOnInit(): void {
+    this.authorities = this.authService.getAuthorities();
     this.categoriaService.listarCategorias().subscribe(
       (data: any) => {
         this.categorias = data;
@@ -54,5 +59,8 @@ export class SidebarRResponsiveComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
     });
+  }
+  navigateTo(url: string) {
+    window.open(url, '_blank');
   }
 }

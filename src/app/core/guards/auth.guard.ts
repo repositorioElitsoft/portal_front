@@ -30,7 +30,7 @@ export class AuthGuard implements CanActivate {
             this.router.navigate(['/admin/welcome-admin']);
           }
           if (userRoles.includes("ROLE_ENTR")) {
-            this.router.navigate(['/entrevistador/welcome-entrevistado']);
+            this.router.navigate(['/entrevistador/welcome-entrevistador']);
           }
           return false;
         }
