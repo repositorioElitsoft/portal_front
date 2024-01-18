@@ -35,7 +35,6 @@ import { PortalViewComponent } from './components/user/portal-view/portal-view.c
 import { DatosPersonalesComponent } from './components/user/datos-personales/datos-personales.component';
 import { DashboardEComponent } from './components/entrevistador/dashboard-e/dashboard-e.component';
 import { WelcomeEntrevistadorComponent } from './components/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
-import { ObservacionService } from './service/observation.service';
 import { ObservacionesComponent } from './components/entrevistador/observaciones/observaciones.component';
 
 
