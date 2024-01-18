@@ -1,18 +1,18 @@
-<mat-card style="background-color: transparent; border: 0; box-shadow: none; padding-top: 5vh;" >
+<mat-card style="background-color: transparent; border: 0; box-shadow: none; padding-top: 5vh;"
+  *ngIf="authorities.has('ROLE_ENTR')">
   <p class="admin-panel-text">Panel de Entrevistador</p>
   <div class="profile-container">
-      <div class="profile-box">
-        <h2 *ngIf="authorities.has('ROLE_ENTR')">Bienvenido Entrevistador </h2>
-        <h2 *ngIf="!authorities.has('ROLE_ENTR')">Bienvenido BLablaba </h2>
-        <p></p>
-        <p>Sus funciones:</p>
-        <ul>
-          <li>Agregar descripciones para el proceso de selección de postulantes </li>
-          <li>Agregar observaciones de diferentes categorias: </li>
-          <li>- Evaluaciones Operacionales</li>
-          <li>- Evaluaciones Técnicas </li>
-          <li>- Evaluaciones Gerenciales </li>
-        </ul>
-      </div>
+    <div class="profile-box">
+      <h2 *ngIf="authorities.has('ROLE_ENTR')">Bienvenido Entrevistador </h2>
+      <p></p>
+      <p>Sus funciones:</p>
+      <ul>
+        <li>Agregar descripciones para el proceso de selección de postulantes </li>
+        <li>Agregar observaciones de diferentes categorias: </li>
+        <li>- Evaluaciones Operacionales</li>
+        <li>- Evaluaciones Técnicas </li>
+        <li>- Evaluaciones Gerenciales </li>
+      </ul>
     </div>
-  </mat-card>
+  </div>
+</mat-card>

@@ -1,0 +1,163 @@
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" *ngIf="shouldRun">
+  <mat-toolbar class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <div class="elitsoft">
+      <img
+        src="https://static.wixstatic.com/media/5a9998_6a14b7ced59447ae8f4bceee9e8d1478~mv2.png/v1/fill/w_182,h_48,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/elitesoft%201.png"
+        alt="Elitesoft Logo">
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56">
+      <mat-nav-list>
+        <!-- SIDEBAR USUARIO  -->
+        <ul class="list-unstyled components" *ngIf="authorities.has('ROLE_GUEST')">
+          <li>
+            <a routerLink="datos-personales" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">assignment_ind</mat-icon> Datos Personales
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/herramientas-tecnologias" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">build</mat-icon> Herramientas y Tecnologías
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/informacion-academica" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">school</mat-icon> Información Académica
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/informacion-laboral" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">work</mat-icon> Información Laboral
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user/cargo-usuario" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">person_pin</mat-icon> Cargo a Postular
+            </a>
+          </li>
+          <li>
+            <a routerLink="/user-dashboard/0" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">question_answer</mat-icon> Portal de Exámenes
+            </a>
+          </li>
+          <mat-divider></mat-divider>
+          <mat-list-item style="cursor: pointer;" [matMenuTriggerFor]="afterMenu">
+            <mat-icon mat-list-icon class="custom-icon">list</mat-icon> Submenú
+          </mat-list-item>
+          <mat-menu #afterMenu="matMenu" xPosition="after">
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/')">Inicio</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/nosotros')">Nosotros</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/servicios')">Servicios</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/tecnologías')">Tecnologías</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/contacto')">Contacto</button>
+            <button mat-menu-item (click)="navigateTo('#')">Trabaja con Nosotros</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/blog')">Blog</button>
+          </mat-menu>
+
+          <br><br><br><br><br><br><br>
+          <li class="nav-item">
+            <a (click)="openDialog('300ms', '150ms')" class="nav-link" style="cursor: pointer;">
+              <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon> Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+
+        <!-- RECLUTADOR  -->
+        <ul class="list-unstyled components" *ngIf="authorities.has('ROLE_REC')">
+          <li>
+            <a routerLink="/reclutador/welcome-reclutador" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">home</mat-icon> Inicio
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclutador/profile-r" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">assignment_ind</mat-icon> Perfil
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclutador/view-usuarios-r" routerLinkActive="active" class="menu__item">
+              <mat-icon mat-list-icon class="custom-icon">supervisor_account</mat-icon> Ver listado de Usuarios
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclutador/estadisticas" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">bar_chart</mat-icon> Ver Estadísticas
+            </a>
+          </li>
+          <mat-divider></mat-divider>
+          <mat-list-item style="cursor: pointer;" [matMenuTriggerFor]="afterMenu">
+            <mat-icon mat-list-icon class="custom-icon">list</mat-icon> Submenú
+          </mat-list-item>
+          <mat-menu #afterMenu="matMenu" xPosition="after">
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/')">Inicio</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/nosotros')">Nosotros</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/servicios')">Servicios</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/tecnologías')">Tecnologías</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/contacto')">Contacto</button>
+            <button mat-menu-item (click)="navigateTo('#')">Trabaja con Nosotros</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/blog')">Blog</button>
+          </mat-menu>
+
+          <br><br><br><br><br><br><br>
+          <li class="nav-item">
+            <a (click)="openDialog('300ms', '150ms')" class="nav-link" style="cursor: pointer;">
+              <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon> Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+
+        <!-- SIDEBAR ADMIN  -->
+        <ul class="list-unstyled components" *ngIf="authorities.has('ROLE_ADMIN')">
+          <li>
+            <a routerLink="/admin/welcome-admin" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">home</mat-icon> Inicio
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/profile-admin" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">assignment_ind</mat-icon> Perfil
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/view-categorias" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">folder</mat-icon> Categorías
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/view-examenes" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">assignment</mat-icon> Exámenes
+            </a>
+          </li>
+          <li>
+            <a routerLink="/admin/view-usuarios" routerLinkActive="active">
+              <mat-icon mat-list-icon class="custom-icon">supervised_user_circle</mat-icon> Usuarios
+            </a>
+          </li>
+          <mat-divider></mat-divider>
+          <mat-list-item style="cursor: pointer;" [matMenuTriggerFor]="afterMenu">
+            <mat-icon mat-list-icon class="custom-icon">list</mat-icon> Submenú
+          </mat-list-item>
+          <mat-menu #afterMenu="matMenu" xPosition="after">
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/')">Inicio</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/nosotros')">Nosotros</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/servicios')">Servicios</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/tecnologías')">Tecnologías</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/contacto')">Contacto</button>
+            <button mat-menu-item (click)="navigateTo('#')">Trabaja con Nosotros</button>
+            <button mat-menu-item (click)="navigateTo('https://www.elitsoft.cl/blog')">Blog</button>
+          </mat-menu>
+
+          <br><br><br><br><br><br><br>
+          <li class="nav-item">
+            <a (click)="openDialog('300ms', '150ms')" class="nav-link" style="cursor: pointer;">
+              <mat-icon mat-list-icon class="custom-icon">no_meeting_room</mat-icon> Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </mat-nav-list>
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>

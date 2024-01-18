@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
 import { UserService } from 'src/app/service/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-profile-r',
   templateUrl: './profile-r.component.html',
@@ -17,6 +19,7 @@ export class ProfileRComponent implements OnInit {
   router: any;
   constructor(
     private formBuilder: FormBuilder,
+    private snackBar: MatSnackBar,
     private userService: UserService,
     private notification: NotificationService
   ) {
@@ -64,10 +67,20 @@ export class ProfileRComponent implements OnInit {
     this.editable = !this.editable;
     if (this.editable) {
       this.form.enable();
+      this.showSnackbar('Se ha activado la edición del formulario');
     } else {
       this.form.disable();
     }
   }
+
+  private showSnackbar(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000, // Adjust the duration as needed
+      verticalPosition: 'bottom',
+      horizontalPosition: 'center',
+    });
+  }
+
   async submitForm(event: Event) {
     event.preventDefault();
     const user: User = this.form.value;
@@ -79,9 +92,9 @@ export class ProfileRComponent implements OnInit {
         "Datos actualizados correctamente"
       );
       if (isConfirmed) {
-        this.toggleEditable(); 
+        this.toggleEditable();
       }
     } catch (error) {
     }
   }
-  }
+}
