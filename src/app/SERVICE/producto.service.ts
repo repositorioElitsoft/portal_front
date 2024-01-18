@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Product } from '../interface/producto.interface';
 import {ProductVersion} from '../interface/version-producto';
 import { environment } from 'src/environments/environment';
+import { Pregunta } from '../interface/pregunta.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -34,7 +35,7 @@ export class ProductoService {
   public agregarExamen(examen:any){
     return this.http.post(`${this.url}/examen/`,examen);
   }
-  public obtenerPreguntasPorProducto(productoId: number): Observable<any> {
-    return this.http.get(`${this.url}/pregunta/por-producto/${productoId}`);
+  public obtenerPreguntasPorProducto(productoId: number): Observable<Pregunta[]> {
+    return this.http.get<Pregunta[]>(`${this.url}/pregunta/por-producto/${productoId}`);
   }
 }
