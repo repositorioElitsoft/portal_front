@@ -109,17 +109,6 @@
       </mat-form-field>
     </div>
 
-    <!-- Filtro por Porcentaje Aprobación -->
-    <div class="filter-row">
-      <mat-form-field class="filter-select" appearance="outline">
-        <mat-label>Porcentaje de aprobación</mat-label>
-        <mat-select [(value)]="selectedPorcentajeAprobacion" (selectionChange)="filterPorcentaje()">
-          <mat-option value="">Seleccione un opción</mat-option>
-          <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label
-            }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
 
 
     <!-- Filtro por Porcentaje Aprobación -->
@@ -146,7 +135,6 @@
         <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
       </mat-slider>
     </div>
-
     <!-- Filtro por Rango Años Experiencia -->
     <div class="filter-slider d-flex flex-column align-items-center m-2">
       <mat-label>Rango de años de Experiencia: </mat-label>

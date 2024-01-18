@@ -101,7 +101,6 @@ import { UserPrefferedJobComponent } from './components/user/user-preffered-job/
 import { ObservationRecruiterComponent } from './components/reclutador/observation-recruiter/observation-recruiter.component';
 import { ObservationRecruiterEditComponent } from './components/reclutador/observation-recruiter-edit/observation-recruiter-edit.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
-import { SidebarExamComponent } from './components/user/sidebar-exam/sidebar-exam.component';
 import { PortalViewComponent } from './components/user/portal-view/portal-view.component';
 
 
@@ -174,7 +173,6 @@ import { PortalViewComponent } from './components/user/portal-view/portal-view.c
     UserPrefferedJobComponent,
     ObservationRecruiterComponent,
     ObservationRecruiterEditComponent,
-    SidebarExamComponent,
     PortalViewComponent
 
   ],
