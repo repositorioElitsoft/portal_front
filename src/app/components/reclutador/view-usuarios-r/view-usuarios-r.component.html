@@ -37,12 +37,27 @@
     <!-- Filtro por Estado Laboral-->
     <div class="filter-row">
       <mat-form-field class="filter-select">
-        <mat-label>Estado employment</mat-label>
+        <mat-label>Disponibilidad</mat-label>
         <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
           <mat-option value="">Seleccione un opción</mat-option>
-          <mat-option value="disponible">Disponible</mat-option>
-          <mat-option value="no-disponible">No Disponible</mat-option>
-          <mat-option value="contratado">Contratado</mat-option>
+          <mat-option value="Inmediata">Inmediata</mat-option>
+          <mat-option value="1 semana">1 semana</mat-option>
+          <mat-option value="2 semanas">2 semanas</mat-option>
+          <mat-option value="3 semanas">3 semanas</mat-option>
+          <mat-option value="4 semanas o más">4 semanas o más</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div> -->
+    <div class="filter-row">
+      <mat-form-field class="filter-select">
+        <mat-label>Disponibilidad</mat-label>
+        <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()" [disabled]="!selectedCargo">
+          <mat-option value="">Seleccione un opción</mat-option>
+          <mat-option value="Inmediata">Inmediata</mat-option>
+          <mat-option value="1 semana">1 semana</mat-option>
+          <mat-option value="2 semanas">2 semanas</mat-option>
+          <mat-option value="3 semanas">3 semanas</mat-option>
+          <mat-option value="4 semanas o más">4 semanas o más</mat-option>
         </mat-select>
       </mat-form-field>
       </div>

@@ -190,19 +190,21 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     });
     console.log("filteredArray",filteredArray);
-    // //filtro por cargo
+    
+
+    
     // if (this.selectedCargo > 0) {
     //   filteredArray = filteredArray.filter(usuario => {
-    //     return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.JobPositionId === this.selectedCargo);
+    //     console.log("cargo a postular", this.selectedCargo);
+    //     return usuario.userJob && usuario.userJob.some(cargo => cargo.jobPosition && cargo.jobPosition.id === this.selectedCargo);
     //   });
     // }
 
-
-//filtro por fecha de postulacion
-if (this.selectedfechaPostulacion) {
-  console.log("seleccioné fecha");
-  // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
-  const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
+    
+    if (this.selectedfechaPostulacion) {
+      console.log("seleccioné fecha");
+      // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
+      const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
 
       // Filtrar los cargos por fecha de postulación
       filteredArray = filteredArray.filter(usuario => {
@@ -215,14 +217,43 @@ if (this.selectedfechaPostulacion) {
           const primerCargo = cargos[0];
           const applicationDate = primerCargo.applicationDate
 
-           // Verificar si la propiedad applicationDateexiste y no es undefined
-      if(!applicationDate)return false;
-      console.log("tipo de la fecha:",typeof applicationDate );
-      console.log("fecha obtenida:", applicationDate );
-      // Comparar solo la parte de la fecha
-       console.log("fecha obtenida2:", String(applicationDate).split('T')[0] );
-       console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
-       return  String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
+          // Verificar si la propiedad applicationDateexiste y no es undefined
+          if (!applicationDate) return false;
+          console.log("tipo de la fecha:", typeof applicationDate);
+          console.log("fecha obtenida:", applicationDate);
+          // Comparar solo la parte de la fecha
+          console.log("fecha obtenida2:", String(applicationDate).split('T')[0]);
+          console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0]);
+          return String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
+        }
+        return false;
+      });
+
+      // Imprimir el array de cargos filtrados
+      console.log("Cargos filtrados por fecha de postulación:", this.cargos);
+    }
+  
+    
+
+          // Filtro por estado de disponibilidad
+          if (this.selectedEstado && this.selectedEstado !== '') {
+            console.log("estado disponibilidad", this.cargos);
+            filteredArray = filteredArray.filter((usuario) => {
+              return usuario.userJob && usuario.userJob.some((job) => {
+                return job.availability && job.availability.time === this.selectedEstado;
+              });
+            });
+          }
+
+       
+
+    // Filtro por producto
+
+    /*
+    if (this.selectedProducto > 0) {
+      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
+      if (selectedProduct) {
+        filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.prd_nom));
       }
       return false;
   });
@@ -362,6 +393,7 @@ if (this.selectedfechaPostulacion) {
 
      this.dataSource.data = filteredArray;
   }
+  
   filterByCargo() {
     let filteredArray = this.originalDataCopy;
 
