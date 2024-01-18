@@ -1,13 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-
 import { User } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-
-
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { State } from 'src/app/interface/state.interface';
 import { City } from 'src/app/interface/city.interface';
@@ -40,7 +37,8 @@ export class DatosPersonalesComponent implements OnInit {
     private cityService: CityService,
     private snackBar: MatSnackBar,
     private notification: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
   ) {
     this.buildForm();
   }
@@ -52,9 +50,10 @@ export class DatosPersonalesComponent implements OnInit {
       secondLastname: ["",  [Validators.required]],
       country: ["1", [Validators.required]],
       state: ["", [Validators.required]],
-      city: this.formBuilder.group({
-       id: ["", Validators.required],
-      }),
+      // city: this.formBuilder.group({
+      //  id: ["", Validators.required],
+      // }),
+      city: ["", Validators.required],
       address: ["", Validators.required],
       linkedin: ["", []],
       phone: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
@@ -78,9 +77,14 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
 
   onCountrySelected(){
     const countryId = this.form.get("country")!.value;
+    this.form.get("state")?.reset();
+    this.form.get("state")?.patchValue("");
+    this.form.get("city")?.reset();
+    this.form.get("city")?.patchValue("");
     this.stateService.obtenerEstadosporCountry(countryId).subscribe({
       next: (data:State[]) => {
         this.states = this.sortByName(data);
+        this.cdRef.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching states:', error);
@@ -90,9 +94,12 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
   onStateSelected(){
 
     const stateId = this.form.get("state")!.value;
+    this.form.get("city")?.reset();
+    this.form.get("city")?.patchValue("");
     this.cityService.getStateByCountry(stateId).subscribe({
       next: (data:City[]) => {
         this.cities = this.sortByName(data);
+        this.cdRef.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching states:', error);
@@ -167,6 +174,8 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
         this.usuarioGuardado = data;
         this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
         this.form.patchValue(data);
+
+        console.log("el usuario guardado es:", data);
     
 
         this.isLoaded= true;
@@ -182,7 +191,7 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
                 this.cityService.getStateByCountry(this.usuarioGuardado.city?.state?.id ?? 0).subscribe({
                   next: (data:City[]) => {
                     this.cities = this.sortByName(data);
-                    this.form.get('city')?.get('id')?.patchValue(this.usuarioGuardado.city?.id)
+                    this.form.get('city')?.patchValue(this.usuarioGuardado.city?.id)
                   },
                   error: (error) => {
                     console.error('Error fetching states:', error);
@@ -206,11 +215,9 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
   }
   async submitForm(event: Event) {
     event.preventDefault();
-    const user: User = this.form.value;
-
-    console.log("USER :", user)
-
-
+    let user: User = this.form.value;
+    user.city = {id:this.form.value.city};
+    console.log("USER enviado :", user)
     try {
       await this.userService.updateUser(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
@@ -225,6 +232,7 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
       console.error(error);
     }
   }
+
   borrarCV() {
     if (this.usuarioGuardado?.id){
     this.userService.borrarCV(this.usuarioGuardado.id).subscribe({

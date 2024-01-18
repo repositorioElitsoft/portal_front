@@ -36,19 +36,6 @@
       </mat-form-field>
     </div>
     <!-- Filtro por estado laboral -->
-    <!-- <div class="filter-row">
-      <mat-form-field class="filter-select">
-        <mat-label>Disponibilidad</mat-label>
-        <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()">
-          <mat-option value="">Seleccione un opción</mat-option>
-          <mat-option value="Inmediata">Inmediata</mat-option>
-          <mat-option value="1 semana">1 semana</mat-option>
-          <mat-option value="2 semanas">2 semanas</mat-option>
-          <mat-option value="3 semanas">3 semanas</mat-option>
-          <mat-option value="4 semanas o más">4 semanas o más</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div> -->
     <div class="filter-row">
       <mat-form-field class="filter-select">
         <mat-label>Disponibilidad</mat-label>
@@ -116,26 +103,9 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <!-- Filtro por Porcentaje Aprobación -->
-    <div class="filter-row">
-      <mat-form-field class="filter-select">
-        <mat-label>Porcentaje de aprobación</mat-label>
-        <mat-select [disabled]="!selectedVersion" [(value)]="selectedPorcentajeAprobacion"
-          (selectionChange)="filterPorcentaje()">
-          <mat-option value="">Seleccione un opción</mat-option>
-          <mat-option *ngFor="let porcentaje of porcentajesAprobacion" [value]="porcentaje">{{ porcentaje.label
-            }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <!-- Filtro por Rango de Sueldo-->
-    <div class="filter-slider d-flex flex-column align-items-center">
-      <mat-label>Rango de Sueldos: </mat-label>
-      <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel">
-        <div class="custom-range">
-          {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} -
-          {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
-        </div>
+    
+
+    
            <!-- Filtro por Porcentaje Aprobación -->
           <div class="filter-row">
           <mat-form-field class="filter-select">
@@ -158,11 +128,11 @@
                 <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
               </mat-slider>
             </div>
-               <!-- Filtro por Rango Años Experiencia -->
+      <!-- Filtro por Rango Años Experiencia -->
     <div class="filter-slider d-flex flex-column align-items-center m-2">
       <mat-label>Rango de años de Experiencia: </mat-label>
       <mat-slider min="1" max="10" (input)="filterAniosExp()" discrete [displayWith]="formatLabel"
-        [disabled]="!selectedVersion">
+        >
         <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
         <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
       </mat-slider>
@@ -179,6 +149,8 @@
         </mat-form-field>
       </div>
     </div>
+  </div>
+</mat-card>
  
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
          class="mat-elevation-z8">

@@ -78,33 +78,32 @@
         </mat-form-field>
         <mat-error *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched">Debe ingresar número de teléfono</mat-error>
       
+       <!-- Genero  -->
+        <div formGroupName="gender">
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Género:</mat-label>
+            <mat-select formControlName="id" placeholder="Seleccionar género"
+              [ngClass]="{'is-invalid': form.get('gender.id')?.invalid && form.get('gender.id')?.touched}">
+              <mat-option value="1">Masculino</mat-option>
+              <mat-option value="2">Femenino</mat-option>
+              <mat-option value="">Otro</mat-option>
+              <mat-option *ngIf="usuarioGuardado && usuarioGuardado.gender?.id! > 2" [value]="usuarioGuardado.gender?.id">{{ usuarioGuardado.gender?.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('gender.id')?.hasError('required') && form.get('gender.id')?.touched">Género es obligatorio</mat-error>
+          </mat-form-field>
         
-          <div formGroupName="gender">
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <mat-label>Género:</mat-label>
-              <mat-select formControlName="id" placeholder="Seleccionar género"
-                [ngClass]="{'is-invalid': form.get('gender.id')?.invalid && form.get('gender.id')?.touched}">
-                <mat-option value="1">Masculino</mat-option>
-                <mat-option value="2">Femenino</mat-option>
-                <mat-option value="">Otro</mat-option>
-                <mat-option *ngIf="usuarioGuardado.gender?.id! > 2" [value]="usuarioGuardado.gender?.id">{{ usuarioGuardado.gender?.name }}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="form.get('gender.id')?.hasError('required') && form.get('gender.id')?.touched">Género es obligatorio</mat-error>
-            </mat-form-field>
-        
-            <div class="row mb-3" *ngIf="!form.get('gender.id')?.value">
-              <div class="col-sm-12">
-                <mat-form-field appearance="outline" class="w-100" color="primary">
-                  <mat-label>Especificar Género:</mat-label>
-                  <input matInput formControlName="name" name="inputGeneroOtro"
-                    [ngClass]="{'is-invalid': form.get('name')?.invalid && form.get('name')?.touched}">
-                  <mat-error *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">Debe especificar el género</mat-error>
-                </mat-form-field>
-              </div>
+          <div class="row mb-3" *ngIf="!form.get('gender.id')?.value">
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <mat-label>Especificar Género:</mat-label>
+                <input matInput formControlName="name" name="inputGeneroOtro"
+                  [ngClass]="{'is-invalid': form.get('name')?.invalid && form.get('name')?.touched}">
+                <mat-error *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">Debe especificar el género</mat-error>
+              </mat-form-field>
             </div>
           </div>
-        
-        
+        </div>
+        <!-- País -->
           <div  class="w-100">
             <div class="col-sm-12">
               <mat-form-field appearance="outline" class="w-100" color="primary">
@@ -124,6 +123,7 @@
                 <mat-label>Región o Estado:</mat-label>
                 <select matNativeControl formControlName="state" (change)="onStateSelected()"
                   [ngClass]="{'is-invalid': form.get('state')?.invalid && form.get('state')?.touched}">
+                  <option value=""> Seleccione una opción </option>
                   <option *ngFor="let state of states" [value]="state.id">{{ state.name }}</option>
                 </select>
                 <mat-error *ngIf="form.get('state')?.invalid && form.get('state')?.touched">Debe seleccionar una región o estado</mat-error>
@@ -135,9 +135,14 @@
             <div >
               <mat-form-field appearance="outline" class="w-100" color="primary">
                 <mat-label>Ciudad:</mat-label>
-                <select matNativeControl formControlName="city.id"
+                <!-- <select matNativeControl formControlName="city.id"
                   [ngClass]="{'is-invalid': form.get('city.id')?.invalid && form.get('city.id')?.touched}">
                   <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+                </select> -->
+                <select matNativeControl formControlName="city"
+                  [ngClass]="{'is-invalid': form.get('city')?.invalid && form.get('city')?.touched}">
+                  <option value=""> Seleccione una opción </option>
+                  <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option> 
                 </select>
                 <mat-error *ngIf="form.get('city.id')?.invalid && form.get('city.id')?.touched">Debe seleccionar una ciudad</mat-error>
               </mat-form-field>
@@ -158,11 +163,7 @@
               <input matInput type="text" id="inputLinkedin" formControlName="linkedin" name="inputLinkedin">
             </mat-form-field>
           </div>
-        
-       
-              
-          
-        
+                
         <label for="file" class="col-sm-2 col-form-label">Subir CV:</label>
         <button type="button" class="botonprimario m-2" mat-raised-button (click)="fileInput.click()" [disabled]="isUploadingFile">
           <div *ngIf="!isUploadingFile">
