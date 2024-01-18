@@ -1,26 +1,11 @@
-<app-sidebar-user></app-sidebar-user>
-<br>
-<app-sidebar-userdesk></app-sidebar-userdesk>
-  <div class="container">
-    <div class="sidebar">
-    </div>
-    <div class="container-datos-personales">
-        <div class="dialog-box">
-            <h1 class="perfilr">Portal de Exámenes</h1>
-            <div class="exam-list">
-                <div class="exams">
-                    <div class="exam-card" *ngFor="let exam of exams">
-                        <h2 class="exam-title">{{ exam.name }}</h2>
-                        <p class="exam-description">{{ exam.description }}</p>
-                        <div class="chip-list">
-                            <ul class="topic-list">
-                                <li class="topic-item" *ngFor="let topic of exam.topics">{{ topic }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<div>
+    <app-sidebar></app-sidebar>
+    <app-sidebar-r-responsive></app-sidebar-r-responsive>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
             </div>
-            <div class="router-outlet">
+            <div class="mt-5 col-md-10">
                 <router-outlet></router-outlet>
             </div>
         </div>

@@ -17,7 +17,6 @@ import { WelcomeReclutadorComponent } from './components/reclutador/welcome-recl
 import { ProfileRComponent } from './components/reclutador/profile-r/profile-r.component';
 import { ViewUsuariosRComponent } from './components/reclutador/view-usuarios-r/view-usuarios-r.component';
 import { ViewPerfilUsuarioRComponent } from './components/reclutador/view-perfil-usuario-r/view-perfil-usuario-r.component';
-import { DatosPersonalesComponent } from './components/user/datos-personales/datos-personales.component';
 import { HerramientasTecnologiasComponent } from './components/user/herramientas-tecnologias/herramientas-tecnologias.component';
 import { InformacionAcademicaComponent } from './components/user/informacion-academica/informacion-academica.component';
 import { InformacionLaboralComponent } from './components/user/informacion-laboral/informacion-laboral.component';
@@ -31,176 +30,177 @@ import { InstruccionesComponent } from './components/user/instrucciones/instrucc
 import { StartComponent } from './components/user/start/start.component';
 import { AddUsuariosComponent } from './components/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './components/reclutador/estadisticas/estadisticas.component';
+import { JobPositionUserComponent } from './components/user/job-position-user/job-position-user.component';
+import { PortalViewComponent } from './components/user/portal-view/portal-view.component';
+import { DatosPersonalesComponent } from './components/user/datos-personales/datos-personales.component';
 import { DashboardEComponent } from './components/entrevistador/dashboard-e/dashboard-e.component';
 import { WelcomeEntrevistadorComponent } from './components/entrevistador/welcome-entrevistador/welcome-entrevistador.component';
 import { ObservacionesComponent } from './components/entrevistador/observaciones/observaciones.component';
-import { ViewPerfilUsuarioEComponent } from './components/entrevistador/view-perfil-usuario-e/view-perfil-usuario-e.component';
-import { JobPositionUserComponent } from './components/user/job-position-user/job-position-user.component';
 
 
 const routes: Routes = [
-  {path:'restaurar', component:RestaurarPassComponent},
+  { path: 'restaurar', component: RestaurarPassComponent },
 
-  {path:'restaurar-contrasena', component:PeticionRestaurarPassComponent},
+  { path: 'restaurar-contrasena', component: PeticionRestaurarPassComponent },
 
-  {path:'', redirectTo:'user/datos_personales', pathMatch:'full'},
-  {path:'registrar', component:RegistrarComponent},
-  {path:'iniciar-sesion', component:IniciarSesionComponent},
-  {path:'verificar-email', component:ValidarMailComponent},
+  { path: '', redirectTo: 'user/datos-personales', pathMatch: 'full' },
+  { path: 'registrar', component: RegistrarComponent },
+  { path: 'iniciar-sesion', component: IniciarSesionComponent },
+  { path: 'verificar-email', component: ValidarMailComponent },
   {
     path: 'user',
+    component: UserDashboardComponent,
     canActivate: [AuthGuard],
     data: { role: 'ROLE_GUEST' },
     children: [
-      {
-        path: 'datos_personales',
-        pathMatch: 'full',
-        component: DatosPersonalesComponent
-      },
-      {path:'herramientas-tecnologias', component:HerramientasTecnologiasComponent},
-      {path:'informacion-academica', component:InformacionAcademicaComponent,},
-      {path:'informacion-laboral', component:InformacionLaboralComponent, },
-      {path:'cargo-usuario', component:JobPositionUserComponent,},
+      { path: 'datos-personales', component: DatosPersonalesComponent },
+      { path: 'herramientas-tecnologias', component: HerramientasTecnologiasComponent },
+      { path: 'informacion-academica', component: InformacionAcademicaComponent, },
+      { path: 'informacion-laboral', component: InformacionLaboralComponent, },
+      { path: 'cargo-usuario', component: JobPositionUserComponent, },
 
     ]
   },
 
   {
-    path:'admin',
-    component:DashboardComponent,
+    path: 'admin',
+    component: DashboardComponent,
     canActivate: [AuthGuard],
     data: { role: 'ROLE_ADMIN' },
-    children:[
+    children: [
       {
-        path:'welcome-admin',
-        component:WelcomeAdminComponent
+        path: 'welcome-admin',
+        component: WelcomeAdminComponent
       },
       {
-        path:'profile-admin',
-        component:ProfileAdminComponent
+        path: 'profile-admin',
+        component: ProfileAdminComponent
       },
       {
-        path:'view-categorias',
-        component:ViewCategoriasComponent
+        path: 'view-categorias',
+        component: ViewCategoriasComponent
       },
       {
-        path:'add-categoria',
-        component:AddCategoriaComponent
+        path: 'add-categoria',
+        component: AddCategoriaComponent
       },
       {
-        path:'actualizar-categoria/:catId',
-        component:AddCategoriaComponent
+        path: 'actualizar-categoria/:catId',
+        component: AddCategoriaComponent
       },
       {
-        path:'view-examenes',
-        component:ViewExamenesComponent
+        path: 'view-examenes',
+        component: ViewExamenesComponent
       },
       {
-        path:'view-examen-preguntas/:exam_id/:exam_titl',
-        component:ViewExamenPreguntasComponent
+        path: 'view-examen-preguntas/:exam_id/:exam_titl',
+        component: ViewExamenPreguntasComponent
       },
       {
-        path:'add-pregunta/:exam_id/:exam_titl',
-        component:AddPreguntaComponent
+        path: 'add-pregunta/:exam_id/:exam_titl',
+        component: AddPreguntaComponent
       },
 
       {
-        path:'view-usuarios',
-        component:ViewUsuariosComponent
+        path: 'view-usuarios',
+        component: ViewUsuariosComponent
       },
       {
-        path:'add-usuarios',
-        component:AddUsuariosComponent
+        path: 'add-usuarios',
+        component: AddUsuariosComponent
       },
       {
-        path:'actualizar-usuario/:usuarioId',
-        component:AddUsuariosComponent
+        path: 'actualizar-usuario/:usuarioId',
+        component: AddUsuariosComponent
       },
       {
-        path:'view-perfil-usuario/:email',
-        component:ViewPerfilUsuarioComponent
+        path: 'view-perfil-usuario/:email',
+        component: ViewPerfilUsuarioComponent
       }
     ]
   },
 
   {
-    path:'reclutador',
-    component:DashboardRComponent,
-    canActivate:[AuthGuard],
+    path: 'reclutador',
+    component: DashboardRComponent,
+    canActivate: [AuthGuard],
     data: { role: 'ROLE_REC' },
-    children:[
+    children: [
       {
-        path:'welcome-reclutador',
-        component:WelcomeReclutadorComponent
+        path: 'welcome-reclutador',
+        component: WelcomeReclutadorComponent
       },
       {
-        path:'profile-r',
-        component:ProfileRComponent
+        path: 'profile-r',
+        component: ProfileRComponent
       },
       {
-        path:'view-usuarios-r',
-        component:ViewUsuariosRComponent
+        path: 'view-usuarios-r',
+        component: ViewUsuariosRComponent
       },
       {
-        path:'view-perfil-usuario-r/:email',
-        component:ViewPerfilUsuarioRComponent
+        path: 'view-perfil-usuario-r/:email',
+        component: ViewPerfilUsuarioRComponent
       },
 
       {
-        path:'estadisticas',
-        component:EstadisticasComponent
+        path: 'estadisticas',
+        component: EstadisticasComponent
       }
 
 
     ]
   },
   {
-    path:'user-dashboard',
-    component:UserDashboardComponent,
-    canActivate:[AuthGuard],
-    children : [
+    path: 'portal-view',
+    component: PortalViewComponent,
+    canActivate: [AuthGuard],
+    children: [
       {
-        path:':catId',
-        component:LoadExamenComponent
+        path: ':catId',
+        component: LoadExamenComponent
       },
       {
-        path:'instrucciones/:exam_id',
-        component:InstruccionesComponent
+        path: 'instrucciones/:exam_id',
+        component: InstruccionesComponent
       },
 
 
     ]
   },
   {
-    path:"start/:exam_id",
-    component:StartComponent,
-    canActivate:[AuthGuard]
+    path: "start/:exam_id",
+    component: StartComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path:"entrevistador",
-    component:DashboardEComponent,
-    canActivate:[AuthGuard],
-    data: { role: 'ROLE_ENTR' },
-    children:[
+    path: "entrevistador",
+    component: DashboardEComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['ROLE_ENTR'] },
+    children: [
       {
-        path:'welcome-entrevistador',
-        component:WelcomeEntrevistadorComponent
+        path: 'welcome-entrevistador',
+        component: WelcomeEntrevistadorComponent
       },
       {
-        path:'viewperfilusuarioe',
-        component:ViewPerfilUsuarioEComponent
+        path: 'observaciones',
+        component: ObservacionesComponent
       },
       {
-        path:'observaciones',
-        component:ObservacionesComponent
-      }
+        path: 'view-usuarios-e',
+        component: ViewUsuariosComponent
+      },
     ]
   }
-
 ];
+
+
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

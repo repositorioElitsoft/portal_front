@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Datos personales</title>
-</head>
-<link rel="stylesheet" href="\datos-personales.component.css">
-<body>
-  <app-sidebar-user></app-sidebar-user>
-  <br>
-  <app-sidebar-userdesk></app-sidebar-userdesk>
-  <div class="container">
-  <div class="sidebar">
-</div>
-  <mat-card class="container-datos-personales">
-    <h4 class="perfilr">Datos Personales</h4>
-    <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
-    <div class="div-inputs" *ngIf="isLoaded">
-      <form [formGroup]="form" (ngSubmit)="submitForm($event)">
+<mat-card class="container-datos-personales">
+  <h4 class="perfilr">Datos Personales</h4>
+  <mat-spinner class="spinner-color" *ngIf="!isLoaded"></mat-spinner>
+  <div class="div-inputs" *ngIf="isLoaded">
+    <form [formGroup]="form" (ngSubmit)="submitForm($event)">
 
         <mat-form-field class="row mb-3" appearance="outline">
           <mat-label>RUT:</mat-label>
