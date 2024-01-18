@@ -184,58 +184,13 @@
                     <span class="job-description">Otro cargo preferente: {{ usuarioData.preferredJob.description
                       }}</span>
                   </div>
-                  <span matListItemMeta> <div>Desde</div> {{jobs.startDate }} </span>
-                  <span matListItemMeta> <div>Hasta</div> {{jobs.endDate }} </span>
-                </mat-list-item>
-              </mat-list>
-            </mat-tab>  
-            <mat-tab label="Información Académica">
-            
-              <mat-list>
-                <mat-list-item *ngFor="let academicalList of usuarioData.academicalList">
-                  <span matListItemTitle>{{ academicalList.degree }}</span>
-                  <span matListItemLine>{{academicalList.university }}</span>
-                  <span matListItemLine>{{academicalList.status }}</span>
-                  
-                  <!-- Referencias académicas -->
-    <div class="mb-3 mt-1"> Referencias Académicas:</div>
-    <ul *ngIf="academicalList.academicalReference && academicalList.academicalReference.length">
-      <li *ngFor="let academicalReference of academicalList.academicalReference">
-        <span matListItemLine>Nombre: {{academicalReference.name }}</span>
-        <span matListItemLine>Institución: {{academicalReference.institution }}</span>
-        <span matListItemLine>Teléfono: {{academicalReference.phone }}</span>
-        <span matListItemLine>Email: {{academicalReference.email }}</span>
-      </li>
-    </ul>
-                  
-                  <div matListItemIcon>
-                    <mat-icon>school</mat-icon>
-                  </div>
-                  <span matListItemMeta> <div>Desde</div> {{ academicalList.startDate }} </span>
-                  <span matListItemMeta> <div>Hasta</div> {{ academicalList.endDate }} </span>
-                </mat-list-item>
-              </mat-list>
-              
-              
-            </mat-tab>
-            <mat-tab label="Postulaciones">
-              <mat-list >
-              <mat-list-item *ngFor="let cargo of usuarioData.userJob"  class="postulaciones">
-                <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
-                <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>               
-                 <span matListItemLine>Disponibilidad: {{cargo.availability.time }}</span> 
-                <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
-                <span matListItemLine>Aprobaciones: {{cargo.approvals }}</span>
-                <div *ngIf="usuarioData.preferredJob?.description" class="preferred-job-container">
-                  <mat-icon class="job-icon">star</mat-icon>
-                  <span class="job-description">Otro cargo preferente: {{ usuarioData.preferredJob.description }}</span>
-                </div>   
-                                                        
-                <div matListItemIcon>
-                  <mat-icon>forward</mat-icon>
-                </div>
-                <div *ngIf="usuarioData.userJob" class="preferred-job-container">
-                <button mat-raised-button class="botonprimario m-4"  (click)="verObservacion(cargo, cargo.id)">
+                </mat-card-content>
+              </mat-card>
+              <div matListItemIcon>
+                <mat-icon>forward</mat-icon>
+              </div>
+              <div *ngIf="usuarioData.userJob" class="preferred-job-container">
+                <button mat-raised-button class="botonprimario m-4" (click)="verObservacion(cargo, cargo.id)">
                   <mat-icon>visibility</mat-icon> Ver Observación
                 </button>
                 <button mat-raised-button class="botonprimario m-4" (click)="aprobarObservacionUsuario(cargo,i)"

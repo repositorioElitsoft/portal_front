@@ -8,10 +8,10 @@ import { UserService } from 'src/app/service/user.service';
   styleUrls: ['./user-dashboard.component.css']
 })
 export class UserDashboardComponent implements OnInit {
-exams: any;
+  exams: any;
   constructor(private preguntaService: PreguntaService,
-    private userService:UserService,
-    private herramientasService : HerramientasService) {   
+    private userService: UserService,
+    private herramientasService: HerramientasService) {
   }
   ngOnInit(): void {
   }

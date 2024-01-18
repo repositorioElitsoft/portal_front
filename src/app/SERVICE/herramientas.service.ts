@@ -16,11 +16,11 @@ export class HerramientasService {
     return this.http.post<CreateToolDTO>(this.url, tool);
   }
 
-  addToolCertification(toolId: number, certificacion: FormData): Observable<any>{
+  addToolCertification(toolId: number, certificacion: FormData): Observable<any> {
     return this.http.post<any>(`${this.url}${toolId}/certification`, certificacion)
   }
 
-  deleteToolCertification(tooldId: number,certificationId: number | undefined): Observable<ToolDTO>{
+  deleteToolCertification(tooldId: number, certificationId: number | undefined): Observable<ToolDTO> {
     return this.http.delete<ToolDTO>(`${this.url}${tooldId}/certification/${certificationId}`)
   }
 
@@ -37,13 +37,16 @@ export class HerramientasService {
   getCurrentUserTools(): Observable<ToolDTO[]> {
     return this.http.get<ToolDTO[]>(this.url);
   }
+  getCurrentUserToolsForExams(): Observable<ToolDTO[]> {
+    return this.http.get<ToolDTO[]>(`${this.url}exams`);
+  }
 
-  deleteTool(toolId: number): Observable<ToolDTO>{
+  deleteTool(toolId: number): Observable<ToolDTO> {
     return this.http.delete<ToolDTO>(`${this.url}${toolId}`)
   }
 
   downloadCertification(certId: number): Observable<any> {
     return this.http.get(`${this.url}certification/${certId}`, { responseType: 'blob', observe: 'response' });
   }
-  
+
 }

@@ -14,14 +14,14 @@ export class LoadExamenComponent implements OnInit {
   examenes?: any;
   productIds: number[] = [];
   productname: any;
-  herramientas!: Herramientas[];
+  herramientas: Herramientas[] = [];
   lvl: any;
   constructor(
     private herramientasService: HerramientasService,
     private preguntaService: PreguntaService
   ) { }
   ngOnInit(): void {
-    this.herramientasService.getCurrentUserTools().subscribe(
+    this.herramientasService.getCurrentUserToolsForExams().subscribe(
       (herramientas: any) => {
         if (herramientas && herramientas.length > 0) {
           this.herramientas = herramientas
