@@ -1,5 +1,8 @@
 <div class="container">
-  <h2>Preguntas del Producto</h2>
+  <div class="preguntas-title">
+    <h2>Preguntas del Producto</h2>
+    <button mat-raised-button>Agregar pregunta</button>
+  </div>
   <ul>
     <li *ngFor="let pregunta of preguntas">
       {{ pregunta.content}}

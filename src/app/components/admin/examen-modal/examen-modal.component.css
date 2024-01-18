@@ -1,11 +1,21 @@
 mat-form-field {
     width: 100%;
 }
-input.mat-input, textarea.mat-input-element {
-font-size: 16px;
-color: #333; /* Color del texto */
+
+input.mat-input,
+textarea.mat-input-element {
+    font-size: 16px;
+    color: #333;
+    /* Color del texto */
 }
-.field-custom{
+
+.field-custom {
     width: 27vw;
 }
 
+
+.preguntas-title {
+    padding: 2vh 2vw 0 2vw;
+    display: flex;
+    justify-content: space-between;
+}

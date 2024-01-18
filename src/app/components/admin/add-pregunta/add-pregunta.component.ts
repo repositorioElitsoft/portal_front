@@ -1,7 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
+import { Pregunta } from 'src/app/interface/pregunta.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-pregunta',
@@ -9,65 +13,66 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
   styleUrls: ['./add-pregunta.component.css']
 })
 export class AddPreguntaComponent implements OnInit {
-  exam_id:any;
-  exam_titl:any;
-  pregunta:any = {
-    examen : {},
-    prg: '',
-    prg_opc1: '',
-    prg_opc2: '',
-    prg_opc3: '',
-    prg_opc4: '',
-    prg_resp: '',
-    prg_ptje_prg: '',
-  }
+
+  form!: FormGroup
+
   constructor(
-    private route:ActivatedRoute,
-    private preguntaService:PreguntaService) { }
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<ExamenModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public pregunta: Pregunta,
+    private route: ActivatedRoute,
+    private preguntaService: PreguntaService) {
+    this.buildForm();
+  }
 
   ngOnInit(): void {
-    this.exam_id = this.route.snapshot.params['exam_id'];
-    this.exam_titl = this.route.snapshot.params['exam_titl'];
-    this.pregunta.examen['exam_id'] = this.exam_id;
+
   }
 
-  formSubmit(){
-    if(this.pregunta.prg.trim() == '' || this.pregunta.prg == null){
-      return;
+  buildForm() {
+    this.form = this.formBuilder.group({
+      content: ['', Validators.required],
+      option1: ['', Validators.required],
+      option2: ['', Validators.required],
+      option3: ['', Validators.required],
+      option4: ['', Validators.required],
+      answer: ['', Validators.required],
+      level: ['', Validators.required]
+    })
+  }
+
+  formSubmit() {
+    this.pregunta.answer = this.form.value.answer
+    this.pregunta.content = this.form.value.content
+    this.pregunta.level.id = this.form.value.level
+    this.pregunta.option1 = this.form.value.option1
+    this.pregunta.option2 = this.form.value.option2
+    this.pregunta.option3 = this.form.value.option3
+    this.pregunta.option4 = this.form.value.option4
+
+    if (!this.pregunta.id) {
+      this.preguntaService.guardarPregunta(this.pregunta).subscribe({
+        next: (response) => {
+          console.log("Respuesta de guarda: ", response)
+          this.dialogRef.close();
+        },
+        error: (err) => {
+          console.log("Error al guardar", err)
+        }
+      })
     }
-    if(this.pregunta.prg_opc1.trim() == '' || this.pregunta.prg_opc1 == null){
-      return;
+    else {
+      this.preguntaService.actualizarPregunta(this.pregunta.id, this.pregunta).subscribe({
+        next: (response) => {
+          console.log("Respuesta de actualizada: ", response)
+          this.dialogRef.close();
+        },
+        error: (err) => {
+          console.log("Error al actualizar", err)
+        }
+      })
     }
-    if(this.pregunta.prg_opc2.trim() == '' || this.pregunta.prg_opc2 == null){
-      return;
-    }
-    if(this.pregunta.prg_opc3.trim() == '' || this.pregunta.prg_opc3 == null){
-      return;
-    }
-    if(this.pregunta.prg_opc4.trim() == '' || this.pregunta.prg_opc4 == null){
-      return;
-    }
-    if(this.pregunta.prg_resp.trim() == '' || this.pregunta.prg_resp == null){
-      return;
-    }
-    if(this.pregunta.prg_ptje_prg.trim() == '' || this.pregunta.prg_ptje_prg == null){
-      return;
-    }
-    this.preguntaService.guardarPregunta(this.pregunta).subscribe(
-      (data) => {
-        Swal.fire('Pregunta guardada','La pregunta ha sido agregada con éxito','success');
-        this.pregunta.prg = '';
-        this.pregunta.prg_opc1 = '';
-        this.pregunta.prg_opc2 = '';
-        this.pregunta.prg_opc3 = '';
-        this.pregunta.prg_opc4 = '';
-        this.pregunta.prg_resp = '';
-        this.pregunta.prg_ptje_prg = '';
-      },(error) => {
-        Swal.fire('Error','Error al guardar la pregunta en la base de datos','error');
-        console.log(error);
-      }
-    )
+
   }
 
 }
