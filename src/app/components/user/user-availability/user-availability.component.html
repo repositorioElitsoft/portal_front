@@ -13,8 +13,9 @@
         </mat-select>
       </div>
     </div>
-    <button mat-raised-button class="botonprimario m-2">
-      Enviar
+    <button mat-raised-button class="botonprimario m-2" [disabled]="isEditMode">
+      {{ !data.user ? 'Enviar Disponibilidad' : 'Editar Disponibilidad' }}
     </button>
+
   </form>
 </mat-card>

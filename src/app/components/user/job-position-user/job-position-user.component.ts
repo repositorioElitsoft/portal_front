@@ -237,7 +237,7 @@ export class JobPositionUserComponent implements OnInit {
     const dialogRef = this.dialog.open(UserAvailabilityComponent, {
       width: '400px',
       height: '300px',
-      data: { user: this.user, creationMode: true },
+      data: { user: this.user, creationMode: true }, // Cambia esto a false para el modo creación
       enterAnimationDuration,
       exitAnimationDuration,
     });
