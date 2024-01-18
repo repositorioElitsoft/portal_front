@@ -9,7 +9,12 @@ export interface Pregunta {
     option3: string;
     option4: string;
     answer: number;
-    produc: Product;
+    product: Product;
     level: Level;
 
+}
+
+export interface QuestionModalDataDTO {
+    question: Pregunta,
+    product: Product
 }

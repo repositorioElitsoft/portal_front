@@ -95,13 +95,13 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  viewPreguntas(event: any, productId: number): void {
-    this.productoService.obtenerPreguntasPorProducto(productId).subscribe({
+  viewPreguntas(event: any, product: Product): void {
+    this.productoService.obtenerPreguntasPorProducto(product.id).subscribe({
       next: (preguntas: Pregunta[]) => {
         const dialogRef = this.dialog.open(ExamenModalComponent, {
           width: '800px',
           height: '700px',
-          data: preguntas,
+          data: { questions: preguntas, product: product },
         });
         dialogRef.afterClosed().subscribe(result => {
         });
