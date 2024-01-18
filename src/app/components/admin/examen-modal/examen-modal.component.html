@@ -1,14 +1,24 @@
 <div class="container">
   <div class="preguntas-title">
     <h2>Preguntas del Producto</h2>
-    <button mat-raised-button>Agregar pregunta</button>
+    <button mat-raised-button (click)="openAddQuestionDialog()">Agregar pregunta</button>
   </div>
   <ul>
-    <li *ngFor="let pregunta of preguntas">
-      {{ pregunta.content}}
-      <button mat-icon-button color="warn" (click)="deletePregunta(pregunta)">
-        <mat-icon>delete</mat-icon>
-      </button>
+    <li *ngFor="let pregunta of data.questions">
+      <div class="question-description">
+        {{ pregunta.content}}
+        <div class="level" [ngClass]="{
+        'level-hard': pregunta.level.id === 3,
+        'level-medium': pregunta.level.id  === 2,
+        'level-easy': pregunta.level.id  === 1,
+      }">
+          {{ pregunta.level.description}}
+        </div>
+        <button mat-icon-button color="warn" (click)="deletePregunta(pregunta)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+
     </li>
   </ul>
   <button mat-raised-button color="primary" (click)="cerrarDialog()">Cerrar</button>
