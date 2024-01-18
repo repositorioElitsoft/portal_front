@@ -16,30 +16,26 @@ export class AuthGuard implements CanActivate {
 
       console.log('usuario roles: ', userRoles);
       console.log('rol requerido: ', requiredRole);
-      if (requiredRole !== undefined) {
+
+
+
+      if (requiredRole != undefined) {
         if (userRoles.includes(requiredRole)) {
           return true;
         } else {
           if (userRoles.includes("ROLE_REC")) {
             this.router.navigate(['/reclutador/welcome-reclutador']);
           }
-
           if (userRoles.includes("ROLE_ADMIN")) {
             this.router.navigate(['/admin/welcome-admin']);
           }
-
-          if (userRoles.includes("ROLE_ENTR") || userRoles.includes("ENTR_TEC")) {
-            this.router.navigate(['/reclutador/welcome-reclutador']);
+          if (userRoles.includes("ROLE_ENTR")) {
+            this.router.navigate(['/entrevistador/welcome-entrevistador']);
           }
-
           return false;
         }
-      } else if (userRoles.includes("ROLE_GUEST")) {
-        this.router.navigate(['user/datos-personales']);
-        return true;
       }
-      return false;
-
+      return true;
     }
     this.router.navigate(['/iniciar-sesion']);
     return false;

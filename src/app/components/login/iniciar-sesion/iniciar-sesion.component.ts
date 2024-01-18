@@ -48,11 +48,8 @@ export class IniciarSesionComponent implements OnInit {
         else if (userRoles.includes('ROLE_REC')) {
           this.router.navigate(['/reclutador/welcome-reclutador']);
         }
-        else if (userRoles.includes('ENTR_TEC')) {
-          this.router.navigate(['/reclutador/welcome-reclutador']);
-        }
         else if (userRoles.includes('ROLE_ENTR')) {
-          this.router.navigate(['/reclutador/welcome-reclutador']);
+          this.router.navigate(['/entrevistador/welcome-entrevistador']);
         }
         else if (userRoles.includes('ROLE_GUEST')) {
           console.log("it's included")
