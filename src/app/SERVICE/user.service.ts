@@ -5,6 +5,8 @@ import { Register } from '../interface/register.interface';
 import { ActivatedRoute } from '@angular/router';
 import { UserEditarDTO, User } from '../interface/user.interface';
 import { environment } from 'src/environments/environment';
+import { UserJob } from '../interface/user-job.interface';
+import { UserJobAvailability } from '../interface/user-job-availability.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -149,4 +151,8 @@ export class UserService {
     return this.HttpClient.get(`${this.url}/users/preferred`);
   }
 
+  updateAvailability(userJobAvailability: any): Observable<UserJobAvailability> {
+    return this.HttpClient.post<UserJobAvailability>(`${this.url}/users/availability`, userJobAvailability);
+
+  }
 }
