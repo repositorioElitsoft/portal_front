@@ -1,0 +1,21 @@
+<mat-card class="contenedorform text-center">
+  <h4 class="perfilr">Disponibilidad Laboral</h4>
+  <form (ngSubmit)="submitForm()" [formGroup]="form">
+    <div class="row mb-3">
+      <div class="col-sm-10">
+        <mat-select placeholder="Selecciona una opción" formControlName="id">
+          <mat-option value="">Selecciona una opción</mat-option>
+          <mat-option value="1">Inmediata</mat-option>
+          <mat-option value="2">1 semana</mat-option>
+          <mat-option value="3">2 semanas</mat-option>
+          <mat-option value="4">3 semanas</mat-option>
+          <mat-option value="5">4 semanas o más</mat-option>
+        </mat-select>
+      </div>
+    </div>
+    <button mat-raised-button class="botonprimario m-2" [disabled]="isEditMode">
+      {{ !data.user ? 'Enviar Disponibilidad' : 'Editar Disponibilidad' }}
+    </button>
+
+  </form>
+</mat-card>

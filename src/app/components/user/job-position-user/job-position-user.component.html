@@ -53,6 +53,27 @@
       </mat-card>
 
 
+      <div *ngFor="let user of user">
+        <mat-card class="user-preferred-job-card">
+          <div class="user-preferred-job-content">
+            <div class="user-preferred-job-info">
+              <h3 class="user-preferred-job-title">Disponibilidad</h3>
+              <p class="user-preferred-job-description">{{user.availability?.time }}</p>
+            </div>
+            <div class="user-preferred-job-actions">
+              <button mat-mini-fab class="minifab m-1" (click)="openUserAvailability('300ms', '150ms')">
+                <mat-icon>add</mat-icon>
+              </button>
+              <!-- <button mat-mini-fab class="minifab m-1" [id]="user.availability?.id"
+                (click)="user.availability?.time && editUserAvailability()">
+                <mat-icon>edit</mat-icon>availability?
+              </button> -->
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+
 
       <button class="botonprimario m-2" mat-raised-button (click)="openAddPositionUser('300ms', '150ms')"> + Añadir
         postulación</button>

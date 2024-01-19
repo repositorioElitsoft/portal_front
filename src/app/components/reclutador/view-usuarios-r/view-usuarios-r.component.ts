@@ -266,7 +266,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     console.log("array final: ", filteredArray)
 
     // Filtro por porcentaje de aprobación
-
     console.log("estoy filtrando", typeof this.selectedPorcentajeAprobacion);
     if (typeof this.selectedPorcentajeAprobacion === "object") {
       console.log("en el filter", filteredArray);
