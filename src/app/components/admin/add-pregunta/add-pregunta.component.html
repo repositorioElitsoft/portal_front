@@ -18,43 +18,43 @@
                 <div class="form-group">
                   <label for="prg_opc1">Digite la opción 1</label>
                   <input type="text" class="form-control" id="prg_opc1" name="prg_opc1" formControlName="option1"
-                    required />
+                    (input)="checkAnswersWritten()" required />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="prg_opc2">Digite la opción 2</label>
                   <input type="text" class="form-control" id="prg_opc2" name="prg_opc2" formControlName="option2"
-                    required />
+                    (input)="checkAnswersWritten()" required />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="prg_opc3">Digite la opción 3</label>
                   <input type="text" class="form-control" id="prg_opc3" name="prg_opc3" formControlName="option3"
-                    required />
+                    (input)="checkAnswersWritten()" required />
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="prg_opc4">Digite la opción 4</label>
                   <input type="text" class="form-control" id="prg_opc4" name="prg_opc4" formControlName="option4"
-                    required />
+                    (input)="checkAnswersWritten()" required />
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label for="prg_resp">Seleccione la respuesta</label>
               <select class="form-control" id="prg_resp" name="prg_resp" formControlName="answer" required>
-                <option *ngIf="pregunta.option1" value="1">{{ pregunta.option1 }}</option>
-                <option *ngIf="pregunta.option2" value="2">{{ pregunta.option2 }}</option>
-                <option *ngIf="pregunta.option3" value="3">{{ pregunta.option3 }}</option>
-                <option *ngIf="pregunta.option4" value="4">{{ pregunta.option4 }}</option>
+                <option value="1">{{ form.get("option1")?.value }}</option>
+                <option value="2">{{ form.get("option2")?.value }}</option>
+                <option value="3">{{ form.get("option3")?.value }}</option>
+                <option value="4">{{ form.get("option4")?.value }}</option>
               </select>
             </div>
-            <div>
+            <div formGroupName="level">
               <label> Seleccione nivel de dificultad</label>
-              <select class="form-control" formControlName="level">
+              <select class="form-control" formControlName="id">
                 <option value="1">Bajo</option>
                 <option value="2">Medio</option>
                 <option value="3">Alto</option>

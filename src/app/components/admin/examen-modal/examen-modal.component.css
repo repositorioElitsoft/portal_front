@@ -19,3 +19,30 @@ textarea.mat-input-element {
     display: flex;
     justify-content: space-between;
 }
+
+.level-hard {
+    color: white;
+    background-color: red;
+}
+
+.level-medium {
+    color: black;
+    background-color: yellow;
+}
+
+.level-easy {
+    color: white;
+    background-color: green;
+}
+
+.level {
+    text-align: center;
+    border-radius: 50px;
+    width: 10vw;
+}
+
+.question-description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

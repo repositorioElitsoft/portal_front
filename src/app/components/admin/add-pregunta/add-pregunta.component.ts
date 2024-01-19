@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
-import { Pregunta } from 'src/app/interface/pregunta.interface';
+import { Pregunta, QuestionModalDataDTO } from 'src/app/interface/pregunta.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -19,7 +19,7 @@ export class AddPreguntaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ExamenModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public pregunta: Pregunta,
+    @Inject(MAT_DIALOG_DATA) public data: QuestionModalDataDTO,
     private route: ActivatedRoute,
     private preguntaService: PreguntaService) {
     this.buildForm();
@@ -29,6 +29,7 @@ export class AddPreguntaComponent implements OnInit {
 
   }
 
+
   buildForm() {
     this.form = this.formBuilder.group({
       content: ['', Validators.required],
@@ -36,25 +37,38 @@ export class AddPreguntaComponent implements OnInit {
       option2: ['', Validators.required],
       option3: ['', Validators.required],
       option4: ['', Validators.required],
-      answer: ['', Validators.required],
-      level: ['', Validators.required]
+      answer: [{ value: '', disabled: true }, Validators.required],
+      level: this.formBuilder.group({
+        id: ['', Validators.required],
+        description: ['',]
+      })
     })
   }
 
-  formSubmit() {
-    this.pregunta.answer = this.form.value.answer
-    this.pregunta.content = this.form.value.content
-    this.pregunta.level.id = this.form.value.level
-    this.pregunta.option1 = this.form.value.option1
-    this.pregunta.option2 = this.form.value.option2
-    this.pregunta.option3 = this.form.value.option3
-    this.pregunta.option4 = this.form.value.option4
+  checkAnswersWritten() {
+    if (this.form.get("option1")?.invalid ||
+      this.form.get("option2")?.invalid ||
+      this.form.get("option3")?.invalid ||
+      this.form.get("option4")?.invalid) {
+      this.form.get("answer")?.disable();
+      return;
+    }
+    this.form.get("answer")?.enable();
+  }
 
-    if (!this.pregunta.id) {
-      this.preguntaService.guardarPregunta(this.pregunta).subscribe({
+  formSubmit() {
+    let question: any = this.form.value
+
+    question.product = {
+      id: this.data.product.id
+    }
+
+    if (!this.data.question) {
+      console.log("Pregunta a guardar", question)
+      this.preguntaService.guardarPregunta(question).subscribe({
         next: (response) => {
           console.log("Respuesta de guarda: ", response)
-          this.dialogRef.close();
+          this.dialogRef.close(response);
         },
         error: (err) => {
           console.log("Error al guardar", err)
@@ -62,10 +76,13 @@ export class AddPreguntaComponent implements OnInit {
       })
     }
     else {
-      this.preguntaService.actualizarPregunta(this.pregunta.id, this.pregunta).subscribe({
+      console.log("Pregunta a actualizar", question)
+
+      this.preguntaService.actualizarPregunta(this.data.question.id ?? 0, question).subscribe({
         next: (response) => {
           console.log("Respuesta de actualizada: ", response)
-          this.dialogRef.close();
+
+          this.dialogRef.close(response);
         },
         error: (err) => {
           console.log("Error al actualizar", err)
