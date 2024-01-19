@@ -27,9 +27,7 @@ export class PreguntaService {
     return this.http.get(`${this.url}/pregunta/${preguntaId}`);
   }
 
-  public listarPreguntasDelExamenParaLaPrueba(examenId: any) {
-    return this.http.get(`${this.url}/pregunta/examen/todos/${examenId}`);
-  }
+
   public evaluarExamen(preguntas: any) {
     return this.http.post(`${this.url}/pregunta/evaluar-examen`, preguntas);
   }

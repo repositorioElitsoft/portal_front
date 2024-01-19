@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProductoService } from 'src/app/service/producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
@@ -18,7 +18,8 @@ export class LoadExamenComponent implements OnInit {
   lvl: any;
   constructor(
     private herramientasService: HerramientasService,
-    private preguntaService: PreguntaService
+    private preguntaService: PreguntaService,
+    private router: Router
   ) { }
   ngOnInit(): void {
     this.herramientasService.getCurrentUserToolsForExams().subscribe(
@@ -43,6 +44,16 @@ export class LoadExamenComponent implements OnInit {
         console.error('Error al obtener el usuario guardado:', error);
       }
     );
+  }
+
+  goToInstructions(tool: Herramientas) {
+
+    this.router.navigate([`/portal-view/instrucciones/${tool.productVersion.product.name}`], {
+      queryParams: {
+        prod: tool.productVersion.product.id,
+        lvl: tool.level?.description
+      }
+    });
   }
 
   getExams() {

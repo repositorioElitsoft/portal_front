@@ -58,6 +58,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
+  selectedProducts: number[] = []
   selectedVersion: number = 0;
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
@@ -189,13 +190,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
-    console.log("filteredArray", filteredArray);
-
-
 
     //LISTO
     if (this.selectedCargo > 0) {
-      console.log("Selected cargo: ", this.selectedCargo)
+
       filteredArray = filteredArray.filter(usuario => {
         return usuario.userJob?.find(application => {
           return String(application.id) === String(this.selectedCargo);
@@ -205,35 +203,17 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     //LISTO
     if (this.selectedfechaPostulacion) {
-      //console.log("seleccioné fecha");
-      // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
       const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
-
-      // Filtrar los cargos por fecha de postulación
       filteredArray = filteredArray.filter(usuario => {
         const cargos = usuario.userJob
-        //console.log("cargos", cargos);
-        // Check if cargos is defined and has at least one element
         if (cargos && cargos.length > 0) {
-          //console.log("cargos es mayor que 1");
-          // Assuming applicationDate is a property of UserJob
           const primerCargo = cargos[0];
           const applicationDate = primerCargo.applicationDate
-
-          // Verificar si la propiedad applicationDateexiste y no es undefined
           if (!applicationDate) return false;
-          //console.log("tipo de la fecha:", typeof applicationDate);
-          //console.log("fecha obtenida:", applicationDate);
-          // Comparar solo la parte de la fecha
-          //console.log("fecha obtenida2:", String(applicationDate).split('T')[0]);
-          //console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0]);
           return String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
         }
         return false;
       });
-
-      // Imprimir el array de cargos filtrados
-      console.log("Cargos filtrados por fecha de postulación:", this.cargos);
     }
 
 
@@ -241,48 +221,52 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     // Filtro por estado de disponibilidad
     if (this.selectedEstado && this.selectedEstado !== '') {
       filteredArray = filteredArray.filter((usuario) => {
-        console.log("usuaio:", usuario)
-        console.log("id availability:", usuario.availability?.id)
-        console.log("id la escogida:", this.selectedEstado)
         return String(usuario.availability?.id) === String(this.selectedEstado)
       });
     }
 
-    console.log("Filtered array de availability", filteredArray)
-
-    // //Filtro por producto
-    // if (this.selectedProducto > 0) {
-    //   const selectedProduct = this.productos.find(product => product.id === this.selectedProducto);
-    //   if (selectedProduct) {
-    //     filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.name));
-    //   }
-    // }
-
-    // //Filtro por versión
-    // if (this.selectedVersion > 0) {
-    //   const selectedVersion = this.versiones.find(version => version.vrs_id === this.selectedVersion);
-    //   if (selectedVersion) {
-    //     filteredArray = filteredArray.filter(element => element.herr_ver.includes(selectedVersion.vrs_name));
-    //   }
-    // }
 
 
-    // Filtro por nivel de examen
-    if (this.selectedNivel > 0) {
-      filteredArray = filteredArray.filter(resultados => {
-        return this.resultados.find(resultado => {
-          const nivelDificultad = resultado.level.description;
-          const productos = resultado.product;
 
-          console.log('nivel examen:', nivelDificultad);
-          console.log('nivel seleccionado:', this.selectedNivel);
-          console.log('Productos:', productos);
-          console.log('Producto seleccionado:', this.selectedProducto);
-          return productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+    // Filtro por producto LISTO
+    if (this.selectedProducts.length > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.tools?.find(tool => {
+          console.log("tool product id", tool.productVersion.product.id)
+          console.log("prueba", this.selectedProducts.includes(16))
+          console.log("resultado de verificarlo", this.selectedProducts.includes(tool.productVersion.product.id))
+          return this.selectedProducts.includes(tool.productVersion.product.id)
         });
       });
     }
+
+    console.log("filtered array tool", filteredArray)
+
+    //Filtro por versión Necesita más testing pero debería estar bien
+    if (this.selectedVersion > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.tools?.find(tool => {
+          return String(tool.productVersion.id) === String(this.selectedVersion)
+        });
+      })
+    }
+
+
+    // Filtro por nivel de examen
+
+    if (this.selectedNivel > 0 && this.selectedProducts.length === 1) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.results?.find(resultado => {
+          return String(resultado.level.id) === String(this.selectedNivel)
+            && String(resultado.product.id) === String(this.selectedProducts[0])
+        })
+      });
+    }
+
+    console.log("array final: ", filteredArray)
+
     // Filtro por porcentaje de aprobación
+
     console.log("estoy filtrando", typeof this.selectedPorcentajeAprobacion);
     if (typeof this.selectedPorcentajeAprobacion === "object") {
       console.log("en el filter", filteredArray);
@@ -290,7 +274,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         console.log("resultado aaaaaa", resultado);
         const resultadoFinal = this.resultados.find(resultado => {
           const resultadoExamen = resultado.score;
-          const puntosMaximos = 4;
+          const puntosMaximos = 20;
           console.log("resultadoExamen", resultadoExamen);
           const nivelDificultad = resultado.level.description;
           const productos = resultado.product;
@@ -323,24 +307,27 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return false;
       })
     }
+
     //Filtro años de experiencia
-
-    if (this.lastYears) {
-      filteredArray = filteredArray.filter((usuario) => {
-        return usuario.jobs?.some((experiencia: any) => {
-          return experiencia.herramientas?.some((herramienta: any) => {
-            const herramientaExperiencia = herramienta.productVersion?.id;
-            if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
-              const fechaFin = new Date(experiencia.endDate);
-              const currentYear = new Date().getFullYear();
-              return fechaFin.getFullYear() >= currentYear - this.lastYears;
-            }
-
-            return false;
+    /*
+    
+        if (this.lastYears) {
+          filteredArray = filteredArray.filter((usuario) => {
+            return usuario.jobs?.some((experiencia: any) => {
+              return experiencia.herramientas?.some((herramienta: any) => {
+                const herramientaExperiencia = herramienta.productVersion?.id;
+                if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
+                  const fechaFin = new Date(experiencia.endDate);
+                  const currentYear = new Date().getFullYear();
+                  return fechaFin.getFullYear() >= currentYear - this.lastYears;
+                }
+    
+                return false;
+              });
+            });
           });
-        });
-      });
-    }
+        }*/
+
 
 
     // if (this.selectedVersion > 0) {
@@ -416,7 +403,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     return `${value}`;
   }
 
-  filterProducto() {
+  filterProducto(event: any) {
+
+    this.selectedProducts = event.value;
+
+    console.log("Values of the event:_", this.selectedProducts)
     this.filterData();
   }
   filterNivel() {
@@ -450,25 +441,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       (data: any[]) => {
         console.log('Data de usuario :', data);
 
-        // Filtrar usuarios por roles igual a "GUEST"
         const usuarios = data
-          // .filter((usuario) => usuario.roles === 'GUEST')
-          .map((usuario) => ({
-            name: usuario.name + " " + usuario.firstLastname + " " + usuario.secondLastname || '',
-            phone: usuario.phone || '',
-            email: usuario.email || '',
-            roles: usuario.roles || '',
-            address: usuario.address || '',
-            tools: usuario.Herramientas,
-            jobs: usuario.jobs,
-            academicalList: usuario.academicalList,
-            id: usuario.id,
-            cvPath: usuario.cvPath,
-            userJob: usuario.userJob,
-            results: usuario.results,
-            availability: usuario.availability
-
-          }));
 
         const controlNames = Object.keys(this.selectedCheckbox.controls);
         controlNames.forEach(controlName => {
@@ -562,12 +535,14 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
 
+
+
   obtenerYFiltrarResultados() {
     console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
 
     this.resultadosService.obtenerResultadosByUser().subscribe(
       (resultadoUsuario: any) => {
-        console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
+
 
         // Aquí puedes verificar si los datos recibidos son lo que esperas
         this.dataSource.data = this.originalDataCopy.filter(usuario => {
@@ -602,9 +577,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
 
   getProductos(categoriaId: number) {
-    console.log('categoria id:', categoriaId)
 
-    this.selectedProducto = 0;
     this.selectedVersion = 0;
     this.selectedProductoNombre = '';
     this.filterInput();
@@ -612,34 +585,35 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this.productoService.getProductsByCategory(categoriaId).subscribe(
         (productos: Product[]) => {
           this.productos = productos;
-          this.selectedProducto = 0;
           this.versiones = [];
           this.originalDataCopy = this.dataSource.data;
-          this.filterProducto();
+          //this.filterProducto();
           this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
-          this.getVersion(this.selectedProducto);
+
         },
         (error) => {
           console.log('Error al cargar productos ', error);
         }
       );
     } else {
-      this.selectedProducto = 0;
       this.versiones = [];
       this.productos = [];
       this.selectedProductoNombre = '';
       this.originalDataCopy = this.dataSource.data;
-      this.filterProducto();
+      //this.filterProducto();
     }
   }
 
 
-  getVersion(productoId: number) {
-    if (productoId) {
-      this.productoService.getVersionByProduct(productoId).subscribe(
+  getVersion(event: any) {
+
+    console.log("selected products", event.value[0])
+
+    if (event.value.length === 1) {
+      this.productoService.getVersionByProduct(event.value[0]).subscribe(
         (data: ProductVersion[]) => {
           this.versiones = data;
-          // this.filter(new Event('input'));
+
         },
         (error) => {
           console.log('Error al cargar version ', error);
@@ -827,7 +801,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.porcentajeAprobacion = 0;
 
     // Vuelve a cargar o filtrar los datos según sea necesario
-    this.filterData();
+    this.dataSource.data = this.originalDataCopy;
   }
 
 
