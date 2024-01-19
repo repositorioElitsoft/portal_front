@@ -11,12 +11,13 @@ export class LaboralService {
   readonly url = `${environment.URL_HOST}/employment/`
   constructor(private http: HttpClient) { }
 
-  
+
   guardarLaboral(employment: Employment | undefined, id: number | null | undefined): Observable<Employment> {
-    if(id){
+    if (id) {
       console.log('Se actualiza')
       return this.http.put<Employment>(`${this.url}${id}`, employment);
     }
+    console.log('Se guarda')
     return this.http.post<Employment>(this.url, employment);
   }
   obtenerHerramientasPorUsuario(usuarioId: number): Observable<Herramientas[]> {

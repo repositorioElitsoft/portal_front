@@ -27,6 +27,7 @@ export class DatosPersonalesComponent implements OnInit {
   isLoaded: boolean = true
   isUploadingFile: boolean = false
   usuarioGuardado!: User
+  mostrarEdicion = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,7 +66,7 @@ export class DatosPersonalesComponent implements OnInit {
         this.form.get("gender.name")?.setValidators([Validators.required]);
       } else {
         this.form.get("gender.name")?.setValidators(null);
-        this.form.get("gender.name")?.setValue("");
+        // this.form.get("gender.name")?.setValue("");
       }
       this.form.get("gender.name")?.updateValueAndValidity();
     });
@@ -165,6 +166,11 @@ export class DatosPersonalesComponent implements OnInit {
       });
     }
   }
+
+  mostrarEdicionDeGenero() {
+    this.mostrarEdicion = true; // Mostrar la segunda parte del formulario
+  }
+
   ObtenerUsuarioGuardado() {
     this.userService.getCurrentUser().subscribe({
       next: (data: any) => {

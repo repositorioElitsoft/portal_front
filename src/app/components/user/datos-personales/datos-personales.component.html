@@ -38,7 +38,7 @@
         <mat-error *ngIf="form.get('secondLastname')?.invalid && form.get('secondLastname')?.touched">Debe ingresar
           apellido</mat-error>
       </mat-form-field>
-      <!-- Teléfono -->
+
       <mat-form-field class="row mb-3" appearance="outline">
         <mat-label>Teléfono:</mat-label>
         <div class="d-flex">
@@ -59,11 +59,47 @@
         teléfono</mat-error>
 
       <!-- Genero  -->
-      <div formGroupName="gender">
-        <mat-form-field appearance="outline" class="w-100" color="primary">
-          <mat-label>Género:</mat-label>
+
+
+      <mat-form-field class="row mb-3" appearance="outline" formGroupName="gender" (click)="mostrarEdicionDeGenero()">
+        <mat-label *ngIf="!mostrarEdicion">Género:</mat-label>
+        <input matInput formControlName="name" id="inputGeneroOtro" *ngIf="!mostrarEdicion">
+
+        <ng-container *ngIf="mostrarEdicion">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nombre del Género</mat-label>
+            <mat-select formControlName="id" placeholder="Seleccionar género">
+              <mat-option value="1">Masculino</mat-option>
+              <mat-option value="2">Femenino</mat-option>
+              <mat-option value="">Otro</mat-option>
+              <mat-option *ngIf="usuarioGuardado && usuarioGuardado.gender?.id! > 2"
+                [value]="usuarioGuardado.gender?.id">{{ usuarioGuardado.gender?.name }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="form.get('gender.id')?.hasError('required') && form.get('gender.id')?.touched">Género es
+              obligatorio</mat-error>
+          </mat-form-field>
+        </ng-container>
+
+        <ng-container *ngIf="!form.get('gender.id')?.value">
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Especificar Género:</mat-label>
+              <input matInput formControlName="name" name="inputGeneroOtro">
+              <mat-error *ngIf="form.get('name')?.hasError('required') && form.get('name')?.touched">Debe especificar el
+                género</mat-error>
+            </mat-form-field>
+          </div>
+        </ng-container>
+      </mat-form-field>
+
+
+
+      <!-- <div formGroupName="gender">
+        <mat-form-field appearance="outline" class="w-100" color="primary" *ngIf="mostrarEdicion">
+          <mat-label formControlName="name" id="inputGeneroOtro">Nombre del Género</mat-label>
           <mat-select formControlName="id" placeholder="Seleccionar género"
             [ngClass]="{'is-invalid': form.get('gender.id')?.invalid && form.get('gender.id')?.touched}">
+
             <mat-option value="1">Masculino</mat-option>
             <mat-option value="2">Femenino</mat-option>
             <mat-option value="">Otro</mat-option>
@@ -85,7 +121,7 @@
             </mat-form-field>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- País -->
       <div class="w-100">
         <div class="col-sm-12">
