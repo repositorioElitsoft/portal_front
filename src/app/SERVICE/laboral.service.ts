@@ -19,6 +19,8 @@ export class LaboralService {
     }
     return this.http.post<Employment>(this.url, employment);
   }
+
+  
   obtenerHerramientasPorUsuario(usuarioId: number): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}por-usuario/${usuarioId}`);
   }

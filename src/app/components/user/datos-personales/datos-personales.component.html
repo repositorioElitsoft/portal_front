@@ -45,7 +45,7 @@
           <!-- <mat-hint>Ejemplo: Apellido Materno</mat-hint> -->
           <mat-error *ngIf="form.get('secondLastname')?.invalid && form.get('secondLastname')?.touched">Debe ingresar apellido</mat-error>
         </mat-form-field>
-      
+        <!-- Teléfono -->
         <mat-form-field class="row mb-3" appearance="outline">
           <mat-label>Teléfono:</mat-label>
           <div class="d-flex">
@@ -59,7 +59,7 @@
             </select>
             <input appNumericOnly matInput type="text" class="form-control select-tel-input" id="inputTelefon" formControlName="phone" name="inputTelefono">
           </div>
-          <mat-hint>Ejemplo: +56 123456789</mat-hint>
+          <mat-hint>Ejemplo: +56923456789</mat-hint>
         </mat-form-field>
         <mat-error *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched">Debe ingresar número de teléfono</mat-error>
       
