@@ -49,6 +49,7 @@ export class AddStudyComponent implements OnInit {
       endDate: ['', Validators.required],
       academicalReference: this.formBuilder.array([])
     });
+
   }
   goBack() {
     this.dialog.closeAll();
@@ -57,10 +58,10 @@ export class AddStudyComponent implements OnInit {
     const rowArray = data.map((academica, index) => {
       return this.formBuilder.group({
         id: [academica.id], 
-        name: [academica.name], 
-        institution: [academica.institution],
-        email: [academica.email], 
-        phone: [academica.phone] 
+        name: [academica.name, Validators.required], 
+        institution: [academica.institution, Validators.required],   
+        email: [academica.email,[Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")]], 
+        phone: [academica.phone,[Validators.required, Validators.minLength(11)]] 
       });
     });
     this.form.setControl('academicalReference', this.formBuilder.array(rowArray))
@@ -127,10 +128,10 @@ export class AddStudyComponent implements OnInit {
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
-      name: [''],
-      institution: [''],
-      email: [''],
-      phone: ['']
+      name: ['', Validators.required],      
+      institution: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")]],
+      phone: ['', [Validators.required, Validators.minLength(11)]],
     });
     this.referenciaFormArray.push(referenciaFormGroup);
   }

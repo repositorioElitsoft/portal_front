@@ -54,19 +54,24 @@
               <mat-form-field appearance="fill" class="example-full-width">
                 <mat-label>Nombre</mat-label>
                 <input matInput type="text" formControlName="name">
-              </mat-form-field>    
+              </mat-form-field> 
+              <!-- Empresa o Institución    -->
               <mat-form-field appearance="fill" class="example-full-width">
-                <mat-label>Institución</mat-label>
+                <mat-label>Empresa o Institución</mat-label>
                 <input matInput type="text" formControlName="company">
               </mat-form-field>  
-              <mat-form-field appearance="fill" class="example-full-width">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" formControlName="email">
-              </mat-form-field> 
-              <mat-form-field appearance="fill" class="example-full-width">
-                <mat-label>Teléfono</mat-label>
-                <input matInput type="tel" formControlName="phone">
-              </mat-form-field>
+              <!-- Email -->
+          <mat-form-field appearance="fill" class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" title="Ingrese un correo electrónico válido">
+            <mat-hint>Ejemplo: ejemplo@ejemplo.com </mat-hint>
+          </mat-form-field>
+          <!-- Teléfono -->
+          <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>Teléfono</mat-label>
+          <input appNumericOnly matInput type="text" formControlName="phone">
+          <mat-hint>Ejemplo: 56923456789</mat-hint>
+          </mat-form-field>
               <mat-card class="guardarycancelar mb-2" style="display: flex; justify-content: center; align-items: center; height: 100%;">
                 <button mat-mini-fab color="warn" (click)="eliminarReferencia(i)" style="margin: auto;">
                   <mat-icon>delete</mat-icon>
@@ -80,7 +85,7 @@
       </mat-card>
       </div>    
       <mat-card class="guardarycancelar">
-        <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">{{ creationMode ? 'Guardar' : 'Guardar' }}</button>
+        <button mat-raised-button class="botonprimario m-2" [disabled]="!form.valid" type="submit">{{ creationMode ? 'Guardar' : 'Editar' }}</button>
         <button mat-raised-button class="botonprimario m-2" (click)="goBack()">Cancelar</button>
       </mat-card>
     </div>
