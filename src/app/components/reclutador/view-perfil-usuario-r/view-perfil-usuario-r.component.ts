@@ -77,6 +77,8 @@ export class ViewPerfilUsuarioRComponent implements OnInit {
     private authService: AuthService
   ) {
     this.usuarioData = data.usuario;
+    console.log("data llegada: ", data)
+    console.log("usuario data: ", this.usuarioData)
 
     // this.observadoresData = data.observadores;
   }

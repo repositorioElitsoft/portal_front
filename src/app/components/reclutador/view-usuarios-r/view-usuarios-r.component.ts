@@ -697,32 +697,22 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   //   });
   // }
 
-  openUserProfile(event: any) {
-    const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-    console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+  openUserProfile(usuario: User) {
 
-    // Llamada al servicio de usuario
-    this.userService.getUsuarioId(userId).subscribe({
-      next: (usuario) => {
-        // Lógica con los datos obtenidos
-        console.log('Perfil del usuario:', usuario);
+    console.log('User DEL BOTON PERFIL CLICKADO:', usuario); // Imprime el ID del usuario en la consola
 
-        // Configura el tamaño del diálogo
-        const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
-          data: { userId, usuario }, // Pasa los datos del usuario al componente hijo
-          height: '60vh', // Establece la altura del diálogo
-        });
 
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-          this.obtenerUsuarios();
-        });
-      },
-      error: (error) => {
-        console.error('Error al obtener datos del usuario:', error);
-        // Manejo de errores aquí
-      }
+    // Configura el tamaño del diálogo
+    const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+      data: { usuario }, // Pasa los datos del usuario al componente hijo
+      height: '60vh', // Establece la altura del diálogo
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.obtenerUsuarios();
+    });
+
   }
 
 
