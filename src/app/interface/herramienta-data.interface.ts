@@ -6,7 +6,7 @@ export interface HerramientaData {
     id: number;
     yearsOfExperience?: number;
     herr_prd_otro:string;
-    productVersion: ProductVersion;
+    productVersion?: ProductVersion;
     certification?: Certification;
     level: Level;
     employments: Employment;

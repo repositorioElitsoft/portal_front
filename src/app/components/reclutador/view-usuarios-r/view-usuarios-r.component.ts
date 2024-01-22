@@ -1,36 +1,40 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/service/user.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator} from '@angular/material/paginator';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSort, Sort } from '@angular/material/sort';
-import { User } from 'src/app/interface/user.interface';
-import { ProductCategory } from 'src/app/interface/categoria-prod.interface';
+import { MatSort, Sort} from '@angular/material/sort';
+import { User} from 'src/app/interface/user.interface';
+import { HerramientaData } from 'src/app/interface/herramienta-data.interface';
+import { ProductCategory} from 'src/app/interface/categoria-prod.interface';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Product } from 'src/app/interface/producto.interface';
 import { ProductVersion } from 'src/app/interface/version-producto';
 import { EditPerfilUsuarioRComponent } from '../edit-perfil-usuario-r/edit-perfil-usuario-r.component'; // Ajusta la ruta según tu estructura de carpetas
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewPerfilUsuarioRComponent } from '../view-perfil-usuario-r/view-perfil-usuario-r.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { viewCrudArchivoComponent } from '../view-crudarchivo/view-crudarchivo.component';
 import * as Papa from 'papaparse';
 import { ObservacionService } from 'src/app/service/observation.service';
+import { forkJoin } from 'rxjs';
 import { CategoriaProductoService } from 'src/app/service/categoria-producto.service';
-import { UserJobService } from 'src/app/service/user-job.service';
+import { UserJobService} from 'src/app/service/user-job.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SendMailToUsersDialogueComponent } from '../send-mail-to-users-dialogue/send-mail-to-users-dialogue.component';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { NivelService } from 'src/app/service/nivel.service';
-import { Level } from 'src/app/interface/niveles.interface';
+import {Level } from 'src/app/interface/niveles.interface';
 import { JobPositionService } from 'src/app/service/jobposition.service';
 import { JobPosition } from 'src/app/interface/jobposition.interface';
+import { UserJob } from 'src/app/interface/user-job.interface';
+import { ToolDTO } from 'src/app/interface/herramientas.interface';
+import { ResultadosService } from 'src/app/service/resultados.service';
 import { AcademicaService } from 'src/app/service/academica.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { Result } from 'src/app/interface/exam-results.interface';
-import { ResultadosService } from 'src/app/service/resultados.service';
-
 const ELEMENT_DATA: User[] = [];
 @Component({
   selector: 'app-view-usuarios-r',
@@ -48,9 +52,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   usuarios: any[] = [];
   categorias: ProductCategory[] = [];
   productos: Product[] = [];
-  niveles: Level[] = [];
+  niveles : Level []=[];
   versiones: ProductVersion[] = [];
-  selectedfechaPostulacion: Date | null = null;
+  selectedfechaPostulacion: Date | null = null;
   selectedAniosExpRange: number[] = [1, 10];
   isIrrelevant: boolean = true;
   selectedCheckbox: FormGroup;
@@ -64,9 +68,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedEstado: string = '';
   inputContent: boolean = false;
   lastYears: number = 0;
-  resultadosExam: any[] = [];
+  resultadosExam: any[]=[];
   cargos: JobPosition[] = [];
-  idUser: number = 0;
+  idUser:number = 0;
   filterCargo: string = '';
   resultados: any[] = [];
   porcentajeAprobacion:number = 0;
@@ -92,8 +96,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private observationService: ObservacionService,
-    private preguntaService: PreguntaService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
     private categoriaProductoService: CategoriaProductoService,
@@ -102,9 +104,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     private _bottomSheet: MatBottomSheet,
     private nivelService: NivelService,
     private JobPositionService: JobPositionService,
-    private resultadosService: ResultadosService,
-    private UserJobService: UserJobService,
-    private AcademicalReferences: AcademicaService,
+    private resultadosService:ResultadosService,
+    private cdr: ChangeDetectorRef,
     private herramientasService: HerramientasService
   ) {
     this.selectedCheckbox = this.fb.group({
@@ -185,98 +186,68 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     filteredArray = filteredArray.filter(usuario => {
       
       return usuario.userJob && usuario.userJob.some(cargo => {
-        const sueldo = cargo.salary;
+        const sueldo = cargo.salary; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
-    console.log("filteredArray",filteredArray);
-    
-
-    
+  
+    // //filtro por cargo
     // if (this.selectedCargo > 0) {
     //   filteredArray = filteredArray.filter(usuario => {
-    //     console.log("cargo a postular", this.selectedCargo);
-    //     return usuario.userJob && usuario.userJob.some(cargo => cargo.jobPosition && cargo.jobPosition.id === this.selectedCargo);
+    //     return usuario.userJob && usuario.userJob.some(cargo => cargo.cargoElitsoft && cargo.cargoElitsoft.JobPositionId === this.selectedCargo);
     //   });
     // }
 
-    
-    if (this.selectedfechaPostulacion) {
-      console.log("seleccioné fecha");
-      // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
-      const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
 
-      // Filtrar los cargos por fecha de postulación
-      filteredArray = filteredArray.filter(usuario => {
-        const cargos = usuario.userJob
-        console.log("cargos", cargos);
-        // Check if cargos is defined and has at least one element
-        if (cargos && cargos.length > 0) {
-          console.log("cargos es mayor que 1");
-          // Assuming applicationDate is a property of UserJob
-          const primerCargo = cargos[0];
-          const applicationDate = primerCargo.applicationDate
+  //filtro por fecha de postulacion
+  if (this.selectedfechaPostulacion) {
+    console.log("seleccioné fecha");
+    // Obtener la fecha seleccionada en formato ISO y cortar para quedarse solo con la parte de la fecha
+    const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
 
-          // Verificar si la propiedad applicationDateexiste y no es undefined
-          if (!applicationDate) return false;
-          console.log("tipo de la fecha:", typeof applicationDate);
-          console.log("fecha obtenida:", applicationDate);
-          // Comparar solo la parte de la fecha
-          console.log("fecha obtenida2:", String(applicationDate).split('T')[0]);
-          console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0]);
-          return String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
+    // Filtrar los cargos por fecha de postulación  
+    filteredArray = filteredArray.filter(usuario => {
+      const cargos = usuario.userJob
+      console.log("cargos", cargos);
+          // Check if cargos is defined and has at least one element
+          if (cargos && cargos.length > 0) {
+            console.log("cargos es mayor que 1");
+            // Assuming applicationDate is a property of UserJob
+            const primerCargo = cargos[0];
+            const applicationDate= primerCargo.applicationDate
+
+        // Verificar si la propiedad applicationDateexiste y no es undefined
+        if(!applicationDate)return false;
+        console.log("tipo de la fecha:",typeof applicationDate );
+        console.log("fecha obtenida:", applicationDate );
+        // Comparar solo la parte de la fecha
+        console.log("fecha obtenida2:", String(applicationDate).split('T')[0] );
+        console.log("fecha seleccionada:", this.selectedfechaPostulacion!.toISOString().split('T')[0] );
+        return  String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
         }
         return false;
-      });
-
-      // Imprimir el array de cargos filtrados
-      console.log("Cargos filtrados por fecha de postulación:", this.cargos);
-    }
-  
-    
-
-          // Filtro por estado de disponibilidad
-          if (this.selectedEstado && this.selectedEstado !== '') {
-            console.log("estado disponibilidad", this.cargos);
-            filteredArray = filteredArray.filter((usuario) => {
-              return usuario.userJob && usuario.userJob.some((job) => {
-                return job.availability && job.availability.time === this.selectedEstado;
-              });
-            });
-          }
-
-       
-
-    // Filtro por producto
-
-    /*
-    if (this.selectedProducto > 0) {
-      const selectedProduct = this.productos.find(producto => producto.prd_id === this.selectedProducto);
-      if (selectedProduct) {
-        filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.prd_nom));
-      }
-      return false;
-  });
+    });
 
   // Imprimir el array de cargos filtrados
   console.log("Cargos filtrados por fecha de postulación:", this.cargos);
-}
+  }
 
 
-    // //Filtro por estado
-    // if (this.selectedEstado && this.selectedEstado !== '') {
-    //   filteredArray = filteredArray.filter((usuario) => {
-    //     return usuario.userJob && usuario.userJob.some((estado) => estado.availability === this.selectedEstado);
-    //   });
+  //Filtro por estado
+  if (this.selectedEstado && this.selectedEstado !== '') {
+    filteredArray = filteredArray.filter((usuario) => {
+      return usuario.userJob && usuario.userJob.some((estado) => String(estado.availability) === String(this.selectedEstado));
+    });
+  }
    
 
-    // //Filtro por producto
-    // if (this.selectedProducto > 0) {
-    //   const selectedProduct = this.productos.find(product => product.id === this.selectedProducto);
-    //   if (selectedProduct) {
-    //     filteredArray = filteredArray.filter(element => element.tools.includes(selectedProduct.name));
-    //   }
-    // }
+  if (this.selectedProducto > 0) {
+    const selectedProduct = this.productos.find(product => product.id === this.selectedProducto);
+    if (selectedProduct) {
+       filteredArray = filteredArray.filter(user => user.tools?.some(tool => tool.productVersion?.product.name.includes(selectedProduct.name)));
+    }
+  }
+  
 
     // //Filtro por versión
     // if (this.selectedVersion > 0) {
@@ -287,48 +258,29 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     // }
     
 
-
-
-// // Filtro por resultado del usuario
-//   if (this.resultados !== undefined) {
-//   this.resultadosService.obtenerResultadosByUser().subscribe(
-//     (resultadoUsuario:any) => {
-//       filteredArray = filteredArray.filter(usuario => {
-//         // Usar una función de flecha para preservar el contexto
-//         return resultadoUsuario === this.resultados;
-//       });
-
-//       console.log('Array filtrado:', filteredArray);
-//     },
-//     (error:any) => {
-//       console.error('Error al obtener resultados del usuario: ', error);
-//     }
-//   );
-// }
-    // Filtro por nivel de examen
+    // Filtro por nivel de examen selectedNivel
     if (this.selectedNivel > 0) {
+      console.log("holaaa")
       filteredArray = filteredArray.filter(resultados => {
         return this.resultados.find(resultado => {
           const nivelDificultad = resultado.level.description;
           const productos = resultado.product;
-
           console.log('nivel examen:', nivelDificultad);
           console.log('nivel seleccionado:', this.selectedNivel);
           console.log('Productos:', productos);
           console.log('Producto seleccionado:', this.selectedProducto);
-          return productos.length > 0 && productos[0].prd_id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+          return productos.length > 0 && productos[0].id=== this.selectedProducto && nivelDificultad === this.selectedNivel;
         });
       });
     }
     // Filtro por porcentaje de aprobación
-    console.log("estoy filtrando",typeof this.selectedPorcentajeAprobacion); 
+  
     if (typeof this.selectedPorcentajeAprobacion ==="object") { 
-      console.log("en el filter",filteredArray); 
       filteredArray = filteredArray.filter(resultado => {
           console.log("resultado aaaaaa",resultado); 
           const resultadoFinal = this.resultados.find(resultado =>{
           const resultadoExamen = resultado.score;
-          const puntosMaximos = 4;
+          const puntosMaximos = 20;
           console.log("resultadoExamen",resultadoExamen); 
           const nivelDificultad = resultado.level.description;
           const productos = resultado.product; 
@@ -343,7 +295,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           
             if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
               return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
-                porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
+                    porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
             } else {
               console.log("usuario", resultado.usuarioId);
               console.log("% aprobacion", porcentajeAprobacion);
@@ -354,12 +306,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           
           return false;
         });
-        console.log("resultado final", resultadoFinal);
-        if (resultadoFinal) {
+        console.log("resultado final",resultadoFinal);
+        if (resultadoFinal){
           return true;
         }
         return false;
-      })
+        })
     }
     //Filtro
     /*
@@ -391,23 +343,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     // console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
     // console.log('Usuarios filtrados:', filteredArray);
 
-     this.dataSource.data = filteredArray;
+     this.dataSource.data = filteredArray
+     this.cdr.detectChanges();
   }
-  
-  filterByCargo() {
-    let filteredArray = this.originalDataCopy;
 
-    // if (this.filterCargo) {
-    //   const filtroCargoLowerCase = this.filterCargo.toLowerCase();
-    //   filteredArray = filteredArray.filter(usuario =>
-    //     usuario.userJob?.some(cargo =>
-    //       cargo.crg_prf && cargo.crg_prf.toLowerCase().includes(filtroCargoLowerCase)
-    //     )
-    //   );
-    // }
-    this.dataSource.data = filteredArray;
-    console.log('Usuarios filtrados', filteredArray);
-  }
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
       this.lastYears = 0;
@@ -440,10 +379,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     if (this.filtroCargo) {
       const filtroLowerCase = this.filtroCargo.toLowerCase();
       filteredArray = filteredArray.filter(usuario => {
-        const cargo = usuario.jobs;
-        if (cargo && cargo.length > 0) {
+        const cargo=usuario.jobs;
+        if(cargo && cargo.length >0){
           const primerCargo = cargo[0];
-          const cargoOcupado = primerCargo.position;
+          const cargoOcupado= primerCargo.position;
           if (cargoOcupado) {
             return cargoOcupado.toLowerCase().includes(filtroLowerCase);
           }
@@ -463,8 +402,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       return Math.round(value / 1000) + 'k';
     }
 
-    return `${value}`;
-  }
+        return `${value}`;
+    }
 
   filterProducto() {
     this.filterData();
@@ -495,10 +434,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.filterData();
   }
 
-  obtenerUsuarios(): void {
-    this.userService.obtenerUsuarios().subscribe(
-      (data: any[]) => {
-        console.log('Data de usuario :', data);
+obtenerUsuarios(): void {
+  this.userService.obtenerUsuarios().subscribe(
+    (data: any[]) => {
+      console.log('Data de usuario :', data);
 
       // Filtrar usuarios por roles igual a "GUEST"
       const usuarios = data
@@ -520,7 +459,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           userJob: usuario.userJob,
           results: usuario.results,
 
-          }));
+        }));
 
         const controlNames = Object.keys(this.selectedCheckbox.controls);
         controlNames.forEach(controlName => {
@@ -528,7 +467,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         });
 
 
-        usuarios.forEach(usuario => {
+        usuarios.forEach(usuario =>{
           this.selectedCheckbox.addControl(String(usuario.email), this.fb.control(false))
         });
 
@@ -542,73 +481,45 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
   );
 }
-// calculateUserResults(results: Result[]) {
-//   const puntosMaximos = 20;
-//   if (results.length === 0) {
-//     return 0;
-//   }
-//   const maxResult: number = results.reduce((max, current) => {
-//     const score = current.score ?? 0;
-//     return score > max ? score : max;
-//   }, Number.NEGATIVE_INFINITY);
-//   const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
-//   return porcentajeAprobacionByUser;
-// }
-
-calculateUserResults(results: Result[]):String {
+calculateUserResults(results: Result[]) {
   const puntosMaximos = 20;
   if (results.length === 0) {
-    return "No ha realizado examenes";
+    return 0;
   }
-  let maxResult = Number.NEGATIVE_INFINITY;
-  let maxResultName = '';
-  let maxResultLevel = '';
-  results.forEach((current) => {
+  const maxResult: number = results.reduce((max, current) => {
     const score = current.score ?? 0;
-    if (score > maxResult) {
-      maxResult = score;
-      maxResultName = current.product.name;
-      maxResultLevel = current.level.description;
-    }
-  });
+    return score > max ? score : max;
+  }, Number.NEGATIVE_INFINITY);
   const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
-  const puntuacion = String(porcentajeAprobacionByUser);
-  return   puntuacion+"%" + " " + maxResultName+ " " + maxResultLevel;  
+  return porcentajeAprobacionByUser;
 }
 
 
+onSendMailPressed(){
+  const values = this.selectedCheckbox.value
 
+  const emails: any = []
 
-
-
-  onSendMailPressed() {
-    const values = this.selectedCheckbox.value
-
-    const emails: any = []
-
-    for (const key in values) {
-      if (!values.hasOwnProperty(key)) { continue }
-      const value = values[key];
-      if (!value) { continue }
-      emails.push(key)
-    }
-
-    const dialogRef = this.dialog.open(SendMailToUsersDialogueComponent, {
-      data: { emails },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-
+  for (const key in values) {
+    if (!values.hasOwnProperty(key)){continue}
+    const value = values[key];
+    if (!value){continue}
+    emails.push(key)
   }
 
+  const dialogRef = this.dialog.open(SendMailToUsersDialogueComponent, {
+    data: {emails},
+  });
 
+  dialogRef.afterClosed().subscribe(result => {
+    console.log('The dialog was closed');
+  });
 
+}
   clearDate() {
     this.selectedfechaPostulacion = null;
     this.filterData();
-  }
+  }
 
   exportToCSV() {
     const dataToExport = this.dataSource.data;
@@ -624,8 +535,6 @@ calculateUserResults(results: Result[]):String {
     document.body.removeChild(a);
   }
 
-
-
   getCategories() {
     this.categoriaProductoService.getCategoriasDisponibles().subscribe(
       (data: ProductCategory[]) => {
@@ -636,278 +545,234 @@ calculateUserResults(results: Result[]):String {
       }
     );
   }
-
-
-  obtenerYFiltrarResultados() {
-    console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
-
-    this.resultadosService.obtenerResultadosByUser().subscribe(
-      (resultadoUsuario: any) => {
-        console.log('Resultado obtenido del servicio para el usuario:', resultadoUsuario);
-
-        // Aquí puedes verificar si los datos recibidos son lo que esperas
-        this.dataSource.data = this.originalDataCopy.filter(usuario => {
-          // Añadir un console.log dentro del filtro para ver qué está pasando
-          const esIgual = this.resultados === resultadoUsuario;
-          console.log('Comparando resultados - User:', usuario, '¿Es igual?:', esIgual);
-
-          return esIgual;
-        });
-
-        // Mostrar los datos filtrados
-        console.log('Datos después de aplicar el filtro:', this.dataSource.data);
-      },
-      (error: any) => {
-        console.error('Error al obtener resultados del usuario: ', error);
-      }
-    );
-
-  }
   obtenerResultadosByUser() {
     this.resultadosService.obtenerResultadosByUser().subscribe(
       (data: any) => {
         this.resultados = data;
-        console.log('Resultados obtenidos aaaa:', this.resultados);
+        console.log('Resultados obtenidos:', this.resultados);
       },
-      (error: any) => {
+      (error:any) => {
         console.error('Error al obtener resultados:', error);
       }
     );
   }
+  
 
-
-
-  getProductos(categoriaId: number) {
+  getProductos(categoriaId: number){
     console.log('categoria id:', categoriaId)
-
-    this.selectedProducto = 0;
-    this.selectedVersion = 0;
-    this.selectedProductoNombre = '';
-    this.filterInput();
     if (categoriaId) {
       this.productoService.getProductsByCategory(categoriaId).subscribe(
         (productos: Product[]) => {
           this.productos = productos;
-          this.selectedProducto = 0;
-          this.versiones = [];
-          this.originalDataCopy = this.dataSource.data;
-          this.filterProducto();
-          this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
-          this.getVersion(this.selectedProducto);
         },
         (error) => {
           console.log('Error al cargar productos ', error);
         }
       );
     } else {
-      this.selectedProducto = 0;
-      this.versiones = [];
       this.productos = [];
-      this.selectedProductoNombre = '';
-      this.originalDataCopy = this.dataSource.data;
-      this.filterProducto();
     }
-  }
-
-
-  getVersion(productoId: number) {
-    if (productoId) {
-      this.productoService.getVersionByProduct(productoId).subscribe(
-        (data: ProductVersion[]) => {
-          this.versiones = data;
-          // this.filter(new Event('input'));
-        },
-        (error) => {
-          console.log('Error al cargar version ', error);
-        }
-      );
-    }
-  }
-
-  getNiveles() {
-
-    this.nivelService.listarNiveles().subscribe(
-      (data: Level[]) => {
-        this.niveles = data;
-
-      },
-      (error) => {
-        console.log('Error al obtener niveles ', error);
-      }
-    );
-
-  }
-
-  // numbertoString(results:number){
-  //   return String(results)
-
-  // }
-
+  } 
+  
+  updateStateAndFilter(categoriaId: number){
+    this.selectedProducto = 0;
+    this.selectedVersion = 0;
+    this.selectedProductoNombre = '';
+    this.filterInput();
+    this.originalDataCopy = this.dataSource.data;
+    this.filterProducto();
+    this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
+    this.getVersion(this.selectedProducto);
+  } 
   
 
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
+    getVersion(productoId: number) {
+      if (productoId) {
+        this.productoService.getVersionByProduct(productoId).subscribe(
+          (data: ProductVersion[]) => {
+            this.versiones = data;
+            // this.filter(new Event('input'));
+          },
+          (error) => {
+            console.log('Error al cargar version ', error);
+          }
+        );
+      }
     }
-  }
-  botonEstadistica(event: any) {
-    event.preventDefault()
-    const elementId = event.target.parentElement.id
-    console.log('Element ID:', elementId);
+
+      getNiveles() {
+
+        this.nivelService.listarNiveles().subscribe(
+          (data: Level[]) => {
+            this.niveles = data;
+
+          },
+          (error) => {
+            console.log('Error al obtener niveles ', error);
+          }
+        );
+
+    }
+  announceSortChange(sortState: Sort) {
+      if (sortState.direction) {
+        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+      } else {
+        this._liveAnnouncer.announce('Sorting cleared');
+      }
+    }
+    botonEstadistica(event: any){
+      event.preventDefault()
+      const elementId = event.target.parentElement.id
+      console.log('Element ID:', elementId);
 
     this.router.navigate([
       "reclutador/estadisticas"
 
     ])
 
-  }
+    }
 
 
-  // openUserProfile(event: any) {
-  //   const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-  //   console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+    // openUserProfile(event: any) {
+    //   const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+    //   console.log('User ID:', userId); // Imprime el ID del usuario en la consola
 
-  //   // Llamadas simultáneas a los servicios
-  //   forkJoin({
-  //     // observadores: this.observationService.obtenerObservacionesPorUsuarioId(userId),
-  //     usuario: this.userService.getUsuarioId(userId)
-  //   }).subscribe({
-  //     next: (resultados) => {
-  //       // Extraemos los resultados
-  //       // const { observadores, usuario } = resultados;
+    //   // Llamadas simultáneas a los servicios
+    //   forkJoin({
+    //     // observadores: this.observationService.obtenerObservacionesPorUsuarioId(userId),
+    //     usuario: this.userService.getUsuarioId(userId)
+    //   }).subscribe({
+    //     next: (resultados) => {
+    //       // Extraemos los resultados
+    //       // const { observadores, usuario } = resultados;
 
-  //       // Lógica con los datos obtenidos
-  //       // console.log('Observaciones del usuario:', observadores);
-  //       console.log('Perfil del usuario:', userId);
+    //       // Lógica con los datos obtenidos
+    //       // console.log('Observaciones del usuario:', observadores);
+    //       console.log('Perfil del usuario:', userId);
 
-  //       // Configura el tamaño del diálogo
-  //       const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
-  //         // data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
-  //         height: '60vh', // Establece la altura del diálogo
-  //       });
+    //       // Configura el tamaño del diálogo
+    //       const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+    //         // data: { userId, observadores, usuario }, // Pasa los datos combinados al componente hijo
+    //         height: '60vh', // Establece la altura del diálogo
+    //       });
 
-  //       dialogRef.afterClosed().subscribe(result => {
-  //         console.log(`Dialog result: ${result}`);
-  //          this.obtenerUsuarios();
-  //       });
-  //     },
-  //     error: (error) => {
-  //       console.error('Error al obtener datos del usuario:', error);
-  //       // Manejo de errores aquí
-  //     }
-  //   });
-  // }
+    //       dialogRef.afterClosed().subscribe(result => {
+    //         console.log(`Dialog result: ${result}`);
+    //          this.obtenerUsuarios();
+    //       });
+    //     },
+    //     error: (error) => {
+    //       console.error('Error al obtener datos del usuario:', error);
+    //       // Manejo de errores aquí
+    //     }
+    //   });
+    // }
 
-  openUserProfile(event: any) {
-    const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
-    console.log('User ID:', userId); // Imprime el ID del usuario en la consola
-
-    // Llamada al servicio de usuario
-    this.userService.getUsuarioId(userId).subscribe({
-      next: (usuario) => {
-        // Lógica con los datos obtenidos
-        console.log('Perfil del usuario:', usuario);
-
-        // Configura el tamaño del diálogo
-        const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
-          data: { userId, usuario }, // Pasa los datos del usuario al componente hijo
-          height: '60vh', // Establece la altura del diálogo
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-          this.obtenerUsuarios();
-        });
-      },
-      error: (error) => {
-        console.error('Error al obtener datos del usuario:', error);
-        // Manejo de errores aquí
-      }
-    });
-  }
-
-
-  isAnyCheckboxChecked(): boolean {
-    return Object.values(this.selectedCheckbox.controls).some(control => control.value);
-  }
-
-
-
-  openBottomSheet(event: any) {
-    const userId = event.currentTarget.id;
-    console.log('User ID:', userId);
-    // Abre el componente hijo y pasa userId como un parámetro de datos
-    this._bottomSheet.open(viewCrudArchivoComponent, {
-      data: { userId: userId }
-    });
-  }
-
-
-  openEditProfileDialog(event: any): void {
-    // Obtiene el ID desde el elemento del botón que dispara el evento
-    const id = event.target.parentElement.id;
-
-    if (id) {
-      // Llama al servicio para obtener los datos del usuario usando el ID
-      this.userService.getUsuarioId(id).subscribe({
-        next: (data) => {
-          console.log('Data llegada:', data);
-          // Abre el diálogo con los datos obtenidos
-          const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
-            width: '800px',
-            height: '700px',
-            data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+    openUserProfile(event: any) {
+      const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
+      console.log('User ID:', userId); // Imprime el ID del usuario en la consola
+    
+      // Llamada al servicio de usuario
+      this.userService.getUsuarioId(userId).subscribe({
+        next: (usuario) => {
+          // Lógica con los datos obtenidos
+          console.log('Perfil del usuario:', usuario);
+    
+          // Configura el tamaño del diálogo
+          const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+            data: { userId, usuario }, // Pasa los datos del usuario al componente hijo
+            height: '60vh', // Establece la altura del diálogo
           });
-
-          // Maneja el resultado después de que el diálogo se cierre
-          dialogRef.afterClosed().subscribe((result) => {
+    
+          dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
             this.obtenerUsuarios();
           });
         },
         error: (error) => {
-          console.log(error);
-          // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+          console.error('Error al obtener datos del usuario:', error);
+          // Manejo de errores aquí
         }
       });
-    } else {
-      console.error('No se pudo obtener el ID del usuario');
     }
+    
+
+isAnyCheckboxChecked(): boolean {
+  return Object.values(this.selectedCheckbox.controls).some(control => control.value);
+}
+
+
+openBottomSheet(event: any) {
+  const userId = event.currentTarget.id;
+  console.log('User ID:', userId);
+  // Abre el componente hijo y pasa userId como un parámetro de datos
+  this._bottomSheet.open(viewCrudArchivoComponent, {
+    data: { userId: userId }
+  });
+}
+openEditProfileDialog(event: any): void {
+  // Obtiene el ID desde el elemento del botón que dispara el evento
+  const id = event.target.parentElement.id;
+
+  if (id) {
+    // Llama al servicio para obtener los datos del usuario usando el ID
+    this.userService.getUsuarioId(id).subscribe({
+      next: (data) => {
+        console.log('Data llegada:', data);
+        // Abre el diálogo con los datos obtenidos
+        const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
+          width: '800px',
+          height: '700px',
+          data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+        });
+
+        // Maneja el resultado después de que el diálogo se cierre
+        dialogRef.afterClosed().subscribe((result) => {
+          console.log(`Dialog result: ${result}`);
+          this.obtenerUsuarios();
+        });
+      },
+      error: (error) => {
+        console.log(error);
+        // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+      }
+    });
+  } else {
+    console.error('No se pudo obtener el ID del usuario');
   }
+ }
 
 
-  clearFilters(): void {
-    this.filtro = '';
-    this.filtroPuntaje = '';
-    this.filtroCargo = '';
-    this.selectedfechaPostulacion = null;
-    this.selectedAniosExpRange = [1, 10];
-    this.isIrrelevant = true;
-    this.selectedSueldoRange = [1, 5000000];
-    this.selectedCargo = 0;
-    this.selectedCategoria = 0;
-    this.selectedProducto = 0;
-    this.selectedVersion = 0;
-    this.selectedAniosExp = 0;
-    this.selectedProductoNombre = "";
-    this.selectedEstado = '';
-    this.inputContent = false;
-    this.lastYears = 0;
-    this.resultadosExam = [];
-    this.selectedOption = '';
-    this.selectedNivel = 0;
-    this.isSueldoSliderEnabled = true;
-    this.selectedPorcentajeAprobacion = null;
-    this.porcentajeAprobacion = 0;
+ clearFilters(): void {
+  this.filtro = '';
+  this.filtroPuntaje = '';
+  this.filtroCargo = '';
+  this.selectedfechaPostulacion = null;
+  this.selectedAniosExpRange = [1, 10];
+  this.isIrrelevant = true;
+  this.selectedSueldoRange = [1, 5000000];
+  this.selectedCargo = 0;
+  this.selectedCategoria = 0;
+  this.selectedProducto = 0;
+  this.selectedVersion = 0;
+  this.selectedAniosExp = 0;
+  this.selectedProductoNombre = "";
+  this.selectedEstado = '';
+  this.inputContent = false;
+  this.lastYears = 0;
+  this.resultadosExam = [];
+  this.selectedOption = '';
+  this.selectedNivel = 0;
+  this.isSueldoSliderEnabled = true;
+  this.selectedPorcentajeAprobacion = null;
+  this.porcentajeAprobacion = 0;
 
-    // Vuelve a cargar o filtrar los datos según sea necesario
-    this.filterData();
-  }
+  // Vuelve a cargar o filtrar los datos según sea necesario
+  this.filterData();
+  this.obtenerUsuarios();
+}
+ }
 
-
-
-
-
+function saveAs(blob: Blob, arg1: string) {
+  throw new Error('Function not implemented.');
 }

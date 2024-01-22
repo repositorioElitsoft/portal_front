@@ -29,7 +29,7 @@ mat-toolbar {
   align-items: center;
 }
 .filter-slider mat-slider {
-  width: 100%; 
+  width: 30%; 
 }
 .filter-checkbox, .filter-number {
   display: flex;

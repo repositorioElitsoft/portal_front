@@ -47,32 +47,19 @@
           <mat-option value="4 semanas o más">4 semanas o más</mat-option>
         </mat-select>
       </mat-form-field>
-    </div> -->
-    <div class="filter-row">
-      <mat-form-field class="filter-select">
-        <mat-label>Disponibilidad</mat-label>
-        <mat-select [(value)]="selectedEstado" (selectionChange)="filterVersion()" [disabled]="!selectedCargo">
-          <mat-option value="">Seleccione un opción</mat-option>
-          <mat-option value="Inmediata">Inmediata</mat-option>
-          <mat-option value="1 semana">1 semana</mat-option>
-          <mat-option value="2 semanas">2 semanas</mat-option>
-          <mat-option value="3 semanas">3 semanas</mat-option>
-          <mat-option value="4 semanas o más">4 semanas o más</mat-option>
-        </mat-select>
-      </mat-form-field>
-      </div>
-             <!-- Filtro por Fecha de Postulación -->
-             <div class="filter-row">
-              <mat-form-field class="filter-datepicker">
-                <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <!-- Botón para limpiar la fecha -->
-              <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
-                <mat-icon>clear</mat-icon>
-              </button>
-              </mat-form-field>
-              </div>
+    </div> 
+  <!-- Filtro por Fecha de Postulación -->
+  <div class="filter-row">
+  <mat-form-field class="filter-datepicker">
+  <input matInput [matDatepicker]="picker" placeholder="Fecha de Postulacion" [(ngModel)]="selectedfechaPostulacion" (dateChange)="filterData()">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+  <!-- Botón para limpiar la fecha -->
+  <button mat-icon-button matSuffix *ngIf="selectedfechaPostulacion" (click)="clearDate()">
+  <mat-icon>clear</mat-icon>
+  </button>
+  </mat-form-field>
+  </div>
   <!-- Filtro por Categoria -->
   <mat-form-field class="filter-select">
     <mat-label>Categoria</mat-label>
@@ -85,18 +72,25 @@
   <div class="filter-row">
     <mat-form-field class="filter-select">
       <mat-label>Producto</mat-label>
-      <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="getNiveles(); filterProducto()">
+      <mat-select [disabled]="!selectedCategoria" [(value)]="selectedProducto" (selectionChange)="updateStateAndFilter(selectedCategoria); filterProducto()">
         <mat-option value="">Seleccione un opción</mat-option>
-        <mat-option *ngFor="let producto of productos" [value]="producto.id">{{ producto.name }}</mat-option>
+        <mat-option *ngFor="let producto of productos" [value]="producto.id">{{ producto.name}}</mat-option>
       </mat-select>
     </mat-form-field>
     </div>
+
+
+
+
  <!-- Filtro por Nivel -->
     <div class="filter-row">
       <mat-form-field class="filter-select">
         <mat-label>Nivel de Examen</mat-label>
-        <mat-select [disabled]="!selectedProducto" [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
+        <mat-select  [(value)]="selectedNivel"  (selectionChange)="getVersion(selectedProducto);filterNivel()">
           <mat-option value="">Seleccione un nivel</mat-option>
+          <mat-option value="1">Alto</mat-option>
+          <mat-option value="2">Medio</mat-option>
+          <mat-option value="3">Bajo</mat-option>
           <mat-option *ngFor="let nivel of niveles" [value]="nivel.id">{{ nivel.description }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -121,19 +115,8 @@
             </mat-select>
           </mat-form-field>
           </div>
-            <!-- Filtro por Rango de Sueldo-->
-            <div class="filter-slider d-flex flex-column align-items-center">
-              <mat-label>Rango de Sueldos: </mat-label>
-              <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel" >
-                <div class="custom-range" >
-                  {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} -
-                  {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
-                </div>
-                <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
-                <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
-              </mat-slider>
-            </div>
-               <!-- Filtro por Rango Años Experiencia -->
+
+    <!-- Filtro por Rango Años Experiencia -->
     <div class="filter-slider d-flex flex-column align-items-center m-2">
       <mat-label>Rango de años de Experiencia: </mat-label>
       <mat-slider min="1" max="10" (input)="filterAniosExp()"  discrete [displayWith]="formatLabel" [disabled]="!selectedVersion">
@@ -153,7 +136,21 @@
     </div>
   </div>
 </div>
-</mat-card>
+
+  <!-- Filtro por Rango de Sueldo-->
+  <div class="filter-slider d-flex flex-column align-items-center">
+    <mat-label>Rango de Sueldos: </mat-label>
+    <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel" >
+      <div class="custom-range" >
+        {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} -
+        {{ selectedSueldoRange[1] | currency: 'USD':'symbol':'1.0-0' }}
+      </div>
+      <input [(ngModel)]="selectedSueldoRange[0]" matSliderStartThumb>
+      <input [(ngModel)]="selectedSueldoRange[1]" matSliderEndThumb>
+    </mat-slider>
+  </div>
+  </mat-card>    
+          
   <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($any($event))"
          class="mat-elevation-z8">
     <ng-container matColumnDef="name">
