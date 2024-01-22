@@ -90,7 +90,7 @@
       <ng-container *ngFor="let tool of userTools">
         <div class="tool-card">
           <div class="tool-header">
-            <div class="tool-title">{{ tool.productVersion.product.name }} {{ tool.productVersion.name }}</div>
+            <div class="tool-title">{{ tool.productVersion.product!.name }} {{ tool.productVersion.name }}</div>
             <div class="tool-experience">{{ tool.yearsOfExperience }} año/s</div>
           </div>
           <div class="tool-description">{{ tool.level?.description }}</div>
