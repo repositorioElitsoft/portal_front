@@ -157,12 +157,13 @@
         </mat-tab>
         <mat-tab label="Postulaciones">
           <mat-list>
+            <div> Disponibilidad: {{ usuarioData.availability.time }}</div>
             <mat-list-item *ngFor="let cargo of usuarioData.userJob;let i = index" class="postulaciones">
               <mat-card>
                 <mat-card-content>
                   <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
                   <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>
-                  <span matListItemLine>Disponibilidad: {{ cargo.availability.time }}</span>
+
                   <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
                   <span matListItemLine class="mat-list-item-content" style="font-weight: bold;">Aprobaciones:
                     <ng-container *ngIf="cargo.approvals && cargo.approvals.length > 0; else noApprovals">

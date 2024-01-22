@@ -81,3 +81,7 @@ button.mat-raised-button mat-icon {
   border-radius: 8px;
   /* Radio de borde para esquinas redondeadas */
 }
+
+.salary-slider {
+  width: 50%;
+}

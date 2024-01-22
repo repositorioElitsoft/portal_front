@@ -1,42 +1,50 @@
 <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                    <mat-card-header>
-                        <mat-card-title>
-                            <i class="material-icons">info_outline</i>
-                            Lea las instrucciones de esta página cuidadosamente
-                        </mat-card-title>
-                        <br> <br>
-                    </mat-card-header>
-                    <mat-card-content class="ml30">
-                        <h1><i class="material-icons">assignment</i> {{herramientas[0].productVersion.product.name}}</h1>
-                        <p>{{ examen.descripcion }}</p>
-                        <mat-divider></mat-divider>
-                        <br>
-                        <h1><i class="material-icons">important_devices</i> Instrucciones importantes</h1>
-                        <ul>
-                            <li><i class="material-icons">check_circle_outline</i> Este examen es solo para fines de práctica</li>
-                            <li><i class="material-icons">timer</i>Tienes que enviar el examen en<b>{{time}} minutos</b></li>
-                            <li><i class="material-icons">help_outline</i> Hay <b>{{puntosPorPregunta}} puntos</b> por pregunta</li>
-                        </ul>
-                        <mat-divider></mat-divider>
-                        <br>
-                        <h1><i class="material-icons">repeat_one</i> Intentos de la prueba</h1>
-                        <ul>
-                            <li><i class="material-icons">play_circle_filled</i> Presione el boton <b>Comenzar prueba</b> para iniciar el examen</li>
-                            <li><i class="material-icons">schedule</i> El tiempo comenzará en el momento en que haga click en el botón de inicio</li>
-                            <li><i class="material-icons">do_not_disturb_on</i> No puede reanudar este examen si se interrumpe por algún motivo</li>
-                            <li><i class="material-icons">vertical_align_bottom</i> Desplácese hacia abajo para pasar a la siguiente pregunta</li>
-                            <li><i class="material-icons">send</i> Haga clic en el botón <b>enviar cuestionario</b> al finalizar el examen</li>
-                            <li><i class="material-icons">print</i> El informe de la prueba se genera automáticamente en forma de copia PDF</li>
-                        </ul>
-                    </mat-card-content>
-                    <br>
-                    <mat-card-actions class="text-center mb20">
-                        <button mat-raised-button class="botonprimario m-2" (click)="empezarExamen()">
-                            <i class="material-icons">play_arrow</i> Comenzar prueba
-                        </button>
-                    </mat-card-actions>
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-card-header>
+                <mat-card-title>
+                    <i class="material-icons">info_outline</i>
+                    Lea las instrucciones de esta página cuidadosamente
+                </mat-card-title>
+                <br> <br>
+            </mat-card-header>
+            <mat-card-content class="ml30">
+                <h1><i class="material-icons">assignment</i>Examen de {{productName}} de nivel {{ lvl }}</h1>
+
+                <mat-divider></mat-divider>
+                <br>
+                <h1><i class="material-icons">important_devices</i> Instrucciones importantes</h1>
+                <ul>
+                    <li><i class="material-icons">check_circle_outline</i> Este examen es solo para fines de práctica
+                    </li>
+                    <li><i class="material-icons">timer</i>Tienes que enviar el examen en<b>{{time}} minutos</b></li>
+                    <li><i class="material-icons">help_outline</i> Hay <b>{{puntosPorPregunta}} puntos</b> por pregunta
+                    </li>
+                </ul>
+                <mat-divider></mat-divider>
+                <br>
+                <h1><i class="material-icons">repeat_one</i> Intentos de la prueba</h1>
+                <ul>
+                    <li><i class="material-icons">play_circle_filled</i> Presione el boton <b>Comenzar prueba</b> para
+                        iniciar el examen</li>
+                    <li><i class="material-icons">schedule</i> El tiempo comenzará en el momento en que haga click en el
+                        botón de inicio</li>
+                    <li><i class="material-icons">do_not_disturb_on</i> No puede reanudar este examen si se interrumpe
+                        por algún motivo</li>
+                    <li><i class="material-icons">vertical_align_bottom</i> Desplácese hacia abajo para pasar a la
+                        siguiente pregunta</li>
+                    <li><i class="material-icons">send</i> Haga clic en el botón <b>enviar cuestionario</b> al finalizar
+                        el examen</li>
+                    <li><i class="material-icons">print</i> El informe de la prueba se genera automáticamente en forma
+                        de copia PDF</li>
+                </ul>
+            </mat-card-content>
+            <br>
+            <mat-card-actions class="text-center mb20">
+                <button mat-raised-button class="botonprimario m-2" (click)="empezarExamen()">
+                    <i class="material-icons">play_arrow</i> Comenzar prueba
+                </button>
+            </mat-card-actions>
         </div>
     </div>
+</div>
