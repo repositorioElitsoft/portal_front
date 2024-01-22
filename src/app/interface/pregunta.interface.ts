@@ -8,7 +8,7 @@ export interface Pregunta {
     option2: string;
     option3: string;
     option4: string;
-    answer: number;
+    answer: string;
     product: Product;
     level: Level;
 
