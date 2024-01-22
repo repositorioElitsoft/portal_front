@@ -23,48 +23,48 @@ export class InformacionLaboralComponent implements OnInit {
   herramientasDisponibles!: ToolDTO[];
   herrIdList: number[] = [];
   constructor(
-    public dialog : MatDialog,
-    private herramientaService:HerramientasService,
+    public dialog: MatDialog,
+    private herramientaService: HerramientasService,
     private laboralService: LaboralService,
     private router: Router) {
-      this.today = new Date().toISOString().split('T')[0];
+    this.today = new Date().toISOString().split('T')[0];
   }
   ngOnInit(): void {
     this.obtenerLaboralesGuardados();
- 
-}
 
-obtenerLaboralesGuardados(){
-  this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
-    next: (data) =>{
-      this.employment = data;
-      console.log('Datos de employment obtenidos:', data);
-    },
-    error: (err)=>{
-      console.error('Error al obtener datos de employment:', err);
-    }
-  })
-}
+  }
 
-  eliminarLaboral(id: number | undefined | null){
+  obtenerLaboralesGuardados() {
+    this.laboralService.obtenerListaLaboralPorUsuario().subscribe({
+      next: (data) => {
+        this.employment = data;
+        console.log('Datos de employment obtenidos:', data);
+      },
+      error: (err) => {
+        console.error('Error al obtener datos de employment:', err);
+      }
+    })
+  }
+
+  eliminarLaboral(id: number | undefined | null) {
     this.laboralService.eliminarLaboral(id).subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.obtenerLaboralesGuardados();
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err);
       }
     });
   }
-  goBack(){
+  goBack() {
     this.creationMode = false;
   }
-  
-  generateHerrForm(){
+
+  generateHerrForm() {
     this.herramientaService.getCurrentUserTools().subscribe({
-      next:(data)=>{
+      next: (data) => {
         this.herramientasDisponibles = data;
-        this.herramientasDisponibles.forEach((herramienta)=>{
+        this.herramientasDisponibles.forEach((herramienta) => {
           let wasCheckedAlready = false
           const newControl = new FormControl(wasCheckedAlready);
           this.form.addControl(herramienta.id.toString(), newControl);
@@ -72,43 +72,44 @@ obtenerLaboralesGuardados(){
         })
         this.checkboxFormCreated = true;
       },
-      error:(err)=>{
+      error: (err) => {
         console.log(err)
       }
     })
   }
 
-  
- 
-  redirectTo(){
+
+
+  redirectTo() {
     this.navigateToRoute('/user/cargo-usuario')
   }
   openaddExperienciaLaboral(enterAnimationDuration: string, exitAnimationDuration: string): void {
     const dialogRef = this.dialog.open(EditLaboralComponent, {
       width: '600px',
       height: '700px',
-      data: {}, 
+      data: {},
       enterAnimationDuration,
       exitAnimationDuration,
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.obtenerLaboralesGuardados();    });
+      this.obtenerLaboralesGuardados();
+    });
   }
-  
- 
+
+
   navigateToRoute(route: string) {
     this.router.navigate([route]);
   }
   editLaboral(event: any) {
     const id = event.target.parentElement.id;
-    console.log('id:', id); 
+    console.log('id:', id);
     if (id) {
-      this.laboralService.obtenerLaboralPorId( id).subscribe({
+      this.laboralService.obtenerLaboralPorId(id).subscribe({
         next: (data) => {
           const dialogRef = this.dialog.open(EditLaboralComponent, {
             width: '800px',
             height: '700px',
-            data: { id: data.id, ...data } 
+            data: { id: data.id, ...data }
           });
           dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
@@ -116,11 +117,11 @@ obtenerLaboralesGuardados(){
           });
         },
         error: (error) => {
-          console.error('Error al obtener datos:', error); 
+          console.error('Error al obtener datos:', error);
         }
       });
     } else {
-      console.error('id es undefined o null'); 
+      console.error('id es undefined o null');
     }
   }
 }
