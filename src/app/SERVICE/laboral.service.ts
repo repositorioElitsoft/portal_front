@@ -20,6 +20,8 @@ export class LaboralService {
     console.log('Se guarda')
     return this.http.post<Employment>(this.url, employment);
   }
+
+  
   obtenerHerramientasPorUsuario(usuarioId: number): Observable<Herramientas[]> {
     return this.http.get<Herramientas[]>(`${this.url}por-usuario/${usuarioId}`);
   }

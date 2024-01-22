@@ -38,7 +38,7 @@ export class EditLaboralComponent implements OnInit {
 
     this.form.patchValue(this.data || {});
 
-    this.id = this.data && this.data.id ? this.data.id : null;
+    this.id = this.data && this.data.id ? this.data.id : null; // Cambio en esta línea
     console.log('Valor asignado a this.id:', this.id);
 
     this.creationMode = this.id === null;
@@ -66,19 +66,19 @@ export class EditLaboralComponent implements OnInit {
     this.generateToolForm();
   }
   crearReferenciasForm(data: EmploymentReferences[]) {
-    if (!Array.isArray(data)) {
-      data = [];
-    }
+    // if (!Array.isArray(data)) {
+    //   data = [];
+    // }
 
     const rowArray = data.map((employment, index) => {
       return this.formBuilder.group({
         id: [employment.id],
-        name: [employment.name],
-        company: [employment.company],
-        email: [employment.email],
-        phone: [employment.phone]
+        name: [employment.name, Validators.required],
+        company: [employment.company, Validators.required],
+        email: [employment.email, [Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")]],
+        phone: [employment.phone, [Validators.required, Validators.minLength(11)]]
       });
-    });
+    })
 
     this.form.setControl('employmentReferences', this.formBuilder.array(rowArray));
   }
@@ -189,10 +189,10 @@ export class EditLaboralComponent implements OnInit {
   }
   addReferencia() {
     const referenciaFormGroup = this.formBuilder.group({
-      name: [''],
-      company: [''],
-      email: [''],
-      phone: [''],
+      name: ['', Validators.required],
+      company: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email, Validators.pattern("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}")]],
+      phone: ['', [Validators.required, Validators.minLength(11)]],
     });
     this.referenciasFormArray.push(referenciaFormGroup);
   }
