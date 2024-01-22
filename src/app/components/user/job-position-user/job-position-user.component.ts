@@ -172,7 +172,9 @@ export class JobPositionUserComponent implements OnInit {
       if (result.isConfirmed) {
         this.cargosusuarioService.eliminarPostulacionPorId(userjob.id).subscribe(
           (eliminacionExitosa) => {
-            this.getCargoUsuario();
+           this.userJobs = this.userJobs.filter(job=> {
+              return job.id !== userjob.id;
+            })
             Swal.fire('Eliminado', 'Su postulación ha sido eliminada con éxito.', 'success');
           },
           (error) => {
