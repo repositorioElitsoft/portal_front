@@ -37,7 +37,7 @@
                     <div *ngFor="let herramienta of herramientasDisponibles; let i = index" formGroupName="tools">
                       <div [formGroupName]="i">
                         <mat-checkbox formControlName="value">
-                            {{ herramienta.productVersion.product.name }} ({{ herramienta.productVersion.name }})
+                            {{ herramienta.productVersion.product!.name }} ({{ herramienta.productVersion.name }})
                         </mat-checkbox>
                       </div>
                     </div>

@@ -48,9 +48,9 @@ export class LoadExamenComponent implements OnInit {
 
   goToInstructions(tool: Herramientas) {
 
-    this.router.navigate([`/portal-view/instrucciones/${tool.productVersion.product.name}`], {
+    this.router.navigate([`/portal-view/instrucciones/${tool.productVersion!.product!.name}`], {
       queryParams: {
-        prod: tool.productVersion.product.id,
+        prod: tool.productVersion!.product!.id,
         lvl: tool.level?.description
       }
     });
@@ -59,7 +59,7 @@ export class LoadExamenComponent implements OnInit {
   getExams() {
     let productsWithMaxLevel = new Map();
     this.herramientas.forEach(h => {
-      let productId = h.productVersion.product.id
+      let productId = h.productVersion!.product!.id
       if (!productsWithMaxLevel.has(productId)) {
         productsWithMaxLevel.set(productId, (h.level?.id ?? 0));
       } else {
@@ -73,7 +73,7 @@ export class LoadExamenComponent implements OnInit {
     console.log("products with level: ", productsWithMaxLevel)
 
     this.herramientas = this.herramientas.filter(h => {
-      const level = productsWithMaxLevel.get(h.productVersion.product.id)
+      const level = productsWithMaxLevel.get(h.productVersion!.product!.id)
       return level === h.level?.id
     })
 
@@ -116,7 +116,7 @@ export class LoadExamenComponent implements OnInit {
     console.log(herramientasDeNivelesBajos)
     this.herramientas = this.herramientas.concat(herramientasDeNivelesBajos)
 
-    this.herramientas.sort((a, b) => a.productVersion.product.name.localeCompare(b.productVersion.product.name));
+    this.herramientas.sort((a, b) => a.productVersion!.product!.name.localeCompare(b.productVersion!.product!.name));
     console.log("Herramientas después de filter: ", this.herramientas)
   }
 

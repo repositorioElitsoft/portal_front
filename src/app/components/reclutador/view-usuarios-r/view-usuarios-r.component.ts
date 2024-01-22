@@ -232,10 +232,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     if (this.selectedProducts.length > 0) {
       filteredArray = filteredArray.filter(usuario => {
         return usuario.tools?.find(tool => {
-          console.log("tool product id", tool.productVersion.product.id)
+          console.log("tool product id", tool.productVersion?.product?.id)
           console.log("prueba", this.selectedProducts.includes(16))
-          console.log("resultado de verificarlo", this.selectedProducts.includes(tool.productVersion.product.id))
-          return this.selectedProducts.includes(tool.productVersion.product.id)
+          console.log("resultado de verificarlo", this.selectedProducts.includes(tool.productVersion!.product!.id))
+          return this.selectedProducts.includes(tool.productVersion!.product!.id)
         });
       });
     }
@@ -246,7 +246,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     if (this.selectedVersion > 0) {
       filteredArray = filteredArray.filter(usuario => {
         return usuario.tools?.find(tool => {
-          return String(tool.productVersion.id) === String(this.selectedVersion)
+          return String(tool.productVersion!.id) === String(this.selectedVersion)
         });
       })
     }
