@@ -15,6 +15,8 @@ import { AdvertenciaEliminarComponent } from "../../shared/advertencia-eliminar/
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { AddUsuariosComponent } from "../add-usuarios/add-usuarios.component";
 import { EditPerfilUsuarioAdminComponent } from "../edit-perfil-usuario-admin/edit-perfil-usuario-admin.component";
+import { Role } from "src/app/interface/role.interface";
+import { RoleService } from "src/app/service/role.service";
 
 
 const ELEMENT_DATA: any[] = [];
@@ -25,7 +27,7 @@ const ELEMENT_DATA: any[] = [];
   styleUrls: ['./view-usuarios.component.css']
 })
 export class ViewUsuariosComponent implements OnInit, AfterViewInit {
-  displayedColumns: any[] = ['name', 'email','roles', 'acciones'];
+  displayedColumns: any[] = ['name', 'email', 'roles', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   originalDataCopy: any[] = [];
@@ -45,70 +47,71 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
   constructor(private userService: UserService,
     private _liveAnnouncer: LiveAnnouncer,
     private router: Router,
-    public dialog: MatDialog, private _snackBar: MatSnackBar) { }
+    public dialog: MatDialog, private _snackBar: MatSnackBar,
+    private roleService: RoleService) { }
 
-    ngOnInit(): void {
-      this.obtenerUsuarios();
-    }
+  ngOnInit(): void {
+    this.obtenerUsuarios();
+  }
 
-    ngAfterViewInit() {
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
-
-
-    obtenerUsuarios(): void {
-      this.userService.obtenerUsuarios().subscribe(
-        (data: any[]) => {
-
-          const usuarios = data.map((usuario) => ({
-            id: usuario.id || '',
-            name: usuario.name || '',
-            firstLastname: usuario.firstLastname || '',
-            phone: usuario.phone || '',
-            email: usuario.email || '',
-            address:usuario.address || '',
-            roles: usuario.roles || '',
-            tools: usuario.herramientas,
-            herr_ver: usuario.herramientas,
-            herr_exp: usuario.herramientas,
-          }));
-
-          this.originalDataCopy = usuarios;
-          this.dataSource.data = usuarios;
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    }
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
 
-    announceSortChange(sortState: Sort) {
-      if (sortState.direction) {
-        this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-      } else {
-        this._liveAnnouncer.announce('Sorting cleared');
+  obtenerUsuarios(): void {
+    this.userService.obtenerUsuarios().subscribe(
+      (data: any[]) => {
+
+        const usuarios = data.map((usuario) => ({
+          id: usuario.id || '',
+          name: usuario.name || '',
+          firstLastname: usuario.firstLastname || '',
+          phone: usuario.phone || '',
+          email: usuario.email || '',
+          address: usuario.address || '',
+          roles: usuario.roles || '',
+          tools: usuario.herramientas,
+          herr_ver: usuario.herramientas,
+          herr_exp: usuario.herramientas,
+        }));
+
+        this.originalDataCopy = usuarios;
+        this.dataSource.data = usuarios;
+      },
+      (error) => {
+        console.log(error);
       }
-    }
+    );
+  }
 
-   openDialogEliminar(event: any) {
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
+
+  openDialogEliminar(event: any) {
 
     const dialogRef = this.dialog.open(AdvertenciaEliminarComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
 
-      if(result){
+      if (result) {
         //#endregionconsole.log()
         this.userService.eliminarUsuarioId(event.target.parentElement.id).subscribe({
-          next:()=>{
-            this._snackBar.open("User eliminado","Cerrar",{
+          next: () => {
+            this._snackBar.open("User eliminado", "Cerrar", {
               duration: 4000
             })
             this.obtenerUsuarios();
           },
-          error:()=>{
-            this._snackBar.open("Error al eliminar User","Cerrar",{
+          error: () => {
+            this._snackBar.open("Error al eliminar User", "Cerrar", {
               duration: 4000
             })
           }
@@ -121,38 +124,43 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
 
 
 
-  
-    editUser(event: any): void {
-      // Obtiene el ID desde el elemento del botón que dispara el evento
-      const id = event.target.parentElement.id;
-       
-      if (id) {
-        // Llama al servicio para obtener los datos del usuario usando el ID
-        this.userService.getUsuarioId(id).subscribe({
-          next: (data) => {
-            console.log('Data llegada:', data);
-            // Abre el diálogo con los datos obtenidos
-            const dialogRef = this.dialog.open(EditPerfilUsuarioAdminComponent, {
-              width: '800px', 
-              height: '700px',
-              data: { usuarioId: id } // Pasa el ID del usuario al diálogo
-            });
-     
-            // Maneja el resultado después de que el diálogo se cierre
-            dialogRef.afterClosed().subscribe((result) => {
-              console.log(`Dialog result: ${result}`);
-              this.obtenerUsuarios();
-            });
-          },
-          error: (error) => {
-            console.log(error);
-            // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
-          }
-        });
-      } else {
-        console.error('No se pudo obtener el ID del usuario');
-      }
-     }
-    
+
+  editUser(event: any): void {
+    // Obtiene el ID desde el elemento del botón que dispara el evento
+    const id = event.target.parentElement.id;
+
+    if (id) {
+      // Llama al servicio para obtener los datos del usuario usando el ID
+      this.userService.getUsuarioId(id).subscribe({
+        next: (data) => {
+          console.log('Data llegada:', data);
+          // Abre el diálogo con los datos obtenidos
+          const dialogRef = this.dialog.open(EditPerfilUsuarioAdminComponent, {
+            width: '800px',
+            height: '700px',
+            data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+          });
+
+          // Maneja el resultado después de que el diálogo se cierre
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log(`Dialog result: ${result}`);
+            this.obtenerUsuarios();
+
+          });
+        },
+        error: (error) => {
+          console.log(error);
+          // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
+        }
+      });
+    } else {
+      console.error('No se pudo obtener el ID del usuario');
+    }
+  }
+
+
+
+
+
 
 }
