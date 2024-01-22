@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { UserService } from 'src/app/service/user.service';
-import { MAT_DIALOG_DATA, MatDialogRef , MatDialog} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ViewUsuariosRComponent } from '../view-usuarios-r/view-usuarios-r.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/service/notification.service';
-import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
+import { UserEditarDTO2 } from 'src/app/interface/user.interface';
 @Component({
   selector: 'app-edit-perfil-usuario-r',
   templateUrl: './edit-perfil-usuario-r.component.html',
@@ -15,19 +15,19 @@ import {  UserEditarDTO2 } from 'src/app/interface/user.interface';
 export class EditPerfilUsuarioRComponent implements OnInit {
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
   userDataForm: FormGroup;
-  usrId:number | null = null
+  usrId: number | null = null
   usuario: UserEditarDTO2 = {
     name: '',
     firstLastname: '',
-    secondLastname:'',
+    secondLastname: '',
     rut: '',
-    email:'',
-    phone:'',
-    password:'',
-    roles:'',
-    address: ''
+    email: '',
+    phone: '',
+    password: '',
+    address: '',
+    roles: ''
   }
-  constructor( private userService:UserService,
+  constructor(private userService: UserService,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,50 +60,50 @@ export class EditPerfilUsuarioRComponent implements OnInit {
       });
     } else {
       this.userDataForm.reset();
-    }    
+    }
   }
   guardarUsuario() {
     if (this.userDataForm.invalid) {
-        return;
+      return;
     }
     const userData = this.userDataForm.value;
     if (this.usrId) {
-        this.usuario = this.userDataForm.value;
-        this.userService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
-            next: (dato: any) => {
-                this._snackBar.open("User actualizado con éxito", "Cerrar", {
-                    duration: 1000
-                });
-                this.cancelar();
-                this.dialog.closeAll();
-                this.dialogClosed.emit();  
-            },
-            error: (error) => {
-                this._snackBar.open("Error al actualizar usuario", "Cerrar", {
-                    duration: 3000
-                });
-            }
-        });
-        return;
-    }
-    this.userService.updateUser(userData).subscribe({
-        next: (data) => {
-            this.notification.showNotification(
-                'success',
-                'Registro Exitoso',
-                'User agregado con éxito'
-            );
-            this.limpiarCampos();         
+      this.usuario = this.userDataForm.value;
+      this.userService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
+        next: (dato: any) => {
+          this._snackBar.open("User actualizado con éxito", "Cerrar", {
+            duration: 1000
+          });
+          this.cancelar();
+          this.dialog.closeAll();
+          this.dialogClosed.emit();
         },
         error: (error) => {
-            console.log(error);
+          this._snackBar.open("Error al actualizar usuario", "Cerrar", {
+            duration: 3000
+          });
         }
+      });
+      return;
+    }
+    this.userService.updateUser(userData).subscribe({
+      next: (data) => {
+        this.notification.showNotification(
+          'success',
+          'Registro Exitoso',
+          'User agregado con éxito'
+        );
+        this.limpiarCampos();
+      },
+      error: (error) => {
+        console.log(error);
+      }
     });
-}
-private limpiarCampos() {
-  this.userDataForm.reset();
-  this.dialogRef.close();
-}
+  }
+  private limpiarCampos() {
+    this.userDataForm.reset();
+    this.dialogRef.close();
+  }
   cancelar() {
     this.dialogRef.close();
   }
