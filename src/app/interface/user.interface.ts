@@ -30,12 +30,10 @@ export interface User {
     cv?: UserCV
     results?: Result[];
     availability?: UserJobAvailability,
-
-
 }
 
 
-export type UserEditarDTO = Omit<User, 'phone' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
-export type UserEditarDTO2 = Omit<User, 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
+export type UserEditarDTO = Omit<User, 'availability' | 'phone' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
+export type UserEditarDTO2 = Omit<User, 'availability' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
 
-export type UserSesionDTO = Omit<User, 'password' | 'linkedin' | 'pais_nom' | 'pais' | 'address' | 'herramientas' | 'tools'>;
+export type UserSesionDTO = Omit<User, 'availability' | 'password' | 'linkedin' | 'pais_nom' | 'pais' | 'address' | 'herramientas' | 'tools'>;

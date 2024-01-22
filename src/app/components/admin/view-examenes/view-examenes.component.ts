@@ -65,25 +65,6 @@ export class ViewExamenesComponent implements OnInit, AfterViewInit {
 
     return `${value}`;
   }
-  editExamen(event: any) {
-    const examenId = event.target.parentElement.id;
-    if (examenId) {
-      this.productoService.obtenerExamen(examenId).subscribe({
-        next: (data) => {
-          const dialogRef = this.dialog.open(ExamenModalComponent, {
-            width: '800px',
-            height: '700px',
-            data: data
-          });
-          dialogRef.afterClosed().subscribe((result) => {
-          });
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
-    }
-  }
 
   getProducts(): void {
     this.productoService.obtenerTodosLosProductos().subscribe({
