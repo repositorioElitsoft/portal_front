@@ -132,7 +132,7 @@
     <div class="filter-slider d-flex flex-column align-items-center m-2 " *ngIf="selectedProducts.length === 1">
       <mat-label>Rango de años de Experiencia: </mat-label>
       <mat-slider min="1" max="10" (input)="filterAniosExp()" discrete [displayWith]="formatLabel"
-        [disabled]="isIrrelevant || selectedProducto === 0">
+        [disabled]="isIrrelevant ">
         <input [(ngModel)]="selectedAniosExpRange[0]" matSliderStartThumb>
         <input [(ngModel)]="selectedAniosExpRange[1]" matSliderEndThumb>
       </mat-slider>
