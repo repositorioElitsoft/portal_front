@@ -10,8 +10,6 @@ import { IniciarSesionComponent } from './components/login/iniciar-sesion/inicia
 import { WelcomeAdminComponent } from './components/admin/welcome-admin/welcome-admin.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { ProfileAdminComponent } from './components/admin/profile-admin/profile-admin.component';
-import { ViewCategoriasComponent } from './components/admin/view-categorias/view-categorias.component';
-import { AddCategoriaComponent } from './components/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './components/admin/view-examenes/view-examenes.component';
 import { AddPreguntaComponent } from './components/admin/add-pregunta/add-pregunta.component';
 import { ViewExamenPreguntasComponent } from './components/admin/view-examen-preguntas/view-examen-preguntas.component';
@@ -114,7 +112,6 @@ import { UserAvailabilityComponent } from './components/user/user-availability/u
     WelcomeAdminComponent,
     DashboardComponent,
     ProfileAdminComponent,
-    ViewCategoriasComponent,
     ViewUsuariosComponent,
     ViewPerfilUsuarioComponent,
     SidebarRComponent,
@@ -137,7 +134,6 @@ import { UserAvailabilityComponent } from './components/user/user-availability/u
     PeticionRestaurarPassComponent,
     RestaurarPassComponent,
     UserDashboardComponent,
-    AddCategoriaComponent,
     ViewExamenesComponent,
     EditUserDialogComponent,
     EditPerfilUsuarioAdminComponent,

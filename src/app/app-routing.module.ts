@@ -5,8 +5,6 @@ import { IniciarSesionComponent } from './components/login/iniciar-sesion/inicia
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { WelcomeAdminComponent } from './components/admin/welcome-admin/welcome-admin.component';
 import { ProfileAdminComponent } from './components/admin/profile-admin/profile-admin.component';
-import { ViewCategoriasComponent } from './components/admin/view-categorias/view-categorias.component';
-import { AddCategoriaComponent } from './components/admin/add-categoria/add-categoria.component';
 import { ViewExamenesComponent } from './components/admin/view-examenes/view-examenes.component';
 import { ViewExamenPreguntasComponent } from './components/admin/view-examen-preguntas/view-examen-preguntas.component';
 import { AddPreguntaComponent } from './components/admin/add-pregunta/add-pregunta.component';
@@ -75,18 +73,6 @@ const routes: Routes = [
       {
         path: 'profile-admin',
         component: ProfileAdminComponent
-      },
-      {
-        path: 'view-categorias',
-        component: ViewCategoriasComponent
-      },
-      {
-        path: 'add-categoria',
-        component: AddCategoriaComponent
-      },
-      {
-        path: 'actualizar-categoria/:catId',
-        component: AddCategoriaComponent
       },
       {
         path: 'view-examenes',
