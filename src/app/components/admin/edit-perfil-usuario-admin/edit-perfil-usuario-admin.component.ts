@@ -46,7 +46,7 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
       rut: [''],
       email: [''],
       phone: [''],
-      password: ['', Validators.required],
+      // password: ['', Validators.required],
       roles: ['', Validators.required],
     });
   }

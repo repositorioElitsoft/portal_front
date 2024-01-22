@@ -37,7 +37,7 @@ export class AddUsuariosComponent implements OnInit {
       firstLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       secondLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email, Validators.maxLength(30), Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(3)]],
+      // password: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(3)]],
       roles: ['', Validators.required],
     });
   }

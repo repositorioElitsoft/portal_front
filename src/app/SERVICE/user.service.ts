@@ -113,7 +113,7 @@ export class UserService {
     return this.HttpClient.get<User[]>(`${this.url}/users/guest`);
   }
   eliminarUsuarioId(usuarioId: number): Observable<string> {
-    return this.HttpClient.delete<string>(`${this.url}/usuarios/eliminar/${usuarioId}`);
+    return this.HttpClient.delete<string>(`${this.url}/users/eliminar/${usuarioId}`);
   }
   guardarUsuarioEnLocalStorage(usuario: any) {
     localStorage.setItem('usuario', JSON.stringify(usuario));
