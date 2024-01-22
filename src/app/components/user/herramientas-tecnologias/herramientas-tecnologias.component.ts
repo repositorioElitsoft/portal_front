@@ -31,15 +31,22 @@ export class HerramientasTecnologiasComponent implements OnInit {
   @ViewChild('btnradio3', { static: true }) btnradio3!: ElementRef<HTMLInputElement>;
   @ViewChild('btnradio4', { static: true }) btnradio4!: ElementRef<HTMLInputElement>;
   @ViewChild('btnradio5', { static: true }) btnradio5!: ElementRef<HTMLInputElement>;
+  
   constructor(private router: Router,
     private categoriaProductoService: CategoriaProductoService,
     private certificacionService: CertificacionService,
     private nivelService: NivelService,
     private productoService: ProductoService,
     private route: ActivatedRoute,
-    private userService:UserService) { }
+    private userService:UserService
+    ) { }
     ngOnInit(): void {
     
     }
-
+    navigateToRoute(route: string) {
+      this.router.navigate([route]);
+    }
+    redirectTo(){
+      this.navigateToRoute('/user/informacion-academica')
+    }
 }

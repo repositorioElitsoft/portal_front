@@ -1,6 +1,7 @@
-.admin-panel-text{
+.admin-panel-text {
   padding-top: 16vh;
 }
+
 .profile-container {
   animation: fadeInUp 1s ease-out;
   margin-top: 10vh;
@@ -8,45 +9,53 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh; 
-  background-color: #f5f5f5; 
+  min-height: 80vh;
+  background-color: #f5f5f5;
   border: 1px solid #F57C27;
-  background-color: #f5f5f5; 
+  background-color: #f5f5f5;
   padding: 5%;
   font-family: 'Meera Inimai', sans-serif;
 }
+
 .profile-details {
   padding: 20px;
-  border-radius: 20px; 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 80%;
-  background-color: #fff; 
-  color: #333; 
+  background-color: #fff;
+  color: #333;
   border: 1px solid #F57C27;
-  background-color: #f5f5f5; 
+  background-color: #f5f5f5;
 }
+
 .profile-details h2 {
   font-size: 24px;
   font-weight: bold;
-  color: #F76805;}
+  color: #F76805;
+}
+
 .profile-content {
   margin-top: 20px;
   font-size: 16px;
   line-height: 1.5;
+
 }
+
 .profile-details ul {
   list-style-type: disc;
   margin-left: 20px;
   margin-top: 10px;
 }
+
 .profile-details li {
   margin-bottom: 5px;
 }
+
 .action-link {
   display: inline-block;
   padding: 10px 20px;
-  background-color: #F76805; 
-  color: #fff; 
+  background-color: #F76805;
+  color: #fff;
   border: none;
   border-radius: 5px;
   font-weight: bold;
@@ -54,38 +63,49 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .action-link:hover {
-  background-color: #FFA500; 
+  background-color: #FFA500;
 }
+
 .no-mouse-action {
   pointer-events: none;
 }
-.perfilr{
+
+.perfilr {
   font-size: 2em;
   padding-bottom: 5%;
-  color:#F57C27;
+  color: #F57C27;
   font-weight: bold;
-} 
+}
+
 .admin-icon-container {
   display: flex;
   align-items: center;
   justify-content: center;
+
 }
+
 .admin-icon-container .material-icons {
   margin-right: 10px;
-  font-size: 24px; 
-  color: #F76805; 
+  font-size: 24px;
+  color: #F76805;
 }
+
+
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 @media (max-width: 600px) {
   .container-datos-personales {
     border: 1px solid #F57C27;

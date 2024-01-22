@@ -36,3 +36,15 @@ width: 100%;
   width: 100%;
   text-align: center; 
 }
+
+/* En tu archivo de estilos CSS o SCSS */
+.small-label {
+  font-size: 14px; /* Ajusta el tamaño de la etiqueta según tus necesidades */
+}
+
+.small-prefix {
+  font-size: 10px; /* Ajusta el tamaño del cuadro de selección según tus necesidades */
+}
+
+
+

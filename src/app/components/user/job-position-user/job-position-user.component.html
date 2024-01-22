@@ -1,12 +1,9 @@
-  <app-sidebar-user></app-sidebar-user>
-  <br>
-  <app-sidebar-userdesk></app-sidebar-userdesk>
 <div class="container">
-<mat-card class="container-datos-personales">
-  <div class="div-inputs" *ngIf="!creationMode">
-    <h4 class="perfilr">Cargos activos en Elitsoft</h4>
-    <div *ngFor="let userjob of userJobs"> 
-      <div class="row celda-laboral">
+  <mat-card class="container-datos-personales">
+    <div class="div-inputs" *ngIf="!creationMode">
+      <h4 class="perfilr">Cargos activos en Elitsoft</h4>
+      <div *ngFor="let userjob of userJobs">
+        <div class="row celda-laboral">
           <div class="col-6 cargo">
             <h4 class="Titulos mb-5">Cargo a Postular</h4>
             <p>{{ userjob.jobPosition?.name }}</p>
@@ -22,16 +19,16 @@
           <div class="col-2">
             <div class="flex">
               <h4 class="Titulos  mb-4">Acciones</h4>
-              <button mat-mini-fab class="minifab m-1"   id="{{userjob.id}}" (click)="editJob(userjob)">
+              <button mat-mini-fab class="minifab m-1" id="{{userjob.id}}" (click)="editJob(userjob)">
                 <mat-icon>edit</mat-icon>
-              </button> 
+              </button>
               <button mat-mini-fab class="minifabdanger m-1" (click)="deleteJob(userjob)">
                 <mat-icon>delete</mat-icon>
-              </button>              
+              </button>
             </div>
-             </div>
           </div>
         </div>
+      </div>
       <div *ngIf="userJobs.length === 0">
         No has definido ninguna experiencia laboral
       </div>
@@ -47,19 +44,41 @@
             <button mat-mini-fab class="minifab m-1" (click)="openPrefferedJob('300ms', '150ms')">
               <mat-icon>add</mat-icon>
             </button>
-            <button mat-mini-fab class="minifab m-1" [id]="userPreferredJob?.id" (click)="userPreferredJob && editpostpref(userPreferredJob)">
-              <mat-icon>edit</mat-icon> 
+            <button mat-mini-fab class="minifab m-1" [id]="userPreferredJob?.id"
+              (click)="userPreferredJob && editpostpref(userPreferredJob)">
+              <mat-icon>edit</mat-icon>
             </button>
           </div>
         </div>
       </mat-card>
-      
-      
-      
-  <button class="botonprimario m-2" mat-raised-button (click)="openAddPositionUser('300ms', '150ms')"> + Añadir postulación</button>
-<button class="botonprimario m-2" mat-raised-button *ngIf="userJobs.length > 0" (click)="redirectTo()">Siguiente</button>
-</div>
-</mat-card>
-</div>
 
 
+      <div *ngFor="let user of user">
+        <mat-card class="user-preferred-job-card">
+          <div class="user-preferred-job-content">
+            <div class="user-preferred-job-info">
+              <h3 class="user-preferred-job-title">Disponibilidad</h3>
+              <p class="user-preferred-job-description">{{user.availability?.time }}</p>
+            </div>
+            <div class="user-preferred-job-actions">
+              <button mat-mini-fab class="minifab m-1" (click)="openUserAvailability('300ms', '150ms')">
+                <mat-icon>add</mat-icon>
+              </button>
+              <!-- <button mat-mini-fab class="minifab m-1" [id]="user.availability?.id"
+                (click)="user.availability?.time && editUserAvailability()">
+                <mat-icon>edit</mat-icon>availability?
+              </button> -->
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+
+
+      <button class="botonprimario m-2" mat-raised-button (click)="openAddPositionUser('300ms', '150ms')"> + Añadir
+        postulación</button>
+      <button class="botonprimario m-2" mat-raised-button *ngIf="userJobs.length > 0"
+        (click)="redirectTo()">Siguiente</button>
+    </div>
+  </mat-card>
+</div>

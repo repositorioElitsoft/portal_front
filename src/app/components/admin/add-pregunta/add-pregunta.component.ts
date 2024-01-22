@@ -1,7 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { PreguntaService } from 'src/app/service/pregunta.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ExamenModalComponent } from '../examen-modal/examen-modal.component';
+import { Pregunta, QuestionModalDataDTO } from 'src/app/interface/pregunta.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-pregunta',
@@ -9,65 +13,83 @@ import { PreguntaService } from 'src/app/service/pregunta.service';
   styleUrls: ['./add-pregunta.component.css']
 })
 export class AddPreguntaComponent implements OnInit {
-  exam_id:any;
-  exam_titl:any;
-  pregunta:any = {
-    examen : {},
-    prg: '',
-    prg_opc1: '',
-    prg_opc2: '',
-    prg_opc3: '',
-    prg_opc4: '',
-    prg_resp: '',
-    prg_ptje_prg: '',
-  }
+
+  form!: FormGroup
+
   constructor(
-    private route:ActivatedRoute,
-    private preguntaService:PreguntaService) { }
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<ExamenModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: QuestionModalDataDTO,
+    private route: ActivatedRoute,
+    private preguntaService: PreguntaService) {
+    this.buildForm();
+  }
 
   ngOnInit(): void {
-    this.exam_id = this.route.snapshot.params['exam_id'];
-    this.exam_titl = this.route.snapshot.params['exam_titl'];
-    this.pregunta.examen['exam_id'] = this.exam_id;
+
   }
 
-  formSubmit(){
-    if(this.pregunta.prg.trim() == '' || this.pregunta.prg == null){
+
+  buildForm() {
+    this.form = this.formBuilder.group({
+      content: ['', Validators.required],
+      option1: ['', Validators.required],
+      option2: ['', Validators.required],
+      option3: ['', Validators.required],
+      option4: ['', Validators.required],
+      answer: [{ value: '', disabled: true }, Validators.required],
+      level: this.formBuilder.group({
+        id: ['', Validators.required],
+        description: ['',]
+      })
+    })
+  }
+
+  checkAnswersWritten() {
+    if (this.form.get("option1")?.invalid ||
+      this.form.get("option2")?.invalid ||
+      this.form.get("option3")?.invalid ||
+      this.form.get("option4")?.invalid) {
+      this.form.get("answer")?.disable();
       return;
     }
-    if(this.pregunta.prg_opc1.trim() == '' || this.pregunta.prg_opc1 == null){
-      return;
+    this.form.get("answer")?.enable();
+  }
+
+  formSubmit() {
+    let question: any = this.form.value
+
+    question.product = {
+      id: this.data.product.id
     }
-    if(this.pregunta.prg_opc2.trim() == '' || this.pregunta.prg_opc2 == null){
-      return;
+
+    if (!this.data.question) {
+      console.log("Pregunta a guardar", question)
+      this.preguntaService.guardarPregunta(question).subscribe({
+        next: (response) => {
+          console.log("Respuesta de guarda: ", response)
+          this.dialogRef.close(response);
+        },
+        error: (err) => {
+          console.log("Error al guardar", err)
+        }
+      })
     }
-    if(this.pregunta.prg_opc3.trim() == '' || this.pregunta.prg_opc3 == null){
-      return;
+    else {
+      console.log("Pregunta a actualizar", question)
+
+      this.preguntaService.actualizarPregunta(this.data.question.id ?? 0, question).subscribe({
+        next: (response) => {
+          console.log("Respuesta de actualizada: ", response)
+
+          this.dialogRef.close(response);
+        },
+        error: (err) => {
+          console.log("Error al actualizar", err)
+        }
+      })
     }
-    if(this.pregunta.prg_opc4.trim() == '' || this.pregunta.prg_opc4 == null){
-      return;
-    }
-    if(this.pregunta.prg_resp.trim() == '' || this.pregunta.prg_resp == null){
-      return;
-    }
-    if(this.pregunta.prg_ptje_prg.trim() == '' || this.pregunta.prg_ptje_prg == null){
-      return;
-    }
-    this.preguntaService.guardarPregunta(this.pregunta).subscribe(
-      (data) => {
-        Swal.fire('Pregunta guardada','La pregunta ha sido agregada con éxito','success');
-        this.pregunta.prg = '';
-        this.pregunta.prg_opc1 = '';
-        this.pregunta.prg_opc2 = '';
-        this.pregunta.prg_opc3 = '';
-        this.pregunta.prg_opc4 = '';
-        this.pregunta.prg_resp = '';
-        this.pregunta.prg_ptje_prg = '';
-      },(error) => {
-        Swal.fire('Error','Error al guardar la pregunta en la base de datos','error');
-        console.log(error);
-      }
-    )
+
   }
 
 }

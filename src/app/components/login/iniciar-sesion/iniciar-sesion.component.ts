@@ -24,13 +24,12 @@ export class IniciarSesionComponent implements OnInit {
     private loginService: LoginService,
     private cookieService: CookieService,
     private authService: AuthService
-    )
-    {
-      this.loginForm = this.formBuilder.group({
-        email: ['', Validators.required],
-        password: ['', Validators.required]
-      });
-    }
+  ) {
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
   ngOnInit() {
   }
   onSubmit() {
@@ -43,18 +42,18 @@ export class IniciarSesionComponent implements OnInit {
 
         console.log("User roles: ", userRoles)
 
-        if ( userRoles.includes('ROLE_ADMIN')) {
+        if (userRoles.includes('ROLE_ADMIN')) {
           this.router.navigate(['/admin/welcome-admin']);
         }
-        else if ( userRoles.includes('ROLE_REC'))  {
+        else if (userRoles.includes('ROLE_REC')) {
           this.router.navigate(['/reclutador/welcome-reclutador']);
         }
-        else if ( userRoles.includes('ROLE_ENTR'))  {
+        else if (userRoles.includes('ROLE_ENTR')) {
           this.router.navigate(['/entrevistador/welcome-entrevistador']);
         }
-        else if ( userRoles.includes('ROLE_GUEST'))  {
+        else if (userRoles.includes('ROLE_GUEST')) {
           console.log("it's included")
-          this.router.navigate(['/user/datos_personales']);
+          this.router.navigate(['user/datos-personales']);
         }
       },
       (e) => {
@@ -66,8 +65,8 @@ export class IniciarSesionComponent implements OnInit {
 
   removeFirstAndLastCharacter(token: String) {
     if (typeof token !== 'string' || token.length < 2) {
-        return token;
+      return token;
     }
     return token.substring(1, token.length - 1);
-}
+  }
 }

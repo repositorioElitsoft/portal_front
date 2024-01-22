@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/service/auth.service';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authService.isAuthenticatedUser()) {
       const requiredRole = route.data['role'];
@@ -17,17 +17,19 @@ export class AuthGuard implements CanActivate {
       console.log('usuario roles: ', userRoles);
       console.log('rol requerido: ', requiredRole);
 
-      
-      
+
       if (requiredRole != undefined) {
         if (userRoles.includes(requiredRole)) {
           return true;
         } else {
-          if(userRoles.includes("ROLE_REC")){
+          if (userRoles.includes("ROLE_REC")) {
             this.router.navigate(['/reclutador/welcome-reclutador']);
           }
-          if(userRoles.includes("ROLE_ADMIN")){
+          if (userRoles.includes("ROLE_ADMIN")) {
             this.router.navigate(['/admin/welcome-admin']);
+          }
+          if (userRoles.includes("ROLE_ENTR")) {
+            this.router.navigate(['/entrevistador/welcome-entrevistador']);
           }
           return false;
         }

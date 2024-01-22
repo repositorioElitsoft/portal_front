@@ -43,7 +43,7 @@ const ELEMENT_DATA: User[] = [];
 })
 export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: any[] = ['name', 'phone', 'email','porcentajeAprobacion', 'acciones', 'seleccionar'];
+  displayedColumns: any[] = ['name', 'phone', 'email', 'porcentajeAprobacion', 'acciones', 'seleccionar'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   filtro: string = '';
   filtroPuntaje: string = '';
@@ -62,6 +62,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedCargo: number = 0;
   selectedCategoria: number = 0;
   selectedProducto: number = 0;
+  selectedProducts: number[] = []
   selectedVersion: number = 0;
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
@@ -73,11 +74,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   idUser:number = 0;
   filterCargo: string = '';
   resultados: any[] = [];
-  porcentajeAprobacion:number = 0;
-  filteredUsuarios:any=[]=[];
-  puntosMaximos?:number;
-  selectedOption:String = '';
-  selectedNivel : number = 0;
+  porcentajeAprobacion: number = 0;
+  filteredUsuarios: any = [] = [];
+  puntosMaximos?: number;
+  selectedOption: String = '';
+  selectedNivel: number = 0;
   isSueldoSliderEnabled = true;
   porcentajesAprobacion = [
     { value: 100, label: '100%' },
@@ -119,7 +120,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.getJobPosition();
     this.obtenerHerramientas();
     this.initializeDataSource();
-    
+
   }
   getJobPosition() {
     this.JobPositionService.obtenerListaJobPosition().subscribe(
@@ -133,11 +134,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
   obtenerResultados() {
     this.resultadosService.obtenerResultadosByUser().subscribe(
-      (data:any) => {
+      (data: any) => {
         this.resultados = data;
         console.log("data", data);
       },
-      (error:any) => {
+      (error: any) => {
         console.error(error);
       }
     );
@@ -146,8 +147,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sortingDataAccessor = this.customSortingAccessor.bind(this);
     this.dataSource.sort = this.sort;
   }
-  
-  customSortingAccessor(item:any, property:any) {
+
+  customSortingAccessor(item: any, property: any) {
     if (property === 'porcentajeAprobacion') {
       return this.calculateUserResults(item.results);
     } else {
@@ -157,15 +158,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   obtenerHerramientas() {
     this.herramientasService.getCurrentUserTools().subscribe(
-      (herramientas:any) => {
+      (herramientas: any) => {
         if (herramientas && herramientas.length > 0) {
           this.herramientas = herramientas
-          this.lvl= herramientas.map((herramienta:any) => herramienta.level.description);
-          console.log("herramientas",this.herramientas);
-          this.productIds = herramientas.map((herramienta:any) => herramienta.productVersion.name);
-          this.productname = herramientas.map((herramienta:any) => herramienta.productVersion.product.name);
-          this.productid = herramientas.map((herramienta:any) => herramienta.productVersion.product.id);
-          this.lvlid= herramientas.map((herramienta:any) => herramienta.level.id);
+          this.lvl = herramientas.map((herramienta: any) => herramienta.level.description);
+          console.log("herramientas", this.herramientas);
+          this.productIds = herramientas.map((herramienta: any) => herramienta.productVersion.name);
+          this.productname = herramientas.map((herramienta: any) => herramienta.productVersion.product.name);
+          this.productid = herramientas.map((herramienta: any) => herramienta.productVersion.product.id);
+          this.lvlid = herramientas.map((herramienta: any) => herramienta.level.id);
         } else {
           console.log('No se encontraron herramientas para el usuario.');
         }
@@ -180,16 +181,17 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
   filterData() {
-    let filteredArray:User[] = this.originalDataCopy;
-   
+    let filteredArray: User[] = this.originalDataCopy;
+
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
-      
+
       return usuario.userJob && usuario.userJob.some(cargo => {
         const sueldo = cargo.salary; 
         return Number(sueldo) >= minSueldo && Number(sueldo) <= maxSueldo;
       });
     });
+<<<<<<< HEAD
   
     // //filtro por cargo
     // if (this.selectedCargo > 0) {
@@ -270,22 +272,107 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           console.log('Productos:', productos);
           console.log('Producto seleccionado:', this.selectedProducto);
           return productos.length > 0 && productos[0].id=== this.selectedProducto && nivelDificultad === this.selectedNivel;
+=======
+
+    //LISTO
+    if (this.selectedCargo > 0) {
+
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.userJob?.find(application => {
+          return String(application.id) === String(this.selectedCargo);
+        })
+      });
+    }
+
+    //LISTO
+    if (this.selectedfechaPostulacion) {
+      const formattedSelectedFechaPostulacion = this.selectedfechaPostulacion.toISOString().split('T')[0];
+      filteredArray = filteredArray.filter(usuario => {
+        const cargos = usuario.userJob
+        if (cargos && cargos.length > 0) {
+          const primerCargo = cargos[0];
+          const applicationDate = primerCargo.applicationDate
+          if (!applicationDate) return false;
+          return String(applicationDate).split('T')[0] === formattedSelectedFechaPostulacion;
+        }
+        return false;
+      });
+    }
+
+
+    //LISTO
+    // Filtro por estado de disponibilidad
+    if (this.selectedEstado && this.selectedEstado !== '') {
+      filteredArray = filteredArray.filter((usuario) => {
+        return String(usuario.availability?.id) === String(this.selectedEstado)
+      });
+    }
+
+
+
+
+    // Filtro por producto LISTO
+    if (this.selectedProducts.length > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.tools?.find(tool => {
+          console.log("tool product id", tool.productVersion.product.id)
+          console.log("prueba", this.selectedProducts.includes(16))
+          console.log("resultado de verificarlo", this.selectedProducts.includes(tool.productVersion.product.id))
+          return this.selectedProducts.includes(tool.productVersion.product.id)
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
         });
       });
     }
+
+    console.log("filtered array tool", filteredArray)
+
+    //Filtro por versión Necesita más testing pero debería estar bien
+    if (this.selectedVersion > 0) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.tools?.find(tool => {
+          return String(tool.productVersion.id) === String(this.selectedVersion)
+        });
+      })
+    }
+
+
+    // Filtro por nivel de examen
+
+    if (this.selectedNivel > 0 && this.selectedProducts.length === 1) {
+      filteredArray = filteredArray.filter(usuario => {
+        return usuario.results?.find(resultado => {
+          return String(resultado.level.id) === String(this.selectedNivel)
+            && String(resultado.product.id) === String(this.selectedProducts[0])
+        })
+      });
+    }
+
+    console.log("array final: ", filteredArray)
+
     // Filtro por porcentaje de aprobación
+<<<<<<< HEAD
   
     if (typeof this.selectedPorcentajeAprobacion ==="object") { 
+=======
+    console.log("estoy filtrando", typeof this.selectedPorcentajeAprobacion);
+    if (typeof this.selectedPorcentajeAprobacion === "object") {
+      console.log("en el filter", filteredArray);
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
       filteredArray = filteredArray.filter(resultado => {
-          console.log("resultado aaaaaa",resultado); 
-          const resultadoFinal = this.resultados.find(resultado =>{
+        console.log("resultado aaaaaa", resultado);
+        const resultadoFinal = this.resultados.find(resultado => {
           const resultadoExamen = resultado.score;
           const puntosMaximos = 20;
+<<<<<<< HEAD
           console.log("resultadoExamen",resultadoExamen); 
+=======
+          console.log("resultadoExamen", resultadoExamen);
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
           const nivelDificultad = resultado.level.description;
-          const productos = resultado.product; 
+          const productos = resultado.product;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
           const cumpleFiltrosAnteriores = productos.length > 0 && productos.id === this.selectedProducto && nivelDificultad === this.selectedNivel;
+<<<<<<< HEAD
           console.log("porcentajeAprobacion",porcentajeAprobacion);
           console.log("this.selectedProducto",this.selectedProducto);
           console.log("resultadoExamen",resultadoExamen); 
@@ -304,6 +391,26 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
               return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
             }
           
+=======
+          console.log("porcentajeAprobacion", porcentajeAprobacion);
+          console.log("this.selectedProducto", this.selectedProducto);
+          console.log("resultadoExamen", resultadoExamen);
+          console.log("nivelDificultad", nivelDificultad);
+          console.log("this.selectedNivel", this.selectedNivel);
+          console.log("productos", productos);
+
+          if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
+            return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
+              porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
+          } else {
+            console.log("usuario", resultado.usuarioId);
+            console.log("% aprobacion", porcentajeAprobacion);
+            console.log("% aprobacion seleccionado", this.selectedPorcentajeAprobacion.value);
+            console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
+            return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
+          }
+
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
           return false;
         });
         console.log("resultado final",resultadoFinal);
@@ -313,13 +420,15 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return false;
         })
     }
-    //Filtro
-    /*
+
+    //Filtro años de experiencia
+
+
     if (this.lastYears) {
       filteredArray = filteredArray.filter((usuario) => {
-        return usuario.laborales?.some((experiencia : any) => {
+        return usuario.jobs?.some((experiencia: any) => {
           return experiencia.herramientas?.some((herramienta: any) => {
-            const herramientaExperiencia = herramienta.productVersion?.prd?.prd_id;
+            const herramientaExperiencia = herramienta.productVersion?.id;
             if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
               const fechaFin = new Date(experiencia.endDate);
               const currentYear = new Date().getFullYear();
@@ -330,23 +439,32 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           });
         });
       });
-    }*/
+    }
 
-    /*
-    if (this.selectedVersion > 0) {
-      const [min, max] = this.selectedAniosExpRange;
-      filteredArray = filteredArray.filter(element => {
-        const anosExp = element.herr_exp.split(', ').map(Number);
-        return anosExp.some((anos: any) => anos >= min && anos <= max);
-      });
-    }*/
-    // console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    // console.log('Usuarios filtrados:', filteredArray);
 
+<<<<<<< HEAD
      this.dataSource.data = filteredArray
      this.cdr.detectChanges();
   }
 
+=======
+
+    // if (this.selectedVersion > 0) {
+    //   const [min, max] = this.selectedAniosExpRange;
+    //   filteredArray = filteredArray.filter(element => {
+    //     const anosExp = element.tools?[0][0].jhjhj.split(', ').map(Number);
+    //     return anosExp.some((anos: any) => anos >= min && anos <= max);
+    //   });
+    // }
+    //  console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
+    console.log('Usuarios filtrados:', filteredArray);
+
+    this.dataSource.data = filteredArray;
+  }
+
+
+
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
   onIrrelevanceChange() {
     if (this.isIrrelevant) {
       this.lastYears = 0;
@@ -405,7 +523,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         return `${value}`;
     }
 
-  filterProducto() {
+  filterProducto(event: any) {
+
+    this.selectedProducts = event.value;
+
+    console.log("Values of the event:_", this.selectedProducts)
     this.filterData();
   }
   filterNivel() {
@@ -439,6 +561,7 @@ obtenerUsuarios(): void {
     (data: any[]) => {
       console.log('Data de usuario :', data);
 
+<<<<<<< HEAD
       // Filtrar usuarios por roles igual a "GUEST"
       const usuarios = data
       // .filter((usuario) => usuario.roles === 'GUEST')
@@ -460,6 +583,9 @@ obtenerUsuarios(): void {
           results: usuario.results,
 
         }));
+=======
+        const usuarios = data
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
 
         const controlNames = Object.keys(this.selectedCheckbox.controls);
         controlNames.forEach(controlName => {
@@ -472,27 +598,27 @@ obtenerUsuarios(): void {
         });
 
 
-      this.originalDataCopy = usuarios;
-      this.dataSource.data = usuarios;
-      console.log ('esta es la datasource',this.dataSource.data)
-    },
-    (error) => {
-      console.log('este es un error,',error);
-    }
-  );
-}
-calculateUserResults(results: Result[]) {
-  const puntosMaximos = 20;
-  if (results.length === 0) {
-    return 0;
+        this.originalDataCopy = usuarios;
+        this.dataSource.data = usuarios;
+        console.log('esta es la datasource', this.dataSource.data)
+      },
+      (error) => {
+        console.log('este es un error,', error);
+      }
+    );
   }
-  const maxResult: number = results.reduce((max, current) => {
-    const score = current.score ?? 0;
-    return score > max ? score : max;
-  }, Number.NEGATIVE_INFINITY);
-  const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
-  return porcentajeAprobacionByUser;
-}
+  calculateUserResults(results: Result[]) {
+    const puntosMaximos = 20;
+    if (results.length === 0) {
+      return 0;
+    }
+    const maxResult: number = results.reduce((max, current) => {
+      const score = current.score ?? 0;
+      return score > max ? score : max;
+    }, Number.NEGATIVE_INFINITY);
+    const porcentajeAprobacionByUser = (maxResult / puntosMaximos) * 100;
+    return porcentajeAprobacionByUser;
+  }
 
 
 onSendMailPressed(){
@@ -545,6 +671,38 @@ onSendMailPressed(){
       }
     );
   }
+<<<<<<< HEAD
+=======
+
+
+
+
+  obtenerYFiltrarResultados() {
+    console.log('Llamando a obtenerResultadosByUser para el usuario con ID:', this.idUser);
+
+    this.resultadosService.obtenerResultadosByUser().subscribe(
+      (resultadoUsuario: any) => {
+
+
+        // Aquí puedes verificar si los datos recibidos son lo que esperas
+        this.dataSource.data = this.originalDataCopy.filter(usuario => {
+          // Añadir un console.log dentro del filtro para ver qué está pasando
+          const esIgual = this.resultados === resultadoUsuario;
+          console.log('Comparando resultados - User:', usuario, '¿Es igual?:', esIgual);
+
+          return esIgual;
+        });
+
+        // Mostrar los datos filtrados
+        console.log('Datos después de aplicar el filtro:', this.dataSource.data);
+      },
+      (error: any) => {
+        console.error('Error al obtener resultados del usuario: ', error);
+      }
+    );
+
+  }
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
   obtenerResultadosByUser() {
     this.resultadosService.obtenerResultadosByUser().subscribe(
       (data: any) => {
@@ -558,18 +716,37 @@ onSendMailPressed(){
   }
   
 
+<<<<<<< HEAD
   getProductos(categoriaId: number){
     console.log('categoria id:', categoriaId)
+=======
+
+
+  getProductos(categoriaId: number) {
+
+    this.selectedVersion = 0;
+    this.selectedProductoNombre = '';
+    this.filterInput();
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
     if (categoriaId) {
       this.productoService.getProductsByCategory(categoriaId).subscribe(
         (productos: Product[]) => {
           this.productos = productos;
+<<<<<<< HEAD
+=======
+          this.versiones = [];
+          this.originalDataCopy = this.dataSource.data;
+          //this.filterProducto();
+          this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
+
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
         },
         (error) => {
           console.log('Error al cargar productos ', error);
         }
       );
     } else {
+<<<<<<< HEAD
       this.productos = [];
     }
   } 
@@ -585,6 +762,54 @@ onSendMailPressed(){
     this.getVersion(this.selectedProducto);
   } 
   
+=======
+      this.versiones = [];
+      this.productos = [];
+      this.selectedProductoNombre = '';
+      this.originalDataCopy = this.dataSource.data;
+      //this.filterProducto();
+    }
+  }
+
+
+  getVersion(event: any) {
+
+    console.log("selected products", event.value[0])
+
+    if (event.value.length === 1) {
+      this.productoService.getVersionByProduct(event.value[0]).subscribe(
+        (data: ProductVersion[]) => {
+          this.versiones = data;
+
+        },
+        (error) => {
+          console.log('Error al cargar version ', error);
+        }
+      );
+    }
+  }
+
+  getNiveles() {
+
+    this.nivelService.listarNiveles().subscribe(
+      (data: Level[]) => {
+        this.niveles = data;
+
+      },
+      (error) => {
+        console.log('Error al obtener niveles ', error);
+      }
+    );
+
+  }
+
+  // numbertoString(results:number){
+  //   return String(results)
+
+  // }
+
+
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
 
     getVersion(productoId: number) {
       if (productoId) {
@@ -633,6 +858,7 @@ onSendMailPressed(){
     }
 
 
+<<<<<<< HEAD
     // openUserProfile(event: any) {
     //   const userId = event.currentTarget.id; // Obtén el ID del usuario desde el evento
     //   console.log('User ID:', userId); // Imprime el ID del usuario en la consola
@@ -682,6 +908,59 @@ onSendMailPressed(){
           const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
             data: { userId, usuario }, // Pasa los datos del usuario al componente hijo
             height: '60vh', // Establece la altura del diálogo
+=======
+
+
+  openUserProfile(usuario: User) {
+
+    console.log('User DEL BOTON PERFIL CLICKADO:', usuario); // Imprime el ID del usuario en la consola
+
+
+    // Configura el tamaño del diálogo
+    const dialogRef = this.dialog.open(ViewPerfilUsuarioRComponent, {
+      data: { usuario }, // Pasa los datos del usuario al componente hijo
+      height: '60vh', // Establece la altura del diálogo
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.obtenerUsuarios();
+    });
+
+  }
+
+
+  isAnyCheckboxChecked(): boolean {
+    return Object.values(this.selectedCheckbox.controls).some(control => control.value);
+  }
+
+
+
+  openBottomSheet(event: any) {
+    const userId = event.currentTarget.id;
+    console.log('User ID:', userId);
+    // Abre el componente hijo y pasa userId como un parámetro de datos
+    this._bottomSheet.open(viewCrudArchivoComponent, {
+      data: { userId: userId }
+    });
+  }
+
+
+  openEditProfileDialog(event: any): void {
+    // Obtiene el ID desde el elemento del botón que dispara el evento
+    const id = event.target.parentElement.id;
+
+    if (id) {
+      // Llama al servicio para obtener los datos del usuario usando el ID
+      this.userService.getUsuarioId(id).subscribe({
+        next: (data) => {
+          console.log('Data llegada:', data);
+          // Abre el diálogo con los datos obtenidos
+          const dialogRef = this.dialog.open(EditPerfilUsuarioRComponent, {
+            width: '800px',
+            height: '700px',
+            data: { usuarioId: id } // Pasa el ID del usuario al diálogo
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
           });
     
           dialogRef.afterClosed().subscribe(result => {
@@ -695,7 +974,44 @@ onSendMailPressed(){
         }
       });
     }
+<<<<<<< HEAD
     
+=======
+  }
+
+
+  clearFilters(): void {
+    this.filtro = '';
+    this.filtroPuntaje = '';
+    this.filtroCargo = '';
+    this.selectedfechaPostulacion = null;
+    this.selectedAniosExpRange = [1, 10];
+    this.isIrrelevant = true;
+    this.selectedSueldoRange = [1, 5000000];
+    this.selectedCargo = 0;
+    this.selectedCategoria = 0;
+    this.selectedProducto = 0;
+    this.selectedVersion = 0;
+    this.selectedAniosExp = 0;
+    this.selectedProductoNombre = "";
+    this.selectedEstado = '';
+    this.inputContent = false;
+    this.lastYears = 0;
+    this.resultadosExam = [];
+    this.selectedOption = '';
+    this.selectedNivel = 0;
+    this.isSueldoSliderEnabled = true;
+    this.selectedPorcentajeAprobacion = null;
+    this.porcentajeAprobacion = 0;
+
+    // Vuelve a cargar o filtrar los datos según sea necesario
+    this.dataSource.data = this.originalDataCopy;
+  }
+
+
+
+
+>>>>>>> f94e8b81149e103fd54e2c88d5cd3fbf59126ba5
 
 isAnyCheckboxChecked(): boolean {
   return Object.values(this.selectedCheckbox.controls).some(control => control.value);

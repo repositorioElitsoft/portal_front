@@ -1,13 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-
 import { User } from 'src/app/interface/user.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import * as intlTelInput from 'intl-tel-input';
 import { NotificationService } from 'src/app/service/notification.service';
-
-
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { State } from 'src/app/interface/state.interface';
 import { City } from 'src/app/interface/city.interface';
@@ -25,11 +22,12 @@ export class DatosPersonalesComponent implements OnInit {
   form!: FormGroup;
   currentResumeName?: string = "";
   countries: Country[] = [];
-  states: State[] = []; 
-  cities: City[] = []; 
+  states: State[] = [];
+  cities: City[] = [];
   isLoaded: boolean = true
   isUploadingFile: boolean = false
   usuarioGuardado!: User
+  mostrarEdicion = false
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,21 +38,20 @@ export class DatosPersonalesComponent implements OnInit {
     private cityService: CityService,
     private snackBar: MatSnackBar,
     private notification: NotificationService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
   ) {
     this.buildForm();
   }
   private buildForm() {
     this.form = this.formBuilder.group({
-      rut: ["",  [Validators.required, validRut]],
-      name: ["",  [Validators.required]],
-      firstLastname: ["",  [Validators.required]],
-      secondLastname: ["",  [Validators.required]],
+      rut: ["", [Validators.required, validRut]],
+      name: ["", [Validators.required]],
+      firstLastname: ["", [Validators.required]],
+      secondLastname: ["", [Validators.required]],
       country: ["1", [Validators.required]],
       state: ["", [Validators.required]],
-      city: this.formBuilder.group({
-       id: ["", Validators.required],
-      }),
+      city: ["", Validators.required],
       address: ["", Validators.required],
       linkedin: ["", []],
       phone: ["", [Validators.required, Validators.pattern("^[0-9]+$")]],
@@ -64,35 +61,43 @@ export class DatosPersonalesComponent implements OnInit {
       }),
     });
 
-this.form.get("gender.id")?.valueChanges.subscribe((value) => {
-    if (value === "Otro") {
-      this.form.get("gender.name")?.setValidators([Validators.required]);
-    } else {
-      this.form.get("gender.name")?.setValidators(null);
-      this.form.get("gender.name")?.setValue("");
-    }
-    this.form.get("gender.name")?.updateValueAndValidity();
-  });
+    this.form.get("gender.id")?.valueChanges.subscribe((value) => {
+      if (value === "Otro") {
+        this.form.get("gender.name")?.setValidators([Validators.required]);
+      } else {
+        this.form.get("gender.name")?.setValidators(null);
+        // this.form.get("gender.name")?.setValue("");
+      }
+      this.form.get("gender.name")?.updateValueAndValidity();
+    });
 
   }
 
-  onCountrySelected(){
+  onCountrySelected() {
     const countryId = this.form.get("country")!.value;
+    this.form.get("state")?.reset();
+    this.form.get("state")?.patchValue("");
+    this.form.get("city")?.reset();
+    this.form.get("city")?.patchValue("");
     this.stateService.obtenerEstadosporCountry(countryId).subscribe({
-      next: (data:State[]) => {
+      next: (data: State[]) => {
         this.states = this.sortByName(data);
+        this.cdRef.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching states:', error);
       }
     });
   }
-  onStateSelected(){
+  onStateSelected() {
 
     const stateId = this.form.get("state")!.value;
+    this.form.get("city")?.reset();
+    this.form.get("city")?.patchValue("");
     this.cityService.getStateByCountry(stateId).subscribe({
-      next: (data:City[]) => {
+      next: (data: City[]) => {
         this.cities = this.sortByName(data);
+        this.cdRef.detectChanges();
       },
       error: (error) => {
         console.error('Error fetching states:', error);
@@ -102,7 +107,7 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
   ngOnInit(): void {
     this.ObtenerUsuarioGuardado();
   }
-   obtenerEstadosporCountry(countryId: number) {
+  obtenerEstadosporCountry(countryId: number) {
     this.stateService.obtenerEstadosporCountry(countryId).subscribe(
       (data: State[]) => {
         this.states = this.sortByName(data);
@@ -161,15 +166,22 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
       });
     }
   }
-   ObtenerUsuarioGuardado() {
+
+  mostrarEdicionDeGenero() {
+    this.mostrarEdicion = true; // Mostrar la segunda parte del formulario
+  }
+
+  ObtenerUsuarioGuardado() {
     this.userService.getCurrentUser().subscribe({
       next: (data: any) => {
         this.usuarioGuardado = data;
-        this.currentResumeName = data.cvPath?.substring(37,data.cvPath.length)
+        this.currentResumeName = data.cvPath?.substring(37, data.cvPath.length)
         this.form.patchValue(data);
-    
 
-        this.isLoaded= true;
+        console.log("el usuario guardado es:", data);
+
+
+        this.isLoaded = true;
 
         this.countryService.obtenerPaises().subscribe({
           next: (data: Country[]) => {
@@ -180,9 +192,9 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
                 this.states = this.sortByName(data);
                 this.form.get('state')?.patchValue(this.usuarioGuardado.city?.state?.id)
                 this.cityService.getStateByCountry(this.usuarioGuardado.city?.state?.id ?? 0).subscribe({
-                  next: (data:City[]) => {
+                  next: (data: City[]) => {
                     this.cities = this.sortByName(data);
-                    this.form.get('city')?.get('id')?.patchValue(this.usuarioGuardado.city?.id)
+                    this.form.get('city')?.patchValue(this.usuarioGuardado.city?.id)
                   },
                   error: (error) => {
                     console.error('Error fetching states:', error);
@@ -206,11 +218,9 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
   }
   async submitForm(event: Event) {
     event.preventDefault();
-    const user: User = this.form.value;
-
-    console.log("USER :", user)
-
-
+    let user: User = this.form.value;
+    user.city = { id: this.form.value.city };
+    console.log("USER enviado :", user)
     try {
       await this.userService.updateUser(user).toPromise();
       const isConfirmed = await this.notification.showNotification(
@@ -225,17 +235,18 @@ this.form.get("gender.id")?.valueChanges.subscribe((value) => {
       console.error(error);
     }
   }
+
   borrarCV() {
-    if (this.usuarioGuardado?.id){
-    this.userService.borrarCV(this.usuarioGuardado.id).subscribe({
-      next: () => {
-        this.currentResumeName = undefined;
-      },
-      error: (err: any) => {
-        console.error('Error al eliminar CV:', err);
-      },
-    });
-  }
+    if (this.usuarioGuardado?.id) {
+      this.userService.borrarCV(this.usuarioGuardado.id).subscribe({
+        next: () => {
+          this.currentResumeName = undefined;
+        },
+        error: (err: any) => {
+          console.error('Error al eliminar CV:', err);
+        },
+      });
+    }
   }
 }
 function validRut(control: AbstractControl): ValidationErrors | null {

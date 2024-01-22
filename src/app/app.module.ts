@@ -30,9 +30,7 @@ import { InformacionLaboralComponent } from './components/user/informacion-labor
 import { InformacionAcademicaComponent } from './components/user/informacion-academica/informacion-academica.component';
 import { AppNavbarComponent } from './components/shared/app-navbar/app-navbar.component';
 import { AppSidebarComponent } from './components/shared/app-sidebar/app-sidebar.component';
-import { SidebarUserComponent } from './components/shared/sidebar-user/sidebar-user.component';
 import { TableHerramientasComponent } from './components/shared/table-herramientas/table-herramientas.component';
-import { SidebarUserDeskComponent } from './components/shared/sidebar-userdesk/sidebar-userdesk.component';
 import { AppSidebar2Component } from './components/shared/app-sidebar2/app-sidebar2.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { NumericOnlyDirective } from './directives/numeric-only.directive';
@@ -42,7 +40,6 @@ import { RestaurarPassComponent } from './components/register/restaurar-pass/res
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserDashboardComponent } from './components/user/user-dashboard/user-dashboard.component';
-import { SidebarComponent as UserSidebar } from './components/user/sidebar/sidebar.component';
 import { LoadExamenComponent } from './components/user/load-examen/load-examen.component';
 import { InstruccionesComponent } from './components/user/instrucciones/instrucc.component';
 import { StartComponent } from './components/user/start/start.component';
@@ -59,7 +56,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
-import { SidebarRResponsiveComponent } from './components/reclutador/sidebar-r-responsive/sidebar-r-responsive.component';
+import { SidebarRResponsiveComponent } from './components/shared/sidebar-r-responsive/sidebar-r-responsive.component';
 import { MatSortModule } from '@angular/material/sort';
 import { AddUsuariosComponent } from './components/admin/add-usuarios/add-usuarios.component';
 import { EstadisticasComponent } from './components/reclutador/estadisticas/estadisticas.component';
@@ -103,6 +100,9 @@ import { ToolCertificationsDialogComponent } from './components/dialogs/tool-cer
 import { UserPrefferedJobComponent } from './components/user/user-preffered-job/user-preffered-job.component';
 import { ObservationRecruiterComponent } from './components/reclutador/observation-recruiter/observation-recruiter.component';
 import { ObservationRecruiterEditComponent } from './components/reclutador/observation-recruiter-edit/observation-recruiter-edit.component';
+import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
+import { PortalViewComponent } from './components/user/portal-view/portal-view.component';
+import { UserAvailabilityComponent } from './components/user/user-availability/user-availability.component';
 
 
 
@@ -132,7 +132,6 @@ import { ObservationRecruiterEditComponent } from './components/reclutador/obser
     AppSidebarComponent,
     CerrarSesionComponent,
     AppSidebar2Component,
-    SidebarUserDeskComponent,
     TableHerramientasComponent,
     ValidarMailComponent,
     PeticionRestaurarPassComponent,
@@ -146,11 +145,10 @@ import { ObservationRecruiterEditComponent } from './components/reclutador/obser
     ViewExamenPreguntasComponent,
     CaracterOnlyDirective,
     AddPreguntaComponent,
-    UserSidebar,
     LoadExamenComponent,
     InstruccionesComponent,
     StartComponent,
-    SidebarUserComponent,
+    SidebarComponent,
     SidebarRResponsiveComponent,
     ExamenModalComponent,
     AddUsuariosComponent,
@@ -175,8 +173,9 @@ import { ObservationRecruiterEditComponent } from './components/reclutador/obser
     ToolCertificationsDialogComponent,
     UserPrefferedJobComponent,
     ObservationRecruiterComponent,
-    ObservationRecruiterEditComponent
-
+    ObservationRecruiterEditComponent,
+    PortalViewComponent,
+    UserAvailabilityComponent
   ],
   imports: [
     MatCheckboxModule,
