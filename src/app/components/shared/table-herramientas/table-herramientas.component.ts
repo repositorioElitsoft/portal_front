@@ -18,8 +18,8 @@ import { ToolCertificationsDialogComponent } from '../../dialogs/tool-certificat
 export class TableHerramientasComponent implements OnInit {
   toolForm!: FormGroup;
   isLoaded: boolean = false;
-  productsToDisplay: Product[] = []; 
-  versionsToDisplay: ProductVersion[] = []; 
+  productsToDisplay: Product[] = [];
+  versionsToDisplay: ProductVersion[] = [];
 
   userTools: ToolDTO[] = [];
 
@@ -31,10 +31,10 @@ export class TableHerramientasComponent implements OnInit {
     private notification: NotificationService,
     private router: Router,
     private certificationDialog: MatDialog
-  ){}
+  ) { }
   ngOnInit(): void {
     this.toolForm = this.formBuilder.group({
-      yearsOfExperience: ["",Validators.required],
+      yearsOfExperience: ["", Validators.required],
       level: this.formBuilder.group({
         id: ["", Validators.required],
         description: ["",]
@@ -62,46 +62,46 @@ export class TableHerramientasComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The certification dialog was closed');
-     
+
     });
   }
 
-  getCurrentTools(){
+  getCurrentTools() {
     this.herramientasService.getCurrentUserTools().subscribe({
-      next: (tools: ToolDTO[])=>{
+      next: (tools: ToolDTO[]) => {
         console.log("Current tools", tools)
         this.userTools = tools
       },
-      error: (err)=>{
+      error: (err) => {
         console.log("Error at getting tools: ", err)
       }
     });
   }
-  
-  getProducts(){
+
+  getProducts() {
     const categoryId = this.toolForm.get("categoryId")?.value;
 
     this.productoService.getProductsByCategory(categoryId).subscribe({
-      next: (products: Product[])=>{
+      next: (products: Product[]) => {
         console.log("Obtuve products", products)
         this.productsToDisplay = products
         console.log("Obtuve products to display", this.productsToDisplay)
       },
-      error: (err) =>{
+      error: (err) => {
         console.log("Error al obtener productos desde categoría: ", err)
       }
     })
   }
 
-  getVersions(){
+  getVersions() {
     const productId = this.toolForm.get("product")?.get("id")?.value;
     console.log("Product id ", productId)
     this.productoService.getVersionByProduct(productId).subscribe({
-      next: (versions: ProductVersion[])=>{
+      next: (versions: ProductVersion[]) => {
         console.log("versiosn obtained ", versions)
         this.versionsToDisplay = versions
       },
-      error: (err) =>{
+      error: (err) => {
         console.log("Error al obtener versiones desde productos: ", err)
       }
     })
@@ -115,26 +115,27 @@ export class TableHerramientasComponent implements OnInit {
       const newTool: CreateToolDTO = this.toolForm.value
       console.log("Tool to be sent: ", newTool)
       this.herramientasService.createTool(newTool).subscribe({
-        next:(res) => {
-          console.log("Created", res),
+        next: (res) => {
+          console.log("Created", res);
           this.getCurrentTools();
+          this.toolForm.reset();
         },
         error: (err) => {
-          console.log("Error al crear herramienta: ",err)
+          console.log("Error al crear herramienta: ", err)
         }
       })
-   
+
     }
   }
 
-  deleteTool(toolId: number){
+  deleteTool(toolId: number) {
     console.log("Toold Id to delete ", toolId)
     this.herramientasService.deleteTool(toolId).subscribe({
-      next: (res)=>{
+      next: (res) => {
         console.log("tool deleted", res);
         this.getCurrentTools();
       },
-      error: (err)=>{
+      error: (err) => {
         console.log("error delting tool", err)
       }
     })
