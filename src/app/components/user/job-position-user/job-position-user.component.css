@@ -62,7 +62,8 @@
   border: 1px solid #F57C27;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 5px;
+  flex: 1;
+  margin-right: 10px;
 }
 
 .user-preferred-job {
@@ -87,3 +88,11 @@
 .user-preferred-job-buttons button {
   margin-left: 8px;
 }
+
+.flex-container {
+  display: flex;
+  justify-content: space-between; /* Otra opción: space-around, según tu preferencia */
+}
+
+
+
