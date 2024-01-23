@@ -218,7 +218,7 @@ export class JobPositionUserComponent implements OnInit {
     });
   }
   redirectTo() {
-    this.navigateToRoute('/user-dashboard/0')
+    this.navigateToRoute('/portal-view/0')
   }
 
   openPrefferedJob(enterAnimationDuration: string, exitAnimationDuration: string): void {
