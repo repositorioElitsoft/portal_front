@@ -1,9 +1,0 @@
-/* Uso Exclusivo de este css  para el formulario en AddCategory*/
-  .form-group {
-    display: flex; /* Uso de Flexbox */
-    justify-content: center; /* Centrar los botones */
-    gap: 10px; /* Espacio entre botones */
-  }
-  form {
-    padding: 20px; /* Espaciado interno */
-  }

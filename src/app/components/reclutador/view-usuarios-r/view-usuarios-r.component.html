@@ -143,8 +143,8 @@
         <mat-form-field class="d-flex flex-column align-items-center" appearance="outline">
           <mat-label>Años de experiencia reciente</mat-label>
           <section class="example-section">
-            <input [disabled]="isIrrelevant || selectedProducto === 0" type="number" (change)="filterData()" matInput
-              [(ngModel)]="lastYears" min="1" max="10">
+            <input [disabled]="isIrrelevant" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"
+              min="0" max="10">
           </section>
         </mat-form-field>
       </div>

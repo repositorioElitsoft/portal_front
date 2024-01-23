@@ -1,6 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/service/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/service/login.service';
 import { MatDialog } from '@angular/material/dialog';  //
@@ -20,7 +19,7 @@ export class SidebarRResponsiveComponent implements OnInit {
   constructor(
 
     changeDetectorRef: ChangeDetectorRef,
-    private categoriaService: CategoriaService,
+
     public dialog: MatDialog,
     private router: Router, private cookieService: CookieService,
     private snack: MatSnackBar,
@@ -36,18 +35,7 @@ export class SidebarRResponsiveComponent implements OnInit {
   categorias: any;
   ngOnInit(): void {
     this.authorities = this.authService.getAuthorities();
-    this.categoriaService.listarCategorias().subscribe(
-      (data: any) => {
-        this.categorias = data;
-      },
-      (error) => {
-        console.log(error);
-        this.snack.open('Error al cargar las categorías', '', {
-          duration: 3000,
-        });
-        console.log(error);
-      }
-    );
+
   }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
