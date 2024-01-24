@@ -79,7 +79,8 @@
       </div>
 
       <div class="col-md-auto mt-4">
-        <button mat-mini-fab class="minifab" type="button" id="addRow" (click)="addTool()">
+        <button [disabled]="toolForm.invalid" mat-mini-fab class="minifab" type="button" id="addRow"
+          (click)="addTool()">
           <mat-icon>library_add</mat-icon>
         </button>
       </div>

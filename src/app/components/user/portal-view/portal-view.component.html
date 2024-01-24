@@ -5,19 +5,6 @@
     <div class="container-datos-personales">
         <div class="dialog-box">
             <h1 class="perfilr">Portal de Exámenes</h1>
-            <div class="exam-list">
-                <div class="exams">
-                    <div class="exam-card" *ngFor="let exam of exams">
-                        <h2 class="exam-title">{{ exam.name }}</h2>
-                        <p class="exam-description">{{ exam.description }}</p>
-                        <div class="chip-list">
-                            <ul class="topic-list">
-                                <li class="topic-item" *ngFor="let topic of exam.topics">{{ topic }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="router-outlet">
                 <router-outlet></router-outlet>
             </div>
