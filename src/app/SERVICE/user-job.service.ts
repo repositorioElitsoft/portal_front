@@ -36,6 +36,7 @@ export class UserJobService {
   eliminarPostulacionPorId(postulacionId: Number): Observable<boolean> {
     const url = `${this.url}eliminar-postulacion/${postulacionId}`;
     return this.http.delete<boolean>(url);
+    
   }
 
   aprobarObservacion(userJobId: Number, userJobApprovalDTO: CreateUserJobApprovalDTO): Observable<UserJobApproval> {
