@@ -29,7 +29,7 @@
       </div>
     </div>
     <div *ngIf="academicas.length === 0">
-      No has definido ninguna experiencia académica
+      No has definido ninguna información académica
     </div>
     <button mat-raised-button class="botonprimario m-2" (click)="openAddDialog('300ms', '150ms')">+ Añadir
       estudios</button>
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="row mb-3">
-        <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Termino:</label>
+        <label for="inputFechafin" class="col-sm-2 col-form-label">Fecha Término:</label>
         <div class="col-sm-10">
           <input type="date" class="form-control" id="inputFechafin" formControlName="endDate" [min]="minFecha"
             [max]="today" name="inputFechafin">
@@ -76,7 +76,7 @@
         </select>
       </div>
       <div>
-        <h4 class="perfilr">Referencias Academicas</h4>
+        <h4 class="perfilr">Referencias Académicas</h4>
         <div formArrayName="academicalReference">
           <div *ngFor="let ref of referenciaFormArray.controls; let i = index" [formGroupName]="i">
             <div class="referencia-individual">

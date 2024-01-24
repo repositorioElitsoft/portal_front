@@ -64,6 +64,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
           const usuarios = data.map((usuario) => ({
             id: usuario.id || '',
             name: usuario.name || '',
+            firstLastname: usuario.firstLastname || '',
             phone: usuario.phone || '',
             email: usuario.email || '',
             address:usuario.address || '',

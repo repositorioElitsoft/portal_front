@@ -1,6 +1,5 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { CategoriaService } from 'src/app/service/categoria.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/service/login.service';
 import { MatDialog } from '@angular/material/dialog';  //
@@ -12,14 +11,14 @@ import { CerrarSesionComponent } from '../../login/cerrar-sesion/cerrar-sesion.c
   templateUrl: './app-sidebar2.component.html',
   styleUrls: ['./app-sidebar2.component.css']
 })
-export class AppSidebar2Component implements OnInit  {
+export class AppSidebar2Component implements OnInit {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    private categoriaService: CategoriaService,
+
     public dialog: MatDialog,
-    private router: Router,private cookieService: CookieService,
+    private router: Router, private cookieService: CookieService,
     private snack: MatSnackBar,
     public login: LoginService,
     media: MediaMatcher
@@ -30,19 +29,7 @@ export class AppSidebar2Component implements OnInit  {
   }
   categorias: any;
   ngOnInit(): void {
-    this.categoriaService.listarCategorias().subscribe(
-      (data: any) => {
-        console.log(data);
-        this.categorias = data;
-      },
-      (error) => {
-        console.log(error);
-        this.snack.open('Error al cargar las categorías', '', {
-          duration: 3000,
-        });
-        console.log(error);
-      }
-    );
+
   }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);

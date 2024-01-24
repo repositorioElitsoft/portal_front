@@ -34,10 +34,12 @@ mat-toolbar {
 
 .filter-slider {
   align-items: center;
+ 
 }
 
 .filter-slider mat-slider {
   width: 100%;
+  width: 500px; /* Ancho deseado */
 }
 
 .filter-checkbox,
@@ -82,6 +84,7 @@ button.mat-raised-button mat-icon {
   /* Radio de borde para esquinas redondeadas */
 }
 
+/* Estilo para el slider en sí */
 .salary-slider {
-  width: 50%;
+  width: 100%; /* O el porcentaje deseado */
 }

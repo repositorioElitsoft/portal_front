@@ -105,6 +105,7 @@ export class DatosPersonalesComponent implements OnInit {
     });
   }
   ngOnInit(): void {
+
     this.ObtenerUsuarioGuardado();
   }
   obtenerEstadosporCountry(countryId: number) {
@@ -172,19 +173,23 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
   ObtenerUsuarioGuardado() {
+
     this.userService.getCurrentUser().subscribe({
       next: (data: any) => {
         this.usuarioGuardado = data;
         this.currentResumeName = data.cvPath?.substring(37, data.cvPath.length)
+
+        console.debug("el usuario guardado es:", data);
+
         this.form.patchValue(data);
 
-        console.log("el usuario guardado es:", data);
 
 
         this.isLoaded = true;
 
         this.countryService.obtenerPaises().subscribe({
           next: (data: Country[]) => {
+            console.debug("Countries :", data)
             this.countries = this.sortByName(data);
             this.form.get('country')?.patchValue(this.usuarioGuardado.city?.state?.country?.id)
             this.stateService.obtenerEstadosporCountry(this.usuarioGuardado.city?.state?.country?.id ?? 0).subscribe(
@@ -212,14 +217,19 @@ export class DatosPersonalesComponent implements OnInit {
         });
       },
       error: (err: any) => {
-        console.log(err);
+        console.error("error obteniendo usiario:", err);
       }
     });
   }
   async submitForm(event: Event) {
     event.preventDefault();
     let user: User = this.form.value;
-    user.city = { id: this.form.value.city };
+
+    console.debug("la city del form", this.form.value.city)
+    user.city = {
+      id: this.form.value.city
+    }
+
     console.log("USER enviado :", user)
     try {
       await this.userService.updateUser(user).toPromise();
@@ -250,6 +260,9 @@ export class DatosPersonalesComponent implements OnInit {
   }
 }
 function validRut(control: AbstractControl): ValidationErrors | null {
+  if (!control.value) {
+    return null;
+  }
   if (!control.value.includes("-")) {
     return { badRut: true };
   }

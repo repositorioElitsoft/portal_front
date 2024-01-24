@@ -310,38 +310,41 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     //Filtro años de experiencia
 
 
-    if (this.lastYears) {
-      filteredArray = filteredArray.filter((usuario) => {
-        return usuario.jobs?.some((experiencia: any) => {
-          return experiencia.herramientas?.some((herramienta: any) => {
-            const herramientaExperiencia = herramienta.productVersion?.id;
-            if (herramientaExperiencia && herramientaExperiencia === this.selectedProducto) {
-              const fechaFin = new Date(experiencia.endDate);
-              const currentYear = new Date().getFullYear();
-              return fechaFin.getFullYear() >= currentYear - this.lastYears;
-            }
-
-            return false;
-          });
-        });
+    if (this.selectedProducts.length === 1 && !this.isIrrelevant) {
+      const [min, max] = this.selectedAniosExpRange;
+      filteredArray = filteredArray.filter(usuario => {
+        let totalExperience = 0
+        if (usuario.jobs) {
+          for (const job of usuario.jobs) {
+            totalExperience += this.calculateExperience(job.startDate, job.endDate);
+          }
+        }
+        return totalExperience >= min && totalExperience <= max;
       });
     }
 
 
-
-    // if (this.selectedVersion > 0) {
-    //   const [min, max] = this.selectedAniosExpRange;
-    //   filteredArray = filteredArray.filter(element => {
-    //     const anosExp = element.tools?[0][0].jhjhj.split(', ').map(Number);
-    //     return anosExp.some((anos: any) => anos >= min && anos <= max);
-    //   });
-    // }
-    //  console.log('Filtro de años de experiencia:', this.selectedAniosExpRange);
-    console.log('Usuarios filtrados:', filteredArray);
-
     this.dataSource.data = filteredArray;
   }
 
+  calculateExperience(start: Date, end: Date) {
+    const startDate = new Date(start);
+    const endDate = end ? new Date(end) : new Date(); // If end date is not provided, use the current date
+    const recencyYears = new Date().getFullYear() - endDate.getFullYear();
+    //Verifica experienca reciente si es requerido
+    if (this.lastYears > 0) {
+      if (this.lastYears < recencyYears) {
+        return 0;
+      }
+    }
+    const yearDifference = endDate.getFullYear() - startDate.getFullYear();
+    const monthDifference = endDate.getMonth() - startDate.getMonth();
+    const dayDifference = endDate.getDate() - startDate.getDate();
+
+    // Adjust the result based on the month and day difference
+    const adjustedDifference = monthDifference < 0 || (monthDifference === 0 && dayDifference < 0) ? yearDifference - 1 : yearDifference;
+    return adjustedDifference;
+  }
 
 
   onIrrelevanceChange() {
@@ -356,7 +359,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
   filterInput() {
     let filteredArray = this.originalDataCopy;
-
     if (this.filtro) {
       const filtroLowerCase = this.filtro.toLowerCase();
       filteredArray = filteredArray.filter(element => {
@@ -406,7 +408,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     this.selectedProducts = event.value;
 
-    console.log("Values of the event:_", this.selectedProducts)
     this.filterData();
   }
   filterNivel() {
@@ -436,8 +437,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   }
 
   obtenerUsuarios(): void {
-    this.userService.obtenerUsuarios().subscribe(
-      (data: any[]) => {
+    this.userService.getGuestUsers().subscribe({
+      next: (data: User[]) => {
         console.log('Data de usuario :', data);
 
         const usuarios = data
@@ -457,10 +458,10 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         this.dataSource.data = usuarios;
         console.log('esta es la datasource', this.dataSource.data)
       },
-      (error) => {
-        console.log('este es un error,', error);
+      error: (error) => {
+        console.error('este es un error,', error);
       }
-    );
+    });
   }
   calculateUserResults(results: Result[]) {
     const puntosMaximos = 20;
@@ -591,7 +592,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
         },
         (error) => {
-          console.log('Error al cargar productos ', error);
+          console.error('Error al cargar productos ', error);
         }
       );
     } else {
@@ -615,7 +616,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
         },
         (error) => {
-          console.log('Error al cargar version ', error);
+          console.error('Error al cargar version ', error);
         }
       );
     }
@@ -629,7 +630,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
       },
       (error) => {
-        console.log('Error al obtener niveles ', error);
+        console.error('Error al obtener niveles ', error);
       }
     );
 
@@ -722,7 +723,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           });
         },
         error: (error) => {
-          console.log(error);
+          console.error(error);
           // Maneja el error aquí, por ejemplo, mostrando un mensaje al usuario
         }
       });

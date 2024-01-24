@@ -9,7 +9,7 @@
   <!-- Position Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.name}} {{element.firstLastname}}</td>
   </ng-container>
 
   <!-- Name Column -->
@@ -25,10 +25,10 @@
   </ng-container>
 
  <!-- Rol Column -->
-  <ng-container matColumnDef="roles">
+  <!-- <ng-container matColumnDef="roles">
   <th mat-header-cell *matHeaderCellDef> Rol </th>
   <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
-  </ng-container>
+  </ng-container> -->
 
 
   <ng-container matColumnDef="acciones">

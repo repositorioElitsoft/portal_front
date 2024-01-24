@@ -143,8 +143,8 @@
         <mat-form-field class="d-flex flex-column align-items-center" appearance="outline">
           <mat-label>Años de experiencia reciente</mat-label>
           <section class="example-section">
-            <input [disabled]="isIrrelevant || selectedProducto === 0" type="number" (change)="filterData()" matInput
-              [(ngModel)]="lastYears" min="1" max="10">
+            <input [disabled]="isIrrelevant" type="number" (change)="filterData()" matInput [(ngModel)]="lastYears"
+              min="0" max="10">
           </section>
         </mat-form-field>
       </div>
@@ -153,7 +153,7 @@
 
   <!-- Filtro por Rango de Sueldo -->
   <div class="filter-slider d-flex flex-column align-items-center">
-    <mat-label>Rango de Sueldos: </mat-label>
+    <mat-label>Rango de pretensión de renta: </mat-label>
     <mat-slider min="1" max="5000001" (input)="filterData()" [displayWith]="formatLabel " class=" salary-slider">
       <div class="custom-range">
         {{ selectedSueldoRange[0] | currency: 'USD':'symbol':'1.0-0' }} -

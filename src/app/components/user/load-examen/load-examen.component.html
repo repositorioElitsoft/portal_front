@@ -1,8 +1,16 @@
 <div class="bootstrap-wrapper ">
   <div class="container-fluid ">
+    <div>
+      <h3 style="color: #F57C27;">Categorías</h3>
+      <section class="example-section" [formGroup]="pickLevelForm">
+        <mat-checkbox class="example-margin" formControlName="easy" (change)="filterExams()">Fácil</mat-checkbox>
+        <mat-checkbox class="example-margin" formControlName="medium" (change)="filterExams()">Medio</mat-checkbox>
+        <mat-checkbox class="example-margin" formControlName="hard" (change)="filterExams()">Difícil</mat-checkbox>
+      </section>
+    </div>
     <h2 style="color: #F57C27;">Exámenes disponibles</h2>
     <div class="exams-container">
-      <div *ngFor="let e of herramientas" class="exam-card">
+      <div *ngFor="let e of herramientasToShow" class="exam-card">
         <mat-card class="m-2 example-card" style=" background-color: #f2f2f2;">
 
           <mat-card-header>
@@ -19,12 +27,7 @@
 
           </mat-card-content>
           <mat-card-actions>
-            <!-- 
-            <button mat-button style="color: #F57C27;" class="botonmath"
-              [routerLink]="'/portal-view/instrucciones/' +e.id?.toString() +'?prod='+e.productVersion.product.id+'&level='+e.level?.id   " 
-              >
-              <mat-icon>play_circle_outline</mat-icon> Empezar
-            </button>  -->
+
 
             <button mat-button style="color: #F57C27;" class="botonmath" (click)="goToInstructions(e)">
               <mat-icon>play_circle_outline</mat-icon> Empezar
