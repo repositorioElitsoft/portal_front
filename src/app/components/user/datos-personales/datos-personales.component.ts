@@ -224,7 +224,12 @@ export class DatosPersonalesComponent implements OnInit {
   async submitForm(event: Event) {
     event.preventDefault();
     let user: User = this.form.value;
-    user.city = { id: this.form.value.city };
+
+    console.debug("la city del form", this.form.value.city)
+    user.city = {
+      id: this.form.value.city
+    }
+
     console.log("USER enviado :", user)
     try {
       await this.userService.updateUser(user).toPromise();

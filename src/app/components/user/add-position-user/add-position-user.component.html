@@ -1,5 +1,5 @@
 <mat-card class="contenedorform">
-  <div class="div-inputs">
+  <div class="div-inputs" class="col-custom">
     <h4 class="perfilr">Cargos activos en Elitsoft</h4>
     <form [formGroup]="form" (ngSubmit)="submitForm($event)">
       <div class="row mb-3">
@@ -7,7 +7,7 @@
         <!-- Mostrar el select solo en modo creación -->
         <div class="combobox col-sm-15" *ngIf="creationMode">
           <select class="form-control" (change)="esCargoTrainee()" id="cargosE" formControlName="JobPositionId"
-            name="cargosE" [disabled]="!creationMode">
+            name="cargosE" [disabled]="!creationMode" [ngClass]="{'trainee-mode': istrainee}">
             <option value="">Seleccione una opción</option>
             <option *ngFor="let cargo of JobPosition" [value]="cargo.id">{{ cargo.name }}</option>
           </select>
@@ -16,14 +16,13 @@
         <input class="form-control" *ngIf="!creationMode" type="text" formControlName="jobPositionName" readonly>
       </div>
 
-      <ng-container *ngIf="JobPosition && form.get('JobPositionId')?.value as selectedJobId">
+      <ng-container *ngIf="JobPosition && form.get('JobPositionId')?.value as selectedJobId" >
         <!-- Mostrar mensaje y botón para redirigir a referencias académicas -->
-        <div *ngIf="isntrainee && mostrarFormulario" class="alert alert-info">
+        <div *ngIf="istrainee && mostrarFormulario" class="alert alert-info small-alert">
           Recuerda añadir referencias académicas si deseas postular a un cargo de Trainee.
-          <button mat-raised-button class="botonprimario m-2" (click)="redirectToReferencias()">Añadir Referencias
-            Académicas</button>
+          <button mat-raised-button class="botonprimario m-2 small-button" (click)="redirectToReferencias()">Añadir Referencias Académicas</button>
         </div>
-        <div *ngIf="isntrainee || mostrarFormulario">
+        <div [ngClass]="{'trainee-mode': istrainee}">
           <div class="row mb-3">
             <label for="inputPretension" class="col-m-2 col-form-label">Pretensión de renta:</label>
             <div class="col-sm-15">

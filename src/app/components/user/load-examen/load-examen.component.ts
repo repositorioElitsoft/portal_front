@@ -4,23 +4,25 @@ import { ProductoService } from 'src/app/service/producto.service';
 import { HerramientasService } from 'src/app/service/herramientas.service';
 import { PreguntaService } from 'src/app/service/pregunta.service';
 import { Herramientas } from 'src/app/interface/herramientas.interface';
+import { Form, FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-load-examen',
   templateUrl: './load-examen.component.html',
   styleUrls: ['./load-examen.component.css']
 })
 export class LoadExamenComponent implements OnInit {
-  catId: any;
-  examenes?: any;
-  productIds: number[] = [];
-  productname: any;
+
+  pickLevelForm!: FormGroup
   herramientas: Herramientas[] = [];
+  herramientasToShow: Herramientas[] = [];
   lvl: any;
   constructor(
     private herramientasService: HerramientasService,
-    private preguntaService: PreguntaService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.buildLevelPickerForm();
+  }
   ngOnInit(): void {
     this.herramientasService.getCurrentUserToolsForExams().subscribe(
       (herramientas: any) => {
@@ -28,14 +30,10 @@ export class LoadExamenComponent implements OnInit {
           this.herramientas = herramientas
           this.lvl = herramientas.map((herramienta: any) => herramienta.level.description);
           console.log("herramientas", this.herramientas);
-          this.productIds = herramientas.map((herramienta: any) => herramienta.productVersion.name);
-          this.productname = herramientas.map((herramienta: any) => herramienta.productVersion.product.name);
-          console.log('IDs de productos:', this.productIds);
-          console.log('name de productos:', this.productname);
           console.log('level:', this.lvl);
 
           this.getExams();
-
+          this.filterExams();
         } else {
           console.log('No se encontraron herramientas para el usuario.');
         }
@@ -44,6 +42,28 @@ export class LoadExamenComponent implements OnInit {
         console.error('Error al obtener el usuario guardado:', error);
       }
     );
+  }
+
+  buildLevelPickerForm() {
+    this.pickLevelForm = this.formBuilder.group({
+      easy: [true],
+      medium: [true],
+      hard: [true]
+    });
+  }
+
+  filterExams() {
+    this.herramientasToShow = this.herramientas.filter(h => {
+      if (h.level?.id === 1) {
+        return this.pickLevelForm.get("easy")?.value;
+      }
+      if (h.level?.id === 2) {
+        return this.pickLevelForm.get("medium")?.value;
+      }
+      if (h.level?.id === 3) {
+        return this.pickLevelForm.get("hard")?.value;
+      }
+    })
   }
 
   goToInstructions(tool: Herramientas) {
@@ -111,6 +131,7 @@ export class LoadExamenComponent implements OnInit {
           })
           break;
       }
+
     })
 
     console.log(herramientasDeNivelesBajos)
@@ -118,6 +139,7 @@ export class LoadExamenComponent implements OnInit {
 
     this.herramientas.sort((a, b) => a.productVersion!.product!.name.localeCompare(b.productVersion!.product!.name));
     console.log("Herramientas después de filter: ", this.herramientas)
+    this.herramientasToShow = this.herramientas
   }
 
 }

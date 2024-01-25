@@ -100,8 +100,9 @@
                 </mat-chip>
               </div>
               <!--    Referencias Laborales -->
-              <div class="mb-3 mt-1"> Referencias Laborales:</div>
+              
               <ul *ngIf="jobs.employmentReferences && jobs.employmentReferences.length">
+                <div class="mb-3 mt-1"> Referencias Laborales:</div>
                 <li *ngFor="let employmentReferences of jobs.employmentReferences">
                   <span matListItemLine>Nombre: {{employmentReferences.name }}</span>
                   <span matListItemLine>Empresa: {{employmentReferences.company }}</span>
@@ -123,16 +124,17 @@
           </mat-list>
         </mat-tab>
         <mat-tab label="Información Académica">
-
           <mat-list>
+            <div class="mb-3 mt-1"> Información Académica:</div>
             <mat-list-item *ngFor="let academicalList of usuarioData.academicalList">
               <span matListItemTitle>{{ academicalList.degree }}</span>
               <span matListItemLine>{{academicalList.university }}</span>
               <span matListItemLine>{{academicalList.status }}</span>
 
               <!-- Referencias académicas -->
-              <div class="mb-3 mt-1"> Referencias Académicas:</div>
+              
               <ul *ngIf="academicalList.academicalReference && academicalList.academicalReference.length">
+                <div class="mb-3 mt-1"> Referencias Académicas:</div>
                 <li *ngFor="let academicalReference of academicalList.academicalReference">
                   <span matListItemLine>Nombre: {{academicalReference.name }}</span>
                   <span matListItemLine>Institución: {{academicalReference.institution }}</span>
@@ -157,13 +159,13 @@
         </mat-tab>
         <mat-tab label="Postulaciones">
           <mat-list>
-            <div> Disponibilidad: {{ usuarioData.availability.time }}</div>
+            
             <mat-list-item *ngFor="let cargo of usuarioData.userJob;let i = index" class="postulaciones">
               <mat-card>
                 <mat-card-content>
                   <span matListItemTitle><strong>{{ cargo.jobPosition.name }}</strong></span>
                   <span matListItemLine>Pretensión de renta: {{ cargo.salary | currency:'USD':'symbol':'1.0-0' }}</span>
-
+                  <span matListItemLine>Disponibilidad: {{ usuarioData.availability.time }}</span>
                   <span matListItemLine>Fecha de postulación: {{ cargo.applicationDate | date: 'dd/MM/yyyy' }}</span>
                   <span matListItemLine class="mat-list-item-content" style="font-weight: bold;">Aprobaciones:
                     <ng-container *ngIf="cargo.approvals && cargo.approvals.length > 0; else noApprovals">
@@ -177,7 +179,7 @@
                         </ng-template>
                         <mat-divider></mat-divider>
                       </span>
-                    </ng-container>
+                      </ng-container>
                     <ng-template #noApprovals>Pendiente...</ng-template>
                   </span>
                   <div *ngIf="usuarioData.preferredJob?.description" class="preferred-job-container">

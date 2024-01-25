@@ -303,8 +303,9 @@ export class StartComponent implements OnInit {
         this.preguntasTotales++;
       }
     });
-    this.mostrarGrafico();
     console.log('Puntos conseguidos:', this.puntosConseguidos);
+    this.mostrarGrafico();
+    
   }
 
 
@@ -315,6 +316,7 @@ export class StartComponent implements OnInit {
   }
   imprimirPagina() {
     window.print();
+    
   }
 }
 function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {

@@ -218,7 +218,7 @@ export class JobPositionUserComponent implements OnInit {
     });
   }
   redirectTo() {
-    this.navigateToRoute('/user-dashboard/0')
+    this.navigateToRoute('/portal-view/0')
   }
 
   openPrefferedJob(enterAnimationDuration: string, exitAnimationDuration: string): void {
@@ -239,7 +239,7 @@ export class JobPositionUserComponent implements OnInit {
     const dialogRef = this.dialog.open(UserAvailabilityComponent, {
       width: '400px',
       height: '300px',
-      data: { user: this.user, creationMode: true }, // Cambia esto a false para el modo creación
+      data: { user: this.user, creationMode: true }, 
       enterAnimationDuration,
       exitAnimationDuration,
     });

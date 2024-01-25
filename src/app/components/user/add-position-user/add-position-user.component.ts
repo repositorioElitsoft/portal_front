@@ -18,7 +18,7 @@ export class AddPositionUserComponent implements OnInit {
   @Output()  AddPositionUserComponent: EventEmitter<void> = new EventEmitter<void>();
   form!: FormGroup;
   mostrarFormulario: boolean = true;
-  isntrainee: boolean = false;
+  istrainee: boolean = false;
   JobPosition: JobPosition[] = [];
   creationMode = true;
   selectedCargo: JobPosition | undefined;
@@ -109,7 +109,7 @@ export class AddPositionUserComponent implements OnInit {
     console.log('cargoSeleccionado:', cargoSeleccionado);
     console.log('cargoSeleccionado id:', this.form.get("JobPositionId")?.value);
     console.log('cargoSeleccionado name:', this.JobPosition);
-    this.isntrainee = !!cargoSeleccionado && !!cargoSeleccionado.name && cargoSeleccionado.name.toLowerCase().includes('trainee');
+    this.istrainee = !!cargoSeleccionado && !!cargoSeleccionado.name && cargoSeleccionado.name.toLowerCase().includes('trainee');
   }
   submitForm(event: Event) {
     event.preventDefault();

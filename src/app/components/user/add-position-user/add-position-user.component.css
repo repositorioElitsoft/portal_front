@@ -31,3 +31,44 @@ background-color: none;
 box-shadow: none;
 width: 100%;
 }
+
+/* Estilo para el mensaje de alerta cuando el cargo es trainee */
+.small-alert {
+  font-size: 14px; /* Puedes ajustar el tamaño según tus preferencias */
+  max-width: 100%; /* Limita el ancho máximo de la alerta */
+}
+
+
+
+.trainee-mode {
+  max-width: 350px; /* O ajusta el valor según tus necesidades */
+  
+ 
+  
+}
+
+.trainee-mode .combobox select {
+  max-width: 350px; /* O el valor que desees */
+}
+
+.trainee-mode option {
+  text-align: left; /* Alinea el texto de las opciones a la izquierda */
+}
+
+.trainee-mode::after {
+  margin-left: 5px; /* Ajusta el espacio entre el texto y la flecha */
+}
+
+/* Opcional: Para centrar verticalmente el contenido del select */
+.trainee-mode,
+.trainee-mode option {
+  padding: 5px; /* Ajusta el relleno para centrar verticalmente */
+}
+
+.col-custom {
+  flex: 0 0 calc(50% - 16px); /* Ajusta según tus necesidades */
+  max-width: calc(50% - 16px); /* Ajusta según tus necesidades */
+}
+
+
+
