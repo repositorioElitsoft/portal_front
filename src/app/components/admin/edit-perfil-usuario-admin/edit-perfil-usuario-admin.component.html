@@ -2,7 +2,7 @@
   <h2 class="perfilr">Editar User</h2>
 </mat-card-header>
 <mat-card-content>
-  <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
+  <form [formGroup]="userDataForm">
     <!-- Nombre -->
     <mat-form-field class="full-width" appearance="outline">
       <mat-label>Nombre</mat-label>
@@ -88,7 +88,7 @@
 
     <!-- Botones de acción -->
     <div class="form-group text-center d-flex">
-      <button mat-raised-button class="botonprimario">Guardar</button>
+      <button mat-raised-button class="botonprimario" (click)="guardarUsuario()">Guardar</button>
       <button mat-raised-button class="botonprimario" (click)="cancelar()">Cancelar</button>
     </div>
   </form>
