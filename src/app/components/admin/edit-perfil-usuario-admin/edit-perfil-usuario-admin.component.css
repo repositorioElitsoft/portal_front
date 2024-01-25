@@ -1,19 +1,22 @@
 .full-width {
   width: 100%;
 }
+
 .actions {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
 }
+
 mat-card-header {
   border-bottom: 1px solid #e0e0e0;
   padding: 16px;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
 }
+
 .perfilr {
   margin: 0;
 
@@ -37,4 +40,21 @@ textarea.mat-input-element {
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+.linkedin-style-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+.roles-list {
+  margin-top: 10px;
+}
+
+.role-item {
+  margin-bottom: 6px;
+  font-size: 16px;
+  color: #333;
 }

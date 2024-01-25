@@ -3,7 +3,7 @@ import { NotificationService } from 'src/app/service/notification.service';
 import { UserService } from 'src/app/service/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserEditarDTO} from 'src/app/interface/user.interface';
+import { UserEditarDTO } from 'src/app/interface/user.interface';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component';
 // Componente necesario para que el administrador pueda crear nuevos perfiles. (modulo view-usuarios)
@@ -14,18 +14,18 @@ import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component'
 })
 export class AddUsuariosComponent implements OnInit {
   userDataForm: FormGroup;
-  usrId:number | null = null
+  usrId: number | null = null
   usuario: UserEditarDTO = {
     name: '',
     firstLastname: '',
-    secondLastname:'',
-    email:'',
-    address:'',
-    password:'',
-    roles:'',
+    secondLastname: '',
+    email: '',
+    address: '',
+    password: '',
+    roles: '',
   }
   hide = true;
-  constructor( private userService:UserService,
+  constructor(private userService: UserService,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -62,26 +62,25 @@ export class AddUsuariosComponent implements OnInit {
       this.userDataForm.reset();
     }
   }
-  guardarUsuario() 
-  {
+  guardarUsuario() {
     if (this.userDataForm.invalid) {
       console.log('Ventana Cerrada');
       return;
     }
     const userData = this.userDataForm.value;
-    if(this.usrId){
-      this.usuario=this.userDataForm.value;
+    if (this.usrId) {
+      this.usuario = this.userDataForm.value;
       console.log(this.usuario, 'usuario para act')
       this.userService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
-        next:(dato:any) => {
-          this._snackBar.open("User actualizado con éxito","Cerrar",{
-            duration:1000
+        next: (dato: any) => {
+          this._snackBar.open("User actualizado con éxito", "Cerrar", {
+            duration: 1000
           })
           this.cancelar();
         },
-        error:(error) => {
-          this._snackBar.open("Error al actualizar usuario","Cerrar",{
-            duration:3000
+        error: (error) => {
+          this._snackBar.open("Error al actualizar usuario", "Cerrar", {
+            duration: 3000
           })
         }
       })
@@ -117,11 +116,11 @@ export class AddUsuariosComponent implements OnInit {
       );
     }
 
-}
-private limpiarCampos() {
-  this.userDataForm.reset();
-  this.dialogRef.close();
-}
+  }
+  private limpiarCampos() {
+    this.userDataForm.reset();
+    this.dialogRef.close();
+  }
   cancelar() {
     this.dialogRef.close();
   }

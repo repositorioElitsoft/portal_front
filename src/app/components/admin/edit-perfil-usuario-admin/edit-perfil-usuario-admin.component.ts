@@ -1,13 +1,16 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { NotificationService } from 'src/app/service/notification.service';
 import { UserService } from 'src/app/service/user.service';
-import { MAT_DIALOG_DATA, MatDialogRef , MatDialog} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NotificationService } from 'src/app/service/notification.service';
-import {  UserEditarDTO, UserEditarDTO2 } from 'src/app/interface/user.interface';
+import { UserEditarDTO2 } from 'src/app/interface/user.interface';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component';
-// Componente de edición de los datos del perfil del administrador. 
+import { Role } from 'src/app/interface/role.interface';
+import { RoleService } from 'src/app/service/role.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EditRoleComponent } from '../edit-role/edit-role.component';
+
 @Component({
   selector: 'app-edit-perfil-usuario-admin',
   templateUrl: './edit-perfil-usuario-admin.component.html',
@@ -16,48 +19,49 @@ import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component'
 export class EditPerfilUsuarioAdminComponent implements OnInit {
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
   userDataForm: FormGroup;
-  usrId:number | null = null
+  usrId: number | null = null
   hide = true;
-  usuario: UserEditarDTO2 = {
-    name: '',
-    firstLastname: '',
-    secondLastname:'',
-    rut: '',
-    email:'',
-    phone:'',
-    password:'',
-    roles:'',
-    address: ''
-  }
   hidePassword: boolean = true;
-  constructor( private userService:UserService,
-    private router:Router,
+  roles: Role[] = [];
+  roleId: number | null = null
+
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private roleService: RoleService,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<ViewUsuariosComponent>,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar) {
+    private _snackBar: MatSnackBar
+  ) {
     this.userDataForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(1)]],
       firstLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       secondLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       rut: [''],
       email: [''],
       phone: [''],
-      // password: ['', Validators.required],
-      roles: ['', Validators.required],
     });
   }
+
   ngOnInit(): void {
+    this.getRoles();
     this.usrId = this.data ? this.data.usuarioId : null;
     if (this.usrId) {
       console.log('existo');
       this.userService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
           this.userDataForm.patchValue(data);
-          this.usuario.id = data.id;
+
+
+          if (data && data.roleId !== undefined) {
+            this.userDataForm.controls['roles'].setValue(data.roleId);
+          }
+
+
           console.log(data.id, 'usuario enviado');
         },
         error: (err) => {
@@ -70,56 +74,124 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     } else {
       this.userDataForm.reset();
     }
+
+    this.getRolesByUserId();
   }
+
   guardarUsuario() {
     if (this.userDataForm.invalid) {
-        console.log('Ventana Cerrada');
-        return;
+      console.log('Formulario no válido');
+      return;
     }
+
     const userData = this.userDataForm.value;
-    if (this.usrId) {
-        this.usuario = this.userDataForm.value;
-        console.log(this.usuario, 'usuario para act')
-        this.userService.actualizarUsuarioAdmin(this.usrId, this.usuario).subscribe({
-            next: (dato: any) => {
-                this._snackBar.open("User actualizado con éxito", "Cerrar", {
-                    duration: 1000
-                });
-                this.cancelar();
-                this.dialog.closeAll();
-                this.dialogClosed.emit();
-            },
-            error: (error) => {
-                this._snackBar.open("Error al actualizar usuario", "Cerrar", {
-                    duration: 3000
-                });
-            }
-        });
-        return;
-    }
-    this.userService.updateUser(userData).subscribe({
-        next: (data) => {
-            console.log(data);
-            this.notification.showNotification(
-                'success',
-                'Registro Exitoso',
-                'User agregado con éxito'
-            );
-            this.limpiarCampos();
+    const userId = this.usrId ?? 0; // Asegúrate de tener un ID de usuario válido
+    console.log('Valor de userId:', userId); // Agrega esta línea para verificar el valor de userId
+
+    const accionCompleta = (mensaje: string) => {
+      this._snackBar.open(mensaje, "Cerrar", { duration: 3000 });
+      this.cancelar();
+      this.dialog.closeAll();
+      this.dialogClosed.emit();
+    };
+
+    const esActualizacion = !!this.usrId;
+
+
+    if (esActualizacion) {
+      console.log(userData, 'usuario para actualizar');
+      this.userService.actualizarUsuarioAdmin(userId, userData).subscribe({
+        next: () => {
+
+          accionCompleta("Usuario actualizado con éxito");
+        },
+        error: () => {
+          accionCompleta("Error al actualizar usuario");
+        }
+      });
+    } else {
+      console.log(userData, 'usuario para agregar');
+      this.userService.updateUser(userData).subscribe({
+        next: () => {
+          accionCompleta("Registro Exitoso");
         },
         error: (error) => {
-            console.log(error);
+          console.error(error);
+          accionCompleta("Error al agregar usuario");
         }
+      });
+    }
+  }
+
+  getRolesByUserId() {
+    this.roleService.getRolesByUserId(this.usrId ?? 0).subscribe((data) => {
+      this.roles = data;
     });
-}
-togglePasswordVisibility(): void {
-  this.hidePassword = !this.hidePassword;
-}
-private limpiarCampos() {
-  this.userDataForm.reset();
-  this.dialogRef.close();
-}
+  }
+
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
+  private limpiarCampos() {
+    this.userDataForm.reset();
+    this.dialogRef.close();
+  }
+
   cancelar() {
     this.dialogRef.close();
   }
+
+  getRoles() {
+    this.roleService.getAllRoles().subscribe({
+      next: (roles) => {
+        this.roles = roles.map(role => ({ id: role.id, name: role.name }));
+        console.log(this.roles);
+      },
+      error: (error) => {
+        console.error("Error al obtener la lista de roles", error);
+      }
+    });
+  }
+
+  editRole(usrId: number): void {
+    if (!usrId) {
+      console.error('El usrId no es válido');
+      return;
+    }
+
+    console.log('usrId enviado:', usrId);
+
+    const dialogRef = this.dialog.open(EditRoleComponent, {
+      width: '400px',
+      height: '400px',
+      data: { usuarioId: usrId }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.getRolesByUserId();
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
+
+
+
+  deleteRole(userId: number, roleId: number): void {
+    this.roleService.deleteRole(userId, roleId).subscribe(
+      response => {
+        // Manejar la respuesta después de la eliminación, por ejemplo, recargar la lista de roles.
+        this._snackBar.open('Rol eliminado correctamente', 'Cerrar', { duration: 3000 }); // Muestra un mensaje de éxito en el snack bar
+        this.getRolesByUserId() // Actualiza la lista de roles
+      },
+      error => {
+        console.error('Error al eliminar el rol:', error);
+        this._snackBar.open('Error al eliminar el rol', 'Cerrar', { duration: 3000 }); // Muestra un mensaje de error en el snack bar
+      }
+    );
+  }
 }
+
+

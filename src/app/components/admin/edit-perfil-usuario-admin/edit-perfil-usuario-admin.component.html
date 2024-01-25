@@ -1,75 +1,99 @@
-<mat-card-header><h2 class="perfilr">Editar User</h2></mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
-      <!-- Nombre -->
-      <mat-form-field class="full-width">
-        <mat-label>Nombre</mat-label>
-        <input matInput formControlName="name" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('name')?.hasError('required')">
-          *Nombre es requerido.
-        </mat-error>
-        <mat-error *ngIf="userDataForm.get('name')?.hasError('maxlength')">
-          *Nombre no debe exceder 30 caracteres
-        </mat-error>
-      </mat-form-field>
-      <!-- Apellido Paterno -->
-      <mat-form-field class="full-width">
-        <mat-label>Apellido Paterno</mat-label>
-        <input matInput formControlName="firstLastname" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('required')">
-          *Apellido Paterno es requerido
-        </mat-error>
-        <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('maxlength')">
-          *Apellido Paterno no debe exceder 30 caracteres
-        </mat-error>
-      </mat-form-field>
-      <!-- Apellido Materno -->
-      <mat-form-field class="full-width">
-        <mat-label>Apellido Materno</mat-label>
-        <input matInput formControlName="secondLastname" required maxlength="30">
-        <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('required')">
-          *Apellido Materno es requerido
-        </mat-error>
-        <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('maxlength')">
-          *Apellido Materno no debe exceder 30 caracteres
-        </mat-error>
-      </mat-form-field>
-       <!-- Rut -->
-       <mat-form-field class="full-width">
-        <mat-label>Rut</mat-label>
-        <input matInput formControlName="rut" required maxlength="30" >
-      </mat-form-field>
-      <!-- Telefono -->
-      <mat-form-field class="full-width">
-            <mat-label>Teléfono</mat-label>
-            <input  type="tel" matInput placeholder="9-9550-1234" formControlName="phone" required maxlength="30">
-      </mat-form-field>
-      <!-- Email -->
-      <mat-form-field class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" readonly>  
-      </mat-form-field>
-  <!-- rol -->
-  <mat-form-field class="full-width">
-    <mat-label>Rol</mat-label>
-    <mat-select formControlName="roles" required>
-      <mat-option value="ADMIN">Administrador</mat-option>
-      <mat-option value="REC">Reclutador</mat-option>
-      <mat-option value="ENTR">Entrevistador</mat-option>
-      <mat-option value="GUEST">User</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <!-- <mat-form-field class="full-width">
-    <mat-label>Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-    </button>
-  </mat-form-field> -->
-      <!-- Botones de acción -->
-      <div class="form-group text-center d-flex">
-        <button mat-raised-button class="botonprimario">Guardar</button>
-        <button mat-raised-button class="botonprimario" (click)="cancelar()">Cancelar</button>
-      </div>
-    </form>
-  </mat-card-content>
+<mat-card-header>
+  <h2 class="perfilr">Editar User</h2>
+</mat-card-header>
+<mat-card-content>
+  <form [formGroup]="userDataForm" (ngSubmit)="guardarUsuario()">
+    <!-- Nombre -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required maxlength="30">
+      <mat-error *ngIf="userDataForm.get('name')?.hasError('required')">
+        *Nombre es requerido.
+      </mat-error>
+      <mat-error *ngIf="userDataForm.get('name')?.hasError('maxlength')">
+        *Nombre no debe exceder 30 caracteres
+      </mat-error>
+    </mat-form-field>
+    <!-- Apellido Paterno -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Apellido Paterno</mat-label>
+      <input matInput formControlName="firstLastname" required maxlength="30">
+      <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('required')">
+        *Apellido Paterno es requerido
+      </mat-error>
+      <mat-error *ngIf="userDataForm.get('firstLastname')?.hasError('maxlength')">
+        *Apellido Paterno no debe exceder 30 caracteres
+      </mat-error>
+    </mat-form-field>
+    <!-- Apellido Materno -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Apellido Materno</mat-label>
+      <input matInput formControlName="secondLastname" required maxlength="30">
+      <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('required')">
+        *Apellido Materno es requerido
+      </mat-error>
+      <mat-error *ngIf="userDataForm.get('secondLastname')?.hasError('maxlength')">
+        *Apellido Materno no debe exceder 30 caracteres
+      </mat-error>
+    </mat-form-field>
+    <!-- Rut -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Rut</mat-label>
+      <input matInput formControlName="rut" required maxlength="30">
+    </mat-form-field>
+    <!-- Telefono -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input type="tel" matInput placeholder="9-9550-1234" formControlName="phone" required maxlength="30">
+    </mat-form-field>
+    <!-- Email -->
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" readonly>
+    </mat-form-field>
+    <!-- rol -->
+
+
+    <mat-card class="linkedin-style-card mb-4">
+      <mat-card-title>Rol/Roles Asignados:</mat-card-title>
+      <mat-card-content>
+        <ng-container *ngIf="roles && roles.length > 0; else noRoles">
+          <mat-list>
+            <ng-container *ngFor="let role of roles; let last = last">
+              <mat-list-item>
+                {{ role.name.substring(5) }}
+                <button mat-mini-fab class="minifabdanger m-1" (click)="deleteRole(this.usrId??0, role.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-list-item>
+              <mat-divider *ngIf="!last"></mat-divider>
+            </ng-container>
+          </mat-list>
+        </ng-container>
+        <div class="text-center">
+          <button mat-icon-button color="primary" (click)="editRole(this.usrId??0)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <ng-template #noRoles>
+          <div class="text">
+            No se han asignado roles para este usuario.
+          </div>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+
+
+
+    <!-- Botones de acción -->
+    <div class="form-group text-center d-flex">
+      <button mat-raised-button class="botonprimario">Guardar</button>
+      <button mat-raised-button class="botonprimario" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+
+
+
+
+</mat-card-content>
