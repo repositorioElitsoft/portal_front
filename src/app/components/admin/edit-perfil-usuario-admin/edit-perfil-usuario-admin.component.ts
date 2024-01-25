@@ -24,6 +24,7 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
   hidePassword: boolean = true;
   roles: Role[] = [];
   roleId: number | null = null
+  displayedColumns: string[] = ['roleName', 'actions'];
 
   constructor(
     private userService: UserService,
