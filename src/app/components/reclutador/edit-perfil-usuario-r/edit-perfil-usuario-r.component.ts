@@ -16,17 +16,7 @@ export class EditPerfilUsuarioRComponent implements OnInit {
   @Output() dialogClosed: EventEmitter<void> = new EventEmitter<void>();
   userDataForm: FormGroup;
   usrId: number | null = null
-  usuario: UserEditarDTO2 = {
-    name: '',
-    firstLastname: '',
-    secondLastname: '',
-    rut: '',
-    email: '',
-    phone: '',
-    password: '',
-    address: '',
-    roles: ''
-  }
+  usuario!: UserEditarDTO2
   constructor(private userService: UserService,
     private formBuilder: FormBuilder,
     private notification: NotificationService,

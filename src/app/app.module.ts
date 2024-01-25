@@ -101,6 +101,7 @@ import { ObservationRecruiterEditComponent } from './components/reclutador/obser
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import { PortalViewComponent } from './components/user/portal-view/portal-view.component';
 import { UserAvailabilityComponent } from './components/user/user-availability/user-availability.component';
+import { EditRoleComponent } from './components/admin/edit-role/edit-role.component';
 
 
 
@@ -171,7 +172,8 @@ import { UserAvailabilityComponent } from './components/user/user-availability/u
     ObservationRecruiterComponent,
     ObservationRecruiterEditComponent,
     PortalViewComponent,
-    UserAvailabilityComponent
+    UserAvailabilityComponent,
+    EditRoleComponent
   ],
   imports: [
     MatCheckboxModule,

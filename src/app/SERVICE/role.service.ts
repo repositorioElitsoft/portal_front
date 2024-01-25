@@ -8,7 +8,7 @@ import { Role } from '../interface/role.interface';
 })
 export class RoleService {
 
-    private baseUrl = 'http://localhost:8080/roles'; // Reemplaza con la URL de tu servidor Spring Boot
+    private baseUrl = 'http://localhost:8080/roles';
 
     constructor(private http: HttpClient) { }
 
@@ -24,16 +24,19 @@ export class RoleService {
         return this.http.get<Role>(`${this.baseUrl}/name/${name}`);
     }
 
-    saveOrUpdateRole(role: Role): Observable<Role> {
-        if (role.id === null || role.id === undefined) {
-            return this.http.post<Role>(`${this.baseUrl}/`, role);
-        } else {
-            return this.http.put<Role>(`${this.baseUrl}/${role.id}`, role);
-        }
+    getRolesByUserId(userId: number): Observable<Role[]> {
+        return this.http.get<Role[]>(`${this.baseUrl}/${userId}/roles`);
     }
 
 
-    deleteRole(id: number): Observable<void> {
-        return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    saveOrUpdateRole(role: any, userId: number): Observable<any> {
+        const url = `${this.baseUrl}/?userId=${userId}`;
+        return this.http.post(url, role);
     }
+
+
+    deleteRole(userId: number, roleId: number): Observable<any> {
+        return this.http.delete(`${this.baseUrl}/${userId}/${roleId}`);
+    }
+
 }

@@ -126,7 +126,6 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
 
 
   editUser(event: any): void {
-    // Obtiene el ID desde el elemento del botón que dispara el evento
     const id = event.target.parentElement.id;
 
     if (id) {
@@ -145,6 +144,7 @@ export class ViewUsuariosComponent implements OnInit, AfterViewInit {
           dialogRef.afterClosed().subscribe((result) => {
             console.log(`Dialog result: ${result}`);
             this.obtenerUsuarios();
+
 
           });
         },

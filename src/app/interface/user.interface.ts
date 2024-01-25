@@ -8,6 +8,7 @@ import { UserCV } from "./user-cv.interface"
 import { UserPreferredJob } from "./user-preferred-job-interface"
 import { Result } from "./exam-results.interface"
 import { UserJobAvailability } from "./user-job-availability.interface"
+import { Role } from "./role.interface"
 
 export interface User {
     id?: number
@@ -30,10 +31,11 @@ export interface User {
     cv?: UserCV
     results?: Result[];
     availability?: UserJobAvailability,
+    roles?: Role[];
 }
 
 
-export type UserEditarDTO = Omit<User, 'availability' | 'phone' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
-export type UserEditarDTO2 = Omit<User, 'availability' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
+export type UserEditarDTO = Omit<User, 'roles' | 'availability' | 'phone' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
+export type UserEditarDTO2 = Omit<User, 'roles' | 'availability' | 'linkedin' | 'city' | 'herramientas' | 'tools'> & { roles: string };
 
-export type UserSesionDTO = Omit<User, 'availability' | 'password' | 'linkedin' | 'pais_nom' | 'pais' | 'address' | 'herramientas' | 'tools'>;
+export type UserSesionDTO = Omit<User, 'roles' | 'availability' | 'password' | 'linkedin' | 'pais_nom' | 'pais' | 'address' | 'herramientas' | 'tools'>;

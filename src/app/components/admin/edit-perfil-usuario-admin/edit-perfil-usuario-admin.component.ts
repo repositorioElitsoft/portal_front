@@ -9,6 +9,7 @@ import { ViewUsuariosComponent } from '../view-usuarios/view-usuarios.component'
 import { Role } from 'src/app/interface/role.interface';
 import { RoleService } from 'src/app/service/role.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EditRoleComponent } from '../edit-role/edit-role.component';
 
 @Component({
   selector: 'app-edit-perfil-usuario-admin',
@@ -20,24 +21,14 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
   userDataForm: FormGroup;
   usrId: number | null = null
   hide = true;
-  usuario: UserEditarDTO2 = {
-    name: '',
-    firstLastname: '',
-    secondLastname: '',
-    rut: '',
-    email: '',
-    phone: '',
-    password: '',
-    address: '',
-    roles: ''
-  }
   hidePassword: boolean = true;
-  roles: Role[] = []; // Inicializa la lista de roles vacía
+  roles: Role[] = [];
+  roleId: number | null = null
 
   constructor(
     private userService: UserService,
     private router: Router,
-    private roleService: RoleService, // Inyecta el servicio de roles
+    private roleService: RoleService,
     private formBuilder: FormBuilder,
     private notification: NotificationService,
     private route: ActivatedRoute,
@@ -47,29 +38,29 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.userDataForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(1)]],
       firstLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       secondLastname: ['', [Validators.required, Validators.maxLength(30), Validators.minLength(3)]],
       rut: [''],
       email: [''],
       phone: [''],
-      roles: [null, Validators.required], // Utiliza null como valor inicial para roles
     });
   }
 
   ngOnInit(): void {
-    this.getRoles(); // Llama al método getRoles() para obtener la lista de roles
-
+    this.getRoles();
     this.usrId = this.data ? this.data.usuarioId : null;
     if (this.usrId) {
       console.log('existo');
       this.userService.getUsuarioId(this.usrId).subscribe({
         next: (data) => {
           this.userDataForm.patchValue(data);
-          this.usuario.id = data.id;
 
-          // Establece el valor seleccionado en función de user.role
-          this.userDataForm.controls['roles'].setValue(data.roleId);
+
+          if (data && data.roleId !== undefined) {
+            this.userDataForm.controls['roles'].setValue(data.roleId);
+          }
+
 
           console.log(data.id, 'usuario enviado');
         },
@@ -83,22 +74,20 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     } else {
       this.userDataForm.reset();
     }
-  }
 
+    this.getRolesByUserId();
+  }
 
   guardarUsuario() {
     if (this.userDataForm.invalid) {
-      console.log('Ventana Cerrada');
+      console.log('Formulario no válido');
       return;
     }
 
     const userData = this.userDataForm.value;
-    const roleId = userData.roles; // Aquí obtienes el ID del rol seleccionado
+    const userId = this.usrId ?? 0; // Asegúrate de tener un ID de usuario válido
+    console.log('Valor de userId:', userId); // Agrega esta línea para verificar el valor de userId
 
-
-    userData.roleId = roleId;
-
-    // Después, procede a guardar o actualizar el usuario con el nuevo rol
     const accionCompleta = (mensaje: string) => {
       this._snackBar.open(mensaje, "Cerrar", { duration: 3000 });
       this.cancelar();
@@ -106,39 +95,39 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
       this.dialogClosed.emit();
     };
 
-    if (this.usrId) {
+    const esActualizacion = !!this.usrId;
+
+
+    if (esActualizacion) {
       console.log(userData, 'usuario para actualizar');
-      this.userService.actualizarUsuarioAdmin(this.usrId, userData).subscribe({
-        next: () => accionCompleta("User actualizado con éxito"),
-        error: () => accionCompleta("Error al actualizar usuario")
+      this.userService.actualizarUsuarioAdmin(userId, userData).subscribe({
+        next: () => {
+
+          accionCompleta("Usuario actualizado con éxito");
+        },
+        error: () => {
+          accionCompleta("Error al actualizar usuario");
+        }
       });
     } else {
       console.log(userData, 'usuario para agregar');
       this.userService.updateUser(userData).subscribe({
         next: () => {
-          console.log('Registro Exitoso');
-          this.notification.showNotification('success', 'Registro Exitoso', 'User agregado con éxito');
-          this.limpiarCampos();
+          accionCompleta("Registro Exitoso");
         },
-        error: (error) => console.log(error)
+        error: (error) => {
+          console.error(error);
+          accionCompleta("Error al agregar usuario");
+        }
       });
     }
   }
 
-  guardarRole(role: Role, callback: () => void) {
-    this.roleService.saveOrUpdateRole(role).subscribe({
-      next: () => {
-        console.log('Rol guardado o actualizado con éxito');
-        callback(); // Llama al callback una vez que el rol se ha guardado o actualizado
-      },
-      error: (error) => {
-        console.error('Error al guardar o actualizar el rol', error);
-        // Manejo de errores
-      }
+  getRolesByUserId() {
+    this.roleService.getRolesByUserId(this.usrId ?? 0).subscribe((data) => {
+      this.roles = data;
     });
   }
-
-
 
   togglePasswordVisibility(): void {
     this.hidePassword = !this.hidePassword;
@@ -153,12 +142,10 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  // Método para obtener la lista de roles
   getRoles() {
     this.roleService.getAllRoles().subscribe({
       next: (roles) => {
-        // Crea objetos Role con los nombres de los roles sin "ROLE_"
-        this.roles = roles.map(role => ({ id: role.id, name: role.name.replace('ROLE_', '') }));
+        this.roles = roles.map(role => ({ id: role.id, name: role.name }));
         console.log(this.roles);
       },
       error: (error) => {
@@ -166,4 +153,45 @@ export class EditPerfilUsuarioAdminComponent implements OnInit {
       }
     });
   }
+
+  editRole(usrId: number): void {
+    if (!usrId) {
+      console.error('El usrId no es válido');
+      return;
+    }
+
+    console.log('usrId enviado:', usrId);
+
+    const dialogRef = this.dialog.open(EditRoleComponent, {
+      width: '400px',
+      height: '400px',
+      data: { usuarioId: usrId }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.getRolesByUserId();
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
+
+
+
+  deleteRole(userId: number, roleId: number): void {
+    this.roleService.deleteRole(userId, roleId).subscribe(
+      response => {
+        // Manejar la respuesta después de la eliminación, por ejemplo, recargar la lista de roles.
+        this._snackBar.open('Rol eliminado correctamente', 'Cerrar', { duration: 3000 }); // Muestra un mensaje de éxito en el snack bar
+        this.getRolesByUserId() // Actualiza la lista de roles
+      },
+      error => {
+        console.error('Error al eliminar el rol:', error);
+        this._snackBar.open('Error al eliminar el rol', 'Cerrar', { duration: 3000 }); // Muestra un mensaje de error en el snack bar
+      }
+    );
+  }
 }
+
+
