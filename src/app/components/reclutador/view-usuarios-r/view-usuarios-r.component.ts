@@ -193,10 +193,13 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     //LISTO
     if (this.selectedCargo > 0) {
-
+      
       filteredArray = filteredArray.filter(usuario => {
         return usuario.userJob?.find(application => {
-          return String(application.id) === String(this.selectedCargo);
+          console.log("cargo seleccionado", this.selectedCargo);
+          console.log("cargo ", application.jobPosition?.id);
+          return String(application.jobPosition?.id) === String(this.selectedCargo);
+          
         })
       });
     }
