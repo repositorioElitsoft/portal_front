@@ -63,7 +63,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   selectedAniosExp: number = 0;
   selectedProductoNombre: string | undefined = "";
   selectedEstado: string = '';
-  inputContent: boolean = false;
+
   lastYears: number = 0;
   resultadosExam: any[] = [];
   cargos: JobPosition[] = [];
@@ -73,7 +73,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   porcentajeAprobacion: number = 0;
   filteredUsuarios: any = [] = [];
   puntosMaximos?: number;
-  selectedOption: String = '';
   selectedNivel: number = 0;
   isSueldoSliderEnabled = true;
   porcentajesAprobacion = [
@@ -161,7 +160,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         if (herramientas && herramientas.length > 0) {
           this.herramientas = herramientas
           this.lvl = herramientas.map((herramienta: any) => herramienta.level.description);
-          console.log("herramientas", this.herramientas);
           this.productIds = herramientas.map((herramienta: any) => herramienta.productVersion.name);
           this.productname = herramientas.map((herramienta: any) => herramienta.productVersion.product.name);
           this.productid = herramientas.map((herramienta: any) => herramienta.productVersion.product.id);
@@ -182,6 +180,8 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
   filterData() {
     let filteredArray: User[] = this.originalDataCopy;
 
+    console.log("filtered array al principio", filteredArray)
+
     const [minSueldo, maxSueldo] = this.selectedSueldoRange;
     filteredArray = filteredArray.filter(usuario => {
 
@@ -193,13 +193,11 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
 
     //LISTO
     if (this.selectedCargo > 0) {
-      
+
       filteredArray = filteredArray.filter(usuario => {
         return usuario.userJob?.find(application => {
-          console.log("cargo seleccionado", this.selectedCargo);
-          console.log("cargo ", application.jobPosition?.id);
           return String(application.jobPosition?.id) === String(this.selectedCargo);
-          
+
         })
       });
     }
@@ -235,15 +233,12 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     if (this.selectedProducts.length > 0) {
       filteredArray = filteredArray.filter(usuario => {
         return usuario.tools?.find(tool => {
-          console.log("tool product id", tool.productVersion?.product?.id)
-          console.log("prueba", this.selectedProducts.includes(16))
-          console.log("resultado de verificarlo", this.selectedProducts.includes(tool.productVersion!.product!.id))
           return this.selectedProducts.includes(tool.productVersion!.product!.id)
         });
       });
     }
 
-    console.log("filtered array tool", filteredArray)
+
 
     //Filtro por versión Necesita más testing pero debería estar bien
     if (this.selectedVersion > 0) {
@@ -269,11 +264,9 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     console.log("array final: ", filteredArray)
 
     // Filtro por porcentaje de aprobación
-    console.log("estoy filtrando", typeof this.selectedPorcentajeAprobacion);
+
     if (typeof this.selectedPorcentajeAprobacion === "object") {
-      console.log("en el filter", filteredArray);
       filteredArray = filteredArray.filter(resultado => {
-        console.log("resultado aaaaaa", resultado);
         const resultadoFinal = this.resultados.find(resultado => {
           const resultadoExamen = resultado.score;
           const puntosMaximos = 20;
@@ -282,22 +275,25 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
           const productos = resultado.product;
           const porcentajeAprobacion = (resultadoExamen / puntosMaximos) * 100;
           const cumpleFiltrosAnteriores = productos.length > 0 && productos.id === this.selectedProducto && nivelDificultad === this.selectedNivel;
-          console.log("porcentajeAprobacion", porcentajeAprobacion);
-          console.log("this.selectedProducto", this.selectedProducto);
-          console.log("resultadoExamen", resultadoExamen);
-          console.log("nivelDificultad", nivelDificultad);
-          console.log("this.selectedNivel", this.selectedNivel);
-          console.log("productos", productos);
+
+
+          /* console.log("porcentajeAprobacion", porcentajeAprobacion);
+           console.log("this.selectedProducto", this.selectedProducto);
+           console.log("resultadoExamen", resultadoExamen);
+           console.log("nivelDificultad", nivelDificultad);
+           console.log("this.selectedNivel", this.selectedNivel);
+           console.log("productos", productos);*/
 
           if (Array.isArray(this.selectedPorcentajeAprobacion.value)) {
             return porcentajeAprobacion >= this.selectedPorcentajeAprobacion.value[0] &&
               porcentajeAprobacion <= this.selectedPorcentajeAprobacion.value[1];
           } else {
+            /*
             console.log("usuario", resultado.usuarioId);
             console.log("% aprobacion", porcentajeAprobacion);
             console.log("% aprobacion seleccionado", this.selectedPorcentajeAprobacion.value);
             console.log("comparacion", porcentajeAprobacion === this.selectedPorcentajeAprobacion.value);
-            return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;
+            return porcentajeAprobacion === this.selectedPorcentajeAprobacion.value;*/
           }
 
           return false;
@@ -311,7 +307,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     }
 
     //Filtro años de experiencia
-
+    console.log("filtered array porcentaje aprob:", filteredArray)
 
     if (this.selectedProducts.length === 1 && !this.isIrrelevant) {
       const [min, max] = this.selectedAniosExpRange;
@@ -326,6 +322,7 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       });
     }
 
+    console.log("final final filtered array:", filteredArray)
 
     this.dataSource.data = filteredArray;
   }
@@ -589,7 +586,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
         (productos: Product[]) => {
           this.productos = productos;
           this.versiones = [];
-          this.originalDataCopy = this.dataSource.data;
           //this.filterProducto();
           this.selectedProductoNombre = this.productos.find((producto) => producto.id === this.selectedProducto)?.name;
 
@@ -602,7 +598,6 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
       this.versiones = [];
       this.productos = [];
       this.selectedProductoNombre = '';
-      this.originalDataCopy = this.dataSource.data;
       //this.filterProducto();
     }
   }
@@ -746,19 +741,17 @@ export class ViewUsuariosRComponent implements OnInit, AfterViewInit {
     this.selectedSueldoRange = [1, 5000000];
     this.selectedCargo = 0;
     this.selectedCategoria = 0;
-    this.selectedProducto = 0;
     this.selectedVersion = 0;
     this.selectedAniosExp = 0;
     this.selectedProductoNombre = "";
     this.selectedEstado = '';
-    this.inputContent = false;
     this.lastYears = 0;
     this.resultadosExam = [];
-    this.selectedOption = '';
     this.selectedNivel = 0;
     this.isSueldoSliderEnabled = true;
-    this.selectedPorcentajeAprobacion = null;
+    this.selectedPorcentajeAprobacion = undefined;
     this.porcentajeAprobacion = 0;
+    this.selectedProducts = []
 
     // Vuelve a cargar o filtrar los datos según sea necesario
     this.dataSource.data = this.originalDataCopy;
