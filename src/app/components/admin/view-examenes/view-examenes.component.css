@@ -3,31 +3,42 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
+
 .card-header {
   background-color: #f8f9fa;
 }
+
 .card-title {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
 }
+
 .card-subtitle {
   font-size: 1rem;
   color: #6c757d;
 }
+
 .card-body {
   padding: 1rem;
 }
+
 .card-footer {
   background-color: #f8f9fa;
   padding: 0.75rem;
 }
+
 .ml-2 {
   margin-left: 0.5rem;
 }
+
 .container {
   margin-top: 40px;
 }
+
 .text-center {
   text-align: center;
 }
-.filter-container{margin-top: 10%;}
+
+.filter-container {
+  margin-top: 10%;
+}
