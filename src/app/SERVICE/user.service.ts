@@ -107,7 +107,7 @@ export class UserService {
     return this.HttpClient.get<any>(`${this.url}/usuarios/email/${email}`);
   }
   obtenerUsuarios(): Observable<any[]> {
-    return this.HttpClient.get<any[]>(`${this.url}/users/usuarios-herramientas`);
+    return this.HttpClient.get<any[]>(`${this.url}/users/all`);
   }
   getGuestUsers(): Observable<User[]> {
     return this.HttpClient.get<User[]>(`${this.url}/users/guest`);

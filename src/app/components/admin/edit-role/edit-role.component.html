@@ -1,0 +1,12 @@
+<div class="form-container">
+    <form [formGroup]="userDataForm" class="form">
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Selecciona un rol</mat-label>
+            <mat-select formControlName="id">
+                <mat-option *ngFor="let role of allRoles" [value]="role.id">{{ role.name }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button class="botonprimario" (click)="guardarRol()">Guardar Nuevo
+            Rol</button>
+    </form>
+</div>
