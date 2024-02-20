@@ -101,6 +101,7 @@ export class StartComponent implements OnInit {
   }
 
   mostrarGrafico(): void {
+    
     setTimeout(() => {
       const canvas = document.getElementById('resultadoExamenGrafico') as HTMLCanvasElement;
       if (canvas) {
@@ -291,6 +292,7 @@ export class StartComponent implements OnInit {
     });
   }
 
+
   evaluarExamen() {
     this.esEnviado = true;
     this.questions.forEach((p: any) => {
@@ -316,7 +318,7 @@ export class StartComponent implements OnInit {
   }
   imprimirPagina() {
     window.print();
-    
+
   }
 }
 function ViewChild(arg0: string): (target: StartComponent, propertyKey: "examPage") => void {
