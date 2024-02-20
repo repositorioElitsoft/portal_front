@@ -96,8 +96,8 @@ export class UserService {
   public downloadCv(userId: any): Observable<Blob> {
     return this.HttpClient.get(`${this.url}/users/file/${userId}`, { responseType: 'blob' });
   }
-  public borrarCV(UserId: number): Observable<any> {
-    const url = `${this.url}/users/eliminar-cv/${UserId}`;
+  public borrarCV(): Observable<any> {
+    const url = `${this.url}/users/delete-cv`;
     return this.HttpClient.delete(url);
   }
   public registrarUsuario(registerData: Register) {

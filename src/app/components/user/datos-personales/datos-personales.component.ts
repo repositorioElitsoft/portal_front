@@ -177,7 +177,7 @@ export class DatosPersonalesComponent implements OnInit {
     this.userService.getCurrentUser().subscribe({
       next: (data: any) => {
         this.usuarioGuardado = data;
-        this.currentResumeName = data.cvPath?.substring(37, data.cvPath.length)
+        this.currentResumeName = data.cv.path?.substring(37, data.cv.path.length)
 
         console.debug("el usuario guardado es:", data);
 
@@ -248,7 +248,7 @@ export class DatosPersonalesComponent implements OnInit {
 
   borrarCV() {
     if (this.usuarioGuardado?.id) {
-      this.userService.borrarCV(this.usuarioGuardado.id).subscribe({
+      this.userService.borrarCV().subscribe({
         next: () => {
           this.currentResumeName = undefined;
         },
