@@ -108,8 +108,8 @@ export class DatosPersonalesComponent implements OnInit {
   ngOnInit(): void {
 
     this.ObtenerUsuarioGuardado();
-    
-   
+
+
 
   }
   obtenerEstadosporCountry(countryId: number) {
@@ -180,13 +180,20 @@ export class DatosPersonalesComponent implements OnInit {
 
     this.userService.getCurrentUser().subscribe({
       next: (data: any) => {
+
+
         this.usuarioGuardado = data;
-        this.currentResumeName = data.cv.path?.substring(37, data.cv.path.length)
+        if (data.cv !== null) {
+          this.currentResumeName = data.cv.path?.substring(37, data.cv.path.length)
+        }
+
 
         console.debug("el usuario guardado es:", data);
 
         this.form.patchValue(data);
 
+
+        this.form.get("gender")?.get("id")?.patchValue(String(data.gender.id));
 
 
         this.isLoaded = true;
@@ -224,25 +231,27 @@ export class DatosPersonalesComponent implements OnInit {
         console.error("error obteniendo usiario:", err);
       }
     });
+
+
   }
   async submitForm(event: Event) {
     event.preventDefault();
     let user: User = this.form.value;
-  
+
     // Obtener el FormGroup gender
     let genderFormGroup = this.form.get('gender') as FormGroup;
-  
-   
-    
+
+
+
     let genderObject = {
       id: parseInt(genderFormGroup.get('id')?.value), // Convertir la ID a número
       name: genderFormGroup.get('name')?.value
     };
-    
+
 
     // Asignar el objeto de género al usuario
     user.gender = genderObject;
-  
+
     // Asegurarse de que el nombre del género esté configurado correctamente
     if (user.gender && user.gender.id !== null) {
       if (user.gender.id === 1) {
@@ -251,12 +260,12 @@ export class DatosPersonalesComponent implements OnInit {
         user.gender.name = "Femenino";
       }
     }
-  
+
     console.debug("la city del form", this.form.value.city);
     user.city = {
       id: this.form.value.city
     };
-  
+
     console.log("USER enviado :", user);
     try {
       await this.userService.updateUser(user).toPromise();
@@ -274,7 +283,7 @@ export class DatosPersonalesComponent implements OnInit {
   }
 
 
-  
+
 
   borrarCV() {
     if (this.usuarioGuardado?.id) {
