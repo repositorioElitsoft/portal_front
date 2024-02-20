@@ -8,21 +8,33 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* Creates two columns with equal width */
-    gap: 20px;
+    gap: 10px;
     /* Adjust the gap between columns */
-    padding: 20px;
-
+    padding: 1px;
+    margin: 0 center;
     /* Optional padding for better spacing */
-    @media (max-width: 600px) {
+    @media (max-width: 1px) {
       grid-template-columns: 1fr;
       /* Set to one column for smaller screens */
     }
+
+
   }
 
   .exam-card {
-    min-width: 20vw;
+    min-width: 15vw;
 
     @media (max-width: 600px) {
-      min-width: 50vw;
+      min-width: 5vw;
     }
+  }
+
+  .custom-mat-card {
+    width: 260px; /* ajusta el tamaño según tus necesidades */
+    height: 100px; /* ajusta el tamaño según tus necesidades */
+  }
+  
+  .custom-mat-card2{
+    width: 260px; /* ajusta el tamaño según tus necesidades */
+    height: 100px; /* ajusta el tamaño según tus necesidades */
   }
