@@ -36,7 +36,7 @@ export class PreguntaService {
       description: description,
       productId: productId.toString()
     };
-    console.log("description", description[0]);
+    console.log("description", description);
     console.log("product id", productId);
     return this.http.get<any>(`${this.url}/pregunta/generarExamen?description=${description}&productid=${productId}`);
   }

@@ -82,7 +82,7 @@ export class StartComponent implements OnInit {
   generarExamen(): void {
     this.questions = [];
     this.timer = 180;
-    console.log("description del nivel blabla bla", this.lvl);
+    console.log("description del nivel", this.lvl);
 
     this.preguntaService.generarExamen(this.lvl, this.productId).subscribe({
       next: (examQuestions) => {
@@ -296,19 +296,26 @@ export class StartComponent implements OnInit {
   evaluarExamen() {
     this.esEnviado = true;
     this.questions.forEach((p: any) => {
-      console.log("dada:", p.respuestaDada, "respuesta correcta:", p.answer)
-      if (p.respuestaDada == p.answer) {
+      console.log("dada:", p.respuestaDada, "respuesta correcta:", "option"+p.answer);
+      
+      // Encuentra la opción correcta basada en el número almacenado en respuestaDada
+      const opcionCorrecta = p['option' + p.answer];
+      
+      // Verifica si la respuesta dada coincide con la opción correcta
+      if (p.respuestaDada === opcionCorrecta) {
         this.respuestasCorrectas++;
         this.puntosConseguidos += 2;
       }
-      if (p.respuestaDada.trim() != '') {
+      
+      if (p.respuestaDada.trim() !== '') {
         this.preguntasTotales++;
       }
     });
+  
     console.log('Puntos conseguidos:', this.puntosConseguidos);
     this.mostrarGrafico();
-    
   }
+  
 
 
   obtenerHoraFormateada() {
