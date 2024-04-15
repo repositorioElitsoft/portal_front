@@ -1,3 +1,11 @@
 .container-datos-personales {
     margin-left: 20vw;
+    /* Establece el margen izquierdo en dispositivos más grandes */
+}
+
+@media screen and (max-width: 768px) {
+    .container-datos-personales {
+        margin-left: 0;
+        /* Restablece el margen izquierdo en dispositivos móviles */
+    }
 }

@@ -8,6 +8,7 @@
   margin-left: -10px;
   margin-right: -10px;
 }
+
 .col-sm-12 {
   flex-basis: 100%;
   margin: 10px 0;
@@ -18,13 +19,16 @@
   padding: 15px;
   border: 1px solid #F57C27;
 }
-.tool-info > div {
+
+.tool-info>div {
   margin-bottom: 10px;
 }
+
 .minifabdanger {
   background-color: #ff6b6b;
   color: #fff;
 }
+
 .minifabdanger mat-icon {
   font-size: 20px;
 }
@@ -42,6 +46,7 @@
     margin: 10px;
   }
 }
+
 @media (min-width: 992px) {
   .col-lg-2 {
     flex-basis: calc(33.33% - 20px);
@@ -95,7 +100,7 @@
 /* Estilo para la descripción de la herramienta */
 .tool-description {
   font-size: 16px;
- 
+
 }
 
 /* Estilo para los botones de acción */

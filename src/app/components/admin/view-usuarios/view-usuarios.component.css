@@ -1,32 +1,84 @@
 /* Estilos para los botones */
 .btn-primary {
-  background-color: #F76805; /* Color naranja */
-  border-color: #F76805; /* Color naranja */
-  color: #fff; /* Color de texto blanco */
+  background-color: #F76805;
+  /* Color naranja */
+  border-color: #F76805;
+  /* Color naranja */
+  color: #fff;
+  /* Color de texto blanco */
   font-weight: bold;
 }
 
 .btn-primary:hover {
-  background-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
-  border-color: #FFA500; /* Cambia el color al naranja más claro al pasar el ratón */
+  background-color: #FFA500;
+  /* Cambia el color al naranja más claro al pasar el ratón */
+  border-color: #FFA500;
+  /* Cambia el color al naranja más claro al pasar el ratón */
 }
 
 .btn-outline-primary {
-  color: #F76805; /* Color naranja */
-  border-color: #F76805; /* Color naranja */
+  color: #F76805;
+  /* Color naranja */
+  border-color: #F76805;
+  /* Color naranja */
   font-weight: bold;
 }
 
 .btn-outline-primary:hover {
-  background-color: #F76805; /* Color naranja */
-  color: #fff; /* Color de texto blanco */
+  background-color: #F76805;
+  /* Color naranja */
+  color: #fff;
+  /* Color de texto blanco */
 }
 
-.custom-btn{
-  background-color: orange!important;
+.custom-btn {
+  background-color: orange !important;
   margin-right: 1vw;
   margin-bottom: 1vh;
-  color: white!important;
+  color: white !important;
   margin-left: 2vw;
 }
-.filter-container{margin-top: 10%;}
+
+.filter-container {
+  margin-top: 10%;
+}
+
+
+/* General table styles */
+.mat-table {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow wrapping on small screens */
+  width: 100%;
+  /* Ensure full width on small screens */
+  overflow-x: auto;
+
+}
+
+.mat-column {
+  flex: 1 0 auto;
+  /* Allow flexible column sizing */
+  min-width: 100px;
+  /* Set minimum width for important columns */
+}
+
+/* Reset default Angular Material table styles (optional) */
+table {
+  white-space: nowrap;
+
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .mat-column-roles {
+    display: none;
+
+  }
+
+  .mat-column-email {
+    display: none;
+
+  }
+
+
+}

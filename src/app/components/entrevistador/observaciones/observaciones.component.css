@@ -1,37 +1,45 @@
 .dashboard-panel {
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   margin-top: 10vh;
   border-radius: 10px;
-  border: 1px solid #F57C27!important;
+  border: 1px solid #F57C27 !important;
 }
+
 .dashboard-panel:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+
 mat-toolbar {
   margin-bottom: 20px;
   background-color: transparent;
 }
+
 .filter-container {
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-between;
 }
-.filter-input, .filter-select, .filter-slider {
+
+.filter-input,
+.filter-select,
+.filter-slider {
   flex: 1 1 200px;
   display: flex;
   flex-direction: column;
 }
+
 .filter-slider {
   align-items: center;
 }
+
 .filter-slider mat-slider {
-  width: 100%; 
+  width: 100%;
 }
-.filter-checkbox, .filter-number {
+
+.filter-checkbox,
+.filter-number {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,3 +63,22 @@ button.mat-raised-button mat-icon {
   font-size: 16px;
 }
 
+
+
+@media (max-width: 768px) {
+  .mat-column-email {
+    display: none;
+
+  }
+
+  .mat-column-phone {
+    display: none;
+
+  }
+
+
+  .botonprimario {
+    font-size: 12px !important;
+  }
+
+}

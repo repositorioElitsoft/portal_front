@@ -64,3 +64,25 @@
 .button-container {
     margin-left: auto;
 }
+
+/* Media Queries para dispositivos móviles */
+@media only screen and (max-width: 768px) {
+    .question-level {
+        max-width: 120px;
+        /* Reducir el ancho máximo en dispositivos móviles */
+    }
+
+    .botonprimario {
+        margin-top: 10px;
+        display: block;
+        width: 100%;
+        /* Asegurar que el botón ocupe toda la anchura en dispositivos móviles */
+    }
+
+    .button-container {
+        margin-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        /* Alinear los botones a la derecha en dispositivos móviles */
+    }
+}

@@ -3,27 +3,24 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: none;
     margin-top: 20px;
+    overflow: auto;
+    /* Agregado para permitir scroll en dispositivos móviles */
 }
 
 .card-header {
     background-color: #f5f5f5;
     border-bottom: 1px solid #ddd;
     text-align: center;
-
 }
 
 .perfilr {
     text-align: center;
 }
 
-
 /* Estilo para los campos de entrada y etiquetas */
 .form-group {
     margin-bottom: 15px;
 }
-
-
-
 
 /* Estilo para el select de nivel de dificultad */
 .form-group select {
@@ -39,6 +36,13 @@
 
 /* Estilo para el título principal */
 h1 {
-
     margin-bottom: 20px;
+}
+
+/* Media Queries para dispositivos móviles */
+@media only screen and (max-width: 768px) {
+    .card {
+        max-height: 500px;
+        /* Altura máxima para el scroll */
+    }
 }

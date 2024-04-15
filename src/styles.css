@@ -185,9 +185,9 @@ body {
 .example-container {
   height: 100vh;
   border: none;
-  /* Elimina el borde */
-  box-shadow: none;
-  /* Elimina la sombra */
+
+  box-shadow: none !important;
+
 }
 
 /*---------------------------- Add-Category--------------------------------------*/

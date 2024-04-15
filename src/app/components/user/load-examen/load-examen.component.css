@@ -12,6 +12,7 @@
     /* Adjust the gap between columns */
     padding: 1px;
     margin: 0 center;
+
     /* Optional padding for better spacing */
     @media (max-width: 1px) {
       grid-template-columns: 1fr;
@@ -30,11 +31,15 @@
   }
 
   .custom-mat-card {
-    width: 260px; /* ajusta el tamaño según tus necesidades */
-    height: 100px; /* ajusta el tamaño según tus necesidades */
+    width: 260px;
+    /* ajusta el tamaño según tus necesidades */
+    height: 100px;
+    /* ajusta el tamaño según tus necesidades */
   }
-  
-  .custom-mat-card2{
-    width: 260px; /* ajusta el tamaño según tus necesidades */
-    height: 100px; /* ajusta el tamaño según tus necesidades */
+
+  .custom-mat-card2 {
+    width: 260px;
+    /* ajusta el tamaño según tus necesidades */
+    height: 100px;
+    /* ajusta el tamaño según tus necesidades */
   }

@@ -34,12 +34,13 @@ mat-toolbar {
 
 .filter-slider {
   align-items: center;
- 
+
 }
 
 .filter-slider mat-slider {
   width: 100%;
-  width: 500px; /* Ancho deseado */
+  width: 500px;
+
 }
 
 .filter-checkbox,
@@ -86,5 +87,67 @@ button.mat-raised-button mat-icon {
 
 /* Estilo para el slider en sí */
 .salary-slider {
-  width: 100%; /* O el porcentaje deseado */
+  width: 100%;
+  /* O el porcentaje deseado */
+}
+
+
+
+
+@media (max-width: 1200px) {
+  .mat-column-roles {
+    display: none;
+
+  }
+
+
+  .mat-column-phone {
+    display: none;
+
+  }
+
+  .mat-column-email {
+    display: none;
+
+  }
+}
+
+@media (max-width: 768px) {
+  .mat-column-roles {
+    display: none;
+
+  }
+
+  .botonprimario {
+    font-size: 12px !important;
+  }
+
+  .mat-column-phone {
+    display: none;
+
+  }
+
+  .mat-column-email {
+    display: none;
+
+  }
+
+  .filter-row {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .filter-datepicker {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .filter-slider mat-slider {
+    width: 90%;
+    width: 300px;
+
+  }
+
 }

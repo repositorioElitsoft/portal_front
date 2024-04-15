@@ -24,49 +24,56 @@
   padding: 10px;
 }
 
-.chips{
-  font-size: 12px; /* Adjust the font size as needed */
+.chips {
+  font-size: 12px;
+  /* Adjust the font size as needed */
   padding: 2px 4px;
   height: auto;
 }
 
-.chips-container{
+.chips-container {
   margin-top: 1vh;
 }
 
-.card-custom{
+.card-custom {
   display: grid;
 
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
 }
-.card-title-custom{
+
+.card-title-custom {
   align-self: baseline;
-  grid-column: 1 / -1; /* Ocupar todas las columnas */
+  grid-column: 1 / -1;
+  /* Ocupar todas las columnas */
   justify-self: center;
   color: rgb(255, 255, 255);
   font-weight: bold;
-   font-size: 1.5em;
-   font-family: 'Meera Inimai', sans-serif;
+  font-size: 1.5em;
+  font-family: 'Meera Inimai', sans-serif;
 
 }
 
 
-.btn-custom{
-  background-color: transparent!important;
-  color: black!important;
+.btn-custom {
+  background-color: transparent !important;
+  color: black !important;
 }
 
-.card-header{
+.card-header {
   background-color: #F57C27;
 }
 
 
 .comentario-box {
-  background-color: #f0f0f0; /* Color de fondo de la caja de comentarios */
-  border: 1px solid #ccc; /* Borde de la caja de comentarios */
-  padding: 10px; /* Espaciado interno de la caja de comentarios */
-  margin-bottom: 10px; /* Margen inferior entre cajas de comentarios */
+  background-color: #f0f0f0;
+  /* Color de fondo de la caja de comentarios */
+  border: 1px solid #ccc;
+  /* Borde de la caja de comentarios */
+  padding: 10px;
+  /* Espaciado interno de la caja de comentarios */
+  margin-bottom: 10px;
+  /* Margen inferior entre cajas de comentarios */
 
 }
 
@@ -77,8 +84,10 @@
 
 .observacion-card {
   margin: 10px;
-  border-left: 5px solid #F57C27; /* Barra lateral para destacar */
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Sombra suave para profundidad */
+  border-left: 5px solid #F57C27;
+  /* Barra lateral para destacar */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  /* Sombra suave para profundidad */
 }
 
 .fecha-info {
@@ -90,8 +99,10 @@
 
 mat-chip {
   margin: 2px;
-  background-color: #F57C27; /* Fondo del chip */
-  color: white; /* Texto del chip */
+  background-color: #F57C27;
+  /* Fondo del chip */
+  color: white;
+  /* Texto del chip */
 }
 
 /* Estilo para el chip de fecha de creación */
@@ -108,144 +119,169 @@ mat-chip {
 
 /* Estilo general para la caja de comentarios */
 .observacion-comentario {
-margin: 10px;
-padding: 10px;
-background-color: #f0f0f0;
-border: 1px solid #ccc;
-border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 /* Estilo para la tarjeta de comentario */
 .comentario-card {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Estilo para el encabezado de la tarjeta */
 .mat-card-header {
-display: flex;
-align-items: center;
-background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
 }
 
 .mat-icon {
-margin-right: 10px;
-font-size: 24px;
+  margin-right: 10px;
+  font-size: 24px;
 }
 
 .mat-card-title {
-font-weight: bold;
+  font-weight: bold;
 }
 
 /* Estilo para el cuerpo de la tarjeta */
 .mat-card-content {
-padding-top: 0;
+  padding-top: 0;
 }
 
 /* Estilo para el campo editable */
 .ancho-completo {
-width: 100%;
+  width: 100%;
 }
 
 /* Estilo para el texto de observación */
 .observacion-texto {
-margin: 10px 0;
+  margin: 10px 0;
 }
 
 /* Estilo para las acciones del comentario */
 .acciones-comentario {
-display: flex;
-justify-content: flex-end;
-margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 
 /* Estilo para el botón de editar */
 
 /* Estilo para la tarjeta de información de fecha */
 .observacion-card {
-background-color: #f0f0f0;
-margin-top: 10px;
+  background-color: #f0f0f0;
+  margin-top: 10px;
 }
 
 .fecha-info {
-display: flex;
-justify-content: space-between;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Estilo para el botón de guardar la nueva observación */
 .avatar {
-background-color: #ffffff; /* Color de fondo como fallback */
-background-image: url('/assets/exam.png'); /* Ruta de la imagen de fondo */
-background-size: cover; /* Asegura que la imagen cubra completamente el círculo */
-background-position: center; /* Centra la imagen de fondo en el avatar */
-border-radius: 50%;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-width: 50px; /* O el tamaño que prefieras */
-height: 50px; /* O el tamaño que prefieras */
-border: 2px solid #ddd; /* Borde para destacar el avatar */
-overflow: hidden; /* Asegura que el contenido no sobresalga del círculo */
-position: relative; /* Para posicionar elementos internos si es necesario */
+  background-color: #ffffff;
+  /* Color de fondo como fallback */
+  background-image: url('/assets/exam.png');
+  /* Ruta de la imagen de fondo */
+  background-size: cover;
+  /* Asegura que la imagen cubra completamente el círculo */
+  background-position: center;
+  /* Centra la imagen de fondo en el avatar */
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  /* O el tamaño que prefieras */
+  height: 50px;
+  /* O el tamaño que prefieras */
+  border: 2px solid #ddd;
+  /* Borde para destacar el avatar */
+  overflow: hidden;
+  /* Asegura que el contenido no sobresalga del círculo */
+  position: relative;
+  /* Para posicionar elementos internos si es necesario */
 }
 
 /* Estilos para agregar un indicador de estado (online/offline, por ejemplo) */
 .avatar::after {
-content: '';
-position: absolute;
-bottom: 0;
-right: 0;
-width: 15px;
-height: 15px;
-background-color: #4caf50; /* Verde para online */
-border: 2px solid #ffffff; /* Borde que coincide con el color de fondo del avatar */
-border-radius: 50%;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 15px;
+  height: 15px;
+  background-color: #4caf50;
+  /* Verde para online */
+  border: 2px solid #ffffff;
+  /* Borde que coincide con el color de fondo del avatar */
+  border-radius: 50%;
 }
 
 
 
 
 .mat-card-header {
-align-items: center;
+  align-items: center;
 }
 
 .mat-card-title {
-margin-left: 8px; /* Espacio al lado del avatar */
-font-weight: bold; /* Estilo del título */
+  margin-left: 8px;
+  /* Espacio al lado del avatar */
+  font-weight: bold;
+  /* Estilo del título */
 }
 
 .mat-card-subtitle {
-margin-left: 8px; /* Espacio al lado del avatar */
-font-size: 0.85em; /* Tamaño del subtítulo */
+  margin-left: 8px;
+  /* Espacio al lado del avatar */
+  font-size: 0.85em;
+  /* Tamaño del subtítulo */
 }
 
 
 
-.observacion-comentario .mat-stepper-vertical, .observacion-comentario .mat-stepper-horizontal {
-  max-width: 800px; /* Ajusta al ancho que prefieras */
+.observacion-comentario .mat-stepper-vertical,
+.observacion-comentario .mat-stepper-horizontal {
+  max-width: 800px;
+  /* Ajusta al ancho que prefieras */
   margin: auto;
 }
 
 
 .observacion-comentario mat-step-header {
-  background-color: #f4f4f4; /* Color de fondo */
-  color:  #F57C27; /* Color del texto */
+  background-color: #f4f4f4;
+  /* Color de fondo */
+  color: #F57C27;
+  /* Color del texto */
   /* Otros estilos que necesites */
 }
 
 .observacion-comentario .mat-step-label {
-  font-weight: bold; /* Texto en negrita */
+  font-weight: bold;
+  /* Texto en negrita */
 }
 
 .observacion-comentario mat-form-field {
-  width: 100%; /* Ancho completo */
-  margin-bottom: 15px; /* Espaciado */
+  width: 100%;
+  /* Ancho completo */
+  margin-bottom: 15px;
+  /* Espaciado */
 }
+
 .observacion-comentario .botonprimario {
-  background-color:  #F57C27;/* Color azul de LinkedIn */
+  background-color: #F57C27;
+  /* Color azul de LinkedIn */
   color: white;
-  border-radius: 4px; /* Bordes redondeados */
+  border-radius: 4px;
+  /* Bordes redondeados */
 }
 
 .observacion-comentario .nueva-observacion {
@@ -256,7 +292,11 @@ font-size: 0.85em; /* Tamaño del subtítulo */
 }
 
 @media (max-width: 768px) {
-  .observacion-comentario .mat-stepper-vertical, .observacion-comentario .mat-stepper-horizontal {
+
+  .observacion-comentario .mat-stepper-vertical,
+  .observacion-comentario .mat-stepper-horizontal {
     max-width: 100%;
   }
+
+
 }
