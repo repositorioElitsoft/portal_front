@@ -241,13 +241,13 @@ export class StartComponent implements OnInit {
 
     switch (this.lvl) {
       case ("Alto"):
-        this.lvlid = 3
+        this.lvlid = 1
         break
       case ("Medio"):
         this.lvlid = 2
         break
       case ("Bajo"):
-        this.lvlid = 1
+        this.lvlid = 3
         break
     }
 
@@ -292,9 +292,11 @@ export class StartComponent implements OnInit {
     });
   }
 
-
   evaluarExamen() {
     this.esEnviado = true;
+    this.respuestasCorrectas = 0; // Reiniciar el contador de respuestas correctas
+    this.puntosConseguidos = 0; // Reiniciar el contador de puntos conseguidos
+  
     this.questions.forEach((p: any) => {
       console.log("dada:", p.respuestaDada, "respuesta correcta:", "option"+p.answer);
       
@@ -312,10 +314,28 @@ export class StartComponent implements OnInit {
       }
     });
   
-    console.log('Puntos conseguidos:', this.puntosConseguidos);
+    // Agregar el resultado actual al arreglo resultados
+    const nuevoResultado: Result = {
+      score: this.puntosConseguidos,
+      time: Math.abs(100 - this.timer),
+      product: {
+        id: this.productId,
+        name: '',
+      },
+      level: {
+        id: this.lvlid,
+        description: ''
+      }
+    };
+    this.resultados.push(nuevoResultado); // Agrega el nuevo resultado al arreglo
+  
+    // Mostrar el gráfico con el último resultado incluido
     this.mostrarGrafico();
+  
+    console.log('Puntos conseguidos:', this.puntosConseguidos);
   }
   
+ 
 
 
   obtenerHoraFormateada() {

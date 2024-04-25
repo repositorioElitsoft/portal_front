@@ -78,7 +78,7 @@
             <mat-error *ngIf="form.get('gender.id')?.hasError('required') && form.get('gender.id')?.touched">Género es
               obligatorio</mat-error>
           </mat-form-field>
-        </ng-container>
+        </ng-container> 
 
         <ng-container *ngIf="form.get('gender.id')?.value > 2 || !form.get('gender.id')?.value">
           <div class="col-sm-12">

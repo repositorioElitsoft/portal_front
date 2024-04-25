@@ -180,20 +180,28 @@ export class DatosPersonalesComponent implements OnInit {
 
     this.userService.getCurrentUser().subscribe({
       next: (data: any) => {
+        console.log('Data recibida del servidor:', data); // Agregado para depuración
+
 
 
         this.usuarioGuardado = data;
         if (data.cv !== null) {
           this.currentResumeName = data.cv.path?.substring(37, data.cv.path.length)
         }
-
+        console.log('Usuario guardado:', this.usuarioGuardado); // Agregado para depuración
+        console.log('Género del usuario guardado:', this.usuarioGuardado.gender); // Agregado para depuración
+        
 
         console.debug("el usuario guardado es:", data);
 
         this.form.patchValue(data);
+        console.log('Género del usuario guardado:', this.usuarioGuardado.gender); // Agregado para depuración
 
 
-        this.form.get("gender")?.get("id")?.patchValue(String(data.gender.id));
+        this.form.get("gender")?.get("id")?.patchValue(String(data.gender?.id));
+        //this.form.get("gender")?.patchValue(String(data.gender?.id));
+        console.log('Valor de género en el formulario después de patchValue:', this.form.get("gender")?.value); // Agregado para depuración
+
 
 
         this.isLoaded = true;
